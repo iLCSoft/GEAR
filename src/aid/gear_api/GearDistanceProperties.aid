@@ -1,0 +1,40 @@
+package hep.gear.api ;
+
+/** Abstract interface for a class that returns the (material) properties along a given distance 
+ *  between two points in in world coordinates. 
+ *  No assumption is made on the tool used to implement the functionality.
+ * 
+ *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
+ *
+ * @author F. Gaede, DESY
+ * @version $Id: GearDistanceProperties.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ */
+public interface GearDistanceProperties {
+    
+
+    /** List of matrial names along the distance between [p0,p1] .
+     */
+    public const String[]& getMaterialNames( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
+    
+    /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
+     *  returned by  getMaterialNames().
+     */
+    public const double[]& getMaterialThicknesses( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
+    
+    /** The number of radiation lengths along the distance between [p0,p1] .
+     */
+    public double getNRadlen( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
+    
+    /** The number of interaction lengths along the distance between [p0,p1] .
+     */
+    public double getNIntlen( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
+    
+    /** The integrated magnetic field along  the distance between [p0,p1] in [FIXME: unit? , direction ?].  
+     */
+    public double getBdL( const Point3D& pos) const throws NotImplementedException ;
+    
+    /** The integrated electric field along  the distance between [p0,p1] in [FIXME: unit? , direction ?].  
+     */
+    public double getEdL( const Point3D& pos) const throws NotImplementedException ;
+    
+}

@@ -1,0 +1,30 @@
+
+##############################################################
+#
+#  GEAR: GEometry Api for Reconstruction 
+#
+#  v00-00: pre-release version 
+# 
+#  F.Gaede, DESY
+#  
+##############################################################
+
+
+ build instructions:
+ ------------------ 
+
+ modify the env.sh  ( path to java ! ) and then source it:
+
+  . env.sh
+
+ ant aid.generate
+ ant cpp
+ ant cpp.doc   
+
+
+ run the example ( ./src/cpp/test/testgear.cc )
+ ----------------------------------------------
+
+  ./bin/testgear gear_ldc.xml
+ 
+
