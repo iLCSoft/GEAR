@@ -1,0 +1,110 @@
+// -*- Java -*-
+package hep.gear.api ;
+
+/** Abstract interface for a manager class that returns the Gear classes for the 
+ *  relevant subdetectors.
+ * 
+ *
+ * @author F. Gaede, DESY
+ * @version $Id: GearMgr.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ */
+public interface GearMgr {
+    
+    /** Get named parameters for key. This can be used to describe a subdetector that is not 
+     *  yet forseen in the Gear API.
+     * 
+     *  @throws UnknownParameterException
+     */
+    public const GearParameters& getGearParameters( const String& key ) const throws UnknownParameterException ;
+    
+    
+    /** Get the TPCParameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const TPCParameters&  getTPCParameters() const throws UnknownParameterException ;
+    
+
+    /** Get the Ecal barrel parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const CalorimeterParameters&  getEcalBarrelParameters() const throws UnknownParameterException ;
+
+    /** Get the Ecal endcap parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const CalorimeterParameters&  getEcalEndcapParameters() const throws UnknownParameterException ;
+
+    /** Get the Hcal barrel parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const CalorimeterParameters&  getHcalBarrelParameters() const throws UnknownParameterException ;
+
+    /** Get the Hcal endcap parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const CalorimeterParameters&  getHcalEndcapParameters() const throws UnknownParameterException ;
+
+
+    /** Get the point properties object.
+     * 
+     *  @throws NotImplementedException
+     */
+    public const GearPointProperties& getPointProperties()  const throws NotImplementedException ;
+
+
+    /** Get the distance properties object.
+     * 
+     *  @throws NotImplementedException
+     */
+    public const GearDistanceProperties& getDistanceProperties()  const throws NotImplementedException ;
+
+
+    /** Keys of all GearParameters. 
+     */ 
+    public const String[]& getGearParameterKeys() const ;
+
+
+    /** Set named parameters for key. This can be used to describe a subdetector that is not 
+     *  yet forseen in the Gear API.
+     */
+    public void setGearParameters( const String& key , GearParameters* gearParameters )   ;
+    
+    
+    /** Set the TPCParameters.
+     */
+    public void  setTPCParameters( TPCParameters* tpcParameters)   ;
+    
+
+    /** Set the EcalBarrelParameters.
+     */
+    public void setEcalBarrelParameters( CalorimeterParameters* ecalBarrelParameters ) ;
+
+    /** Set the EcalEndcapParameters.
+     */
+    public void setEcalEndcapParameters( CalorimeterParameters* ecalEndcapParameters ) ;
+    
+    /** Set the HcalBarrelParameters.
+     */
+    public void setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) ;
+
+    /** Set the HcalEndcapParameters.
+     */
+    public void setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) ;
+    
+
+    /** Set the point properties object.
+     */
+    public void  setPointProperties( GearPointProperties* pointProperties)   ;
+
+
+    /** Set the distance properties object.
+     */
+    public void  setDistanceProperties( GearDistanceProperties* distanceProperties )   ;
+
+
+}

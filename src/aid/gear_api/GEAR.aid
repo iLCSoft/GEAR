@@ -1,0 +1,130 @@
+package hep.gear.api ;
+
+@ifdef cpp
+
+@cpp{
+ #include <map>
+ #include <vector>
+ #include <string>
+ #include <exception> 
+
+}
+
+@endif
+
+
+
+@ifdef cpp
+@cpp{
+
+ typedef std::pair<double,double> Point2D ;
+ typedef std::vector<int> IntVec ;
+ typedef std::vector<double> DoubleVec ;
+ typedef std::vector<std::string> StringVec ;
+ 
+
+
+  /**Base exception class for GEAR - all other exceptions extend this.
+   * @author gaede
+   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   */
+
+  class Exception : public std::exception {
+
+    
+  protected:
+    std::string message ;
+    
+    Exception(){  /*no_op*/ ; } 
+    
+  public: 
+    virtual ~Exception() throw() { /*no_op*/; } 
+    
+    Exception( const std::string& text ){
+      message = "lcio::Exception: " + text ;
+    }
+
+    virtual const char* what() const  throw() { return  message.c_str() ; } 
+
+  };
+
+
+  /**ParseException used for parse errors, e.g. when reading the xml file.
+   * @author gaede
+   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   */
+  class ParseException : public Exception{
+    
+  protected:
+    ParseException() {  /*no_op*/ ; } 
+  public: 
+    virtual ~ParseException() throw() { /*no_op*/; } 
+
+    ParseException( std::string text ){
+      message = "gear::ParseException: " + text ;
+    }
+  }; 
+
+  /**NotImplementedException used for features that are not implemented.
+   * @author gaede
+   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   */
+  class NotImplementedException : public Exception{
+
+  protected:
+    NotImplementedException() {  /*no_op*/ ; } 
+
+  public: 
+    NotImplementedException( std::string text ){
+      message = "gear::NotImplementedException: " + text ;
+    }
+    virtual ~NotImplementedException() throw() { /*no_op*/; } 
+
+  }; 
+
+  /** UnknownParameterException 
+   *  call Processor::end().
+   * @author gaede
+   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   */
+   class UnknownParameterException : public Exception{
+
+  protected:
+    UnknownParameterException() {  /*no_op*/ ; } 
+
+  public: 
+    UnknownParameterException( std::string text ){
+      message = "gear::UnknownParameterException: " + text ;
+    }
+    virtual ~UnknownParameterException() throw() { /*no_op*/; } 
+
+  }; 
+}
+
+@endif
+
+/** Global constants used in GEAR
+ */
+public interface GEAR{
+
+@ifdef cpp
+
+@cpp{
+
+  public:
+   static const char*  GEARPARAMETERS  ;
+   static const char*  TPCPARAMETERS  ;
+   static const char*  CALORIMETERPARAMETERS  ;
+
+
+}
+
+@else
+  public static const String GEARPARAMETERS = "GearParameters" ;
+  public static const String TPCPARAMETERS = "TPCParameters" ;
+  public static const String CALORIMETERPARAMETERS = "CalorimeterParameters" ;
+
+@endif
+
+
+}
