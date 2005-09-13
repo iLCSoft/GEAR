@@ -5,7 +5,7 @@
 \image html "../gear_banner.png"
 
 
-<h2>Overview</h2>
+<h3>Overview</h3>
 
 Gear is a geometry description toolkit for ILC reconstruction software. It is easy to use and 
 lightweight. Gear defines an abstract interface for the description of an ILC detector as needed for
@@ -24,7 +24,7 @@ implementation for the abstract interface to generic material properties in spac
 material's  density at a given point or the integrated B-field along a (straight) path 
 between two points. 
  
-<h2>Code Structure</h2>
+<h3>Code Structure</h3>
 At the core of the geometry description in gear is the class gear::GearMgr. An instance of that class 
 provides the user with available implementations of the various sub-interfaces, e.g. an instance of 
 gear::TPCParameters. All subdetector interfaces inherit from gear::GearParameters - this allows to store 
@@ -40,7 +40,7 @@ Gear is written in C++. However the abstract interface classes are written using
 <a href="http://www.freehep.org/">AID tool.</a> which allows to also create Java interface files
 from the same source.
 
-<h2>Installation</h2>
+<h3>Installation</h3>
 A tar-ball of released versions of Gear can be downloaded at 
 <a href="http://www-zeuthen.desy.de/lc-cgi-bin/cvsweb.cgi/gear/?cvsroot=gear">
 http://www-zeuthen.desy.de/lc-cgi-bin/cvsweb.cgi/gear/?cvsroot=gear</a> .
@@ -60,14 +60,14 @@ To build issue the following commands:<br>
 </code>
  
 
-<h2>Example code</h2>
+<h3>Example code</h3>
 The file  <b>./src/cpp/test/testgear.cc</b> serves as a simple test and example program.
 Also the <em>print</em>-methods in <b>./src/cpp/gearimpl/src/Util.cc</b> are a good starting point  
 for learning  how to access the information in Gear.
 <p>
 Here is an <a href="../../gear_ldc.xml">example XML-file</a> with a detector description in gear.
 
-<h2>Release Notes</h2>
+<h3>Release Notes</h3>
 Gear is under development and there are frequent releases. Please check the
 <a href="../release.notes">./release.notes</a>
  
