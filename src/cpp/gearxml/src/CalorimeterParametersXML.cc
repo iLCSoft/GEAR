@@ -16,10 +16,18 @@
 namespace gear {
 
 
-  TiXmlElement CalorimeterParametersXML::toXML( GearParameters* parameters ) const {
+  TiXmlElement CalorimeterParametersXML::toXML( const GearParameters & parameters ) const {
 
-    
+    TiXmlElement detector("detector" ) ;
+
+
     // FIXME: needs to be implemented .....
+
+
+
+    GearParametersXML::getXMLForParameters( &detector , &parameters ) ;
+
+    return detector ;
   }
   
   
