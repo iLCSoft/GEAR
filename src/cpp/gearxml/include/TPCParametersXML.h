@@ -16,7 +16,7 @@ namespace gear {
   /** XML handler for TPCParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: TPCParametersXML.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: TPCParametersXML.h,v 1.2 2005-11-25 16:08:15 gaede Exp $
    */
   class TPCParametersXML : public XMLHandler {
     
@@ -24,7 +24,7 @@ namespace gear {
     
     /** Creates an XML node for the given parameters 
      */
-    virtual TiXmlElement toXML( GearParameters* parameters ) const ;
+    virtual TiXmlElement toXML( const GearParameters & parameters ) const ;
     
     
     /** Creates the appropriate GearParameters subclass from the given

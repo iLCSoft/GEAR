@@ -3,7 +3,7 @@
 # GNUmakefile to build the gear library
 #
 # @author F. Gaede, DESY
-# @version $Id: GNUmakefile,v 1.3 2005-09-13 16:10:20 gaede Exp $
+# @version $Id: GNUmakefile,v 1.4 2005-11-25 16:08:15 gaede Exp $
 ###################################################################
 
 
@@ -56,7 +56,7 @@ lib: $(includedirs)
 #	ln -s $(GEARBASE)/src/cpp/$$i/include  $(GEARBASE)/src/cpp/include/$$i ; \
 
 
-bin: lib
+bin: lib $(GEARBASE)/lib/libgear.a  $(GEARBASE)/lib/libgearxml.a
 	mkdir -p $(GEARBASE)/bin ; \
 	$(MAKE) -C ./test bin
 

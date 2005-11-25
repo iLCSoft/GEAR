@@ -16,11 +16,18 @@
 namespace gear {
 
 
-  TiXmlElement TPCParametersXML::toXML( GearParameters* parameters ) const {
+  TiXmlElement TPCParametersXML::toXML( const GearParameters & parameters ) const {
 
-    
+    TiXmlElement detector("detector" ) ;
+
+
     // FIXME: needs to be implemented .....
-  }
+
+
+    GearParametersXML::getXMLForParameters( &detector , &parameters ) ;
+
+    return detector ;
+ }
   
   
   GearParameters* TPCParametersXML::fromXML( const TiXmlElement* xmlElement, GearMgr* gearMgr) const {
