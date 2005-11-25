@@ -62,13 +62,15 @@ namespace gear {
 
 
 
-  TiXmlElement GearParametersXML::toXML( GearParameters* parameters ) const {
+  TiXmlElement GearParametersXML::toXML( const GearParameters & parameters ) const {
 
     
-    // FIXMe: needs to be implemented .....
+    TiXmlElement det("detector") ;
 
-
-
+    getXMLForParameters( &det , &parameters ) ;
+    
+    return det ;
+    
   }
     
     
@@ -93,8 +95,34 @@ namespace gear {
     return gearParams ;
   }
 
+  void GearParametersXML::getXMLForParameters( TiXmlElement* xmlElement, 
+					       const GearParameters* gearParams ){
 
-  void GearParametersXML::setParametersFromXML( const TiXmlElement* xmlElement, GearParametersImpl* gearParams ){
+    typedef const std::vector< std::string > KeyVec ;
+
+    if( xmlElement == 0 || gearParams == 0 ){
+      return ;
+    }
+    
+    KeyVec& keys = gearParams->getIntKeys() ;
+    for(unsigned int i=0 ; i < keys.size() ; ++i ){
+
+      TiXmlElement param("parameter") ;
+
+      param.SetAttribute( "name", keys[i] ) ;
+      param.SetAttribute( "value", gearParams->getIntVal( keys[i] )  ) ;
+ 
+      xmlElement->InsertEndChild( param ) ;
+//       std::stringstream str ;
+//       str << 
+
+    }
+
+  }
+
+  void GearParametersXML::setParametersFromXML( const TiXmlElement* xmlElement, 
+						GearParametersImpl* gearParams ){
+
 
     const TiXmlNode* par = 0 ;
     while( ( par = xmlElement->IterateChildren( "parameter", par ) )  != 0  ){
