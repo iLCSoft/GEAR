@@ -17,7 +17,7 @@ namespace gear {
  *  (through the pad center).
  * 
  * @author F. Gaede, DESY
- * @version $Id: FixedPadSizeDiskLayout.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id: FixedPadSizeDiskLayout.h,v 1.2 2005-11-28 14:42:44 gaede Exp $
  */
   class FixedPadSizeDiskLayout : public PadRowLayout2D {
     
@@ -37,6 +37,7 @@ namespace gear {
     double _rowHeight ;
     double _padWidth ;
     double _padHeight ;
+    double _padGap ;
     int _nRow ;
     int _nPad ;
     std::vector<Row> _rows ;
@@ -49,7 +50,7 @@ namespace gear {
     /** Construct the FixedPadSizeDiskLayout from the given parameters rMin, rMax,
      *  padHeight and PadWidth where the maximum number of pads are fitted to the plane.
      *  @param nRow :  limits the number of rows - if given 
-     *  @param padGap : additional gap between pads in r-phi 
+     *  @param padGap : additional gap between pads in r-phi in mm 
      */
     
     FixedPadSizeDiskLayout( double rMin, double rMax, double padHeight, double PadWidth, 
@@ -59,6 +60,15 @@ namespace gear {
     /// Destructor.
     virtual ~FixedPadSizeDiskLayout() { /* nop */; }
     
+
+    /** The gap width in mm that was given in the C'tor. */
+    virtual double getPadGap() const { return _padGap ; } 
+
+    /** The fixed width of the pads in mm. 
+     */
+    virtual double getFixedPadWidth() const { return _padWidth ; }
+    
+
     /** The type of the row layout: PadRowLayout2D::POLAR.
      */
     virtual int getPadLayoutType() const { return PadRowLayout2D::POLAR ; } 
