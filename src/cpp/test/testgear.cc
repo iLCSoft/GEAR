@@ -68,6 +68,11 @@ int main(int argc, char**argv){
 
   testFixedPadSizeDiskLayout( pl ) ;
 
+
+  // --- test writing of XML file ---------
+
+  GearXML::createXMLFile( gearMgr, "testgear_out.xml" ) ;
+
 }
 
 

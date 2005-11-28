@@ -14,7 +14,8 @@ namespace gear {
     _rMin( rMin ),
     _rMax( rMax ),
     _padWidth( padWidth ) ,
-    _padHeight(padHeight)
+    _padHeight(padHeight)  ,
+    _padGap( padGap ) 
   {
     
     _extent.resize(4) ;
@@ -80,6 +81,7 @@ namespace gear {
     int rowNum =  getRowNumber( padIndex ) ;
     try {  
 
+      // need to return padWidth in radians !!
       return _padWidth / _rows.at( rowNum ).RCenter ; 
 
     } 
