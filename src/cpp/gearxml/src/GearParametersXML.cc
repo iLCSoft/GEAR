@@ -104,20 +104,110 @@ namespace gear {
       return ;
     }
     
-    KeyVec& keys = gearParams->getIntKeys() ;
-    for(unsigned int i=0 ; i < keys.size() ; ++i ){
-
+    KeyVec& intKeys = gearParams->getIntKeys() ;
+    for(unsigned int i=0 ; i < intKeys.size() ; ++i ){
+      
       TiXmlElement param("parameter") ;
-
-      param.SetAttribute( "name", keys[i] ) ;
-      param.SetAttribute( "value", gearParams->getIntVal( keys[i] )  ) ;
- 
+      
+      param.SetAttribute( "name", intKeys[i] ) ;
+      param.SetAttribute( "type", "int" ) ;
+      param.SetAttribute( "value", gearParams->getIntVal( intKeys[i] )  ) ;
+      
       xmlElement->InsertEndChild( param ) ;
-//       std::stringstream str ;
-//       str << 
 
     }
 
+    KeyVec& doubleKeys = gearParams->getDoubleKeys() ;
+
+    for(unsigned int i=0 ; i < doubleKeys.size() ; ++i ){
+      
+      TiXmlElement param("parameter") ;
+      
+      param.SetAttribute( "name", doubleKeys[i] ) ;
+      param.SetAttribute( "type", "double" ) ;
+      param.SetDoubleAttribute( "value", gearParams->getDoubleVal( doubleKeys[i] )  ) ;
+      
+      xmlElement->InsertEndChild( param ) ;
+
+    }
+
+    KeyVec& stringKeys = gearParams->getStringKeys() ;
+
+    for(unsigned int i=0 ; i < stringKeys.size() ; ++i ){
+      
+      TiXmlElement param("parameter") ;
+      
+      param.SetAttribute( "name", stringKeys[i] ) ;
+      param.SetAttribute( "type", "string" ) ;
+      param.SetAttribute( "value", gearParams->getStringVal( stringKeys[i] )  ) ;
+      
+      xmlElement->InsertEndChild( param ) ;
+
+    }
+
+    KeyVec& intVecKeys = gearParams->getIntVecKeys() ;
+    for(unsigned int i=0 ; i < intVecKeys.size() ; ++i ){
+      
+      TiXmlElement param("parameter") ;
+      
+      param.SetAttribute( "name", intVecKeys[i] ) ;
+      param.SetAttribute( "type", "IntVec" ) ;
+
+      IntVec vec = gearParams->getIntVals( intVecKeys[i]  ) ;
+      std::stringstream str ;
+      for(unsigned int j=0 ; j < vec.size() ; ++j ){
+	if( j!=0 ) 
+	  str << " " ; 
+	str << vec[j] ;
+      }      
+      param.SetAttribute( "values", str.str() ) ;
+      
+      xmlElement->InsertEndChild( param ) ;
+      
+    }
+    
+    KeyVec& doubleVecKeys = gearParams->getDoubleVecKeys() ;
+    for(unsigned int i=0 ; i < doubleVecKeys.size() ; ++i ){
+      
+      TiXmlElement param("parameter") ;
+      
+      param.SetAttribute( "name", doubleVecKeys[i] ) ;
+      param.SetAttribute( "type", "DoubleVec" ) ;
+
+      DoubleVec vec = gearParams->getDoubleVals( doubleVecKeys[i]  ) ;
+      std::stringstream str ;
+      for(unsigned int j=0 ; j < vec.size() ; ++j ){
+	if( j!=0 ) 
+	  str << " " ; 
+	str << vec[j] ;
+      }      
+      param.SetAttribute( "values", str.str() ) ;
+      
+      xmlElement->InsertEndChild( param ) ;
+      
+    }
+
+    KeyVec& stringVecKeys = gearParams->getStringVecKeys() ;
+    for(unsigned int i=0 ; i < stringVecKeys.size() ; ++i ){
+      
+      TiXmlElement param("parameter") ;
+      
+      param.SetAttribute( "name", stringVecKeys[i] ) ;
+      param.SetAttribute( "type", "StringVec" ) ;
+
+      StringVec vec = gearParams->getStringVals( stringVecKeys[i]  ) ;
+      std::stringstream str ;
+      for(unsigned int j=0 ; j < vec.size() ; ++j ){
+	if( j!=0 ) 
+	  str << " " ; 
+	str << vec[j] ;
+      }      
+      param.SetAttribute( "values", str.str() ) ;
+      
+      xmlElement->InsertEndChild( param ) ;
+      
+    }
+    
   }
 
   void GearParametersXML::setParametersFromXML( const TiXmlElement* xmlElement, 
