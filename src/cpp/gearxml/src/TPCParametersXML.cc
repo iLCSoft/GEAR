@@ -12,21 +12,89 @@
 #include <algorithm>
 #include <sstream>
 
-
 namespace gear {
 
 
   TiXmlElement TPCParametersXML::toXML( const GearParameters & parameters ) const {
 
-    TiXmlElement detector("detector" ) ;
+    // Check whether parameters is valid TPCParameters
+    
+    const TPCParameters* param=dynamic_cast<const TPCParameters*>(&parameters);
+
+    if(param==NULL) {
+            
+      throw ParseException ("XML TPCParametersXML::toXML given parameter not of correct type. " 
+			    "Needs to be a gear::TPCParameter");
+    }
+    
+    // Set up TPC Detector as Element
+    TiXmlElement det("detector");
+    
+    
+    TiXmlElement driftVelocity("driftVelocity");
+    driftVelocity.SetDoubleAttribute("value", param->getDriftVelocity());
+    
+    
+    TiXmlElement maxDriftLength("maxDriftLength");
+    maxDriftLength.SetDoubleAttribute("value", param->getMaxDriftLength());
+    
+    
+    TiXmlElement readoutFrequency("readoutFrequency");
+    readoutFrequency.SetDoubleAttribute("value", param->getReadoutFrequency());
+
+    // Set up PadRowLayout2D
+    const PadRowLayout2D* padLayout=&(param->getPadLayout());
+  
+    // Check if type is FixedPadSizeDiskLayout
+
+    const FixedPadSizeDiskLayout* fixedPadLayout=dynamic_cast<const FixedPadSizeDiskLayout*>(padLayout);
+    
+    if (fixedPadLayout==NULL) {
+    
+      throw ParseException("Only FixedPadSizeDiskLayouts are supported so far.");
+    }
+    
+
+    // <------- Write PadLayout
+    // For PadWith get the radius of last row and multiply with PadWith (returns radian) 
+        
+    // append data to PadRowLayout2D
+    TiXmlElement padRowLayout2DXML("PadRowLayout2D");    
+
+    padRowLayout2DXML.SetAttribute("type","FixedPadSizeDiskLayout"); 
+
+    padRowLayout2DXML.SetDoubleAttribute("rMin",(fixedPadLayout->getPlaneExtent())[0]);
+
+    padRowLayout2DXML.SetDoubleAttribute("rMax",(fixedPadLayout->getPlaneExtent())[1]);
+
+    padRowLayout2DXML.SetDoubleAttribute("padHeight",fixedPadLayout->getPadHeight(1));
+
+    padRowLayout2DXML.SetDoubleAttribute("padWidth", fixedPadLayout->getFixedPadWidth());
+
+    padRowLayout2DXML.SetAttribute("maxRow",fixedPadLayout->getNRows());
+
+    padRowLayout2DXML.SetDoubleAttribute("padGap",fixedPadLayout->getPadGap());
+
+    // End Pad Layput -------->
+
+    
+    // Assemble all items to detector
+    det.InsertEndChild(driftVelocity);
+    
+    det.InsertEndChild(maxDriftLength);
+
+    det.InsertEndChild(readoutFrequency);
+
+    det.InsertEndChild(padRowLayout2DXML);
 
 
-    // FIXME: needs to be implemented .....
+    // Write all other parameters to detecotor as attributes
+    GearParametersXML::getXMLForParameters( &det ,  param ) ;
 
-
-    GearParametersXML::getXMLForParameters( &detector , &parameters ) ;
-
-    return detector ;
+    
+    // return XMLElement
+    return det;
+     
  }
   
   
