@@ -160,7 +160,7 @@ namespace gear {
 	  str << " " ; 
 	str << vec[j] ;
       }      
-      param.SetAttribute( "values", str.str() ) ;
+      param.SetAttribute( "value", str.str() ) ;
       
       xmlElement->InsertEndChild( param ) ;
       
@@ -181,7 +181,7 @@ namespace gear {
 	  str << " " ; 
 	str << vec[j] ;
       }      
-      param.SetAttribute( "values", str.str() ) ;
+      param.SetAttribute( "value", str.str() ) ;
       
       xmlElement->InsertEndChild( param ) ;
       
@@ -202,7 +202,7 @@ namespace gear {
 	  str << " " ; 
 	str << vec[j] ;
       }      
-      param.SetAttribute( "values", str.str() ) ;
+      param.SetAttribute( "value", str.str() ) ;
       
       xmlElement->InsertEndChild( param ) ;
       
