@@ -16,13 +16,14 @@ namespace gear {
   /** XML handler for CalorimeterParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: CalorimeterParametersXML.h,v 1.2 2005-11-25 16:08:15 gaede Exp $
+   * @version $Id: CalorimeterParametersXML.h,v 1.3 2005-11-29 12:04:09 gaede Exp $
    */
   class CalorimeterParametersXML : public XMLHandler {
     
   public: 
     
     /** Creates an XML node for the given parameters 
+     *  @author R.Lippe, DESY
      */
     virtual TiXmlElement toXML( const GearParameters & parameters ) const ;
     
