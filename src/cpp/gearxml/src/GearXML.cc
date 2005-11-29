@@ -185,7 +185,7 @@ namespace gear{
       throw ParseException( str.str() ) ;
     }
     
-    TiXmlHandle docHandle( doc );
+//     TiXmlHandle docHandle( doc );
     
     TiXmlElement* root = doc->RootElement();
 
