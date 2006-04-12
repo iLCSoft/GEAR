@@ -142,7 +142,7 @@ namespace gear{
     s << std::endl 
       << "   -----------   TPCParameters  ------- "  << std::endl         ;
     
-    s << (GearParameters&) p  ;
+    s << dynamic_cast<const GearParameters&>( p )  ;
     
     s << std::endl  << "  maxDriftLength :      "  <<  p.getMaxDriftLength() ;
     s << std::endl  << "  driftVelocity :       "  <<  p.getDriftVelocity() ;
@@ -179,8 +179,7 @@ namespace gear{
   std::ostream& operator<< (  std::ostream& s,  const CalorimeterParameters& p ) {
 
 
-    s << (GearParameters&) p  ;
-    
+    s << dynamic_cast<const GearParameters&>( p )  ;
 
     if( p.getLayoutType() == CalorimeterParameters::BARREL ) {
 
