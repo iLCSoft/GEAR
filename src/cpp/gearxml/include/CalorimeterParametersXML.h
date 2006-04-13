@@ -16,7 +16,7 @@ namespace gear {
   /** XML handler for CalorimeterParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: CalorimeterParametersXML.h,v 1.3 2005-11-29 12:04:09 gaede Exp $
+   * @version $Id: CalorimeterParametersXML.h,v 1.4 2006-04-13 10:16:20 lippe Exp $
    */
   class CalorimeterParametersXML : public XMLHandler {
     
@@ -38,9 +38,14 @@ namespace gear {
     
     //  std::string getAttribute(const  TiXmlNode* node , const std::string& name ) const ;    
 
-    
-    
-  }; // class
+  private:
+
+    /** Private function that compares two double values and returns true if they are almost equal
+     *  precision to be equal is relativly given in EPSILON
+     */
+    bool isEqual( const double valueOne, const double valueTwo ) const ;
+
+    }; // class
   
 } // namespace gear
 

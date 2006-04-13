@@ -14,6 +14,8 @@
 #include <algorithm>
 #include <sstream>
 
+#define _EPSILON 0.0001
+
 
 namespace gear {
 
@@ -21,8 +23,7 @@ namespace gear {
   TiXmlElement CalorimeterParametersXML::toXML( const GearParameters & parameters ) const {
 
     //check wheter parameter is valid CalorimeterParameter
-    const CalorimeterParameters* param = 
-      dynamic_cast<const CalorimeterParameters*> ( &parameters );
+    const CalorimeterParameters* param = dynamic_cast<const CalorimeterParameters*> ( &parameters );
 
     if( param == 0 ) {
 
@@ -92,10 +93,10 @@ namespace gear {
       // check if anything has changed
 
       bool layerChanged = 	
-	( curThickness != layerLayout.getThickness(i) )         ||
-	( curAbsorber  != layerLayout.getAbsorberThickness(i) ) ||
-	( curCell0     != layerLayout.getCellSize0(i) )         ||
-	( curCell1     != layerLayout.getCellSize1(i) )  ;
+	( ! isEqual( curThickness, layerLayout.getThickness(i) )         ) ||
+	( ! isEqual( curAbsorber,  layerLayout.getAbsorberThickness(i) ) ) ||
+	( ! isEqual( curCell0,     layerLayout.getCellSize0(i) )         ) ||
+	( ! isEqual( curCell1,     layerLayout.getCellSize1(i) )         ) ;
       
       if( layerChanged && repN > 0 ) {
 
@@ -277,5 +278,20 @@ namespace gear {
     return caloParams ;
   }
 
+
+  bool CalorimeterParametersXML::isEqual( const double valueOne, const double valueTwo ) const {
+
+     // save calculating time if equal
+    if ( valueOne == valueTwo ) return true ;
+    
+    // get avg value and calculate maximum allowed delta
+    double maxDelta = std::abs( ( valueOne + valueTwo ) / 2 * _EPSILON ) ;
+    
+    // check if values differ by less than maximal delta
+    bool differsLess = ( std::abs( valueOne - valueTwo ) < maxDelta ) ;
+
+    // return 
+    return differsLess ;
+  }
 
 } // namespace
