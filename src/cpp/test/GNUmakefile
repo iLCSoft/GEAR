@@ -3,7 +3,7 @@
 # GNUmakefile to build the GEAR library examples
 #
 # @author F. Gaede, DESY
-# @version $Id: GNUmakefile,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+# @version $Id: GNUmakefile,v 1.2 2006-04-13 10:21:01 lippe Exp $
 ######################################################
 
 
@@ -37,4 +37,7 @@ clean:
 
 $(BINDIR)/testgear: testgear.cc $(INSTALL)/libgear.a
 	$(CXX) -o $(BINDIR)/testgear $(CPPFLAGS) testgear.cc  $(LIBS) 
+
+$(BINDIR)/mergeXML: mergeXML.cc $(INSTALL)/libgear.a
+	$(CXX) -o $(BINDIR)/mergeXML $(CPPFLAGS) mergeXML.cc  $(LIBS)
 
