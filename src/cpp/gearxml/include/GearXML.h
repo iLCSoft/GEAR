@@ -13,7 +13,7 @@ namespace gear {
   /** Implementation of GEAR using XML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: GearXML.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GearXML.h,v 1.2 2005-11-25 16:08:15 gaede Exp $
    */
   class GearXML {
     
@@ -31,10 +31,15 @@ namespace gear {
     virtual GearMgr* createGearMgr() ;
     
   
+    /** Write an XML file to disk from the given GearMgr object.
+     */
+     static void createXMLFile( GearMgr* mgr, const std::string& fileName ) ;
+
+
   protected:
+
     std::string _fileName ;
     GearMgrImpl* _gearMgr ;
-
 
   }; // class
   

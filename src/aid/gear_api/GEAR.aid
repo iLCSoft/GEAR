@@ -17,16 +17,30 @@ package hep.gear.api ;
 @ifdef cpp
 @cpp{
 
- typedef std::pair<double,double> Point2D ;
+ #include "gearimpl/Vectors.h"
+
+
+namespace gear {
+
+//  typedef std::pair<double,double> Point2D ;
+
+ typedef gear::Vector2D Point2D ;
+
+ typedef gear::Vector3D Point3D ;
+
  typedef std::vector<int> IntVec ;
  typedef std::vector<double> DoubleVec ;
  typedef std::vector<std::string> StringVec ;
  
 
+  /** 64 bit integer,e.g.to be used for cellids **/
+  typedef long long long64 ;
+ 
+
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -51,7 +65,7 @@ package hep.gear.api ;
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -67,7 +81,7 @@ package hep.gear.api ;
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -85,7 +99,7 @@ package hep.gear.api ;
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 
@@ -100,6 +114,7 @@ package hep.gear.api ;
 
   }; 
 }
+}// namespace
 
 @endif
 

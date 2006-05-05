@@ -7,7 +7,7 @@ package hep.gear.api ;
  *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
  *
  * @author F. Gaede, DESY
- * @version $Id: GearDistanceProperties.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id: GearDistanceProperties.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
  */
 public interface GearDistanceProperties {
     
@@ -29,12 +29,12 @@ public interface GearDistanceProperties {
      */
     public double getNIntlen( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
     
-    /** The integrated magnetic field along  the distance between [p0,p1] in [FIXME: unit? , direction ?].  
+    /** The integrated magnetic field along  the distance between [p0,p1] in Tesla*mm.  
      */
-    public double getBdL( const Point3D& pos) const throws NotImplementedException ;
+    public double getBdL( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
     
-    /** The integrated electric field along  the distance between [p0,p1] in [FIXME: unit? , direction ?].  
+    /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
      */
-    public double getEdL( const Point3D& pos) const throws NotImplementedException ;
+    public double getEdL( const Point3D& p0, const Point3D& p1) const throws NotImplementedException ;
     
 }

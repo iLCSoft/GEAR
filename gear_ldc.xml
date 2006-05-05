@@ -72,7 +72,7 @@
 
 
 
-     <!--  additional detectors can be added as geartype="GearParameters" detector elements, e.g.
+     <!--  additional detectors can be added as geartype="GearParameters" detector elements, e.g. -->
  
      <detector id="0" name="SomeDetectorTest" geartype="GearParameters" type="UNKNOWN" insideTrackingVolume="false">
 
@@ -87,7 +87,7 @@
         
      </detector>
 
-     -->
+     
 
   </detectors> 
 

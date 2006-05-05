@@ -18,7 +18,7 @@ namespace gear {
   /** XML handler for GearParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: GearParametersXML.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GearParametersXML.h,v 1.2 2005-11-25 16:08:15 gaede Exp $
    */
   class GearParametersXML : public XMLHandler {
     
@@ -26,7 +26,7 @@ namespace gear {
     
     /** Creates an XML node for the given parameters 
      */
-    virtual TiXmlElement toXML( GearParameters* parameters ) const ;
+    virtual TiXmlElement toXML( const GearParameters& parameters ) const ;
     
     
     /** Creates the appropriate GearParameters subclass from the given
@@ -38,6 +38,12 @@ namespace gear {
     /** Static helper function that can be used by other subclass handlers to read parameters 
      */
     static void setParametersFromXML( const TiXmlElement* xmlElement, GearParametersImpl* gearParams );
+
+
+    /** Static helper function that can be used by other subclass handlers to create XML for parameters 
+     */
+    static void getXMLForParameters( TiXmlElement* xmlElement, const GearParameters* gearParams );
+
 
   protected:
     

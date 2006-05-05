@@ -142,7 +142,7 @@ namespace gear{
     s << std::endl 
       << "   -----------   TPCParameters  ------- "  << std::endl         ;
     
-    s << (GearParameters&) p  ;
+    s << dynamic_cast<const GearParameters&>( p )  ;
     
     s << std::endl  << "  maxDriftLength :      "  <<  p.getMaxDriftLength() ;
     s << std::endl  << "  driftVelocity :       "  <<  p.getDriftVelocity() ;
@@ -156,7 +156,7 @@ namespace gear{
     double rMax = ext[1] ;
     
     // getPadWidth() returns phi - need to multiply by r 
-    double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0).first ; 
+    double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0)[0]; 
     
     int nRow = pl.getNRows() ;
     
@@ -179,8 +179,7 @@ namespace gear{
   std::ostream& operator<< (  std::ostream& s,  const CalorimeterParameters& p ) {
 
 
-    s << (GearParameters&) p  ;
-    
+    s << dynamic_cast<const GearParameters&>( p )  ;
 
     if( p.getLayoutType() == CalorimeterParameters::BARREL ) {
 

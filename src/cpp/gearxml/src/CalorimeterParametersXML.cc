@@ -5,21 +5,147 @@
 
 #include "gearxml/tinyxml.h"
 #include "gearimpl/CalorimeterParametersImpl.h"
-#include "gearimpl/FixedPadSizeDiskLayout.h"
+// #include "gear/LayerLayout.h"
 #include "gear/GearMgr.h"
+
+#include "gearimpl/FixedPadSizeDiskLayout.h"
 
 #include <vector>
 #include <algorithm>
 #include <sstream>
 
+#define _EPSILON 0.0001
+
 
 namespace gear {
 
 
-  TiXmlElement CalorimeterParametersXML::toXML( GearParameters* parameters ) const {
+  TiXmlElement CalorimeterParametersXML::toXML( const GearParameters & parameters ) const {
 
+    //check wheter parameter is valid CalorimeterParameter
+    const CalorimeterParameters* param = dynamic_cast<const CalorimeterParameters*> ( &parameters );
+
+    if( param == 0 ) {
+
+      throw Exception( "CaloriemterParametersXML::toXML given parmeters not of correct type. "
+		       "needs to be gear::CaloriemeterParameters." );
+    }
+
+    //Set up Caloriemter-Detector as Element
+    TiXmlElement det("detector");
+
+    //Dimension
+    const std::vector<double> vecDim=param->getExtent();
+    TiXmlElement dimensions("dimensions");
+
+    //Layout
+    TiXmlElement layout("layout");
+
+    switch( param->getLayoutType() ) {
+      
+    case CalorimeterParameters::BARREL : 
+      
+      layout.SetAttribute("type","Barrel");
+      dimensions.SetDoubleAttribute("inner_r",vecDim[0]);
+      dimensions.SetDoubleAttribute("outer_z",vecDim[3]);
+      break;
+      
+    case CalorimeterParameters::ENDCAP : 
+
+      layout.SetAttribute("type","Endcap");
+      dimensions.SetDoubleAttribute("inner_r",vecDim[0]);
+      dimensions.SetDoubleAttribute("outer_r",vecDim[1]);
+      dimensions.SetDoubleAttribute("inner_z",vecDim[2]);
+      break;
+      
+    default: 
+
+      layout.SetAttribute("type","Unknown");
+      dimensions.SetDoubleAttribute("inner_r",vecDim[0]);
+      dimensions.SetDoubleAttribute("outer_r",vecDim[1]);
+      dimensions.SetDoubleAttribute("inner_z",vecDim[2]);
+      dimensions.SetDoubleAttribute("outer_z",vecDim[3]);
+      break;
+    }
+
+    layout.SetAttribute("symmetry",param->getSymmetryOrder());
+    layout.SetDoubleAttribute("phi0",param->getPhi0());
+
+
+    //Assemble first parts
+    det.InsertEndChild(layout);
+    det.InsertEndChild(dimensions);
+
+    //LayerLayout
+    const LayerLayout& layerLayout = param->getLayerLayout();
     
-    // FIXME: needs to be implemented .....
+    //<------Go through layers to find out how to repeat
+    // prepare currentValues for each repeater
+    double curThickness = 0.0 ;
+    double curAbsorber = 0.0 ;
+    double curCell0 = 0.0 ;
+    double curCell1 = 0.0 ;
+
+    int repN = 0 ;
+    
+    for(int i=0; i<layerLayout.getNLayers();i++) {
+
+      // check if anything has changed
+
+      bool layerChanged = 	
+	( ! isEqual( curThickness, layerLayout.getThickness(i) )         ) ||
+	( ! isEqual( curAbsorber,  layerLayout.getAbsorberThickness(i) ) ) ||
+	( ! isEqual( curCell0,     layerLayout.getCellSize0(i) )         ) ||
+	( ! isEqual( curCell1,     layerLayout.getCellSize1(i) )         ) ;
+      
+      if( layerChanged && repN > 0 ) {
+
+	//Write parameters
+
+	TiXmlElement layer("layer");
+
+	layer.SetAttribute("repeat",repN);
+
+	layer.SetDoubleAttribute("thickness",curThickness);
+	layer.SetDoubleAttribute("absorberThickness",curAbsorber);
+	layer.SetDoubleAttribute("cellSize0",curCell0);
+	layer.SetDoubleAttribute("cellSize1",curCell1);
+
+	det.InsertEndChild(layer);
+
+	repN = 1;
+
+      } else {
+
+	repN += 1;
+      }
+
+      // take on new values
+      curThickness = layerLayout.getThickness(i);
+      curAbsorber = layerLayout.getAbsorberThickness(i);
+      curCell0 = layerLayout.getCellSize0(i);
+      curCell1 = layerLayout.getCellSize1(i);	  
+    }
+
+
+
+    //Assemble last Repeater
+    if ( repN > 0 ) {
+
+      //Write parameters
+      TiXmlElement layer("layer");
+      layer.SetAttribute("repeat",repN);
+      layer.SetDoubleAttribute("thickness",curThickness);
+      layer.SetDoubleAttribute("absorberThickness",curAbsorber);
+      layer.SetDoubleAttribute("cellSize0",curCell0);
+      layer.SetDoubleAttribute("cellSize1",curCell1);
+      det.InsertEndChild(layer);
+    }
+    //Assemble Detector
+    
+    GearParametersXML::getXMLForParameters( &det , &parameters ) ;
+
+    return det ;
   }
   
   
@@ -152,5 +278,20 @@ namespace gear {
     return caloParams ;
   }
 
+
+  bool CalorimeterParametersXML::isEqual( const double valueOne, const double valueTwo ) const {
+
+     // save calculating time if equal
+    if ( valueOne == valueTwo ) return true ;
+    
+    // get avg value and calculate maximum allowed delta
+    double maxDelta = std::abs( ( valueOne + valueTwo ) / 2 * _EPSILON ) ;
+    
+    // check if values differ by less than maximal delta
+    bool differsLess = ( std::abs( valueOne - valueTwo ) < maxDelta ) ;
+
+    // return 
+    return differsLess ;
+  }
 
 } // namespace
