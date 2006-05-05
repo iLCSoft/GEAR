@@ -156,7 +156,7 @@ namespace gear{
     double rMax = ext[1] ;
     
     // getPadWidth() returns phi - need to multiply by r 
-    double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0).first ; 
+    double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0)[0]; 
     
     int nRow = pl.getNRows() ;
     

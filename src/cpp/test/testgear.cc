@@ -3,6 +3,7 @@
 #include "gearimpl/Util.h"
 #include "gearxml/GearXML.h"
 #include "gear/GearMgr.h"
+#include "gear/GEAR.h"
 
 #include <iostream>
 #include <assert.h>
@@ -122,19 +123,36 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
       if( (i==0 && j < 10 ) || ( i == nRow-1 && j > nPad-9 ) ) {
 	std::cout << "         pad: "  
 		  << " [" << iRow << "," << iPad << "] "
-		  << " - ( " << p.first << " , " << p.second  << ") "
+		  << " - ( " << p[0] << " , " << p[1]  << ") "
 		  << std::endl ;
       }
 
-      assert(  pl.getNearestPad(  p.first , p.second ) == pads[j]  ) ;
-      assert( pl.isInsidePad(  p.first , p.second , pads[j] ) ) ;
+      assert(  pl.getNearestPad(  p[0] , p[1] ) == pads[j]  ) ;
+      assert( pl.isInsidePad(  p[0] , p[1] , pads[j] ) ) ;
 
-//       if( !(  pl.isInsidePad(  p.first , p.second , pads[j] ) )) {
+//       if( !(  pl.isInsidePad(  p[0] , p[1] , pads[j] ) )) {
 // 	std::cout << " center is not in pad :( ! " << std::endl ;
 //       }
     }
   }
   assert( nPadTotal ==  pl.getNPads() ) ;
+
+
+
+  //---------------------------------
+  Point3D r ;
+  r[0] = 1. ;
+  r[1] = 2. ;
+  r[2] = 3. ;
+
+  Point3D r1( r ) ;
+  Point3D r2( r1[0] , r1[1] , r1[2] ) ;
+  Point3D r3 ;
+
+  std::cout << " test of Point3D  r : " << r[0] << ", " << r[1]  << ", " << r[2] << std::endl ; 
+  std::cout << " test of Point3D  r1 : " << r1[0] << ", " << r1[1]  << ", " << r1[2] << std::endl ; 
+  std::cout << " test of Point3D  r2: " << r2[0] << ", " << r2[1]  << ", " << r2[2] << std::endl ; 
+  std::cout << " test of Point3D  r3: " << r3[0] << ", " << r3[1]  << ", " << r3[2] << std::endl ; 
 
 }
   

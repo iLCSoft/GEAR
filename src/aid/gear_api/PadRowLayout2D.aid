@@ -7,7 +7,7 @@ package hep.gear.api ;
  *  in one 32-bit word.
  * 
  * @author F. Gaede, DESY
- * @version $Id: PadRowLayout2D.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id: PadRowLayout2D.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
  */
 public interface PadRowLayout2D {
     
@@ -72,7 +72,7 @@ public interface PadRowLayout2D {
     public const int[]& getPadsInRow( int rowNumber) const ;
 
     /** Extent of the sensitive plane - [xmin,xmax,ymin,ymax] CARTESIAN or 
-     *	[phimin,phimax,rmin,rmax] POLAR.
+     *	[rmin,rmax,phimin,phimax] POLAR.
      */
     public const double[]& getPlaneExtent() const ;
     

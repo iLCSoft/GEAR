@@ -101,7 +101,8 @@ namespace gear {
 
     double phi =  ( padNum + 0.5 ) * _rows[ rowNum ].PhiPad ; 
     
-    return std::make_pair( r , phi ) ;
+    return Point2D( r , phi ) ;
+//     return std::make_pair( r , phi ) ;
   }
 
   const std::vector<int>& FixedPadSizeDiskLayout::getPadsInRow(int rowNumber) const {
@@ -201,8 +202,11 @@ namespace gear {
 // 	      << (std::abs( phi - p.second ) <= phiPadHalf)
 // 	      << std::endl ;
 
-    return  ( std::abs( r - p.first ) <= 0.5 * _padHeight  && 
-	      std::abs( phi - p.second ) <= phiPadHalf  ) ;
+//     return  ( std::abs( r - p.first ) <= 0.5 * _padHeight  && 
+// 	      std::abs( phi - p.second ) <= phiPadHalf  ) ;
+
+    return  ( std::abs( r - p[0] ) <= 0.5 * _padHeight  && 
+	      std::abs( phi - p[1] ) <= phiPadHalf  ) ;
     
   }
 

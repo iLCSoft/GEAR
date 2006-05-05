@@ -2,6 +2,20 @@
   Gear release notes
  ======================
  
+ --------------
+| v00-03-beta  |
+ --------------
+
+  - implemented Point2D and Point3D coherently
+    
+  - Point2D no longer is pair<double,double>
+    ->  Point2D p ;
+        p.first needs to be changed to p[0]  and 
+        p.second needs to be changed to p[1]
+
+  - updated (clarified) GearPointProperties and GearDistanceProperties
+  
+
  ----------
 | v00-02   |
  ----------

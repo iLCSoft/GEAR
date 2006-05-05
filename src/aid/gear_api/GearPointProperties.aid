@@ -6,7 +6,7 @@ package hep.gear.api ;
  *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
  *
  * @author F. Gaede, DESY
- * @version $Id: GearPointProperties.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id: GearPointProperties.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
  */
 public interface GearPointProperties {
     
@@ -14,7 +14,7 @@ public interface GearPointProperties {
     
     /** The cellID of the the sensitive detector at pos.
      */
-    public int getCellID( const Point3D& pos) const throws NotImplementedException ;
+    public long64 getCellID( const Point3D& pos) const throws NotImplementedException ;
     
     // 	bool getMaterial  (true if defined material, false if problem)
     
@@ -51,13 +51,13 @@ public interface GearPointProperties {
     Point3D getLocalPosition( const Point3D& pos) const throws NotImplementedException ;
 
 
-    /** The magnetic field strength at pos in [FIXME: unit? , direction ?].  
+    /** The magnetic field vector at pos in [Tesla].  
      */
-    public double getB( const Point3D& pos) const throws NotImplementedException ;
+    public Vector3D getB( const Point3D& pos) const throws NotImplementedException ;
     
-    /** The electric field strength at pos in [FIXME: unit? , direction ?].  
+    /** The electric field vector at pos in [V/m].  
      */
-    public double getE( const Point3D& pos) const throws NotImplementedException ;
+    public Vector3D getE( const Point3D& pos) const throws NotImplementedException ;
     
 
     /** Names of (geant4) logical volumes in heirarchy starting at given pos ending with the world volume. 
