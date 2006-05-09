@@ -166,13 +166,32 @@ namespace gear {
 
   int FixedPadSizeDiskLayout::getRightNeighbour(int padIndex) const {
     
-    return( getPadIndex(  getRowNumber( padIndex) , getPadNumber( padIndex ) - 1  ) ) ;
+    int pn = getPadNumber( padIndex ) + 1  ;
+    int rn = getRowNumber( padIndex)  ;
     
+    int nPad = _rows.at(rn).NPad ;
+    
+    if( pn > nPad-1 ){ 
+
+      pn = 0 ;
+    }
+    
+    return getPadIndex(  rn , pn ) ;
   }
 
   int FixedPadSizeDiskLayout::getLeftNeighbour(int padIndex) const {
-      
-    return( getPadIndex(  getRowNumber( padIndex) , getPadNumber( padIndex ) + 1  ) ) ;
+
+    int pn = getPadNumber( padIndex ) - 1  ;
+    int rn = getRowNumber( padIndex)  ;
+    
+    int nPad = _rows.at(rn).NPad ;
+    
+    if( pn < 0  ){ 
+
+      pn = nPad - 1  ;
+    }
+    
+    return getPadIndex(  rn , pn ) ;
   }
   
 

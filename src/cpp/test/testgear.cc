@@ -115,12 +115,24 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
     
     for( int j = 0 ; j < nPad ; j++) {
       
+
       int iRow = pl.getRowNumber( pads[j] ) ;
       int iPad = pl.getPadNumber( pads[j] ) ;
       
+      if( j == 0 ) {
+	int ln = pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	assert(  pl.getPadNumber( ln ) ==  nPad-1 ) ;
+      }
+
+      if( j == nPad-1 ) {
+	int rn = pl.getRightNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	assert(  pl.getPadNumber( rn ) ==  0 ) ;
+      }
+
       Point2D p = pl.getPadCenter( pads[j] ) ;
 
       if( (i==0 && j < 10 ) || ( i == nRow-1 && j > nPad-9 ) ) {
+
 	std::cout << "         pad: "  
 		  << " [" << iRow << "," << iPad << "] "
 		  << " - ( " << p[0] << " , " << p[1]  << ") "
