@@ -12,7 +12,7 @@ namespace gear {
    *  e.g. from CLHEP or root::MathCore in the future.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: Vectors.h,v 1.1 2006-05-05 12:59:26 gaede Exp $
+   * @version $Id: Vectors.h,v 1.2 2006-05-10 07:43:35 gaede Exp $
    */
   
   template <int N, typename float_t=double>
@@ -24,6 +24,12 @@ namespace gear {
 
     /** The i-th coordinate */
     inline float_t& operator[](unsigned i) {  
+      
+      if( i > N-1 ) throw std::out_of_range( "VectorND_T::operator[]" ) ;
+      
+      return _c[i]  ; 
+    } 
+    inline float_t operator[](unsigned i) const {  
       
       if( i > N-1 ) throw std::out_of_range( "VectorND_T::operator[]" ) ;
       
