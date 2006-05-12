@@ -21,7 +21,7 @@ namespace gear {
  *  by M. Weber RWTH Aachen and J. McGeachie UVic, Ca..
  * 
  * @author F. Gaede, DESY
- * @version $Id: RectangularPadRowLayout.h,v 1.1 2006-05-10 07:45:38 gaede Exp $
+ * @version $Id: RectangularPadRowLayout.h,v 1.2 2006-05-12 12:56:31 gaede Exp $
  */
   class RectangularPadRowLayout : public PadRowLayout2D {
     
@@ -43,10 +43,12 @@ namespace gear {
   protected:
     int _nRow ;
     int _nPad ;
+    int _repeatRows ;
     std::vector<Row> _rows ;
     std::vector<double> _extent ;
     mutable std::vector< std::vector<int>* > _padIndices ;
-    
+    std::vector<unsigned> _nRows ;  // helper vector to keep track of equal rows
+
   public: 
 
     /** Construct the empty RectangularPadRowLayout with the width and x position
@@ -56,7 +58,7 @@ namespace gear {
     RectangularPadRowLayout( double xMin, double xMax , double yMin=0.0) ;
     
     /// Destructor.
-    virtual ~RectangularPadRowLayout() { /* nop */; }
+    virtual ~RectangularPadRowLayout() ; 
     
 
     /** Add nRow rows with the given parameters.
@@ -65,6 +67,18 @@ namespace gear {
 		    double rowHeight =0.0, double leftOffset =0.0 , 
 		    double rightOffset =0.0 );
     
+
+    /** Repeat the current rows 'count' times - this allows to easily repeat a pattern of
+     *  several rows, e.g. 2 rows offset to each other by half a padWidth (staggering).
+     *  Can only be called once per layout, i.e. no multiple rpeat patterns are allowed.
+     */
+    virtual void repeatRows(unsigned count) ;
+
+    /** Returns the number number for which a given row pattern has been repaeted 
+     */
+    int getRepeatRowCount() const { return _repeatRows ; } 
+
+
     /** The type of the row layout: PadRowLayout2D::CARTESIAN.
      */
     virtual int getPadLayoutType() const { return PadRowLayout2D::CARTESIAN ; } 
@@ -140,6 +154,13 @@ namespace gear {
     /** True if coordinate (x,y) is within any pad.
      */
     virtual bool isInsidePad(double x, double y)  const;
+
+
+    /** Helper method to identify equal row numbers in this layout (as they have been added).*/
+    const std::vector<unsigned>& equalRowNumbers() const { return _nRows ; }
+
+    /** Helper method with all row data.*/
+    const std::vector<Row>& rows() const { return _rows ; }
 
 
   protected:

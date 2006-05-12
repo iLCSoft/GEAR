@@ -64,11 +64,15 @@ int main(int argc, char**argv){
 
   
 
-  const FixedPadSizeDiskLayout& pl = 
-    dynamic_cast<const FixedPadSizeDiskLayout&>( gearMgr->getTPCParameters().getPadLayout() );
-
-  testFixedPadSizeDiskLayout( pl ) ;
-
+  try{
+    const FixedPadSizeDiskLayout& pl = 
+      dynamic_cast<const FixedPadSizeDiskLayout&>( gearMgr->getTPCParameters().getPadLayout() );
+    
+    testFixedPadSizeDiskLayout( pl ) ;
+  }
+  catch(std::bad_cast& e){
+    std::cout << "  wrong type of layout - expected FixedPadSizeDiskLayout ! " << std::endl ;
+  }
 
   // --- test writing of XML file ---------
 

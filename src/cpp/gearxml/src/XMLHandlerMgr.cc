@@ -85,6 +85,22 @@ namespace gear{
 
   }
 
+  std::string getOptionalXMLAttribute(const  TiXmlNode* node , const std::string& name , 
+				      const std::string& defaultValue) {
+
+    std::string result( defaultValue ) ;
+
+    try{
+
+      result = getXMLAttribute( node, name ) ;
+    }
+    catch( ParseException& p){
+    }
+
+    return result ;
+  }   
+
+
 
   // helper function (declared in XMLHandler.h )
 

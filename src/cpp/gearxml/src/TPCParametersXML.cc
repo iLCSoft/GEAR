@@ -2,6 +2,7 @@
 
 #include "gearxml/XMLHandlerMgr.h"
 #include "gearxml/GearParametersXML.h"
+#include "gearxml/PadRowLayout2DXML.h"
 
 #include "gearxml/tinyxml.h"
 #include "gearimpl/TPCParametersImpl.h"
@@ -42,42 +43,20 @@ namespace gear {
     TiXmlElement readoutFrequency("readoutFrequency");
     readoutFrequency.SetDoubleAttribute("value", param->getReadoutFrequency());
 
-    // Set up PadRowLayout2D
-    const PadRowLayout2D* padLayout=&(param->getPadLayout());
-  
-    // Check if type is FixedPadSizeDiskLayout
 
-    const FixedPadSizeDiskLayout* fixedPadLayout=dynamic_cast<const FixedPadSizeDiskLayout*>(padLayout);
-    
-    if (fixedPadLayout==NULL) {
-    
-      throw ParseException("Only FixedPadSizeDiskLayouts are supported so far.");
+    // Set up PadRowLayout2D
+    const PadRowLayout2D* padLayout = &( param->getPadLayout() ) ;
+  
+    PadRowLayout2DXML* layoutXML = PadRowLayout2DXML::getHandler( padLayout ) ;
+
+    if( layoutXML == 0 ) {
+
+      throw ParseException( "TPCParametersXML::toXML: no handler for " + std::string(typeid(padLayout).name()) + " found !" ) ;
     }
     
+    TiXmlElement padRowLayout2DXML = layoutXML->toXML( padLayout ) ;
 
-    // <------- Write PadLayout
-    // For PadWith get the radius of last row and multiply with PadWith (returns radian) 
-        
-    // append data to PadRowLayout2D
-    TiXmlElement padRowLayout2DXML("PadRowLayout2D");    
 
-    padRowLayout2DXML.SetAttribute("type","FixedPadSizeDiskLayout"); 
-
-    padRowLayout2DXML.SetDoubleAttribute("rMin",(fixedPadLayout->getPlaneExtent())[0]);
-
-    padRowLayout2DXML.SetDoubleAttribute("rMax",(fixedPadLayout->getPlaneExtent())[1]);
-
-    padRowLayout2DXML.SetDoubleAttribute("padHeight",fixedPadLayout->getPadHeight(1));
-
-    padRowLayout2DXML.SetDoubleAttribute("padWidth", fixedPadLayout->getFixedPadWidth());
-
-    padRowLayout2DXML.SetAttribute("maxRow",fixedPadLayout->getNRows());
-
-    padRowLayout2DXML.SetDoubleAttribute("padGap",fixedPadLayout->getPadGap());
-
-    // End Pad Layput -------->
-
-    
     // Assemble all items to detector
     det.InsertEndChild(driftVelocity);
     
@@ -125,36 +104,40 @@ namespace gear {
 
     std::string layoutType = getXMLAttribute( layout , "type" )   ;
   
-    // FIXME: this needs to be implemented more generically for other types of PadRowLayout !
-    if( layoutType != "FixedPadSizeDiskLayout" ) {
+    PadRowLayout2DXML* layoutXML = PadRowLayout2DXML::getHandler( layoutType ) ;
 
-      throw ParseException( "TPCParametersXML::toXML: currently only FixedPadSizeDiskLayout implemented ! " ) ;
+    if( layoutXML == 0 ) {
+
+      throw ParseException( "TPCParametersXML::fromXML: no handler for " + layoutType + " found !" ) ;
     }
+
+    PadRowLayout2D* dLayout = layoutXML->fromXML( layout ) ;
+
 
 //     <PadRowLayout2D  type="FixedPadSizeDiskLayout" rMin="320.0" rMax="1680.0" padHeight="6.0" padWidth="2.0" />
 
-    double rMin      =  atof(  getXMLAttribute( layout , "rMin" ) .c_str() ) ;
-    double rMax      =  atof(  getXMLAttribute( layout , "rMax" ) .c_str() ) ;
-    double padHeight =  atof(  getXMLAttribute( layout , "padHeight" ) .c_str() ) ;
-    double padWidth  =  atof(  getXMLAttribute( layout , "padWidth" ) .c_str() ) ;
-    int    maxRow    =  atoi(  getXMLAttribute( layout , "maxRow" ) .c_str() ) ;
-    double padGap    =  atof(  getXMLAttribute( layout , "padGap" ) .c_str() ) ;
+//     double rMin      =  atof(  getXMLAttribute( layout , "rMin" ) .c_str() ) ;
+//     double rMax      =  atof(  getXMLAttribute( layout , "rMax" ) .c_str() ) ;
+//     double padHeight =  atof(  getXMLAttribute( layout , "padHeight" ) .c_str() ) ;
+//     double padWidth  =  atof(  getXMLAttribute( layout , "padWidth" ) .c_str() ) ;
+//     int    maxRow    =  atoi(  getXMLAttribute( layout , "maxRow" ) .c_str() ) ;
+//     double padGap    =  atof(  getXMLAttribute( layout , "padGap" ) .c_str() ) ;
 
-
-    PadRowLayout2D* dLayout = 
-      new FixedPadSizeDiskLayout( rMin, rMax, padHeight, padWidth, maxRow, padGap ) ;
-
+    
+//     PadRowLayout2D* dLayout = 
+//       new FixedPadSizeDiskLayout( rMin, rMax, padHeight, padWidth, maxRow, padGap ) ;
+    
     tpcParams->setPadLayout( dLayout ) ;
-
-
-   if( gearMgr != 0 ) {
-
+    
+    
+    if( gearMgr != 0 ) {
+      
       gearMgr->setTPCParameters( tpcParams ) ;
     }
     
-
+    
     return tpcParams ;
   }
-
-
+  
+  
 } // namespace

@@ -17,7 +17,7 @@ namespace gear {
  *  (through the pad center).
  * 
  * @author F. Gaede, DESY
- * @version $Id: FixedPadSizeDiskLayout.h,v 1.2 2005-11-28 14:42:44 gaede Exp $
+ * @version $Id: FixedPadSizeDiskLayout.h,v 1.3 2006-05-12 12:56:31 gaede Exp $
  */
   class FixedPadSizeDiskLayout : public PadRowLayout2D {
     
@@ -58,7 +58,7 @@ namespace gear {
 			    double padGap=0.) ;
     
     /// Destructor.
-    virtual ~FixedPadSizeDiskLayout() { /* nop */; }
+    virtual ~FixedPadSizeDiskLayout() ; 
     
 
     /** The gap width in mm that was given in the C'tor. */

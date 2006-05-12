@@ -7,6 +7,12 @@
 
 namespace gear {
   
+  FixedPadSizeDiskLayout::~FixedPadSizeDiskLayout() { 
+    for( unsigned i=0; i<_padIndices.size(); ++i ){
+      delete _padIndices[i] ;
+    }
+  }
+
   FixedPadSizeDiskLayout::FixedPadSizeDiskLayout( double rMin, double rMax, 
 						  double padHeight, double padWidth, 
 						  int nRow , 

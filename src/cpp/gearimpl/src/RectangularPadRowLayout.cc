@@ -14,13 +14,14 @@ namespace gear {
   RectangularPadRowLayout::RectangularPadRowLayout( double xMin, double xMax , double yMin ) :
 
     _nRow(0) ,
-    _nPad(0) {
+    _nPad(0),
+    _repeatRows(0)  {
     
     _extent.resize(4) ;
     _extent[0] = xMin ;
     _extent[1] = xMax ;
     _extent[2] = yMin ;
-    _extent[3] = 0.0 ;
+    _extent[3] = yMin ;
     
   }
   
@@ -43,7 +44,7 @@ namespace gear {
     double xMin = _extent[0] + leftOffset ;
     double xMax = _extent[1] - rightOffset ;
 
-    double rowWidth = xMax - xMin - leftOffset - rightOffset ;
+    double rowWidth = xMax - xMin ;
 
     if( nPad * padWidth   >  rowWidth ) {
 
@@ -57,35 +58,67 @@ namespace gear {
 
     Row row ; 
 
-
     _nPad += abs( nRow ) * abs( nPad )  ;
     
     row.WidthPerPad = rowWidth / nPad ;
 
-    if( rowHeight <  padHeight ) 
+    if( rowHeight == 0.0 ) 
       rowHeight = padHeight ;
     
-    row.Center = _extent[3] + rowHeight / 2. ;
+    if( rowHeight <  padHeight ){ 
 
-    _extent[3]+= rowHeight ;
-           
+      std::stringstream sstr ;
+      sstr << "RectangularPadRowLayout::addRow: row height ( " 
+	   << rowHeight << " ) can't be smaller than pad height ( " << padHeight << " ) !" ;
+
+      throw Exception( sstr.str() ) ;
+    }
+
 
     row.NPad = nPad  ;
     row.PadWidth = padWidth ;
     row.PadHeight = padHeight ;
     
-    
     row.Height =  rowHeight ;
-    
+
     row.LeftOffset =  leftOffset ;
     row.RightOffset = rightOffset  ;
     
 
     for( int i = 0 ; i < nRow ; i++ ) {
+
+      row.Center = _extent[3] + rowHeight / 2. ;
+
+      _extent[3]+= rowHeight ;
+
       _rows.push_back( row ) ;
+
       _padIndices.push_back( 0 ) ;
     }
 
+    _nRows.push_back( nRow ) ; // keep track of nRows as they are added
+
+  }
+
+  void RectangularPadRowLayout::repeatRows(unsigned count) {
+
+    if( _repeatRows > 0  ) // ignore all but first call
+      return ;
+
+    _repeatRows = count ;
+    
+    int nRow = _rows.size() ;
+    
+    for(unsigned i=0 ; i< count-1 ; ++i ){
+      for(int j=0 ; j< nRow; ++j ){
+	
+	const Row& r = _rows[j] ;
+	
+	addRow( 1 , r.NPad , r.PadWidth ,r.PadHeight , 
+		r.Height , r.LeftOffset, r.RightOffset ) ;
+	
+      }
+    }
   }
   
   int RectangularPadRowLayout::getNRows() const {
@@ -119,13 +152,19 @@ namespace gear {
     
     const Row& row =  _rows[ rowNum ] ;
 
-    double x = row.LeftOffset + padNum * row.WidthPerPad + row.WidthPerPad / 2. ;  
+    double x = _extent[0] + row.LeftOffset + padNum * row.WidthPerPad + row.WidthPerPad / 2. ;  
 
     double y = row.Center ; 
 
     return Point2D( x , y  ) ;
   }
   
+
+  RectangularPadRowLayout::~RectangularPadRowLayout() { 
+    for( unsigned i=0; i<_padIndices.size(); ++i ){
+      delete _padIndices[i] ;
+    }
+  }
 
   const std::vector<int>& RectangularPadRowLayout::getPadsInRow(int rowNumber) const {
     
@@ -160,15 +199,16 @@ namespace gear {
 
     int rn = ( 0xffff0000 & padIndex ) >> 16 ; 
 
-    if( rn < 0 || (unsigned) rn > _rows.size() - 1 ){
-
+    if( rn < 0 ||  rn > int(_rows.size() - 1) ){
+      
       std::stringstream sstr ;
-
+      
       sstr << "RectangularPadRowLayout::getRowNumber: illegal rownumber: " 
-	   << rn << " for padIndex  0x" << std::hex << padIndex << std::dec ;
-
+	   << rn << " for padIndex  0x" << std::hex << padIndex << " nRows: " << _rows.size() << std::dec ;
+      
       throw Exception( sstr.str() ) ;
     }
+
     return rn ;
   } 
 
@@ -183,7 +223,12 @@ namespace gear {
     
     if( padNum > _rows[rowNum].NPad - 1 ) {
       
-      throw std::out_of_range("RectangularPadRowLayout::getPadIndex pad number too large !");
+      std::stringstream sstr ;
+      
+      sstr << "RectangularPadRowLayout::getPadIndex: pad number too large: "
+	   << padNum << " only " <<   _rows[rowNum].NPad << " pads in row " << rowNum ;
+
+      throw std::out_of_range( sstr.str() );
     }
     
     return  (rowNum << 16 ) | ( 0x0000ffff & padNum ) ;
@@ -272,7 +317,8 @@ namespace gear {
     int rn = getRowNumber( padIndex)  ;
     
     if( pn < 0  ){ 
-
+      std::cerr << " hgoing top throw exception: getLeftNeighbour: no left neighbour pad !" << std::endl ;
+      throw Exception("RectangularPadRowLayout::getLeftNeighbour: no left neighbour pad !");
       throw std::out_of_range("RectangularPadRowLayout::getLeftNeighbour: no left neighbour pad !");
     }
     
@@ -287,11 +333,11 @@ namespace gear {
 
     const Row& row =  _rows[rn] ;
 
-    // ---                                                         ----  insensitive gap --------
-    double pXMin = row.LeftOffset +  pn    * row.WidthPerPad + (  row.WidthPerPad - row.PadWidth ) ;
-    double pXMax = row.LeftOffset + (pn+1) * row.WidthPerPad - (  row.WidthPerPad - row.PadWidth ) ;
-    double pYMin = row.Center -  row.Height / 2. ;
-    double pYMax = row.Center +  row.Height / 2. ;
+    // ---                                                                       ----  insensitive gap --------
+    double pXMin = _extent[0] + row.LeftOffset +  pn    * row.WidthPerPad + (  row.WidthPerPad - row.PadWidth )/ 2.;
+    double pXMax = _extent[0] + row.LeftOffset + (pn+1) * row.WidthPerPad - (  row.WidthPerPad - row.PadWidth )/ 2.;
+    double pYMin = row.Center -  row.PadHeight / 2. ;
+    double pYMax = row.Center +  row.PadHeight / 2. ;
     
     return ( pXMin <= x && x <= pXMax  &&
 	     pYMin <= y && y <= pYMax ) ;
@@ -301,7 +347,7 @@ namespace gear {
 
     //  outside of pad plane
     if( x < _extent[0] || x > _extent[1] || 
-	y < _extent[2] || y < _extent[3] )
+	y < _extent[2] || y > _extent[3] )
       
       return false ;
     
