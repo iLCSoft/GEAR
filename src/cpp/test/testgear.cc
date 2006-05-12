@@ -3,6 +3,7 @@
 #include "gearimpl/Util.h"
 #include "gearxml/GearXML.h"
 #include "gear/GearMgr.h"
+#include "gear/GEAR.h"
 
 #include <iostream>
 #include <assert.h>
@@ -63,10 +64,19 @@ int main(int argc, char**argv){
 
   
 
-  const FixedPadSizeDiskLayout& pl = 
-    dynamic_cast<const FixedPadSizeDiskLayout&>( gearMgr->getTPCParameters().getPadLayout() );
+  try{
+    const FixedPadSizeDiskLayout& pl = 
+      dynamic_cast<const FixedPadSizeDiskLayout&>( gearMgr->getTPCParameters().getPadLayout() );
+    
+    testFixedPadSizeDiskLayout( pl ) ;
+  }
+  catch(std::bad_cast& e){
+    std::cout << "  wrong type of layout - expected FixedPadSizeDiskLayout ! " << std::endl ;
+  }
 
-  testFixedPadSizeDiskLayout( pl ) ;
+  // --- test writing of XML file ---------
+
+  GearXML::createXMLFile( gearMgr, "testgear_out.xml" ) ;
 
 }
 
@@ -109,27 +119,56 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
     
     for( int j = 0 ; j < nPad ; j++) {
       
+
       int iRow = pl.getRowNumber( pads[j] ) ;
       int iPad = pl.getPadNumber( pads[j] ) ;
       
+      if( j == 0 ) {
+	int ln = pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	assert(  pl.getPadNumber( ln ) ==  nPad-1 ) ;
+      }
+
+      if( j == nPad-1 ) {
+	int rn = pl.getRightNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	assert(  pl.getPadNumber( rn ) ==  0 ) ;
+      }
+
       Point2D p = pl.getPadCenter( pads[j] ) ;
 
       if( (i==0 && j < 10 ) || ( i == nRow-1 && j > nPad-9 ) ) {
+
 	std::cout << "         pad: "  
 		  << " [" << iRow << "," << iPad << "] "
-		  << " - ( " << p.first << " , " << p.second  << ") "
+		  << " - ( " << p[0] << " , " << p[1]  << ") "
 		  << std::endl ;
       }
 
-      assert(  pl.getNearestPad(  p.first , p.second ) == pads[j]  ) ;
-      assert( pl.isInsidePad(  p.first , p.second , pads[j] ) ) ;
+      assert(  pl.getNearestPad(  p[0] , p[1] ) == pads[j]  ) ;
+      assert( pl.isInsidePad(  p[0] , p[1] , pads[j] ) ) ;
 
-//       if( !(  pl.isInsidePad(  p.first , p.second , pads[j] ) )) {
+//       if( !(  pl.isInsidePad(  p[0] , p[1] , pads[j] ) )) {
 // 	std::cout << " center is not in pad :( ! " << std::endl ;
 //       }
     }
   }
   assert( nPadTotal ==  pl.getNPads() ) ;
+
+
+
+  //---------------------------------
+  Point3D r ;
+  r[0] = 1. ;
+  r[1] = 2. ;
+  r[2] = 3. ;
+
+  Point3D r1( r ) ;
+  Point3D r2( r1[0] , r1[1] , r1[2] ) ;
+  Point3D r3 ;
+
+  std::cout << " test of Point3D  r : " << r[0] << ", " << r[1]  << ", " << r[2] << std::endl ; 
+  std::cout << " test of Point3D  r1 : " << r1[0] << ", " << r1[1]  << ", " << r1[2] << std::endl ; 
+  std::cout << " test of Point3D  r2: " << r2[0] << ", " << r2[1]  << ", " << r2[2] << std::endl ; 
+  std::cout << " test of Point3D  r3: " << r3[0] << ", " << r3[1]  << ", " << r3[2] << std::endl ; 
 
 }
   

@@ -6,7 +6,7 @@
 <!--                                                                         -->
 <!-- Author: Mark Donszelmann                                                -->
 <!--   modified by F.Gaede for GEAR                                          -->
-<!-- Version: $Id: build.xml,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $    -->
+<!-- Version: $Id: build.xml,v 1.2 2006-05-05 12:59:26 gaede Exp $    -->
 <!--                                                                         -->
 <!-- ======================================================================= -->
 
@@ -141,7 +141,7 @@
 
    <target name="cpp.linux" depends="cpp.gear.linux"/>
    <target name="cpp.gear.linux">
-     <exec dir="." executable="gmake" os="Linux">
+     <exec dir="." executable="gmake" os="Linux" failOnError="true">
        <arg line="-C ./src/cpp all"/>
      </exec>
    </target>
@@ -152,7 +152,7 @@
 
    <target name="cpp.windows" depends="cpp.gear.windows"/>
    <target name="cpp.gear.windows">
-     <exec dir="." executable="make" os="Windows XP,Windows 2000,Windows NT,Windows 98">
+     <exec dir="." executable="make" os="Windows XP,Windows 2000,Windows NT,Windows 98" failOnError="true">
        <arg line="-C ./src/cpp all"/>
      </exec>
    </target>
@@ -167,13 +167,13 @@
 
 
    <target name="f77.linux" description="&lt;cpp-target&gt; creates f77 examples">
-     <exec dir="." executable="gmake" os="Linux">
+     <exec dir="." executable="gmake" os="Linux" failOnError="true">
        <arg line="-C ./src/f77"/>
      </exec>
    </target>
 
    <target name="f77.windows" description="&lt;cpp-target&gt; creates f77 examples">
-     <exec dir="." executable="make" os="Windows XP,Windows 2000,Windows NT,Windows 98">
+     <exec dir="." executable="make" os="Windows XP,Windows 2000,Windows NT,Windows 98" failOnError="true">
        <arg line="-C ./src/f77"/>
      </exec>
    </target>

@@ -7,6 +7,12 @@
 
 namespace gear {
   
+  FixedPadSizeDiskLayout::~FixedPadSizeDiskLayout() { 
+    for( unsigned i=0; i<_padIndices.size(); ++i ){
+      delete _padIndices[i] ;
+    }
+  }
+
   FixedPadSizeDiskLayout::FixedPadSizeDiskLayout( double rMin, double rMax, 
 						  double padHeight, double padWidth, 
 						  int nRow , 
@@ -14,7 +20,8 @@ namespace gear {
     _rMin( rMin ),
     _rMax( rMax ),
     _padWidth( padWidth ) ,
-    _padHeight(padHeight)
+    _padHeight(padHeight)  ,
+    _padGap( padGap ) 
   {
     
     _extent.resize(4) ;
@@ -80,6 +87,7 @@ namespace gear {
     int rowNum =  getRowNumber( padIndex ) ;
     try {  
 
+      // need to return padWidth in radians !!
       return _padWidth / _rows.at( rowNum ).RCenter ; 
 
     } 
@@ -99,7 +107,8 @@ namespace gear {
 
     double phi =  ( padNum + 0.5 ) * _rows[ rowNum ].PhiPad ; 
     
-    return std::make_pair( r , phi ) ;
+    return Point2D( r , phi ) ;
+//     return std::make_pair( r , phi ) ;
   }
 
   const std::vector<int>& FixedPadSizeDiskLayout::getPadsInRow(int rowNumber) const {
@@ -163,13 +172,32 @@ namespace gear {
 
   int FixedPadSizeDiskLayout::getRightNeighbour(int padIndex) const {
     
-    return( getPadIndex(  getRowNumber( padIndex) , getPadNumber( padIndex ) - 1  ) ) ;
+    int pn = getPadNumber( padIndex ) + 1  ;
+    int rn = getRowNumber( padIndex)  ;
     
+    int nPad = _rows.at(rn).NPad ;
+    
+    if( pn > nPad-1 ){ 
+
+      pn = 0 ;
+    }
+    
+    return getPadIndex(  rn , pn ) ;
   }
 
   int FixedPadSizeDiskLayout::getLeftNeighbour(int padIndex) const {
-      
-    return( getPadIndex(  getRowNumber( padIndex) , getPadNumber( padIndex ) + 1  ) ) ;
+
+    int pn = getPadNumber( padIndex ) - 1  ;
+    int rn = getRowNumber( padIndex)  ;
+    
+    int nPad = _rows.at(rn).NPad ;
+    
+    if( pn < 0  ){ 
+
+      pn = nPad - 1  ;
+    }
+    
+    return getPadIndex(  rn , pn ) ;
   }
   
 
@@ -199,8 +227,11 @@ namespace gear {
 // 	      << (std::abs( phi - p.second ) <= phiPadHalf)
 // 	      << std::endl ;
 
-    return  ( std::abs( r - p.first ) <= 0.5 * _padHeight  && 
-	      std::abs( phi - p.second ) <= phiPadHalf  ) ;
+//     return  ( std::abs( r - p.first ) <= 0.5 * _padHeight  && 
+// 	      std::abs( phi - p.second ) <= phiPadHalf  ) ;
+
+    return  ( std::abs( r - p[0] ) <= 0.5 * _padHeight  && 
+	      std::abs( phi - p[1] ) <= phiPadHalf  ) ;
     
   }
 

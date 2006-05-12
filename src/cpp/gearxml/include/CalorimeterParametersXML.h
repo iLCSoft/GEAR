@@ -16,15 +16,16 @@ namespace gear {
   /** XML handler for CalorimeterParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: CalorimeterParametersXML.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: CalorimeterParametersXML.h,v 1.4 2006-04-13 10:16:20 lippe Exp $
    */
   class CalorimeterParametersXML : public XMLHandler {
     
   public: 
     
     /** Creates an XML node for the given parameters 
+     *  @author R.Lippe, DESY
      */
-    virtual TiXmlElement toXML( GearParameters* parameters ) const ;
+    virtual TiXmlElement toXML( const GearParameters & parameters ) const ;
     
     
     /** Creates the appropriate GearParameters subclass from the given
@@ -37,9 +38,14 @@ namespace gear {
     
     //  std::string getAttribute(const  TiXmlNode* node , const std::string& name ) const ;    
 
-    
-    
-  }; // class
+  private:
+
+    /** Private function that compares two double values and returns true if they are almost equal
+     *  precision to be equal is relativly given in EPSILON
+     */
+    bool isEqual( const double valueOne, const double valueTwo ) const ;
+
+    }; // class
   
 } // namespace gear
 

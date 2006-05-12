@@ -142,7 +142,7 @@ namespace gear{
     s << std::endl 
       << "   -----------   TPCParameters  ------- "  << std::endl         ;
     
-    s << (GearParameters&) p  ;
+    s << dynamic_cast<const GearParameters&>( p )  ;
     
     s << std::endl  << "  maxDriftLength :      "  <<  p.getMaxDriftLength() ;
     s << std::endl  << "  driftVelocity :       "  <<  p.getDriftVelocity() ;
@@ -152,25 +152,36 @@ namespace gear{
     const PadRowLayout2D& pl = p.getPadLayout() ;
     
     const DoubleVec& ext = pl.getPlaneExtent() ;
-    double rMin = ext[0] ;
-    double rMax = ext[1] ;
     
-    // getPadWidth() returns phi - need to multiply by r 
-    double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0).first ; 
+    //     double rMin = ext[0] ;
+    //     double rMax = ext[1] ;
+    //     // getPadWidth() returns phi - need to multiply by r 
+    //     double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0)[0]; 
+    //     int nRow = pl.getNRows() ;
+    //     s <<  std::endl
+    //       << "   FixedPadSizeDiskLayout :  " << std::endl
+    //       << "         rMin:      " << rMin  << std::endl
+    //       << "         rMax:      " << rMax  << std::endl
+    //       << "         padHeight: " << pl.getPadHeight(0)  << std::endl 
+    //       << "         padWidth:  " <<  padWidth  << std::endl
+    //       << "         nRows :    " << nRow << std::endl 
+    //       << std::endl 
+    //       << std::endl ;
     
+
     int nRow = pl.getNRows() ;
+    int type = pl.getPadLayoutType() ;
     
     s <<  std::endl
-      << "   FixedPadSizeDiskLayout :  " << std::endl
-      << "         rMin:      " << rMin  << std::endl
-      << "         rMax:      " << rMax  << std::endl
-      << "         padHeight: " << pl.getPadHeight(0)  << std::endl 
-      << "         padWidth:  " <<  padWidth  << std::endl
-      << "         nRows :    " << nRow << std::endl 
-      << std::endl 
-      << std::endl ;
+      << "   PadRowLayout2D ( type: " ;
     
+    if( type == PadRowLayout2D::CARTESIAN )   s << "CARTESIAN )" ;
+    if( type == PadRowLayout2D::POLAR )       s << "POLAR )" ;
     
+    s << "         nRows :    " << nRow << std::endl ; 
+    s << "         extent:    [" << ext[0] << ","<< ext[1] << ","<< ext[2] << ","<< ext[3] << "]"  << std::endl ; 
+    
+    s <<  std::endl ;
     s << std::endl ;
     
     return s ;
@@ -179,8 +190,7 @@ namespace gear{
   std::ostream& operator<< (  std::ostream& s,  const CalorimeterParameters& p ) {
 
 
-    s << (GearParameters&) p  ;
-    
+    s << dynamic_cast<const GearParameters&>( p )  ;
 
     if( p.getLayoutType() == CalorimeterParameters::BARREL ) {
 

@@ -12,7 +12,7 @@ namespace gear {
   /** Interface for XML handlers of GEAR classes.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: XMLHandler.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: XMLHandler.h,v 1.3 2006-05-12 12:56:31 gaede Exp $
    */
   class XMLHandler {
     
@@ -21,7 +21,7 @@ namespace gear {
     
     /** Creates an XML node for the given parameters 
      */
-    virtual TiXmlElement toXML( GearParameters* parameters ) const = 0 ;
+    virtual TiXmlElement toXML( const GearParameters & parameters ) const = 0 ;
     
     
     /** Creates the approprtiate GearParameters subclass from the given
@@ -37,6 +37,10 @@ namespace gear {
 
   /** Helper method used for parsing XML */
   std::string getXMLAttribute(const  TiXmlNode* node , const std::string& name ) ;    
+
+  /** Helper method used for parsing XML */
+  std::string getOptionalXMLAttribute(const  TiXmlNode* node , const std::string& name , 
+				      const std::string& defaultValue) ;    
 
   /** Helper method used for parsing XML - returns the attribute 'value' of the named child element as double 
    */
