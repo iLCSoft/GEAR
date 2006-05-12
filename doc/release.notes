@@ -6,6 +6,9 @@
 | v00-03-beta  |
  --------------
 
+  - introduced RectangularPadRowLayout for TPC prototypes
+    -> see example file gear_tpc_proto.xml
+
   - implemented Point2D and Point3D coherently
     
   - Point2D no longer is pair<double,double>
