@@ -47,8 +47,8 @@ void gear_unexpected(){
 }
 
 
-/** Testprogram for gear classes.
- * 
+/** Testprogram for TPC prototype description. If linked with an AIDA implementation a hit map is created that
+ *  shows the pad layout.
  */
 
 int main(int argc, char**argv){
