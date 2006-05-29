@@ -13,7 +13,7 @@ export JDK_HOME=/usr
 
 #----------- use RAIDA  -------------------------
 
-#export GEAR_USE_AIDA=1
+export GEAR_USE_AIDA=1
 
 if [ $GEAR_USE_AIDA ] ; then
     export ROOTSYS=/opt/products/root/5.08.00
@@ -28,7 +28,7 @@ fi
 
 #------------use CGA -------------------------
 
-export GEAR_USE_CGA=1
+#export GEAR_USE_CGA=1
 
 if [ $GEAR_USE_CGA ] ; then
 # Define the folowing variables for gearcga:
