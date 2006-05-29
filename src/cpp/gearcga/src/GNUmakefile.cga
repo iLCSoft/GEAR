@@ -1,5 +1,5 @@
 ##
-## $Id: GNUmakefile.cga,v 1.1 2006-05-29 13:03:18 musat Exp $
+## $Id: GNUmakefile.cga,v 1.2 2006-05-29 15:51:01 musat Exp $
 ## $Name: not supported by cvs2svn $
 ##
 ## History
@@ -29,6 +29,14 @@ CGALIBS += \
         $(MOKKALIBS)/LCPhys/libLCPhys.a \
         $(MOKKALIBS)/CGA/libCGA.a \
 	-Wl,-no-whole-archive
+
+FOUND = $(shell [ -r $(MOKKALIBS)/MokkaGear/libMokkaGear.a ] && echo "found")
+ifeq ($(FOUND), found)
+CGALIBS += \
+	-Wl,-whole-archive  \
+	$(MOKKALIBS)/MokkaGear/libMokkaGear.a \
+	-Wl,-no-whole-archive 
+endif
 
 PLLIBDIR = $(G4INSTALL)/lib/plists/$(G4SYSTEM)
 G4LIBDIR = $(G4INSTALL)/lib/$(G4SYSTEM)

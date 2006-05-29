@@ -3,7 +3,7 @@
 # GNUmakefile to build the GEAR library examples
 #
 # @author F. Gaede, DESY
-# @version $Id: GNUmakefile,v 1.4 2006-05-29 13:03:18 musat Exp $
+# @version $Id: GNUmakefile,v 1.5 2006-05-29 15:51:01 musat Exp $
 ######################################################
 
 
@@ -24,20 +24,15 @@ INCLUDE =  $(GEARINCLUDE)
 
 CPPFLAGS = $(GEARCPPFLAGS) $(INCLUDE) 
 
-
-LIBS = -L$(INSTALL) -L$(SIOINSTALL)/lib  -lgearxml 
+LIBS = -L$(INSTALL) -L$(SIOINSTALL)/lib  
 
 ifdef GEAR_USE_CGA
 include $(GEARBASE)/src/cpp/gearcga/src/GNUmakefile.cga
-LIBS += -lgearcga
-endif
-
-LIBS += -lgear
-
-ifdef GEAR_USE_CGA
-LIBS += $(CGALIBS)
+LIBS += -lgearcga $(CGALIBS)
 CPPFLAGS += -DCGA
 endif
+
+LIBS += -lgearxml -lgear
 
 #----- testong tpcproto ---------
 ifdef GEAR_USE_AIDA
