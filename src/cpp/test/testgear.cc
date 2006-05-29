@@ -5,11 +5,19 @@
 #include "gear/GearMgr.h"
 #include "gear/GEAR.h"
 
+#ifdef CGA
+#include "gearcga/CGAGearDistanceProperties.h"
+#include "gearcga/CGAGearPointProperties.h"
+#endif
+
 #include <iostream>
 #include <assert.h>
 
 #include <exception>
 #include <cstdlib>
+
+#include <sstream>
+#include <fstream>
 
 using namespace gear ;
 
@@ -78,6 +86,55 @@ int main(int argc, char**argv){
 
   GearXML::createXMLFile( gearMgr, "testgear_out.xml" ) ;
 
+  // --- testing gearcga ---
+#ifdef CGA
+  std::ifstream inFile("mokka.steer");
+  std::stringstream steer;
+  std::string line ;
+  while(  ! inFile.eof()  ) {
+        getline( inFile, line ) ;
+        steer << line << std::endl ;
+  }
+
+  CGAGearDistanceProperties * distProp = new CGAGearDistanceProperties(steer.str(), "ProtoDesy0205", "", "", "", "");
+                                                                                
+        Point3D initial, final;
+        std::vector<std::string> matNames, lvNames;
+        initial[0] = 0.0;
+        initial[1] = 0.0;
+        initial[2] = 0.0;
+        final[0] = 0.0;
+        final[1] = 1000.0;
+        final[2] = 1000.0;
+                                                                                
+        try{
+                matNames = distProp->getMaterialNames(initial, final);
+                for(unsigned int i=0; i<matNames.size();i++)
+                        std::cout << matNames[i].c_str() << std::endl;
+                double bDl = distProp->getBdL(initial, final);
+                std::cout << "Bdl=" << bDl << std::endl;
+                double eDl = distProp->getEdL(initial, final);
+                std::cout << "Edl=" << eDl << std::endl;
+        }
+        catch(NotImplementedException e){}
+
+  CGAGearPointProperties * pointProp = new CGAGearPointProperties(steer.str(), "ProtoDesy0205", "", "", "", "");
+                                                                                
+        const Point3D position(0.0, 1730.0, 0.0);
+        try{
+                std::cout << "Material: " <<
+                        pointProp->getMaterialName(position) << " Density: " <<
+                        pointProp->getDensity(position) << std::endl;
+                                                                                
+                lvNames = pointProp->getListOfLogicalVolumes(position);
+                for(unsigned int i=0; i<lvNames.size();i++)
+                        std::cout << lvNames[i].c_str() << std::endl;
+                Vector3D B = pointProp->getB(position);
+                std::cout << "B=(" << B[0] << "," << B[1] << "," << B[2] <<
+                        ")" << std::endl;
+        }
+        catch(NotImplementedException e){}
+#endif //ifdef CGA
 }
 
 

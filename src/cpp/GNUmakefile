@@ -3,7 +3,7 @@
 # GNUmakefile to build the gear library
 #
 # @author F. Gaede, DESY
-# @version $Id: GNUmakefile,v 1.4 2005-11-25 16:08:15 gaede Exp $
+# @version $Id: GNUmakefile,v 1.5 2006-05-29 13:03:18 musat Exp $
 ###################################################################
 
 
@@ -23,6 +23,10 @@ endif
 export GEARCPPFLAGS
 
 packages := gearimpl gearxml
+
+ifdef GEAR_USE_CGA
+packages += gearcga
+endif
 
 subdirs := $(patsubst %, $(GEARBASE)/src/cpp/%, $(packages) )
 
