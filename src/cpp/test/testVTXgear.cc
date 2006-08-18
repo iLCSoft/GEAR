@@ -103,7 +103,7 @@ int main(int argc, char**argv){
  
 #ifdef GEAR_USE_AIDA  
 
-  std::string storeName("/scratch/lippe/vxdCheckPlot.root");
+  std::string storeName("vxdCheckPlot.root");
 
   myaida = AIDA_createAnalysisFactory() ;
 
@@ -214,8 +214,10 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
 								  100, 0, 0.00000000000001 ) ;
   
   // number of point to be tested
-  int nPoints = (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) / ( testStep * testStep * zStep ) +
-                (testDetailEnd-testDetailStart)*(testDetailEnd-testDetailStart)*(zEnd-zStart) / (testDetailStep * testDetailStep * zStep ) ;
+  int nPoints = int( (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) 
+    / ( testStep * testStep * zStep ) 
+    +  (testDetailEnd-testDetailStart)*(testDetailEnd-testDetailStart)*(zEnd-zStart) 
+    / (testDetailStep * testDetailStep * zStep ) ) ;
 
   std::cout << "Testing " << nPoints << " Points to AIDA" << std::endl ;
 
@@ -473,7 +475,8 @@ void testAllVXDPoint( const VXDParameters& vxdParams ) {
   
 #endif
 
-  int nPoints = (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) / ( testStep * testStep * zStep ) ;
+  int nPoints = int( (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) 
+		     / ( testStep * testStep * zStep ) ) ;
   std::cout << "Testing " << nPoints << " Points to AIDA" << std::endl ;
   
   // x
@@ -546,7 +549,8 @@ void testAllVXDDist( const VXDParameters& vxdParams ) {
   myfile.open (fileName, std::ios::out | std::ios::trunc );
   myHisto.open( histoName, std::ios::out | std::ios::trunc ) ;
   
-  int nPoints = (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) / ( testStep * testStep * zStep ) ;
+  int nPoints = int ( (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) 
+		      / ( testStep * testStep * zStep ) ) ;
   std::cout << "Testing " << nPoints << " Points to file : " << fileName <<std::endl ;
   
   // x
