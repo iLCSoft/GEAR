@@ -61,6 +61,12 @@ namespace gear{
     } catch(UnknownParameterException &e){}
        
 
+    try{ 
+      // VXD parameters
+      s <<  m.getVXDParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+
     return s ;
   }
 
@@ -254,4 +260,43 @@ namespace gear{
     return s ;
   }
 
+
+  std::ostream& operator<< (  std::ostream& s,  const VXDParameters& p ) {
+    
+    s << std::endl 
+      << "   -----------   VXDParameters  ------- "  << std::endl         ;
+    
+    s << dynamic_cast<const GearParameters&>( p )  ;
+    
+    /** The type of Vertex detector: VXDParameters.CCD, VXDParameters.CMOS or
+     *  VXDParameters.HYBRID.
+     */
+     int type = p.getVXDType() ;
+    
+    s << std::endl  << " vxd type : " ;
+    
+    switch( type ) {
+
+    case VXDParameters::CCD : 
+
+      s << " CCD " << std::endl ;       break ;
+    case VXDParameters::CMOS : 
+
+      s << " CMOS " << std::endl ;      break ;
+    case VXDParameters::HYBRID :
+
+      s << " HYBRID " << std::endl ;    break ;
+    default :  
+
+      s << " unknown " << std::endl ; 
+    }
+
+    s << " print out of VXDParameters needs to be completed !!!! " 
+      << std::endl ;
+
+    return s ;
+    
+    
+  }
+  
 }

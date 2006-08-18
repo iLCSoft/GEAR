@@ -100,7 +100,15 @@ int main(int argc, char**argv){
   std::cout << " testVTXgear - instantiated  GearMgr from file " << fileName 
 	    << std::endl ;
 
+  const VXDParameters& vp = 
+    dynamic_cast<const VXDParameters&>( gearMgr->getVXDParameters() ) ;
  
+
+  std::cout << " VXD parameters : " << std::endl 
+	    << vp 
+	    << std::endl ;
+
+
 #ifdef GEAR_USE_AIDA  
 
   std::string storeName("vxdCheckPlot.root");
@@ -115,12 +123,17 @@ int main(int argc, char**argv){
   myhistofactory = myaida->createHistogramFactory( *mytree ) ;
   mytuplefactory = myaida->createTupleFactory( *mytree ) ;
   
-  const VXDParameters& vp = 
-    dynamic_cast<const VXDParameters&>( gearMgr->getVXDParameters() ) ;
+//   const VXDParameters& vp = 
+//     dynamic_cast<const VXDParameters&>( gearMgr->getVXDParameters() ) ;
 
   //testVXDIntersection( vp ) ;
   
   createCheckPlots( vp ) ;
+  
+#else
+  
+  std::cout << " Compile with GEAR_USE_AIDA==1 to get some histograms   ! " 
+	    << std::endl; 
   
 #endif
   
