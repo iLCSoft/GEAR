@@ -10,6 +10,7 @@ namespace gear{
     _ecalEndcapParameters(0) ,
     _hcalBarrelParameters(0) ,
     _hcalEndcapParameters(0) ,
+    _vxdParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) {
   }
@@ -72,6 +73,18 @@ namespace gear{
     return  *_hcalEndcapParameters ;
 
   }
+
+
+  const VXDParameters & GearMgrImpl::getVXDParameters() const
+    throw (UnknownParameterException, std::exception ) {
+
+    if( _vxdParameters == 0 )
+      throw UnknownParameterException( "No VXDParameters set ") ;
+
+    return *_vxdParameters ;
+
+  }
+
   
   const GearPointProperties & GearMgrImpl::getPointProperties() const 
     throw (NotImplementedException, std::exception ) {
@@ -121,6 +134,11 @@ namespace gear{
   void GearMgrImpl::setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) {
 
     _hcalEndcapParameters = hcalEndcapParameters ;
+  }
+
+  void GearMgrImpl::setVXDParameters( VXDParameters* vxdParameters ) {
+
+    _vxdParameters = vxdParameters ;
   }
 
 

@@ -40,7 +40,7 @@ namespace gear {
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.3 2006-08-18 09:17:15 lippe Exp $
    */
 
   class Exception : public std::exception {
@@ -65,7 +65,7 @@ namespace gear {
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.3 2006-08-18 09:17:15 lippe Exp $
    */
   class ParseException : public Exception{
     
@@ -81,7 +81,7 @@ namespace gear {
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.3 2006-08-18 09:17:15 lippe Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -99,7 +99,7 @@ namespace gear {
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.3 2006-08-18 09:17:15 lippe Exp $
    */
    class UnknownParameterException : public Exception{
 
@@ -130,6 +130,7 @@ public interface GEAR{
    static const char*  GEARPARAMETERS  ;
    static const char*  TPCPARAMETERS  ;
    static const char*  CALORIMETERPARAMETERS  ;
+   static const char*  VXDPARAMETERS  ;
 
 
 }
@@ -138,6 +139,7 @@ public interface GEAR{
   public static const String GEARPARAMETERS = "GearParameters" ;
   public static const String TPCPARAMETERS = "TPCParameters" ;
   public static const String CALORIMETERPARAMETERS = "CalorimeterParameters" ;
+  public static const String VXDPARAMETERS = "VXDParameters" ;
 
 @endif
 

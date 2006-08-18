@@ -3,7 +3,7 @@
 # GNUmakefile to build the GEAR library examples
 #
 # @author F. Gaede, DESY
-# @version $Id: GNUmakefile,v 1.5 2006-05-29 15:51:01 musat Exp $
+# @version $Id: GNUmakefile,v 1.6 2006-08-18 09:17:15 lippe Exp $
 ######################################################
 
 
@@ -64,3 +64,6 @@ $(BINDIR)/mergeXML: mergeXML.cc $(INSTALL)/libgear.a
 
 $(BINDIR)/testtpcproto: testtpcproto.cc $(INSTALL)/libgear.a
 	$(CXX) -o $(BINDIR)/testtpcproto $(CPPFLAGS) testtpcproto.cc  $(LIBS) 
+
+$(BINDIR)/testVTXgear: testVTXgear.cc $(INSTALL)/libgear.a
+	$(CXX) -o $(BINDIR)/testVTXgear $(CPPFLAGS) testVTXgear.cc  $(LIBS) 

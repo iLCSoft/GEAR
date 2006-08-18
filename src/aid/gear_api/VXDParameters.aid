@@ -1,0 +1,83 @@
+package hep.gear.api ;
+
+/** Proposal for an abstract interface that defines the geometry properties of
+ * a Vertex detector needed for reconstruction code. <br>
+ * This assumes a symmetric layout of ladders, arranged in layers equidistant 
+ * to IP.  <br>
+ * 
+ * @author R. Lippe, DESY
+ * @version $Id: 
+ */
+public interface VXDParameters extends GearParameters {
+    
+  // static constants (enums( for the type of layout
+    
+@ifdef cpp
+@cpp{
+    static const int CCD    = 1 ;
+    static const int CMOS   = 2 ;
+    static const int HYBRID = 3 ;
+}@else
+    public static const int CCD    = 1 ;
+    public static const int CMOS   = 2 ;
+    public static const int HYBRID = 3 ;
+@endif
+
+
+    /** The layer layout in the Vertex */
+    public const VXDLayerLayout& getVXDLayerLayout() const ;
+
+    /** The type of Vertex detector: VXDParameters.CCD, VXDParameters.CMOS or
+     *  VXDParameters.HYBRID.
+     */
+    public int getVXDType() const ;
+    
+    /** The half length (z) of the support shell in mm (w/o gap).
+     */
+    public double getShellHalfLength() const ;
+
+    /** The length of the gap in mm (gap position at z=0)
+     */
+    public double getShellGap() const ;
+    
+    /** The inner radius of the support shell in mm.
+     */
+    public double getShellInnerRadius() const ;
+    
+    /** The outer radius of the support shell in mm.
+     */
+    public double getShellOuterRadius() const ;
+
+    /** The radiation length in the support shell
+     */
+    public double getShellRadLength() const ;
+
+    /** returns whether a point is inside a ladder
+     */
+    public bool isPointInLadder(Point3D p) const ;
+
+    /** returns wheter a point is inside a sensitive volume
+     */
+    public bool isPointInSensitive(Point3D p) const ;
+
+    /** returns vector from point to nearest ladder
+     */
+    public Vector3D distanceToNearestLadder(Point3D p) const ;
+
+    /** returns vector from point to nearest sensitive volume
+     */
+    public Vector3D distanceToNearestSensitive(Point3D p) const ;
+	
+    /** returns the first found point where a straight line intersects with a ladder
+     *  straight line is parameterised by point p and vector v
+     * 	the function starts at 0,0,0 so the first found point usually will be close to IP
+     */
+    public Vector3D intersectionLadder( Point3D p , Vector3D v ) const ;
+
+    /** returns whether a straight line intersects with a sensitive volume
+     *  straight line is parameterised by point p and vector v
+     * 	the function starts at 0,0,0 so the first found point usually will be close to IP
+     */
+    public Vector3D intersectionSensitive( Point3D p, Vector3D v ) const ;	
+    
+}

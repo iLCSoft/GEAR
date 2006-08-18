@@ -5,11 +5,13 @@
 #include "gearxml/GearParametersXML.h"
 #include "gearxml/TPCParametersXML.h"
 #include "gearxml/CalorimeterParametersXML.h"
+#include "gearxml/VXDParametersXML.h"
 
 #include "gearimpl/GearMgrImpl.h"
 
 #include "gear/GEAR.h"
 #include "gear/CalorimeterParameters.h"
+#include "gear/VXDParameters.h"
 
 //#include <algorithm>
 #include <sstream>
@@ -122,6 +124,24 @@ namespace gear{
 
     }
     catch( UnknownParameterException& e){
+    }
+
+    // ------- add VXD parameters ----------------------------
+    try{
+
+      VXDParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getVXDParameters() ) ;
+
+      // debugging
+      //std::cout << "VXD called." << std::endl ;
+
+      detector.SetAttribute( "name" , "VXD" ) ;
+      detector.SetAttribute( "geartype" , GEAR::VXDPARAMETERS ) ;
+      
+      detectors.InsertEndChild( detector ) ;
+    }
+    catch( UnknownParameterException& e) {
     }
     
 

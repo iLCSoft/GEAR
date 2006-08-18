@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.2 2006-08-18 09:17:15 lippe Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -71,6 +71,13 @@ namespace gear {
     virtual const CalorimeterParameters & getHcalEndcapParameters() const 
 	throw (UnknownParameterException, std::exception )  ;
 
+    /** Get the VXD parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const VXDParameters & getVXDParameters() const
+      throw (UnknownParameterException, std::exception )  ;
+
    /** Get the point properties object.
      * 
      *  @throws NotImplementedException
@@ -117,7 +124,10 @@ namespace gear {
     /** Set the HcalEndcapParameters.
      */
     virtual void setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) ;
-    
+
+     /** Set the VXDParameters.
+     */
+    virtual void setVXDParameters( VXDParameters * vxdParameters ) ;
 
     /** Set the point properties object 
      */
@@ -138,6 +148,7 @@ namespace gear {
     CalorimeterParameters* _ecalEndcapParameters ;
     CalorimeterParameters* _hcalBarrelParameters ;
     CalorimeterParameters* _hcalEndcapParameters ;
+    VXDParameters* _vxdParameters ;
     GearPointProperties*  _pointProperties ;
     GearDistanceProperties*  _distanceProperties ;
 
