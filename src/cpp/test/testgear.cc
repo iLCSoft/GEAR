@@ -4,7 +4,6 @@
 #include "gearxml/GearXML.h"
 #include "gear/GearMgr.h"
 #include "gear/GEAR.h"
-#include "gear/VXDParameters.h"
 
 #ifdef CGA
 #include "gearcga/CGAGearDistanceProperties.h"
@@ -22,17 +21,8 @@
 
 using namespace gear ;
 
-void testVXD( const VXDParameters& vxdParams ) ;
-
-void testVXDPoint( const Point3D p , const VXDParameters& vxdParams ) ;
-
-void testVXDDist( const Point3D p , const VXDParameters& vxdParams ) ;
-
-void testAllVXDPoint( const VXDParameters& vxdParams ) ;
-
-void testAllVXDDist( const VXDParameters& vxdParams ) ;
-
 void testFixedPadSizeDiskLayout( const FixedPadSizeDiskLayout& pl ) ;
+
 
 void gear_unexpected(){
 
@@ -92,12 +82,6 @@ int main(int argc, char**argv){
     std::cout << "  wrong type of layout - expected FixedPadSizeDiskLayout ! " << std::endl ;
   }
 
-  // ---- text VXD ----
-  const VXDParameters& vp = 
-    dynamic_cast<const VXDParameters&>( gearMgr->getVXDParameters() ) ;
-
-    testVXD( vp ) ;
-    
   // --- test writing of XML file ---------
 
   GearXML::createXMLFile( gearMgr, "testgear_out.xml" ) ;
@@ -245,205 +229,3 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
 
 }
   
-
-void testVXD( const VXDParameters& vxdParams ) {
-
-  //  Point3D p0 ( 17.8191 , 3.67696 , 10 ) ;
-  //  Point3D p1 ( -36.8 , 7 , 10 ) ;
-  //   Point3D p2 ( -15 ,-8, .5 ) ;
-//   Point3D p3 ( -30 , -2 , .5 ) ;
-//   Point3D p4 ( -25 ,-25.0 , 0 ) ;
- 
-//   testVXDPoint( p0 , vxdParams ) ;
-//   testVXDPoint( p1 , vxdParams ) ;
-//   testVXDPoint( p2 , vxdParams ) ;
-//   testVXDPoint( p3 , vxdParams ) ;
-//   testVXDPoint( p4 , vxdParams ) ;
- 
-
-//  testVXDDist( p0, vxdParams ) ;
-//   testVXDDist( p1, vxdParams ) ;
-//   testVXDDist( p2, vxdParams ) ;
-//   testVXDDist( p3, vxdParams ) ;
-//   testVXDDist( p4, vxdParams ) ;
-
-  testAllVXDDist( vxdParams ) ;
-  //  testAllVXDPoint( vxdParams ) ;
-}
-
-void testVXDPoint( const Point3D p , const VXDParameters& vxdParams ) {
-  
-  std::cout <<  p[0] <<" " <<  p[1] <<" "<<  p[2] ;
-  bool isPoint = vxdParams.isPointInLadder( p ) ;
-  
-  if( isPoint ) {
-    std::cout <<  p[0] <<" " <<  p[1] <<" "<<  p[2] << " inside";
-  }
-  
-  std::cout << std::endl ;
-  
-}
-
-void testVXDDist( const Point3D p , const VXDParameters& vxdParams ) {
-  
-  Vector3D v = vxdParams.distanceToNearestLadder( p ) ;
-
-  std::cout << "testVXDDist " << std::endl 
-	    << "\nPoint  (" << p[0] << "," << p[1] << "," << p[2] << ") "
-	    << "\nVector (" << v[0] << "," << v[1] << "," << v[2] << ") " << std::endl;
-
-  bool isFound = false ;
-
-  double myStep =1 ;
-  double lBound = 1 ;
-  double uBound = 1 ;
-
-  for(double r1 = lBound ; r1 <= uBound ; r1+= myStep ) {
-    for(double r2 = lBound ; r2 <= uBound ; r2+= myStep ) {
-      for(double r3 = lBound ; r3 <= uBound ; r3+= myStep ) {
-
-	Point3D iP ( p[0] + r1* v[0] , p[1] + r2* v[1] , p[2] + r3*v[2] ) ;
-
-	bool isPoint = vxdParams.isPointInLadder( iP ) ;
-	if( isPoint ) {
-	  std::cout << "Vector point withhin Ladder at r =" << r1 <<" , " << r2 <<" , " << r3 << std::endl ;
-	  std::cout << "                                  " << iP[0] << " , " << iP[1] << " , " << iP[2] << std::endl ;
-	  isFound = true ;
-	  break ;
-	}
-	else{
-	  std::cout << "ERROR Vector NOT pointin in Ladder." << std::endl ;
-	}
-      }
-      if (isFound ) break ;
-    }
-    if (isFound ) break ;
-  }
-}
-
-void testAllVXDPoint( const VXDParameters& vxdParams ) {
-
-  double testStart = -65 ;
-  double testEnd = 65 ;
-  double testStep = 0.05 ;
-  double zStart = 10 ;
-  double zEnd = 11 ;
-  double zStep = 1 ;
-
-  float myStatusP = 0, myStatusL = 0;
-  int nLadder = 0 , nSensitive = 0 ;
-
-  std::ofstream myfile;
-  const char *fileName = "/scratch/lippe/myOutput.txt" ;
-  myfile.open (fileName, std::ios::out | std::ios::trunc );
-
-  int nPoints = (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) / ( testStep * testStep * zStep ) ;
-  std::cout << "Testing " << nPoints << " Points to file : " << fileName <<std::endl ;
-  
-  // x
-  for ( double x=testStart ; x < testEnd ; x += testStep ) {
-    
-    // Status
-    float curStatus = (x - testStart) / (testEnd - testStart) * 100 ;
-    if ( curStatus > ( myStatusP + 0.25 ) ) {
-      myStatusP = curStatus ;
-      std::cout << "." << std::flush ;
-    }
-    if ( curStatus > ( myStatusL + 10 ) ) {
-      myStatusL = curStatus ;
-      std::cout << std::floor(myStatusL) << "% finished" << std::endl ;
-    }
-	 
-    // y
-    for ( double y=testStart ; y < testEnd ; y += testStep ) {
-      
-      // z
-      for ( double z = zStart ; z < zEnd ; z += zStep ) {
-	
-	Point3D p ( x , y , z ) ;
-	bool isPoint = vxdParams.isPointInLadder( p ) ;
-	bool isSensitive = vxdParams.isPointInSensitive( p ) ;
-
-	if( isPoint ) nLadder ++;
-	if( isSensitive ) nSensitive ++;
-
-	if( isPoint || isSensitive ) {
-	  myfile <<  p[0] <<" " <<  p[1] <<" "<<  p[2] << " " << isSensitive << "\n" ;
-	}
-
-      } // z
-    } // y
-  } //x
-  
-  myfile.close() ;
-  
-  std::cout << "\ntotal tested points: " << nPoints << "\n" 
-	    << "          in ladder: " << nLadder << " (" << nLadder/nPoints*100 << ") \n"
-	    << "       in sensitive: " << nSensitive << " (" << nSensitive/nPoints*100 << ")\n"
-	    << "Points finished " << std::endl ;
-
-}
-
-
-void testAllVXDDist( const VXDParameters& vxdParams ) {
-  
-  double testStart = -65 ;
-  double testEnd = 65 ;
-  double testStep = 1 ;
-  double zStart = -120 ;
-  double zEnd = 120 ;
-  double zStep = 10 ;
-    
-  float myStatusP = 0, myStatusL = 0;
-  
-  std::ofstream myfile, myHisto;
-  const char *fileName     = "/scratch/lippe/myOutput.txt" ;
-  const char *histoName  = "/scratch/lippe/myHistogram.txt" ;
-  myfile.open (fileName, std::ios::out | std::ios::trunc );
-  myHisto.open( histoName, std::ios::out | std::ios::trunc ) ;
-  
-  int nPoints = (testEnd-testStart)*(testEnd-testStart)*(zEnd-zStart) / ( testStep * testStep * zStep ) ;
-  std::cout << "Testing " << nPoints << " Points to file : " << fileName <<std::endl ;
-  
-  // x
-  for ( double x=testStart ; x < testEnd ; x += testStep ) {
-    
-    // Status
-    float curStatus = (x - testStart) / (testEnd - testStart) * 100 ;
-    if ( curStatus > ( myStatusP + 0.25 ) ) {
-      myStatusP = curStatus ;
-      std::cout << "." << std::flush ;
-    }
-    if ( curStatus > ( myStatusL + 10 ) ) {
-	myStatusL = curStatus ;
-	std::cout << std::floor(myStatusL) << "% finished" << std::endl ;
-    }
-    
-    // y
-    for ( double y=testStart ; y < testEnd ; y += testStep ) {
-      
-      // z
-      for ( double z = zStart ; z < zEnd ; z += zStep ) {
-	
-	Point3D p ( x , y , z ) ;
-	Vector3D nv = vxdParams.distanceToNearestLadder( p ) ;
-	Point3D np ( p[0] + nv[0] , p[1] + nv[1] , p[2] + nv[2] ) ;
-	  
-	//bool isPoint = vxdParams.isPointInLadder( np ) ;
-	
-	//if( !isPoint ) {
-	  Vector3D nv2 = vxdParams.distanceToNearestLadder( np ) ;
-	  myHisto << sqrt( nv2[0]*nv2[0] + nv2[1]*nv2[1] + nv2[2]*nv2[2] ) << "\n" ;
-	  myfile << np[0] <<" " <<  np[1] <<" "<<  np[2] << 0 << "\n" ;
-	  //}
-	
-      } // z
-    } // y
-  } //x
-  
-  myfile.close() ;
-  myHisto.close() ;
-    
-  std::cout << "Points finished " << std::endl ;
-}
-
