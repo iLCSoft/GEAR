@@ -1,6 +1,15 @@
 
   Gear release notes
  ======================
+
+
+ -----------------
+| v00-03-beta-01  |
+ -----------------
+
+
+ - initial version of VXDParameters implementation
+    -> see example file gear_ldc.xml
  
  --------------
 | v00-03-beta  |

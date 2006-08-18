@@ -11,10 +11,14 @@ namespace gear {
 
 class VXDLayerLayout;
 
-/** Proposal for an abstract interface that defines the geometry properties of
+/** FIXME: describe schema of vertex detector in gear :  ... layers,ladders etc ...
+ * <p>
+ * Geometry properties of
  * a Vertex detector needed for reconstruction code. <br>
  * This assumes a symmetric layout of ladders, arranged in layers equidistant 
  * to IP.  <br>
+ * 
+ *@see addLayer
  * 
  * @author R. Lippe, DESY
  * @version $Id: 
@@ -37,32 +41,23 @@ public:
   /** adding a Layer to the vertex
    *  one layer consiste of a number of ladders and sensitive areas (nLadders) that are
    *  each equidistant to IP. They are cubic with dimensions length (z), width (perpendicular to
-   *  connection IP-spacepoint) and thickness (extension to connection IP-spacepoint). <br>
-   * 
-   *  the layer is parametrized by the following values:
+   *  connection IP-spacepoint) and thickness (extension to connection IP-spacepoint).
    *
-   *  | nLadders  | the number of ladders and sensitive areas inside the layer        |
-   *  |           |                                                                   |
-   *  | phi0      | the starting angle for straight connection to the spacepoint      |
-   *  |           |                                                                   |
-   *  | Distance  | the length (mm) of the straigth line between IP and spacepoint to |
-   *  |           | ladder (ladderDistance) or sensitive Area (sensitiveDistance)     |
-   *  |           |                                                                   |
-   *  | Offset    | the offset of ladder (ladderOffset) or sensitive area             |
-   *  |           | (sensitiveOffset) in clockwise direction in mm between spacepoint |
-   *  |           | and middle of ladder/sensitive                                    |
-   *  |           |                                                                   |
-   *  | Thickness | the thickness in mm of the ladder (ladderThickness) or the        |
-   *  |           | sensitive area (sensitiveThickness)                               |
-   *  |           |                                                                   |
-   *  | Length    | the length (z-direction) in mm of the ladder (ladderLength)       |
-   *  |           | or the sensitive area (sensitiveLength)                           |
-   *  |           |                                                                   |
-   *  | Width     | the width of the ladder (ladderWidth) or the                      |
-   *  |           | sensitive area (sensitiveWidth) in mm in clockwise direction      |
-   *  |           |                                                                   |
-   *  | RadLenght | the radiation lenght of the ladder (ladderRadLength) or the       |
-   *  |           | sensitive area (sensitiveRadLength) in mm                         |
+   * @param nLadders   the number of ladders and sensitive areas inside the layer        
+   * @param phi0       the starting angle for straight connection to the spacepoint      
+   * @param Distance   the length (mm) of the straigth line between IP and spacepoint to 
+   *                   ladder (ladderDistance) or sensitive Area (sensitiveDistance)     
+   * @param Offset     the offset of ladder (ladderOffset) or sensitive area             
+   *                   (sensitiveOffset) in clockwise direction in mm between spacepoint 
+   *                   and middle of ladder/sensitive                                    
+   * @param Thickness  the thickness in mm of the ladder (ladderThickness) or the        
+   *                   sensitive area (sensitiveThickness)                               
+   * @param Length     the length (z-direction) in mm of the ladder (ladderLength)       
+   *                   or the sensitive area (sensitiveLength)                           
+   * @param Width      the width of the ladder (ladderWidth) or the                      
+   *                   sensitive area (sensitiveWidth) in mm in clockwise direction      
+   * @param RadLenght  the radiation lenght of the ladder (ladderRadLength) or the       
+   *                   sensitive area (sensitiveRadLength) in mm                         
    *  		     
    */
   virtual void addLayer(int nLadders, double phi0,
