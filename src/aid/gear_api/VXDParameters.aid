@@ -54,11 +54,11 @@ public interface VXDParameters extends GearParameters {
 
     /** returns whether a point is inside a ladder
      */
-    public bool isPointInLadder(Point3D p) const ;
+    public boolean isPointInLadder(Point3D p) const ;
 
     /** returns wheter a point is inside a sensitive volume
      */
-    public bool isPointInSensitive(Point3D p) const ;
+    public boolean isPointInSensitive(Point3D p) const ;
 
     /** returns vector from point to nearest ladder
      */
