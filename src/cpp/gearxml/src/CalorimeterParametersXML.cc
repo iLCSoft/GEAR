@@ -13,6 +13,7 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <math.h>
 
 #define _EPSILON 0.0001
 
@@ -285,10 +286,10 @@ namespace gear {
     if ( valueOne == valueTwo ) return true ;
     
     // get avg value and calculate maximum allowed delta
-    double maxDelta = std::abs( ( valueOne + valueTwo ) / 2 * _EPSILON ) ;
+    double maxDelta = fabs( ( valueOne + valueTwo ) / 2 * _EPSILON ) ;
     
     // check if values differ by less than maximal delta
-    bool differsLess = ( std::abs( valueOne - valueTwo ) < maxDelta ) ;
+    bool differsLess = ( fabs( valueOne - valueTwo ) < maxDelta ) ;
 
     // return 
     return differsLess ;

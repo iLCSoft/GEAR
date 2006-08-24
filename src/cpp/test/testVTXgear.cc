@@ -19,6 +19,8 @@
 #include <sstream>
 #include <fstream>
 
+#include <math.h>
+
 #ifdef GEAR_USE_AIDA  
 #include "AIDA/AIDA.h"
 using namespace AIDA ;
@@ -249,7 +251,7 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
     }
     if ( curStatus > ( myStatusL + 10 ) ) {
       myStatusL = curStatus ;
-      std::cout << std::floor(myStatusL) << "% finished" << std::endl ;
+      std::cout << floor(myStatusL) << "% finished" << std::endl ;
     }
 
    	 
@@ -327,7 +329,7 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
     }
     if ( curStatus > ( myStatusL + 10 ) ) {
       myStatusL = curStatus ;
-      std::cout << std::floor(myStatusL) << "% finished" << std::endl ;
+      std::cout << floor(myStatusL) << "% finished" << std::endl ;
     }
 
    	 
@@ -503,7 +505,7 @@ void testAllVXDPoint( const VXDParameters& vxdParams ) {
     }
     if ( curStatus > ( myStatusL + 10 ) ) {
       myStatusL = curStatus ;
-      std::cout << std::floor(myStatusL) << "% finished" << std::endl ;
+      std::cout << floor(myStatusL) << "% finished" << std::endl ;
     }
 	 
     // y
@@ -577,7 +579,7 @@ void testAllVXDDist( const VXDParameters& vxdParams ) {
     }
     if ( curStatus > ( myStatusL + 10 ) ) {
 	myStatusL = curStatus ;
-	std::cout << std::floor(myStatusL) << "% finished" << std::endl ;
+	std::cout << floor(myStatusL) << "% finished" << std::endl ;
     }
     
     // y

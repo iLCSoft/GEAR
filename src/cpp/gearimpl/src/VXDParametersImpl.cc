@@ -794,7 +794,7 @@ namespace gear{
     if ( valueOne == valueTwo ) return true ;
 
     // check if values differ by less than maximal delta
-    return ( std::abs( 2 * (valueOne - valueTwo) / (valueOne + valueTwo) ) < ( _EPSILON ) ) ;
+    return ( fabs( 2 * (valueOne - valueTwo) / (valueOne + valueTwo) ) < ( _EPSILON ) ) ;
     
   } // fucntion isEqual
 
@@ -813,7 +813,7 @@ namespace gear{
   bool VXDParametersImpl::differsLess( double valueOne, double valueTwo ) const
   {
 
-    return ( ( std::abs( valueOne ) + std::abs( valueTwo ) ) < _EPSILON ) ;
+    return ( ( fabs( valueOne ) + fabs( valueTwo ) ) < _EPSILON ) ;
 
   } // function differsLess
   

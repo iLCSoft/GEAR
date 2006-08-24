@@ -12,13 +12,14 @@ namespace gear {
   /** Interface for XML handlers of GEAR classes.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: XMLHandler.h,v 1.3 2006-05-12 12:56:31 gaede Exp $
+   * @version $Id: XMLHandler.h,v 1.4 2006-08-24 14:23:07 gaede Exp $
    */
   class XMLHandler {
     
   public: 
     
-    
+    virtual ~XMLHandler() { /* no_op*/ }
+
     /** Creates an XML node for the given parameters 
      */
     virtual TiXmlElement toXML( const GearParameters & parameters ) const = 0 ;
