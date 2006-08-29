@@ -11,22 +11,29 @@ namespace gear {
 
 class VXDLayerLayout;
 
-/** FIXME: describe schema of vertex detector in gear :  ... layers,ladders etc ...
- * <p>
- * Geometry properties of
- * a Vertex detector needed for reconstruction code. <br>
- * This assumes a symmetric layout of ladders, arranged in layers equidistant 
- * to IP.  <br>
- * 
- *@see addLayer
- * 
- * @author R. Lippe, DESY
- * @version $Id: 
- */
+  /** Geometry properties of a vertex detector needed for reconstruction code. <br>
+   *  <p>The vertex is assumed to consist of a number of layers. Each layer consists of
+   *  a number of rectangular ladders that are uniformly distributed in a circle around the IP.<br>
+   *  The sensitive volumes can be placed relative to the (insensitive) ladders.
+   *  @see addLayer .</p>
+   *  <p>The shell is described by outer and inner radius and it's half length in z.</p>
+   *  <p>The gap is assumed to be symetrical around z==0 and goes through all layers and ladders.</p>
+   *  
+   *
+   *  @author R. Lippe, DESY
+   *  @version $Id: 
+   */
 class VXDParametersImpl : public GearParametersImpl, public VXDParameters {
 
 public: 
-  //C'tor  
+  /** C'tor  
+   *  @param vxdType           the type of the vertex detector: CCD, CMOS or HYBRID
+   *  @param shellInnerRadius  the inner Radius of the vertex' shell (in mm)
+   *  @param shellOuterRadius  the outer Radius of the vertex' shell (in mm)
+   *  @param shellHalfLength   the half length in z (in mm)
+   *  @param shellGap          the total width of the gap at z==0 - symetrical around z==0
+   *  @param shellRadLength    the material property information about the shell's material radiation length
+   */
   VXDParametersImpl( int vxdType, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) ;
 
   // Destructor.
@@ -73,7 +80,7 @@ public:
   }
     
       
-  /** The layer layout in the Vertex */
+  /** Returns the layer layout in the Vertex */
   virtual const VXDLayerLayout & getVXDLayerLayout() const { return _layer ; }
   
   /** The type of Vertex detector: VXDParametersImpl.CCD, VXDParametersImpl.CMOS or
@@ -113,27 +120,27 @@ public:
     return isPointInVXD( p, true ) ;
   }
   
-  /** returns vector from point to nearest ladder
+  /** returns vector from given point p to nearest ladder
    */
   virtual Vector3D distanceToNearestLadder(Point3D p) const {
     return distanceToNearestVXD( p, false ) ;
   }
 
-  /** returns vector from point to nearest sensitive volume
+  /** returns vector from given point p to nearest sensitive volume
    */
   virtual Vector3D distanceToNearestSensitive(Point3D p) const {
     return distanceToNearestVXD( p, true ) ;
   }
 
-  /** returns the first point a strainght line
-   *  (parameters Point p and Direction v)  crosses a ladder
+  /** returns the first point where a given strainght line
+   *  (parameters point p and direction v)  crosses a ladder
    */
   virtual Point3D intersectionLadder( Point3D p, Vector3D v ) const {
     return intersectionVXD( p, v, false ) ;
   }
 
-  /** returns the first point a strainght line
-   *  (parameters Point p and Direction v)  crosses a sensitive volume
+  /** returns the first point where a given strainght line
+   *  (parameters point p and direction v)  crosses a sensitive volume
    */
   virtual Point3D intersectionSensitive( Point3D p, Vector3D v ) const {
     return intersectionVXD( p, v, true ) ;
@@ -157,7 +164,7 @@ protected:
 
 private:
 
-  /** returns if i point is in ladder (sensitive == false) or in sensitive (sensitive == true)
+  /** returns if a point is in ladder (sensitive == false) or in sensitive (sensitive == true)
    */
   bool isPointInVXD(Point3D p , bool sensitive = false) const ;
 
@@ -174,7 +181,7 @@ private:
    */
   Vector3D distanceToPlane(Point3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV) const ;
 
-  /** returns, whether a straight line intersects with the vxd
+  /** returns the first point on the vxd, where it intersects with a given straight line (parameters point p and direction v)
    */     
   Point3D intersectionVXD( Point3D p, Vector3D v, bool sensitive = false) const ;
 

@@ -1,13 +1,18 @@
 package hep.gear.api ;
 
-/** Proposal for an abstract interface that defines the geometry properties of
- * a Vertex detector needed for reconstruction code. <br>
- * This assumes a symmetric layout of ladders, arranged in layers equidistant 
- * to IP.  <br>
- * 
- * @author R. Lippe, DESY
- * @version $Id: 
- */
+  /** Geometry properties of a vertex detector needed for reconstruction code. <br>
+   *  <p>The vertex is assumed to consist of a number of layers. Each layer consists of
+   *  a number of rectangular ladders that are uniformly distributed in a circle around the IP.<br>
+   *  The sensitive volumes can be placed relative to the (insensitive) ladders.
+   *  @see addLayer .</p>
+   *  <p>The shell is described by outer and inner radius and it's half length in z.</p>
+   *  <p>The gap is assumed to be symetrical around z==0 and goes through all layers and ladders.</p>
+   *  
+   *
+   *  @author R. Lippe, DESY
+   *  @version $Id: 
+   */
+	
 public interface VXDParameters extends GearParameters {
     
   // static constants (enums( for the type of layout
@@ -68,16 +73,20 @@ public interface VXDParameters extends GearParameters {
      */
     public Vector3D distanceToNearestSensitive(Point3D p) const ;
 	
-    /** returns the first found point where a straight line intersects with a ladder
-     *  straight line is parameterised by point p and vector v
-     * 	the function starts at 0,0,0 so the first found point usually will be close to IP
-     */
+    /** returns the first point where a given strainght line
+     *  (parameters point p and direction v)  crosses a ladder
+     *  (0,0,0) is returned if no intersection can be found.
+     *  @param p  a point on the line. This will be the starting point.
+     *  @param v  a vector along the line    
+     */	
     public Vector3D intersectionLadder( Point3D p , Vector3D v ) const ;
 
-    /** returns whether a straight line intersects with a sensitive volume
-     *  straight line is parameterised by point p and vector v
-     * 	the function starts at 0,0,0 so the first found point usually will be close to IP
-     */
+    /** returns the first point where a given strainght line
+     *  (parameters point p and direction v)  crosses a sensitive volume
+     *  (0,0,0) is returned if no intersection can be found.
+     *  @param p  a point on the line. This will be the starting point.
+     *  @param v  a vector along the line
+     */	
     public Vector3D intersectionSensitive( Point3D p, Vector3D v ) const ;	
     
 }
