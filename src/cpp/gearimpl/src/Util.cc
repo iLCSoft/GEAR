@@ -2,6 +2,7 @@
 #include "gearimpl/Util.h"
 
 #include "gear/PadRowLayout2D.h"
+#include "gear/VXDLayerLayout.h"
 #include "gear/LayerLayout.h"
 
 
@@ -268,10 +269,9 @@ namespace gear{
     
     s << dynamic_cast<const GearParameters&>( p )  ;
     
-    /** The type of Vertex detector: VXDParameters.CCD, VXDParameters.CMOS or
-     *  VXDParameters.HYBRID.
-     */
-     int type = p.getVXDType() ;
+    const VXDLayerLayout & l = p.getVXDLayerLayout() ;
+
+    int type = p.getVXDType() ;
     
     s << std::endl  << " vxd type : " ;
     
@@ -291,9 +291,54 @@ namespace gear{
       s << " unknown " << std::endl ; 
     }
 
-    s << " print out of VXDParameters needs to be completed !!!! " 
+    s << " Shell innerR : " << p.getShellInnerRadius() << " outerR : " << p.getShellOuterRadius() << std::endl 
+      << "       length : " << p.getShellHalfLength()  << " gap "      << p.getShellGap() << std::endl ;
+    
+    
+    // layers
+    
+    s << " Layers : " << l.getNLayers()  
+      << std::endl << std::endl ;
+
+
+    s <<  " layer parameters (note: ladder length (l) are half lengths ! )" 
       << std::endl ;
 
+    char buffer[1024] ;
+    
+    sprintf(buffer,"  |------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |      |       ladder:                        |       sensitive part:                |\n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |  #   |    d    |    w    |    l    |   t    |    d    |    w    |    l    |    t   | \n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+
+    for( int i = 0 ; i < l.getNLayers() ; i++ ) {
+
+      char buffer1[1024] ;
+      sprintf(buffer1,"  | %3d  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |\n"
+	      , l.getNLadders(i) 
+	      , l.getLadderDistance(i) 
+	      , l.getLadderWidth(i)
+	      , l.getLadderLength(i)
+	      , l.getLadderThickness(i)
+	      , l.getSensitiveDistance(i)
+	      , l.getSensitiveWidth(i) 
+	      , l.getSensitiveLength(i) 
+	      , l.getSensitiveThickness(i) ) ;
+      
+      s << buffer1 ;
+
+    }
+
+    sprintf(buffer,"  |------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+    
     return s ;
     
     
