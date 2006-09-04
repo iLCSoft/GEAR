@@ -3,6 +3,7 @@
 #include <cmath>
 #include <math.h>
 #include <iostream>
+#include <sstream>
 #include <stdexcept>
 
 namespace gear {
@@ -24,6 +25,17 @@ namespace gear {
     _padGap( padGap ) 
   {
     
+    // minimal sanity check:
+    if ( _padHeight <= 0.0  || _padWidth <= 0.0 ) {
+
+      std::stringstream s ;
+      s << " FixedPadSizeDiskLayout: missing or inconsistent parameters"
+	<< " - padHeight: " << _padHeight 
+	<< " - padWidth : " << _padWidth ;
+
+      throw ParseException( s.str() ) ;
+    }
+
     _extent.resize(4) ;
     _extent[0] = _rMin ;
     _extent[1] = _rMax ;
