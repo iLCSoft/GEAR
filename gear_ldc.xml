@@ -69,32 +69,29 @@
 
      </detector>
 
-
-
-
         <detector name="VXD" geartype="VXDParameters">
             <vxdType technology="CCD" />
-            <shell halfLength="135.000000" gap="0.040000" innerRadius="65.000000" outerRadius="65.493920" radLength="0.000000" />
+            <shell halfLength="135.000000" gap="0.040000" innerRadius="65.000000" outerRadius="65.493920" radLength="352.759946" />
             <layers>
                 <layer nLadders="8" phi0="0.000000">
-                    <ladder distance="15.000000" thickness="0.282240" width="13.000000" length="25.000000" offset="-1.455005" radLength="0.000000" />
-                    <sensitive distance="15.282240" thickness="0.037440" width="13.000000" length="25.000000" offset="-1.455005" radLength="0.000000" />
+                    <ladder distance="15.000000" thickness="0.282240" width="13.000000" length="25.000000" offset="-1.455005" radLength="352.759946" />
+                    <sensitive distance="15.282240" thickness="0.037440" width="13.000000" length="25.000000" offset="-1.455005" radLength="93.676203" />
                 </layer>
                 <layer nLadders="8" phi0="0.000000">
-                    <ladder distance="26.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-1.398656" radLength="0.000000" />
-                    <sensitive distance="26.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-1.398656" radLength="0.000000" />
+                    <ladder distance="26.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-1.398656" radLength="352.759946" />
+                    <sensitive distance="26.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-1.398656" radLength="93.676203" />
                 </layer>
                 <layer nLadders="12" phi0="0.000000">
-                    <ladder distance="38.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-2.571633" radLength="0.000000" />
-                    <sensitive distance="38.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-2.571633" radLength="0.000000" />
+                    <ladder distance="38.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-2.571633" radLength="352.759946" />
+                    <sensitive distance="38.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-2.571633" radLength="93.676203" />
                 </layer>
                 <layer nLadders="16" phi0="0.000000">
-                    <ladder distance="49.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-3.592945" radLength="0.000000" />
-                    <sensitive distance="49.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-3.592945" radLength="0.000000" />
+                    <ladder distance="49.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-3.592945" radLength="352.759946" />
+                    <sensitive distance="49.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-3.592945" radLength="93.676203" />
                 </layer>
                 <layer nLadders="20" phi0="0.000000">
-                    <ladder distance="60.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-4.422448" radLength="0.000000" />
-                    <sensitive distance="60.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-4.422448" radLength="0.000000" />
+                    <ladder distance="60.000000" thickness="0.282240" width="22.000000" length="62.500000" offset="-4.422448" radLength="352.759946" />
+                    <sensitive distance="60.282240" thickness="0.037440" width="22.000000" length="62.500000" offset="-4.422448" radLength="93.676203" />
                 </layer>
             </layers>
         </detector>
