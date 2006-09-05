@@ -1,7 +1,7 @@
 
 export GEAR=$PWD
 
-export GEARVERSION=v00-02
+export GEARVERSION=v00-03
 
 export PATH=$GEAR/tools:$GEAR/bin:$PATH
 export JDK_HOME=/opt/products/java/1.4.2
@@ -29,17 +29,28 @@ fi
 #------------use CGA -------------------------
 
 #export GEAR_USE_CGA=1
+unset GEAR_USE_CGA
 
 if [ $GEAR_USE_CGA ] ; then
 # Define the folowing variables for gearcga:
-export MOKKA=/home/musat/Mokka
-export MYSQLLIB=/usr/lib/mysql
-export CLHEP_BASE_DIR=/usr/local/CLHEP/2.0.2.2
-export G4INSTALL=/usr/local/geant4/geant4.8.0.p01
+
+#---- test setup --------------- 
+#export MOKKA=/home/musat/Mokka
+#export MYSQLLIB=/usr/lib/mysql
+#export CLHEP_BASE_DIR=/usr/local/CLHEP/2.0.2.2
+#export G4INSTALL=/usr/local/geant4/geant4.8.0.p01
+#export G4SYSTEM=Linux-g++
+#export MOKKALIBS=$HOME/$G4INSTALL/tmp/$G4SYSTEM
+#export LCIO=/usr/local/LCIO/01.07
+
+#---- DESY setup --------------- 
+export MOKKA=/afs/desy.de/group/it/ilcsoft/mokka/6.1-dev/
+export MYSQLLIB=/opt/products/mysql/3.23.58/lib/mysql
+export CLHEP_BASE_DIR=/opt/products/CLHEP/2.0.2.2
+export G4INSTALL=/opt/products/geant4/8.0.p01
 export G4SYSTEM=Linux-g++
-export MOKKALIBS=$HOME/$G4INSTALL/tmp/$G4SYSTEM
-# Define the folowing variable if Mokka was compiled in LCIO mode:
-export LCIO=/usr/local/LCIO/01.07
+export MOKKALIBS=$MOKKA/tmp/$G4SYSTEM
+export LCIO=/afs/desy.de/group/it/ilcsoft/lcio/v01-07
 fi
 
 

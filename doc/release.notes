@@ -2,18 +2,24 @@
   Gear release notes
  ======================
 
+ ---------
+| v00-03  |
+ ---------
 
- -----------------
-| v00-03-beta-01  |
- -----------------
-
-
- - initial version of VXDParameters implementation
+  - initial version of VXDParameters implementation
     -> see example file gear_ldc.xml
- 
- --------------
-| v00-03-beta  |
- --------------
+
+  - first version of gearcga - implementation of GearPointProperties 
+    and GearDistanceProperties ( author: Gabriel Mussat )
+    -> needs geant4 and Mokka installed 
+    ( note: as Mokka depeneds on Gear gearcga can only be build in 
+     a second  build process after Mokka has been built with the first
+     build of Gear )
+    -> see commented environment variables in env.sh
+
+  - mergeXML: program to merge two XML files - can be used to 
+    add missing (user) information to existing xml file, e.g
+    a file created with MokkaGear
 
   - introduced RectangularPadRowLayout for TPC prototypes
     -> see example file gear_tpc_proto.xml
@@ -26,7 +32,7 @@
         p.second needs to be changed to p[1]
 
   - updated (clarified) GearPointProperties and GearDistanceProperties
-  
+   
 
  ----------
 | v00-02   |
