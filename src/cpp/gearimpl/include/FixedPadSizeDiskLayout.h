@@ -17,7 +17,7 @@ namespace gear {
  *  (through the pad center).
  * 
  * @author F. Gaede, DESY
- * @version $Id: FixedPadSizeDiskLayout.h,v 1.3 2006-05-12 12:56:31 gaede Exp $
+ * @version $Id: FixedPadSizeDiskLayout.h,v 1.4 2007-03-07 15:37:45 gaede Exp $
  */
   class FixedPadSizeDiskLayout : public PadRowLayout2D {
     
@@ -99,7 +99,7 @@ namespace gear {
 
     /** The center of the pad in 2d coordinates, (x,y) or (r,phi).
      */
-    virtual Point2D getPadCenter(int padIndex)  const;
+    virtual Vector2D getPadCenter(int padIndex)  const;
 
 
     /** Indices of all pads in row rowNumber (row indices start from 0 at the

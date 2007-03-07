@@ -145,7 +145,7 @@ namespace gear {
   } 
 
 
-  Point2D RectangularPadRowLayout::getPadCenter(int padIndex)  const {
+  Vector2D RectangularPadRowLayout::getPadCenter(int padIndex)  const {
     
     int rowNum =  getRowNumber( padIndex ) ;
     int padNum =  getPadNumber( padIndex ) ;
@@ -156,7 +156,7 @@ namespace gear {
 
     double y = row.Center ; 
 
-    return Point2D( x , y  ) ;
+    return Vector2D( x , y  ) ;
   }
   
 
@@ -260,7 +260,7 @@ namespace gear {
       double ymin =  row.Center -  row.PadHeight / 2. ;
       double ymax =  row.Center +  row.PadHeight / 2. ;
 
-      Point2D  p( x, y ) ;
+      Vector2D  p( x, y ) ;
 
       double d ;
 
@@ -354,7 +354,7 @@ namespace gear {
     return  isInsidePad( x , y , getNearestPad( x, y ) )  ;
   }
   
-  double RectangularPadRowLayout::distanceToBox( const Point2D& p , 
+  double RectangularPadRowLayout::distanceToBox( const Vector2D& p , 
 						 double xmin, double ymin, 
 						 double xmax, double ymax ) const {
     

@@ -69,6 +69,13 @@ int main(int argc, char**argv){
 
   std::cout  << *gearMgr  << std::endl ;
 
+  Point3D p( 1.,2.,3. ) ;
+
+  std::cout << " testgear - old point 3d : " 
+	    << p[0] << ", " 
+	    << p[1] << ", " 
+	    << p[2] << std::endl ; 
+  
 
   
 
@@ -98,7 +105,8 @@ int main(int argc, char**argv){
 
   CGAGearDistanceProperties * distProp = new CGAGearDistanceProperties(steer.str(), "ProtoDesy0205", "", "", "", "");
                                                                                 
-        Point3D initial, final;
+  //        Vector3D initial, final;
+        Vector3D initial, final;
         std::vector<std::string> matNames, lvNames;
         initial[0] = 0.0;
         initial[1] = 0.0;
@@ -120,7 +128,7 @@ int main(int argc, char**argv){
 
   CGAGearPointProperties * pointProp = new CGAGearPointProperties(steer.str(), "ProtoDesy0205", "", "", "", "");
                                                                                 
-        const Point3D position(0.0, 1730.0, 0.0);
+        const Vector3D position(0.0, 1730.0, 0.0);
         try{
                 std::cout << "Material: " <<
                         pointProp->getMaterialName(position) << " Density: " <<
@@ -190,7 +198,7 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
 	assert(  pl.getPadNumber( rn ) ==  0 ) ;
       }
 
-      Point2D p = pl.getPadCenter( pads[j] ) ;
+      Vector2D p = pl.getPadCenter( pads[j] ) ;
 
       if( (i==0 && j < 10 ) || ( i == nRow-1 && j > nPad-9 ) ) {
 
@@ -213,19 +221,19 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
 
 
   //---------------------------------
-  Point3D r ;
+  Vector3D r ;
   r[0] = 1. ;
   r[1] = 2. ;
   r[2] = 3. ;
 
-  Point3D r1( r ) ;
-  Point3D r2( r1[0] , r1[1] , r1[2] ) ;
-  Point3D r3 ;
+  Vector3D r1( r ) ;
+  Vector3D r2( r1[0] , r1[1] , r1[2] ) ;
+  Vector3D r3 ;
 
-  std::cout << " test of Point3D  r : " << r[0] << ", " << r[1]  << ", " << r[2] << std::endl ; 
-  std::cout << " test of Point3D  r1 : " << r1[0] << ", " << r1[1]  << ", " << r1[2] << std::endl ; 
-  std::cout << " test of Point3D  r2: " << r2[0] << ", " << r2[1]  << ", " << r2[2] << std::endl ; 
-  std::cout << " test of Point3D  r3: " << r3[0] << ", " << r3[1]  << ", " << r3[2] << std::endl ; 
+  std::cout << " test of Vector3D  r : " << r[0] << ", " << r[1]  << ", " << r[2] << std::endl ; 
+  std::cout << " test of Vector3D  r1 : " << r1[0] << ", " << r1[1]  << ", " << r1[2] << std::endl ; 
+  std::cout << " test of Vector3D  r2: " << r2[0] << ", " << r2[1]  << ", " << r2[2] << std::endl ; 
+  std::cout << " test of Vector3D  r3: " << r3[0] << ", " << r3[1]  << ", " << r3[2] << std::endl ; 
 
 }
   

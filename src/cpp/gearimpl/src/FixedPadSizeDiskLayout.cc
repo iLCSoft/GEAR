@@ -110,7 +110,7 @@ namespace gear {
 
 
 
-  Point2D FixedPadSizeDiskLayout::getPadCenter(int padIndex)  const {
+  Vector2D FixedPadSizeDiskLayout::getPadCenter(int padIndex)  const {
     
     int rowNum =  getRowNumber( padIndex ) ;
     int padNum =  getPadNumber( padIndex ) ;
@@ -119,7 +119,7 @@ namespace gear {
 
     double phi =  ( padNum + 0.5 ) * _rows[ rowNum ].PhiPad ; 
     
-    return Point2D( r , phi ) ;
+    return Vector2D( r , phi ) ;
 //     return std::make_pair( r , phi ) ;
   }
 
@@ -226,7 +226,7 @@ namespace gear {
     if( r < _rMin || r > _rMax )
       return false ;
     
-    Point2D p  = getPadCenter( padIndex ) ;
+    Vector2D p  = getPadCenter( padIndex ) ;
     
 //     double phiPadHalf = 0.5 * _padWidth / rCenter ;
     

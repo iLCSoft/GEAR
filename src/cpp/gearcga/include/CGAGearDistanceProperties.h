@@ -13,7 +13,7 @@ namespace gear {
  *  properties along a given distance between two points in in world 
  *  coordinates. 
  * @author G. Musat, Ecole Polytechnique
- * @version $Id: CGAGearDistanceProperties.h,v 1.1 2006-05-29 13:03:18 musat Exp $
+ * @version $Id: CGAGearDistanceProperties.h,v 1.2 2007-03-07 15:37:45 gaede Exp $
  */
 class CGAGearDistanceProperties: public GearDistanceProperties {
 
@@ -27,31 +27,31 @@ public:
 
     /** List of matrial names along the distance between [p0,p1] .
      */
-    virtual const std::vector<std::string> & getMaterialNames(const Point3D & p0, const Point3D & p1) const throw (NotImplementedException, std::exception );
+    virtual const std::vector<std::string> & getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
     /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
      *  returned by  getMaterialNames().
      */
-    virtual const std::vector<double>  & getMaterialThicknesses(const Point3D & p0, const Point3D & p1) const throw (NotImplementedException, std::exception );
+    virtual const std::vector<double>  & getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
     /** The number of radiation lengths along the distance between [p0,p1] .
      */
-    virtual double getNRadlen(const Point3D & p0, const Point3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getNRadlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
     /** The number of interaction lengths along the distance between [p0,p1] .
      */
-    virtual double getNIntlen(const Point3D & p0, const Point3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getNIntlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
     /** The integrated magnetic field along  the distance between [p0,p1] in Tesla*mm.  
      */
-    virtual double getBdL(const Point3D & p0, const Point3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getBdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
     /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
      */
-    virtual double getEdL(const Point3D & p0, const Point3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getEdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
 protected:
-    void beamOn(const Point3D & p0, const Point3D & p1) const;
+    void beamOn(const Vector3D & p0, const Vector3D & p1) const;
 
 	
 }; // class

@@ -17,7 +17,7 @@ namespace gear{
     _shellRadLength( shellRadLength ) {}
 
 
- bool VXDParametersImpl::isPointInVXD( Point3D p , bool sensitive ) const 
+ bool VXDParametersImpl::isPointInVXD( Vector3D p , bool sensitive ) const 
   {
     
     // very first check for quick calculation
@@ -165,7 +165,7 @@ namespace gear{
 
 
 
-  Vector3D VXDParametersImpl::distanceToNearestVXD( Point3D p , bool sensitive ) const
+  Vector3D VXDParametersImpl::distanceToNearestVXD( Vector3D p , bool sensitive ) const
   {
 
     // check if point is in already
@@ -227,29 +227,44 @@ namespace gear{
 	}
 	
 	// take normal vector of planes, Base, Side, Z and spacePoint
-	Vector3D nBase, nSide, nZ ;
+//fg: ------- test vector3d ---------------------------
+// 	Vector3D nBase, nSide, nZ ;
 	
-	nBase[0] = sin( phi ) ;
-	nBase[1] = cos( phi ) ;
-	nBase[2] = 0;
+// 	nBase[0] = sin( phi ) ;
+// 	nBase[1] = cos( phi ) ;
+// 	nBase[2] = 0;
       
-	nSide[0] = cos( phi ) ;
-	nSide[1] = -sin( phi ) ;
-	nSide[2] = 0 ;
+// 	nSide[0] = cos( phi ) ;
+// 	nSide[1] = -sin( phi ) ;
+// 	nSide[2] = 0 ;
       
-	nZ[0] = 0 ;
-	nZ[1] = 0 ;
-	nZ[2] = 1 ;
+// 	nZ[0] = 0 ;
+// 	nZ[1] = 0 ;
+// 	nZ[2] = 1 ;
 
-	if( p[2] < 0 ) {
-	  nZ[2] = - nZ[2] ;
-	}
+// 	if( p[2] < 0 ) {
+// 	  nZ[2] = - nZ[2] ;
+// 	}
 	
-	Vector3D spacePoint ;
-	spacePoint[0] = dist * nBase[0] ;
-	spacePoint[1] = dist * nBase[1] ;
-	spacePoint[2] = dist * nBase[2] ;
+// 	Vector3D spacePoint ;
+// 	spacePoint[0] = dist * nBase[0] ;
+// 	spacePoint[1] = dist * nBase[1] ;
+// 	spacePoint[2] = dist * nBase[2] ;
 	
+
+	Vector3D nBase( sin( phi ),  cos( phi ), 0.0 ) ;
+	Vector3D nSide( cos( phi ), -sin( phi ), 0.0 ) ;
+
+	Vector3D nZ( 0. , 0. , 1. ) ;
+ 	if( p[2] < 0 ) {
+ 	  nZ[2] = -nZ[2] ;
+ 	}
+	Vector3D spacePoint = dist * nBase ;
+
+//fg: ------- end test vector3d ---------------------------
+
+
+
 	// upper and lower base
 	// inner (1) and outer (2) boundary
 	for ( int j = 1 ; j<=2 ; j ++ ) {
@@ -259,15 +274,19 @@ namespace gear{
 	    d = thick ;
 	  }
 
-	  Vector3D r ;
-	  r[0] = spacePoint[0] + d * nBase[0] ;
-	  r[1] = spacePoint[1] + d * nBase[1] ;
-	  r[2] = spacePoint[2] + d * nBase[2] ;
+//fg: ------- test vector3d ---------------------------
+// 	  Vector3D r ;
+// 	  r[0] = spacePoint[0] + d * nBase[0] ;
+// 	  r[1] = spacePoint[1] + d * nBase[1] ;
+// 	  r[2] = spacePoint[2] + d * nBase[2] ;
+	  Vector3D r = spacePoint + d * nBase ;
+//fg: ------- end test vector3d ---------------------------
   
+
 	  Vector3D myVec = distanceToPlane( p, r, nBase, nSide, nZ, left, right, zStart, zEnd ) ;
 
 	  // debug
-// 	  Point3D iP ( p[0]+myVec[0] , p[1]+myVec[1] , p[2]+myVec[2] ) ;
+// 	  Vector3D iP ( p[0]+myVec[0] , p[1]+myVec[1] , p[2]+myVec[2] ) ;
 // 	  bool isCorrect = isPointInVXD( iP ) ;
 	  
 // 	  if ( !isCorrect ) {
@@ -373,11 +392,11 @@ namespace gear{
 
 
 
-  Point3D VXDParametersImpl::intersectionVXD( Point3D p , Vector3D v , bool sensitive ) const {
+  Vector3D VXDParametersImpl::intersectionVXD( Vector3D p , Vector3D v , bool sensitive ) const {
     
     // return values
     double currentLength = 99999 ;
-    Point3D currentPoint (0. , 0. , 0. ) ;
+    Vector3D currentPoint (0. , 0. , 0. ) ;
     
     for ( int takeLayer=0 ; takeLayer < _layer.getNLayers() ; takeLayer++ ) {
 
@@ -453,7 +472,7 @@ namespace gear{
 	    if ( j == 1 ) spacePoint = r ;
 
 	    // get intersection point plane/line	    
-	    Point3D interSection = planeLineIntersection( r, nBase, p, v ) ;
+	    Vector3D interSection = planeLineIntersection( r, nBase, p, v ) ;
 
 	    // get vector from point to intersection point
 	    Vector3D vip ;
@@ -510,7 +529,7 @@ namespace gear{
 	    r[2] = spacePoint[2] + d * nSide[2] ;
 
 	    // get intersection point plane/line
-	    Point3D interSection = planeLineIntersection( r, nSide, p, v ) ;
+	    Vector3D interSection = planeLineIntersection( r, nSide, p, v ) ;
 	     
 	    // get vector from point to intersection point
 	    Vector3D vip ;
@@ -561,7 +580,7 @@ namespace gear{
 	    r[2] = spacePoint[2] + d * nZ[2] ;
 	    
 	    // get intersection point plane/line
-	    Point3D interSection = planeLineIntersection( r, nZ, p, v ) ;
+	    Vector3D interSection = planeLineIntersection( r, nZ, p, v ) ;
 	    
 	    // get vector from point to intersection point
 	    Vector3D vip ;
@@ -602,7 +621,7 @@ namespace gear{
 
 
 
-  Vector3D VXDParametersImpl::distanceToPlane( Point3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const {
+  Vector3D VXDParametersImpl::distanceToPlane( Vector3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const {
 
     // check zeros
 
@@ -648,7 +667,7 @@ namespace gear{
     double t = - ( n[0] * p[0] + n[1] * p[1] + n[2] * p[2] - d ) ;
 
     // nearest point in plane
-    Point3D pn ;
+    Vector3D pn ;
     pn[0] = p[0] + n[0] * t;
     pn[1] = p[1] + n[1] * t;
     pn[2] = p[2] + n[2] * t;
@@ -674,7 +693,7 @@ namespace gear{
 
 
 
-  Point3D VXDParametersImpl::planeLineIntersection( Vector3D r, Vector3D n, Point3D linePoint, Vector3D lineDir) const {
+  Vector3D VXDParametersImpl::planeLineIntersection( Vector3D r, Vector3D n, Vector3D linePoint, Vector3D lineDir) const {
 
     // calculate distance of plane
     double distance = ( r[0]*n[0] + r[1]*n[1] + r[2]*n[2] ) / ( sqrt( n[0]*n[0] + n[1]*n[1] + n[2]*n[2] ) ) ;
@@ -688,17 +707,17 @@ namespace gear{
     
     if ( denominator == 0 ) {
       // line paralell to plane -> no intersection
-      return Point3D ( 0. , 0. , 0. ) ;
+      return Vector3D ( 0. , 0. , 0. ) ;
     }
 
     double t = numerator/denominator ;
 
     if( t < 0 ) {
       // intersection not in direction of line
-      return Point3D ( 0. , 0. , 0. ) ;
+      return Vector3D ( 0. , 0. , 0. ) ;
     }
 
-    Point3D final ;
+    Vector3D final ;
     final[0] = linePoint[0] + t * lineDir[0] ;
     final[1] = linePoint[1] + t * lineDir[1] ;
     final[2] = linePoint[2] + t * lineDir[2] ;
@@ -762,7 +781,7 @@ namespace gear{
   } // function correctPhiRange
   
 
-  double VXDParametersImpl::getPhiPoint( Point3D p ) const {
+  double VXDParametersImpl::getPhiPoint( Vector3D p ) const {
       // get phi of point in projection 2D
     double pPhi = 0. ;
     if( ( p[0] >= 0 ) && ( p[1] == 0 ) )
@@ -799,7 +818,7 @@ namespace gear{
   } // fucntion isEqual
 
 
-  bool VXDParametersImpl::isEqual( Point3D p1 , Point3D p2 ) const
+  bool VXDParametersImpl::isEqual( Vector3D p1 , Vector3D p2 ) const
   {
     for( int i=0 ; i<3 ; i++ ) {
       if( !( p1[i] == p2[i] ) ) {

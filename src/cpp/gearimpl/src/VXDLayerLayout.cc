@@ -123,12 +123,12 @@ namespace gear{
     double angularThickness ;
 
     // first check if layer is completely out of ladder
-    if( phi < getStartInnerPhi( layerIndex , sensitive ) or phi > getEndInnerPhi( layerIndex, sensitive ) ) {
+    if( phi < getStartInnerPhi( layerIndex , sensitive ) || phi > getEndInnerPhi( layerIndex, sensitive ) ) {
       return -1 ;
     }
 
     // check if angle is withhin outer boundaries - easy calculation then
-    if( phi >= getStartOuterPhi( layerIndex , sensitive ) and phi <= getEndOuterPhi( layerIndex , sensitive ) ) {
+    if( phi >= getStartOuterPhi( layerIndex , sensitive ) && phi <= getEndOuterPhi( layerIndex , sensitive ) ) {
       return ( l.Thickness / cos( phi ) ) ;
     }
 

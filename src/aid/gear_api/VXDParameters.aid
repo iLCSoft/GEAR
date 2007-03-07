@@ -59,19 +59,19 @@ public interface VXDParameters extends GearParameters {
 
     /** returns whether a point is inside a ladder
      */
-    public boolean isPointInLadder(Point3D p) const ;
+    public boolean isPointInLadder(Vector3D p) const ;
 
     /** returns wheter a point is inside a sensitive volume
      */
-    public boolean isPointInSensitive(Point3D p) const ;
+    public boolean isPointInSensitive(Vector3D p) const ;
 
     /** returns vector from point to nearest ladder
      */
-    public Vector3D distanceToNearestLadder(Point3D p) const ;
+    public Vector3D distanceToNearestLadder(Vector3D p) const ;
 
     /** returns vector from point to nearest sensitive volume
      */
-    public Vector3D distanceToNearestSensitive(Point3D p) const ;
+    public Vector3D distanceToNearestSensitive(Vector3D p) const ;
 	
     /** returns the first point where a given strainght line
      *  (parameters point p and direction v)  crosses a ladder
@@ -79,7 +79,7 @@ public interface VXDParameters extends GearParameters {
      *  @param p  a point on the line. This will be the starting point.
      *  @param v  a vector along the line    
      */	
-    public Vector3D intersectionLadder( Point3D p , Vector3D v ) const ;
+    public Vector3D intersectionLadder( Vector3D p , Vector3D v ) const ;
 
     /** returns the first point where a given strainght line
      *  (parameters point p and direction v)  crosses a sensitive volume
@@ -87,6 +87,6 @@ public interface VXDParameters extends GearParameters {
      *  @param p  a point on the line. This will be the starting point.
      *  @param v  a vector along the line
      */	
-    public Vector3D intersectionSensitive( Point3D p, Vector3D v ) const ;	
+    public Vector3D intersectionSensitive( Vector3D p, Vector3D v ) const ;	
     
 }

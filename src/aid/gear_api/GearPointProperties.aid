@@ -6,7 +6,7 @@ package hep.gear.api ;
  *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
  *
  * @author F. Gaede, DESY
- * @version $Id: GearPointProperties.aid,v 1.2 2006-05-05 12:59:26 gaede Exp $
+ * @version $Id: GearPointProperties.aid,v 1.3 2007-03-07 15:37:45 gaede Exp $
  */
 public interface GearPointProperties {
     
@@ -14,74 +14,74 @@ public interface GearPointProperties {
     
     /** The cellID of the the sensitive detector at pos.
      */
-    public long64 getCellID( const Point3D& pos) const throws NotImplementedException ;
+    public long64 getCellID( const Vector3D& pos) const throws NotImplementedException ;
     
     // 	bool getMaterial  (true if defined material, false if problem)
     
     /** Name of material at pos.  
      */
-    public const String& getMaterialName( const Point3D& pos) const throws NotImplementedException ;
+    public const String& getMaterialName( const Vector3D& pos) const throws NotImplementedException ;
     
     /** Density in kg/m^3 at pos.  
      */
-    public double getDensity( const Point3D& pos) const throws NotImplementedException ;
+    public double getDensity( const Vector3D& pos) const throws NotImplementedException ;
 
 //     /** Name of material at pos.  
 //      */
-//     public double getState( const Point3D& pos) const throws NotImplementedException ;
+//     public double getState( const Vector3D& pos) const throws NotImplementedException ;
 
     /** Temperature in K of material at pos.  
      */
-    public double getTemperature( const Point3D& pos) const throws NotImplementedException ;
+    public double getTemperature( const Vector3D& pos) const throws NotImplementedException ;
 
     /** Pressure in P at pos.  
      */
-    public double getPressure( const Point3D& pos) const throws NotImplementedException ;
+    public double getPressure( const Vector3D& pos) const throws NotImplementedException ;
     
     /** Radiation length of material in mm at pos.  
      */
-    public double getRadlen( const Point3D& pos) const throws NotImplementedException ;
+    public double getRadlen( const Vector3D& pos) const throws NotImplementedException ;
     
     /** Interaction length of material in mm at pos.  
      */
-    public double getIntlen( const Point3D& pos) const throws NotImplementedException ;
+    public double getIntlen( const Vector3D& pos) const throws NotImplementedException ;
     
     /** Position in local coordinate 
      */
-    Point3D getLocalPosition( const Point3D& pos) const throws NotImplementedException ;
+    Vector3D getLocalPosition( const Vector3D& pos) const throws NotImplementedException ;
 
 
     /** The magnetic field vector at pos in [Tesla].  
      */
-    public Vector3D getB( const Point3D& pos) const throws NotImplementedException ;
+    public Vector3D getB( const Vector3D& pos) const throws NotImplementedException ;
     
     /** The electric field vector at pos in [V/m].  
      */
-    public Vector3D getE( const Point3D& pos) const throws NotImplementedException ;
+    public Vector3D getE( const Vector3D& pos) const throws NotImplementedException ;
     
 
     /** Names of (geant4) logical volumes in heirarchy starting at given pos ending with the world volume. 
      */
-    public String[] getListOfLogicalVolumes( const Point3D& pos) const throws NotImplementedException ;
+    public String[] getListOfLogicalVolumes( const Vector3D& pos) const throws NotImplementedException ;
 
 
     /** Names of (geant4) physical volumes in heirarchy starting at given pos ending with the world volume. 
      */
-    public String[] getListOfPhysicalVolumes( const Point3D& pos) const throws NotImplementedException ;
+    public String[] getListOfPhysicalVolumes( const Vector3D& pos) const throws NotImplementedException ;
 
 
     /** Names of (geant4) region that contains the given pos.
      */
-    public String getRegion( const Point3D& pos) const throws NotImplementedException ;
+    public String getRegion( const Vector3D& pos) const throws NotImplementedException ;
     
 
     /** True if region that contains pos is defined as a tracker.
      */
-    public boolean isTracker( const Point3D& pos) const throws NotImplementedException ;
+    public boolean isTracker( const Vector3D& pos) const throws NotImplementedException ;
 
 
     /** True if region that contains pos is defined as a calorimeter.
      */
-    public boolean isCalorimeter( const Point3D& pos) const throws NotImplementedException ;
+    public boolean isCalorimeter( const Vector3D& pos) const throws NotImplementedException ;
 
 }

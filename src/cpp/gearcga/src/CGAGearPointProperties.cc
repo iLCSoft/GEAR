@@ -21,7 +21,7 @@ namespace gear {
     //vec getPosition returns the current position (if ID is known)
     /** The cellID of the the sensitive detector at pos.
      */
-    long64 CGAGearPointProperties::getCellID(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    long64 CGAGearPointProperties::getCellID(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 	
 	double x, y, z;
 	int flag;
@@ -63,7 +63,7 @@ namespace gear {
     // 	bool getMaterial  (true if defined material, false if problem)
     /** Name of material at pos.  
      */
-    const std::string & CGAGearPointProperties::getMaterialName(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    const std::string & CGAGearPointProperties::getMaterialName(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	static std::string matName("unknown");
 
@@ -79,7 +79,7 @@ namespace gear {
     }
     /** Density in kg/m^3 at pos.  
      */
-    double CGAGearPointProperties::getDensity(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    double CGAGearPointProperties::getDensity(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -91,10 +91,10 @@ namespace gear {
 
 //     /** Name of material at pos.  
 //      */
-//     public double getState( const Point3D& pos) const throws NotImplementedException ;
+//     public double getState( const Vector3D& pos) const throws NotImplementedException ;
     /** Temperature in K of material at pos.  
      */
-    double CGAGearPointProperties::getTemperature(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    double CGAGearPointProperties::getTemperature(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -106,7 +106,7 @@ namespace gear {
 
     /** Pressure in P at pos.  
      */
-    double CGAGearPointProperties::getPressure(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    double CGAGearPointProperties::getPressure(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -119,7 +119,7 @@ namespace gear {
 
     /** Radiation length of material in mm at pos.  
      */
-    double CGAGearPointProperties::getRadlen(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    double CGAGearPointProperties::getRadlen(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -131,7 +131,7 @@ namespace gear {
 
     /** Interaction length of material in mm at pos.  
      */
-    double CGAGearPointProperties::getIntlen(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    double CGAGearPointProperties::getIntlen(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -143,7 +143,7 @@ namespace gear {
 
     /** Position in local coordinate 
      */
-    Point3D CGAGearPointProperties::getLocalPosition(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    Vector3D CGAGearPointProperties::getLocalPosition(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -152,12 +152,12 @@ namespace gear {
 
 	std::vector<double> result = CGAGetLocalPosition(position);
 
-	return Point3D(result[0], result[1], result[2]);
+	return Vector3D(result[0], result[1], result[2]);
     }
 
     /** The magnetic field vector at pos in [Tesla].  
      */
-    Vector3D CGAGearPointProperties::getB(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    Vector3D CGAGearPointProperties::getB(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -172,7 +172,7 @@ namespace gear {
 
     /** The electric field vector at pos in [V/m].  
      */
-    Vector3D CGAGearPointProperties::getE(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    Vector3D CGAGearPointProperties::getE(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -186,7 +186,7 @@ namespace gear {
 
     /** Names of (geant4) logical volumes in heirarchy starting at given pos ending with the world volume. 
      */
-    std::vector<std::string>  CGAGearPointProperties::getListOfLogicalVolumes(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    std::vector<std::string>  CGAGearPointProperties::getListOfLogicalVolumes(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -197,7 +197,7 @@ namespace gear {
     }
     /** Names of (geant4) physical volumes in heirarchy starting at given pos ending with the world volume. 
      */
-    std::vector<std::string>  CGAGearPointProperties::getListOfPhysicalVolumes(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    std::vector<std::string>  CGAGearPointProperties::getListOfPhysicalVolumes(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -209,7 +209,7 @@ namespace gear {
 
     /** Names of (geant4) region that contains the given pos.
      */
-    std::string CGAGearPointProperties::getRegion(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    std::string CGAGearPointProperties::getRegion(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -221,7 +221,7 @@ namespace gear {
 
     /** True if region that contains pos is defined as a tracker.
      */
-    bool CGAGearPointProperties::isTracker(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    bool CGAGearPointProperties::isTracker(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
@@ -233,7 +233,7 @@ namespace gear {
 
     /** True if region that contains pos is defined as a calorimeter.
      */
-    bool CGAGearPointProperties::isCalorimeter(const Point3D & pos) const throw (NotImplementedException, std::exception ) {
+    bool CGAGearPointProperties::isCalorimeter(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
 
 	double position[3];
         position[0] = pos[0];
