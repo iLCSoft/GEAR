@@ -97,7 +97,7 @@ namespace gear {
     int _domFile ;
 
     // unique attribute as identifier for nodes
-    char* _name ;
+    const char* _name ;
     
   }; //class
 

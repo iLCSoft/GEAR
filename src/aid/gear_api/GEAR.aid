@@ -33,13 +33,13 @@ namespace gear {
  
 
   /** 64 bit integer,e.g.to be used for cellids **/
-  typedef long long long64 ;
- 
+   typedef long long long64 ;
+   // FIXME: needs to be only long on 64bit machines ->  flags??
 
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.5 2007-03-07 15:37:45 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -64,7 +64,7 @@ namespace gear {
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.5 2007-03-07 15:37:45 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -80,7 +80,7 @@ namespace gear {
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.5 2007-03-07 15:37:45 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -98,7 +98,7 @@ namespace gear {
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.5 2007-03-07 15:37:45 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 

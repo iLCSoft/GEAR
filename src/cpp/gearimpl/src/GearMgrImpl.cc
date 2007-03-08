@@ -1,5 +1,7 @@
 
 #include "gearimpl/GearMgrImpl.h"
+#include "gearimpl/GearParametersImpl.h"
+#include "gear/CalorimeterParameters.h"
 
 namespace gear{
 
@@ -10,6 +12,7 @@ namespace gear{
     _ecalEndcapParameters(0) ,
     _hcalBarrelParameters(0) ,
     _hcalEndcapParameters(0) ,
+    _lcalParameters(0) ,
     _vxdParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) {
@@ -75,6 +78,16 @@ namespace gear{
   }
 
 
+  const CalorimeterParameters & GearMgrImpl::getLcalParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _lcalParameters == 0 )
+      throw UnknownParameterException( "No LcalParameters set ") ;
+
+    return  *_lcalParameters ;
+
+  }
+
   const VXDParameters & GearMgrImpl::getVXDParameters() const
     throw (UnknownParameterException, std::exception ) {
 
@@ -134,6 +147,27 @@ namespace gear{
   void GearMgrImpl::setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) {
 
     _hcalEndcapParameters = hcalEndcapParameters ;
+  }
+
+  void GearMgrImpl::setLcalParameters( CalorimeterParameters* lcalParameters ) {
+
+    try {
+
+      lcalParameters->getDoubleVal("beam_crossing_angle") ;
+
+    }catch( UnknownParameterException ){
+
+      std::cout << "WARNING GearMgrImpl::setLcalParameters: added "
+	" missing parameter beam_crossing_angle 0.0 ! " << std::endl ;
+      
+      GearParametersImpl* gp 
+	= dynamic_cast<GearParametersImpl*>(lcalParameters) ;
+
+      if( gp ) 
+	gp->setDoubleVal("beam_crossing_angle", 0.0 ) ;
+
+    }
+    _lcalParameters = lcalParameters ;
   }
 
   void GearMgrImpl::setVXDParameters( VXDParameters* vxdParameters ) {

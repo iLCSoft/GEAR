@@ -257,23 +257,31 @@ namespace gear {
 
       std::string caloName = getXMLAttribute( xmlElement , "name" ) ;
 
-      bool isEcal = ( caloName[0] == 'E' || caloName[0] == 'e' ) ; 
+//       bool isEcal = ( caloName[0] == 'E' || caloName[0] == 'e' ) ; 
 
-      if( isEcal ){
+      std::transform( caloName.begin() , caloName.end() , 
+		      caloName.begin(), tolower ) ;
 
+
+      if( caloName=="ecal" ){
+	
 	if( isBarrelCalorimeter )
 	  gearMgr->setEcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setEcalEndcapParameters( caloParams ) ;
-
-      } else {
-
+	
+      }else if( caloName=="hcal" ) {
+	
 	if( isBarrelCalorimeter )
 	  gearMgr->setHcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setHcalEndcapParameters( caloParams ) ;
+	
+      }else if( caloName=="lcal" ) {
 
+	gearMgr->setLcalParameters( caloParams ) ;	
       }
+      
     }
     
     return caloParams ;

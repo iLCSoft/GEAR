@@ -1,6 +1,22 @@
-
+ ======================
   Gear release notes
  ======================
+
+ ---------
+| v00-04  |
+ ---------
+
+   - replaced Point3D and Point2D from all interfaces - only Vector3D/Vector2D
+     are used now. Kept Point3D/Point2D definition for backward compatibility.
+
+   - added implementation of simple 3d vector with scalar product, addition,
+     and coordinate transform (cartesian, cylindrical and spherical).
+     This vetcor will also be used in a future LCIo release.
+
+   - added parameters for 'Lcal' (Calorimeter type endcap symmetry=1) 
+     as suggested by B.Pawlik. Lcal sections in xml need mandatory user 
+     parameter 'beam_crossing_angle' - enforced in GearMgr::setLcalParameters
+     ( will also be written with MokkaGear)	
 
  ---------
 | v00-03  |

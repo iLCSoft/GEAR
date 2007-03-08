@@ -61,6 +61,15 @@ namespace gear{
 	 <<  m.getHcalEndcapParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
        
+    try{ 
+      s  << "   ----  Lcal   ---- "  << std::endl 
+	 <<  m.getLcalParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){
+
+      s << "   ----  Lcal   ----  NOT FOUND :( " << std::endl ;
+
+    }
+       
 
     try{ 
       // VXD parameters

@@ -25,6 +25,12 @@
                          rMin="386.0" rMax="1626.0" 
                          padHeight="6.0" padWidth="2.0" 
                          maxRow="200" padGap="0.0" />
+	<parameter name="tpcRPhiResMax" type="double"> 0.16  </parameter>
+	<parameter name="tpcZRes" type="double"> 1.0  </parameter>
+	<parameter name="tpcPixRP" type="double"> 1.0  </parameter>
+	<parameter name="tpcPixZ" type="double"> 1.4  </parameter>
+	<parameter name="tpcIonPotential" type="double"> 0.00000003  </parameter>
+	<parameter name="BField" type="double"> 4.0  </parameter>
      </detector>
 
      <detector name="EcalBarrel" geartype="CalorimeterParameters">
@@ -68,6 +74,15 @@
 	<layer repeat="40" thickness="24.5" absorberThickness="21.0"  cellSize0="30.0" cellSize1="30.0"/>
 
      </detector>
+
+    <detector name="LCAL" geartype="CalorimeterParameters">
+    	<layout type="Endcap"  symmetry="1" phi0="0.0" />
+	<dimensions inner_r = "80.0" outer_r = "280.0" inner_z = "3050.0" />
+	<layer repeat="30" thickness="5.8" absorberThickness="3.5" 
+               cellSize0="0.3" cellSize1="0.05235987755982988527"/>
+	<parameter name="beam_crossing_angle" type="double">0.0</parameter>	
+	<parameter name="hitCollectionName" type="string">SLcal01_LumiCal</parameter>	
+    </detector>
 
         <detector name="VXD" geartype="VXDParameters">
             <vxdType technology="CCD" />
