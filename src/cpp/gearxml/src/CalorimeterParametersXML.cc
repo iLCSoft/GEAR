@@ -14,6 +14,7 @@
 #include <algorithm>
 #include <sstream>
 #include <math.h>
+#include <string>
 
 #define _EPSILON 0.0001
 
@@ -263,21 +264,21 @@ namespace gear {
 		      caloName.begin(), tolower ) ;
 
 
-      if( caloName=="ecal" ){
+      if( caloName.find("ecal") != std::string::npos ){
 	
 	if( isBarrelCalorimeter )
 	  gearMgr->setEcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setEcalEndcapParameters( caloParams ) ;
 	
-      }else if( caloName=="hcal" ) {
+      }else if( caloName.find("hcal" ) != std::string::npos ) {
 	
 	if( isBarrelCalorimeter )
 	  gearMgr->setHcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setHcalEndcapParameters( caloParams ) ;
 	
-      }else if( caloName=="lcal" ) {
+      }else if( caloName.find("lcal" ) != std::string::npos ) {
 
 	gearMgr->setLcalParameters( caloParams ) ;	
       }
