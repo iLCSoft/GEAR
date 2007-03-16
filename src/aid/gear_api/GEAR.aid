@@ -24,12 +24,13 @@ namespace gear {
 
 //  typedef std::pair<double,double> Vector2D ;
 
-//  typedef Vector2D Point2D ;
-//  typedef Vector3D Point3D ;
 
- typedef std::vector<int> IntVec ;
- typedef std::vector<double> DoubleVec ;
- typedef std::vector<std::string> StringVec ;
+typedef Vector2D Point2D ;
+typedef Vector3D Point3D ;
+
+typedef std::vector<int> IntVec ;
+typedef std::vector<double> DoubleVec ;
+typedef std::vector<std::string> StringVec ;
  
 
   /** 64 bit integer,e.g.to be used for cellids **/
@@ -39,7 +40,7 @@ namespace gear {
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -64,7 +65,7 @@ namespace gear {
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -80,7 +81,7 @@ namespace gear {
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -98,7 +99,7 @@ namespace gear {
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.6 2007-03-08 16:34:44 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 

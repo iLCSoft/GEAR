@@ -13,7 +13,7 @@ namespace gear {
    *  e.g. from CLHEP or root::MathCore in the future.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: Vectors.h,v 1.4 2007-03-07 15:37:45 gaede Exp $
+   * @version $Id: Vectors.h,v 1.5 2007-03-16 15:43:17 gaede Exp $
    */
   
   template <int N, typename Float_T=double>
@@ -82,21 +82,21 @@ namespace gear {
   
   
 
-  /** Defined for backward compatibility */
-  struct Point2D : public Vector2D{
+//   /** Defined for backward compatibility */
+//   struct Point2D : public Vector2D{
     
-    Point2D() : Vector2D( 0., 0. ) {}
-    Point2D(double d0, double d1 ) : Vector2D( d0, d1 ) {}
+//     Point2D() : Vector2D( 0., 0. ) {}
+//     Point2D(double d0, double d1 ) : Vector2D( d0, d1 ) {}
 
-  } ;
+//   } ;
 
-  /** Defined for backward compatibility */
-  struct Point3D : public Vector3D{
+//   /** Defined for backward compatibility */
+//   struct Point3D : public Vector3D{
     
-    Point3D() : Vector3D( 0., 0., 0.) {}
-    Point3D(double d0, double d1, double d2 ) : Vector3D( d0, d1,d2 ) {}
+//     Point3D() : Vector3D( 0., 0., 0.) {}
+//     Point3D(double d0, double d1, double d2 ) : Vector3D( d0, d1,d2 ) {}
 
-  } ;
+//   } ;
 
 
 } // namespace gear
