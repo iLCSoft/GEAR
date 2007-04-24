@@ -16,7 +16,7 @@ SET( test_bins
 	testtpcproto
 	testVTXgear )
 
-OPTION( BUILD_GEAR_TESTS OFF )
+OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
 
 IF( BUILD_GEAR_TESTS )
 	# loop through list of test binaries
