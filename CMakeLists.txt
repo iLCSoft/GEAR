@@ -14,6 +14,9 @@ SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 # project name
 PROJECT( GEAR )
 
+# project options
+OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
+
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 5 )

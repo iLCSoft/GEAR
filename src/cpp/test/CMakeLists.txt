@@ -9,14 +9,13 @@ INCLUDE_DIRECTORIES( ../include )
 # create symbolic bin target for calling targets bin_XXX
 ADD_CUSTOM_TARGET( bin VERBATIM )
 
-# test binaries
+# list of test binaries
 SET( test_bins
 	mergeXML
 	testgear
 	testtpcproto
-	testVTXgear )
-
-OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
+	testVTXgear
+)
 
 IF( BUILD_GEAR_TESTS )
 	# loop through list of test binaries
