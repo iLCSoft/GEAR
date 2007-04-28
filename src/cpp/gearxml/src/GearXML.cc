@@ -6,6 +6,7 @@
 #include "gearxml/TPCParametersXML.h"
 #include "gearxml/CalorimeterParametersXML.h"
 #include "gearxml/VXDParametersXML.h"
+#include "gearxml/ConstantBFieldXML.h"
 
 #include "gearimpl/GearMgrImpl.h"
 
@@ -37,11 +38,28 @@ namespace gear{
 
     TiXmlElement root("gear") ;
 
+
+
     TiXmlElement detectors("detectors") ;
 
     TiXmlComment rootComment ;
     rootComment.SetValue( "Gear XML file automatically created with GearXML::createXMLFile ...."  ) ;
     root.InsertEndChild ( rootComment) ;
+
+    // --- the BField ------------
+
+    try{
+      
+      ConstantBFieldXML handler ;  //FIXME : need full field map ...
+
+      TiXmlElement field = handler.toXML(  mgr->getBField()  )  ;
+
+      root.InsertEndChild( field ) ;
+ 
+    }
+    catch( UnknownParameterException& e){
+    }
+
 
 
     // --------- add TPC parameters -------------------
@@ -237,7 +255,14 @@ namespace gear{
 			   + _fileName  ) ;
     }
 
-    
+//     // --- the BField ------------
+    TiXmlNode* field = root->FirstChild("BField")  ;
+    if( field != 0 ){
+      ConstantBFieldXML handler ;
+      handler.fromXML( field->ToElement() , _gearMgr ) ; 
+    }
+
+
     TiXmlNode* det = 0 ;
     while( ( det = detectors->IterateChildren( "detector", det ) )  != 0  ){
       

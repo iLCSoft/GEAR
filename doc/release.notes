@@ -1,7 +1,14 @@
  ======================
   Gear release notes
  ======================
- ----------
+
+  ----------
+ | v00-05   |
+  ----------
+   - added BField map (only constant)
+     ( double bfield = gearmgr.getBField().at( Vector3D(0,0,0) ).z() ; )
+
+  ----------
  | v00-04-02|
   ----------
    patch release - identical to v00-04-01, except

@@ -6,7 +6,7 @@ package hep.gear.api ;
  * 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearMgr.aid,v 1.3 2007-03-08 16:34:44 gaede Exp $
+ * @version $Id: GearMgr.aid,v 1.4 2007-04-28 21:45:45 gaede Exp $
  */
 public interface GearMgr {
     
@@ -17,7 +17,13 @@ public interface GearMgr {
      */
     public const GearParameters& getGearParameters( const String& key ) const throws UnknownParameterException ;
     
-    
+    /** Get the B field map.
+     *
+     *  @throws UnknownParameterException
+     */
+     public const BField& getBField() const throws UnknownParameterException ;
+
+					   
     /** Get the TPCParameters.
      *
      *  @throws UnknownParameterException
@@ -88,6 +94,10 @@ public interface GearMgr {
     public void setGearParameters( const String& key , GearParameters* gearParameters )   ;
     
     
+    /** Set the BField.
+     */
+    public void  setBField( BField* bField)   ;
+
     /** Set the TPCParameters.
      */
     public void  setTPCParameters( TPCParameters* tpcParameters)   ;

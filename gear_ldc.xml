@@ -10,9 +10,11 @@
              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
       -->
 
+  <BField type="ConstantBField" x="0.0" y="0.0" z="4.0"/>
 
   <detectors> 
    
+
      <detector name="TPCTest" geartype="TPCParameters">
 
         <maxDriftLength value="2500." />

@@ -39,6 +39,17 @@ namespace gear{
 
   }
 
+
+  const BField & GearMgrImpl::getBField() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _bField == 0 )
+      throw UnknownParameterException( "No BField set ") ;
+
+    return  *_bField ;
+
+  }
+
   const CalorimeterParameters & GearMgrImpl::getEcalBarrelParameters() const
     throw (UnknownParameterException, std::exception ) {
     
@@ -128,6 +139,11 @@ namespace gear{
   void GearMgrImpl::setTPCParameters( TPCParameters* tpcParameters ) {
     
     _tpcParameters = tpcParameters ;
+  }
+
+  void GearMgrImpl::setBField( BField* b){
+    
+    _bField = b ;
   }
 
   void GearMgrImpl::setEcalBarrelParameters( CalorimeterParameters* ecalBarrelParameters ) {

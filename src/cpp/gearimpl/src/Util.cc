@@ -35,6 +35,10 @@ namespace gear{
 
 
     try{ 
+      s <<  m.getBField() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+
+    try{ 
       // TPC parameters
       s <<  m.getTPCParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
@@ -150,7 +154,20 @@ namespace gear{
     return s ;
   }
 
+  std::ostream& operator<< (  std::ostream& s,  const BField& b ) {
 
+    s << std::endl 
+      << "   -----------   BField   ------- "  << std::endl  << std::endl        ;
+
+    Vector3D bv = b.at(  Vector3D ( 0., 0., 0. ) ) ;
+
+    s << "       field vector at origin :   Bx = " << bv.x() <<  " , By = " << bv.y() << " , Bz = " << bv.z()  << " [Tesla] " << std::endl ;
+
+    s << dynamic_cast<const GearParameters&>( b )  ;
+    
+    return s ;
+
+  }
 
 
   std::ostream& operator<< (  std::ostream& s,  const  TPCParameters& p ) {

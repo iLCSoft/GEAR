@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.3 2007-03-08 16:34:44 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.4 2007-04-28 21:45:45 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -38,7 +38,13 @@ namespace gear {
     virtual const GearParameters & getGearParameters(const std::string & key) const 
       throw (UnknownParameterException, std::exception )  ;
 
-    /** Get the TPCParameters.
+    /** Get the BField.
+	 */
+	virtual const BField & getBField() const 
+		throw (UnknownParameterException, std::exception ) ;
+
+		
+	/** Get the TPCParameters.
      */
     virtual const TPCParameters & getTPCParameters() const
       throw (UnknownParameterException, std::exception ) ;
@@ -149,9 +155,10 @@ namespace gear {
      */
     virtual void  setDistanceProperties( GearDistanceProperties* distanceProperties) ; 
     
-    
-    
-    
+   /** Set the b field object
+	*/
+	virtual void setBField( BField* bField ) ;
+				
   protected:
     
     ParameterMap _map ;
@@ -164,7 +171,8 @@ namespace gear {
     VXDParameters* _vxdParameters ;
     GearPointProperties*  _pointProperties ;
     GearDistanceProperties*  _distanceProperties ;
-
+    BField* _bField ;
+	
     mutable StringVec _keys ;
 
   }; // class
