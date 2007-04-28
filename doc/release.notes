@@ -1,8 +1,13 @@
  ======================
   Gear release notes
  ======================
-
  ----------
+ | v00-04-02|
+  ----------
+   patch release - identical to v00-04-01, except
+   -  added support for cmake (experimental)
+
+----------
 | v00-04-01|
  ----------
    
