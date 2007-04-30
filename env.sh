@@ -1,10 +1,10 @@
 
 export GEAR=$PWD
 
-export GEARVERSION=v00-04
+export GEARVERSION=v00-05
 
 export PATH=$GEAR/tools:$GEAR/bin:$PATH
-export JDK_HOME=/opt/products/java/1.4.2
+export JDK_HOME=/afs/desy.de/group/it/ilcsoft/java/1.5.0
 
 #export GEARDEBUG=1
 
@@ -16,8 +16,8 @@ export JDK_HOME=/opt/products/java/1.4.2
 export GEAR_USE_AIDA=1
 
 if [ $GEAR_USE_AIDA ] ; then
-    export ROOTSYS=/opt/products/root/5.08.00
-    export RAIDA_HOME=/afs/desy.de/group/it/ilcsoft/RAIDA/v00-02
+    export ROOTSYS=/afs/desy.de/group/it/ilcsoft/root/5.08.00
+    export RAIDA_HOME=/afs/desy.de/group/it/ilcsoft/RAIDA/v01-01
     
     export LD_LIBRARY_PATH=$ROOTSYS/lib:$LD_LIBRARY_PATH
     export PATH=$ROOTSYS/bin:$PATH
@@ -44,13 +44,13 @@ if [ $GEAR_USE_CGA ] ; then
 #export LCIO=/usr/local/LCIO/01.07
 
 #---- DESY setup --------------- 
-export MOKKA=/afs/desy.de/group/it/ilcsoft/mokka/6.1-dev/
-export MYSQLLIB=/opt/products/mysql/3.23.58/lib/mysql
-export CLHEP_BASE_DIR=/opt/products/CLHEP/2.0.2.2
-export G4INSTALL=/opt/products/geant4/8.0.p01
+export MOKKA=/afs/desy.de/group/it/ilcsoft/mokka/6.3.p01
+export MYSQLLIB=/afs/desy.de/group/it/ilcsoft/MySQL/5.0.26/lib/mysql
+export CLHEP_BASE_DIR=/afs/desy.de/group/it/ilcsoft/CLHEP/2.0.2.2
+export G4INSTALL=/afs/desy.de/group/it/ilcsoft/geant4/8.0.p01
 export G4SYSTEM=Linux-g++
 export MOKKALIBS=$MOKKA/tmp/$G4SYSTEM
-export LCIO=/afs/desy.de/group/it/ilcsoft/lcio/v01-07
+export LCIO=/afs/desy.de/group/it/ilcsoft/lcio/v01-08-02
 fi
 
 

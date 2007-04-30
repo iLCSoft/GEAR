@@ -94,6 +94,15 @@ int main(int argc, char**argv){
 
   GearXML::createXMLFile( gearMgr, "testgear_out.xml" ) ;
 
+
+  // ----- getting Bz from the field map
+  double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ; 
+  
+  std::cout << std::endl  
+	  <<	" --  Bz at origin [double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ;]  : " << bfield
+	  << std::endl << std::endl ;
+
+	  
   // --- testing gearcga ---
 #ifdef CGA
   std::ifstream inFile("mokka.steer");
