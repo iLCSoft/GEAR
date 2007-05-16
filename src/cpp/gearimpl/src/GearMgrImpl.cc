@@ -15,7 +15,9 @@ namespace gear{
     _lcalParameters(0) ,
     _vxdParameters(0) ,
     _pointProperties(0) ,
-    _distanceProperties(0) {
+    _distanceProperties(0),
+    _bField(0){
+    
   }
   
   const GearParameters & GearMgrImpl::getGearParameters(const std::string & key) const 
