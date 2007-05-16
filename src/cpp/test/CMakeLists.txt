@@ -3,21 +3,21 @@
 # @author Jan Engels, DESY
 #############################################
 
-# include directories
-INCLUDE_DIRECTORIES( ../include )
-
-# create symbolic bin target for calling targets bin_XXX
-ADD_CUSTOM_TARGET( bin VERBATIM )
-
-# list of test binaries
-SET( test_bins
-	mergeXML
-	testgear
-	testtpcproto
-	testVTXgear
-)
-
 IF( BUILD_GEAR_TESTS )
+	# include directories
+	INCLUDE_DIRECTORIES( ../include )
+
+	# list of test binaries
+	SET( test_bins
+		mergeXML
+		testgear
+		testtpcproto
+		testVTXgear
+	)
+
+	# create symbolic bin target for calling targets bin_XXX
+	ADD_CUSTOM_TARGET( bin VERBATIM )
+
 	# loop through list of test binaries
 	FOREACH( bin ${test_bins} )
 		# create target for binary
