@@ -36,7 +36,19 @@ namespace gear{
 
     try{ 
       s <<  m.getBField() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
+    } catch(UnknownParameterException &e){
+
+      s << "   ----  BField   ----   " << std::endl 
+	<< "     WARNING:  NOT FOUND  !     " << std::endl 
+	<< "   please add  it to the <gear> element of your gear file, e.g.: "
+	<< std::endl
+	<< "   <gear> " << std::endl
+	<< "      <BField type=\"ConstantBField\" x=\"0.0\" y=\"0.0\" z=\"4.0\"/> " 
+	<< std::endl
+	<< "      <detectors> ... <detectors/>" << std::endl
+	<< "   <gear/> " << std::endl
+	<< std::endl ;  
+    }
 
     try{ 
       // TPC parameters
