@@ -117,23 +117,46 @@ namespace gear {
     // type
 
     const TiXmlElement* vxdType = xmlElement->FirstChildElement( "vxdType" ) ;
+
+//     int intType = 0 ;
+//     const char* strType = getXMLAttribute( vxdType , "technology" ) .c_str() ;
+
+//     //std::cout << "VXDParameters::fromXML vxdType == '" << strType << "'" << std::endl ; // debug
+
+//     if( !std::strcmp( strType , "CCD" ) ) {
+//       intType = VXDParameters::CCD ;
+//      }
+//     if( !std::strcmp( strType ,"CMOS" ) ) {
+//       intType = VXDParameters::CMOS ;
+//     }
+//     if( !std::strcmp( strType , "HYBRID" ) ) {
+//       intType = VXDParameters::HYBRID ;
+//     }
+//     if( std::strcmp( strType , "CCD" ) && std::strcmp( strType ,"CMOS" )  && std::strcmp( strType , "HYBRID" ) ) {
+//       throw Exception( "VXDParametersXML::fromXML technology of vxdType not known."
+// 		       "Needs to be 'CCD', 'CMOS' or 'HYBRID'." ) ;
+//     }
+
+
     int intType = 0 ;
-    const char* strType = getXMLAttribute( vxdType , "technology" ) .c_str() ;
+    std::string strType = getXMLAttribute( vxdType , "technology" ) ;
+    
+    if( strType == "CCD"  ) {
 
-    //std::cout << "VXDParameters::fromXML vxdType == '" << strType << "'" << std::endl ; // debug
-
-    if( !std::strcmp( strType , "CCD" ) ) {
       intType = VXDParameters::CCD ;
-     }
-    if( !std::strcmp( strType ,"CMOS" ) ) {
+    }
+    else if( strType == "CMOS" ) {
+
       intType = VXDParameters::CMOS ;
     }
-    if( !std::strcmp( strType , "HYBRID" ) ) {
+    else if( strType == "HYBRID"  ) {
+
       intType = VXDParameters::HYBRID ;
     }
-    if( std::strcmp( strType , "CCD" ) && std::strcmp( strType ,"CMOS" )  && std::strcmp( strType , "HYBRID" ) ) {
-      throw Exception( "VXDParametersXML::fromXML technology of vxdType not known."
-		       "Needs to be 'CCD', 'CMOS' or 'HYBRID'." ) ;
+    else{
+      
+      throw Exception( "VXDParametersXML::fromXML technology of vxdType:  " + strType +
+		       "\n  has to be one of: 'CCD', 'CMOS' or 'HYBRID'." ) ;
     }
 
     const TiXmlElement* shell = xmlElement->FirstChildElement( "shell" ) ;
