@@ -1,0 +1,71 @@
+<gear>
+    <!--Gear XML file automatically created with GearXML::createXMLFile ....-->
+    <detectors>
+        <detector name="SiPlanes" geartype="SiPlanesParameters">
+            <siplanesType type="TelescopeWithDUT" />
+            <siplanesNumber siplanesNumber="6" />
+            <dut dut_ID="10">
+                <dut_ladder positionX="0.000000" positionY="0.000000" positionZ="0.157000" sizeX="7.700000" sizeY="7.700000" thickness="0.286000" radLength="93.660734" />
+                <dut_sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+            </dut>
+            <layers>
+                <layer ID="1">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-48.945000" sizeX="7.700000" sizeY="7.700000" thickness="0.096000" radLength="93.660734" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="-49.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+                </layer>
+                <layer ID="2">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-28.945000" sizeX="7.700000" sizeY="7.700000" thickness="0.096000" radLength="93.660734" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="-29.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+                </layer>
+                <layer ID="3">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-8.945000" sizeX="7.700000" sizeY="7.700000" thickness="0.096000" radLength="93.660734" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="-9.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+                </layer>
+                <layer ID="4">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="20.055000" sizeX="7.700000" sizeY="7.700000" thickness="0.096000" radLength="93.660734" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="20.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+                </layer>
+                <layer ID="5">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="40.055000" sizeX="7.700000" sizeY="7.700000" thickness="0.096000" radLength="93.660734" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="40.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+                </layer>
+                <layer ID="6">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="60.055000" sizeX="7.700000" sizeY="7.700000" thickness="0.096000" radLength="93.660734" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="60.000000" sizeX="7.700000" sizeY="7.700000" thickness="0.014000" radLength="93.660734" />
+                </layer>
+                <layer ID="1001">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-100.000000" sizeX="10.000000" sizeY="10.000000" thickness="2.500000" radLength="413.124664" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="2001">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-53.000000" sizeX="10.000000" sizeY="10.000000" thickness="0.030000" radLength="88.963206" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="2002">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-5.000000" sizeX="10.000000" sizeY="10.000000" thickness="0.030000" radLength="88.963206" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="2003">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="-4.000000" sizeX="10.000000" sizeY="10.000000" thickness="0.030000" radLength="88.963206" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="2004">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="15.000000" sizeX="10.000000" sizeY="10.000000" thickness="0.030000" radLength="88.963206" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="2005">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="16.000000" sizeX="10.000000" sizeY="10.000000" thickness="0.030000" radLength="88.963206" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="2006">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="64.000000" sizeX="10.000000" sizeY="10.000000" thickness="0.030000" radLength="88.963206" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+                <layer ID="1002">
+                    <ladder positionX="0.000000" positionY="0.000000" positionZ="100.000000" sizeX="10.000000" sizeY="10.000000" thickness="2.500000" radLength="413.124664" />
+                    <sensitive positionX="0.000000" positionY="0.000000" positionZ="0.000000" sizeX="0.000000" sizeY="0.000000" thickness="0.000000" radLength="0.000000" />
+                </layer>
+            </layers>
+        </detector>
+    </detectors>
+</gear>

@@ -13,6 +13,7 @@ IF( BUILD_GEAR_TESTS )
 		testgear
 		testtpcproto
 		testVTXgear
+		testSiPlanesgear
 	)
 
 	# create symbolic bin target for calling targets bin_XXX
