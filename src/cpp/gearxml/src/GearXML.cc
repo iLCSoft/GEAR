@@ -7,12 +7,14 @@
 #include "gearxml/CalorimeterParametersXML.h"
 #include "gearxml/VXDParametersXML.h"
 #include "gearxml/ConstantBFieldXML.h"
+#include "gearxml/SiPlanesParametersXML.h"
 
 #include "gearimpl/GearMgrImpl.h"
 
 #include "gear/GEAR.h"
 #include "gear/CalorimeterParameters.h"
 #include "gear/VXDParameters.h"
+#include "gear/SiPlanesParameters.h"
 
 //#include <algorithm>
 #include <sstream>
@@ -37,8 +39,6 @@ namespace gear{
     TiXmlDocument doc( fileName )  ;
 
     TiXmlElement root("gear") ;
-
-
 
     TiXmlElement detectors("detectors") ;
 
@@ -179,6 +179,24 @@ namespace gear{
     catch( UnknownParameterException& e) {
     }
     
+    // ------- add SiPlanes parameters ----------------------------
+    try{
+
+      SiPlanesParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getSiPlanesParameters() ) ;
+
+      // debugging
+      //      std::cout << "SiPlanes called." << std::endl ;
+
+      detector.SetAttribute( "name" , "SiPlanes" ) ;
+      detector.SetAttribute( "geartype" , GEAR::SIPLANESPARAMETERS ) ;
+      detectors.InsertEndChild( detector ) ;
+    }
+    catch( UnknownParameterException& e) {
+    }
+    
+
 
     // ------- generic/user detector parameters -----------
 
@@ -254,7 +272,7 @@ namespace gear{
       throw ParseException( std::string( "GearXML::createGearMgr : no detectors tag found in  ") 
 			   + _fileName  ) ;
     }
-
+    
 //     // --- the BField ------------
     TiXmlNode* field = root->FirstChild("BField")  ;
     if( field != 0 ){

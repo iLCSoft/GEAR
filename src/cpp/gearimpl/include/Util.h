@@ -6,6 +6,7 @@
 #include "gear/BField.h"
 #include "gear/TPCParameters.h"
 #include "gear/VXDParameters.h"
+#include "gear/SiPlanesParameters.h"
 #include "gear/CalorimeterParameters.h"
 #include "gear/GearMgr.h"
 #include "gear/GEAR.h"
@@ -22,15 +23,18 @@ namespace gear {
   
   
   std::ostream& operator<< (  std::ostream& s,  const TPCParameters& p ) ;
-
+  
 
   std::ostream& operator<< (  std::ostream& s,  const BField& b ) ;
-  
-  
+
+
   std::ostream& operator<< (  std::ostream& s,  const CalorimeterParameters& p ) ;
   
 
   std::ostream& operator<< (  std::ostream& s,  const VXDParameters& p ) ;
+
+
+  std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) ;
 
 
 } // namespace gear

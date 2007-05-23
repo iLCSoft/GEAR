@@ -3,6 +3,7 @@
 
 #include "gear/PadRowLayout2D.h"
 #include "gear/VXDLayerLayout.h"
+#include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 
 
@@ -50,6 +51,7 @@ namespace gear{
 	<< std::endl ;  
     }
 
+
     try{ 
       // TPC parameters
       s <<  m.getTPCParameters() <<  std::endl  ;
@@ -92,7 +94,12 @@ namespace gear{
       s <<  m.getVXDParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
     
-
+ 
+    try{ 
+      // SiPlanes parameters
+      s <<  m.getSiPlanesParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}  
+    
     return s ;
   }
 
@@ -180,6 +187,8 @@ namespace gear{
     return s ;
 
   }
+
+
 
 
   std::ostream& operator<< (  std::ostream& s,  const  TPCParameters& p ) {
@@ -382,4 +391,120 @@ namespace gear{
     
   }
   
+  std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) {
+    
+    s << std::endl 
+      << "   -----------   SiPlanesParameters  ------- "  << std::endl         ;
+    
+    s << dynamic_cast<const GearParameters&>( p )  ;
+    
+    const SiPlanesLayerLayout & l = p.getSiPlanesLayerLayout() ;
+
+    int type = p.getSiPlanesType() ;
+    
+    s << std::endl  << " siplanes type : " ;
+    
+    switch( type ) {
+
+    case SiPlanesParameters::TelescopeWithDUT : 
+
+      s << " TelescopeWithDUT" << std::endl ;       break ;
+    case SiPlanesParameters::TelescopeWithoutDUT : 
+
+      s << " TelescopeWithoutDUT " << std::endl ;      break ;
+
+    default :  
+
+      s << " unknown " << std::endl ; 
+    }
+
+    s << " Number of telescope planes : " << p.getSiPlanesNumber() << std::endl;
+    
+    
+    // layers
+    
+									      
+    s << " Number of Layers : " << l.getNLayers() << std::endl << std::endl ;
+
+
+    s <<  " layer parameters "  << std::endl ;
+
+    char buffer[1024] ;
+    
+    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |       |                          ladder:                          |                    sensitive part:                        |\n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |  ID   |  pozX   |  pozY   |  pozZ   |  sizeX  |  sizeY  |  Thick  |  pozX   |  pozY   |  pozZ   |  sizeX  |  sizeY  |  Thick  | \n") ;
+
+    s << buffer ;
+
+    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+
+    for( int i = 0 ; i < l.getNLayers() ; i++ ) {
+
+      char buffer1[1024] ;
+      sprintf(buffer1,"  | %4d  | %7.2f | %7.2f | %7.2f | %7.2f | %7.2f | %7.3f | %7.2f | %7.2f | %7.2f | %7.2f | %7.2f | %7.3f |\n"
+	      , l.getID(i) 
+	      , l.getLayerPositionX(i) 
+	      , l.getLayerPositionY(i) 
+	      , l.getLayerPositionZ(i)
+	      , l.getLayerSizeX(i) 
+	      , l.getLayerSizeY(i) 
+	      , l.getLayerThickness(i) 
+ 	      , l.getSensitivePositionX(i) 
+	      , l.getSensitivePositionY(i) 
+	      , l.getSensitivePositionZ(i)
+	      , l.getSensitiveSizeX(i) 
+	      , l.getSensitiveSizeY(i) 
+	      , l.getSensitiveThickness(i) ) ;
+      
+      s << buffer1 ;
+
+    }
+
+    // DUT
+									      
+    s <<  " DUT parameters "  << std::endl ;
+
+    sprintf(buffer,"  |       |                          ladder:                          |                     sensitive part:                       |\n") ;
+    s << buffer ;
+    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |  ID   |  pozX   |  pozY   |  pozZ   |  sizeX  |  sizeY  |  Thick  |  pozX   |  pozY   |  pozZ   |  sizeX  |  sizeY  |  Thick  | \n") ;
+    s << buffer ;
+
+    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+
+    char buffer1[1024] ;
+      sprintf(buffer1,"  | %4d  | %7.2f | %7.2f | %7.2f | %7.2f | %7.2f | %7.3f | %7.2f | %7.2f | %7.2f | %7.2f | %7.2f | %7.3f |\n"
+            , l.getDUTID() 
+            , l.getDUTPositionX() 
+            , l.getDUTPositionY() 
+            , l.getDUTPositionZ()
+            , l.getDUTSizeX() 
+            , l.getDUTSizeY() 
+            , l.getDUTThickness() 
+            , l.getDUTSensitivePositionX() 
+            , l.getDUTSensitivePositionY() 
+            , l.getDUTSensitivePositionZ()
+            , l.getDUTSensitiveSizeX()
+            , l.getDUTSensitiveSizeY() 
+            , l.getDUTSensitiveThickness() ) ;
+      
+    s << buffer1 ;
+    
+    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    s << buffer ;
+    
+    return s ;
+    
+    
+  }
+
 }

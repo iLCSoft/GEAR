@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.4 2007-04-28 21:45:45 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.5 2007-05-23 10:36:21 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -39,12 +39,11 @@ namespace gear {
       throw (UnknownParameterException, std::exception )  ;
 
     /** Get the BField.
-	 */
-	virtual const BField & getBField() const 
-		throw (UnknownParameterException, std::exception ) ;
+     */
+    virtual const BField & getBField() const 
+      throw (UnknownParameterException, std::exception ) ;
 
-		
-	/** Get the TPCParameters.
+    /** Get the TPCParameters.
      */
     virtual const TPCParameters & getTPCParameters() const
       throw (UnknownParameterException, std::exception ) ;
@@ -90,6 +89,13 @@ namespace gear {
      *  @throws UnknownParameterException
      */
     virtual const VXDParameters & getVXDParameters() const
+      throw (UnknownParameterException, std::exception )  ;
+
+    /** Get the SiPlanes parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const SiPlanesParameters & getSiPlanesParameters() const
       throw (UnknownParameterException, std::exception )  ;
 
    /** Get the point properties object.
@@ -147,6 +153,11 @@ namespace gear {
      */
     virtual void setVXDParameters( VXDParameters * vxdParameters ) ;
 
+
+     /** Set the SiPlanesParameters.
+     */
+    virtual void setSiPlanesParameters( SiPlanesParameters * siplanesParameters ) ;
+
     /** Set the point properties object 
      */
     virtual void  setPointProperties( GearPointProperties* pointProperties) ; 
@@ -155,10 +166,13 @@ namespace gear {
      */
     virtual void  setDistanceProperties( GearDistanceProperties* distanceProperties) ; 
     
-   /** Set the b field object
-	*/
-	virtual void setBField( BField* bField ) ;
-				
+    /** Set the b field object
+     */
+    virtual void setBField( BField* bField ) ;
+    
+    
+    
+    
   protected:
     
     ParameterMap _map ;
@@ -169,10 +183,11 @@ namespace gear {
     CalorimeterParameters* _hcalEndcapParameters ;
     CalorimeterParameters* _lcalParameters ;
     VXDParameters* _vxdParameters ;
+    SiPlanesParameters* _siplanesParameters ;
     GearPointProperties*  _pointProperties ;
     GearDistanceProperties*  _distanceProperties ;
     BField* _bField ;
-	
+
     mutable StringVec _keys ;
 
   }; // class

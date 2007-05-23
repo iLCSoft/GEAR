@@ -6,7 +6,7 @@ package hep.gear.api ;
  * 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearMgr.aid,v 1.4 2007-04-28 21:45:45 gaede Exp $
+ * @version $Id: GearMgr.aid,v 1.5 2007-05-23 10:36:21 gaede Exp $
  */
 public interface GearMgr {
     
@@ -22,8 +22,8 @@ public interface GearMgr {
      *  @throws UnknownParameterException
      */
      public const BField& getBField() const throws UnknownParameterException ;
-
-					   
+    
+    
     /** Get the TPCParameters.
      *
      *  @throws UnknownParameterException
@@ -68,6 +68,11 @@ public interface GearMgr {
      */
     public const VXDParameters&  getVXDParameters() const throws UnknownParameterException ;
 
+    /** Get the SiPlanes parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const SiPlanesParameters&  getSiPlanesParameters() const throws UnknownParameterException ;
 
     /** Get the point properties object.
      * 
@@ -98,6 +103,8 @@ public interface GearMgr {
      */
     public void  setBField( BField* bField)   ;
 
+    
+    
     /** Set the TPCParameters.
      */
     public void  setTPCParameters( TPCParameters* tpcParameters)   ;
@@ -123,6 +130,10 @@ public interface GearMgr {
      */
     public void setVXDParameters( VXDParameters* vxdParameters ) ;
 
+    
+    /** Set the SiPlanesParameters.
+     */
+    public void setSiPlanesParameters( SiPlanesParameters* siplanesParameters ) ;
 
     /** Set the LcalParameters.
      */

@@ -40,7 +40,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -65,7 +65,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -81,7 +81,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -99,7 +99,7 @@ typedef std::vector<std::string> StringVec ;
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 
@@ -131,6 +131,7 @@ public interface GEAR{
    static const char*  TPCPARAMETERS  ;
    static const char*  CALORIMETERPARAMETERS  ;
    static const char*  VXDPARAMETERS  ;
+   static const char*  SIPLANESPARAMETERS  ;
 
 
 }
@@ -140,6 +141,7 @@ public interface GEAR{
   public static const String TPCPARAMETERS = "TPCParameters" ;
   public static const String CALORIMETERPARAMETERS = "CalorimeterParameters" ;
   public static const String VXDPARAMETERS = "VXDParameters" ;
+  public static const String SIPLANESPARAMETERS = "SiPlanesParameters" ;
 
 @endif
 

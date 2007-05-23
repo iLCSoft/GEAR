@@ -1,5 +1,4 @@
 
-
 #include "gearimpl/FixedPadSizeDiskLayout.h"
 #include "gearimpl/Util.h"
 #include "gearxml/GearXML.h"
@@ -102,7 +101,7 @@ int main(int argc, char**argv){
 	  <<	" --  Bz at origin [double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ;]  : " << bfield
 	  << std::endl << std::endl ;
 
-	  
+
   // --- testing gearcga ---
 #ifdef CGA
   std::ifstream inFile("mokka.steer");

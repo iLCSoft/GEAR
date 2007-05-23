@@ -14,10 +14,10 @@ namespace gear{
     _hcalEndcapParameters(0) ,
     _lcalParameters(0) ,
     _vxdParameters(0) ,
+    _siplanesParameters(0) ,
     _pointProperties(0) ,
-    _distanceProperties(0),
+    _distanceProperties(0) ,
     _bField(0){
-    
   }
   
   const GearParameters & GearMgrImpl::getGearParameters(const std::string & key) const 
@@ -111,6 +111,15 @@ namespace gear{
 
   }
 
+  const SiPlanesParameters & GearMgrImpl::getSiPlanesParameters() const
+    throw (UnknownParameterException, std::exception ) {
+
+    if( _siplanesParameters == 0 )
+      throw UnknownParameterException( "No SiPlanesParameters set ") ;
+
+    return *_siplanesParameters ;
+
+  }
   
   const GearPointProperties & GearMgrImpl::getPointProperties() const 
     throw (NotImplementedException, std::exception ) {
@@ -193,6 +202,10 @@ namespace gear{
     _vxdParameters = vxdParameters ;
   }
 
+  void GearMgrImpl::setSiPlanesParameters( SiPlanesParameters* siplanesParameters ) {
+
+    _siplanesParameters = siplanesParameters ;
+  }
 
   void GearMgrImpl::setPointProperties( GearPointProperties* pointProperties) {
     

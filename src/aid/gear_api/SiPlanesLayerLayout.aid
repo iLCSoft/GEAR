@@ -1,0 +1,80 @@
+package hep.gear.api ;
+
+/**
+ * @author T. Klimkovich, DESY
+ * @version $Id: 
+ */
+public interface SiPlanesLayerLayout {
+    
+    /** The total number of layers. */
+
+    public int getNLayers() const ;
+
+    /** The number of ladders in the layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source.
+     */
+   /** public int getNLayers(int layerIndex) const ; */
+
+     /** Get layer ID */
+    public int getID(int layerIndex) const ;
+
+   /** The radiation length in the support structure of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source.
+     */
+    public double getLayerRadLength(int layerIndex) const ;
+
+    /** The radiation length in sensitive volumes in layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source.
+     */
+    public double getSensitiveRadLength(int layerIndex) const ;
+
+    public double getLayerPositionX(int layerIndex) const ;
+    public double getLayerPositionY(int layerIndex) const ;
+    public double getLayerPositionZ(int layerIndex) const ;
+
+    public double getLayerSizeX(int layerIndex) const ;
+    public double getLayerSizeY(int layerIndex) const ;
+    public double getLayerThickness(int layerIndex) const ;
+
+/** Sensitive	*/
+
+    public double getSensitivePositionX(int layerIndex) const ;
+    public double getSensitivePositionY(int layerIndex) const ;
+    public double getSensitivePositionZ(int layerIndex) const ;
+
+    public double getSensitiveSizeX(int layerIndex) const ;
+    public double getSensitiveSizeY(int layerIndex) const ;
+    public double getSensitiveThickness(int layerIndex) const ;
+
+
+     /** Get DUT ID */
+    public int getDUTID() const ;
+
+   /** The radiation length in the support structure of the DUT.
+     */
+    public double getDUTRadLength() const ;
+
+    /** The radiation length in sensitive volume of the DUT.
+     */
+    public double getDUTSensitiveRadLength() const ;
+
+    public double getDUTPositionX() const ;
+    public double getDUTPositionY() const ;
+    public double getDUTPositionZ() const ;
+
+    public double getDUTSizeX() const ;
+    public double getDUTSizeY() const ;
+    public double getDUTThickness() const ;
+
+    /** Sensitive volume of the DUT.
+     */
+
+    public double getDUTSensitivePositionX() const ;
+    public double getDUTSensitivePositionY() const ;
+    public double getDUTSensitivePositionZ() const ;
+
+    public double getDUTSensitiveSizeX() const ;
+    public double getDUTSensitiveSizeY() const ;
+    public double getDUTSensitiveThickness() const ;
+
+}
