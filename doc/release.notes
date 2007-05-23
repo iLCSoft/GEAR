@@ -3,6 +3,14 @@
  ======================
 
   ----------
+ | v00-06   |
+  ----------
+  - added SiPlanes detector for pixel telescope (and FTD?)
+    (author T.Klimkovich, DESY)
+ 
+  - bug fix for BField: warning if not present
+
+  ----------
  | v00-05   |
   ----------
    - added BField map (only constant)
