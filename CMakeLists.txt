@@ -17,25 +17,26 @@ PROJECT( GEAR )
 # project options
 OPTION( BUILD_SHARED_LIBS "Set this to OFF to build static libraries " ON )
 OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
+OPTION( BUILD_DOC "Set to ON to build Documentation" ON )
 
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 5 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
 SET( ${PROJECT_NAME}_VERSION
-	"${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
+    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
 SET( ${PROJECT_NAME}_SOVERSION
-	"${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
+    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
 
 # set default cmake build type to RelWithDebInfo
 IF( NOT CMAKE_BUILD_TYPE )
-	SET( CMAKE_BUILD_TYPE "RelWithDebInfo" )
+    SET( CMAKE_BUILD_TYPE "RelWithDebInfo" )
 ENDIF()
 
 # set default install prefix to project root directory
 #IF( CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT )
 IF( CMAKE_INSTALL_PREFIX STREQUAL "/usr/local" )
-	SET( CMAKE_INSTALL_PREFIX "${${PROJECT_NAME}_SOURCE_DIR}" )
+    SET( CMAKE_INSTALL_PREFIX "${${PROJECT_NAME}_SOURCE_DIR}" )
 ENDIF()
 
 # add library install path to the rpath list
@@ -48,21 +49,21 @@ MARK_AS_ADVANCED( CMAKE_INSTALL_RPATH_USE_LINK_PATH )
 
 # output directories
 SET( EXECUTABLE_OUTPUT_PATH "${${PROJECT_NAME}_BINARY_DIR}/bin" CACHE PATH
-	"EXECUTABLE_OUTPUT_PATH" FORCE )
+    "EXECUTABLE_OUTPUT_PATH" FORCE )
 SET( LIBRARY_OUTPUT_PATH "${${PROJECT_NAME}_BINARY_DIR}/lib" CACHE PATH
-	"LIBRARY_OUTPUT_PATH" FORCE )
+    "LIBRARY_OUTPUT_PATH" FORCE )
 MARK_AS_ADVANCED( EXECUTABLE_OUTPUT_PATH LIBRARY_OUTPUT_PATH )
 
 # create symbolic link for include files
 IF( NOT EXISTS ${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml )
-	EXEC_PROGRAM( ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/src/cpp/include
-	ARGS -E create_symlink ../gearxml/include gearxml
-	OUTPUT_VARIABLE out_tmp )
+    EXEC_PROGRAM( ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/src/cpp/include
+    ARGS -E create_symlink ../gearxml/include gearxml
+    OUTPUT_VARIABLE out_tmp )
 ENDIF()
 IF( NOT EXISTS ${CMAKE_SOURCE_DIR}/src/cpp/include/gearimpl )
-	EXEC_PROGRAM( ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/src/cpp/include
-	ARGS -E create_symlink ../gearimpl/include gearimpl
-	OUTPUT_VARIABLE out_tmp )
+    EXEC_PROGRAM( ${CMAKE_COMMAND} ${CMAKE_SOURCE_DIR}/src/cpp/include
+    ARGS -E create_symlink ../gearimpl/include gearimpl
+    OUTPUT_VARIABLE out_tmp )
 ENDIF()
 
 # input directories
@@ -70,10 +71,41 @@ ADD_SUBDIRECTORY( src/cpp/gearxml gearxml )
 ADD_SUBDIRECTORY( src/cpp/gearimpl gear )
 ADD_SUBDIRECTORY( src/cpp/test test )
 
+# create doc target
+IF( BUILD_DOC )
+    FIND_PACKAGE( Doxygen )
+    FIND_PACKAGE( LATEX )
+    IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
+
+        # add doc target for building documentation
+        ADD_CUSTOM_TARGET( doc
+            "${CMAKE_COMMAND}" -E chdir
+            "${${PROJECT_NAME}_SOURCE_DIR}/doc"
+            "${DOXYGEN_EXECUTABLE}" VERBATIM )
+
+        # make sure doxygen is executed before make install
+        INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
+        
+        # install documentation
+        INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
+                DESTINATION . )
+    ELSE()
+        IF( NOT DOXYGEN_FOUND )
+            MESSAGE( SEND_ERROR
+                    "Doxygen not found in your system!! BUILD_DOC set to OFF" )
+        ENDIF()
+        IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
+            MESSAGE( SEND_ERROR
+                    "Latex not found in your system!! BUILD_DOC set to OFF" )
+        ENDIF()
+        SET( BUILD_DOC OFF )
+    ENDIF()
+ENDIF()
+
 # create uninstall configuration file 
 CONFIGURE_FILE( "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-				"${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
-				IMMEDIATE @ONLY )
+                "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+                IMMEDIATE @ONLY )
 
 # create uninstall target
 ADD_CUSTOM_TARGET( uninstall
@@ -81,16 +113,16 @@ ADD_CUSTOM_TARGET( uninstall
 
 # create configuration file from .in file
 CONFIGURE_FILE( "${${PROJECT_NAME}_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
-				"${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
+                "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
 
 # install configuration file
 INSTALL( FILES "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION . )
 
 # install include files
 INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include"
-		DESTINATION .
-		PATTERN "*~" EXCLUDE
-		PATTERN "*CVS*" EXCLUDE )
+        DESTINATION .
+        PATTERN "*~" EXCLUDE
+        PATTERN "*CVS*" EXCLUDE )
 
 # display status message for important variables
 MESSAGE( STATUS )
@@ -100,6 +132,7 @@ MESSAGE( STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
 MESSAGE( STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
 MESSAGE( STATUS "CMAKE_MODULE_PATH = ${CMAKE_MODULE_PATH}" )
 MESSAGE( STATUS "BUILD_GEAR_TESTS = ${BUILD_GEAR_TESTS}" )
+MESSAGE( STATUS "BUILD_DOC = ${BUILD_DOC}" )
 MESSAGE( STATUS "To change a value type: cmake -D<Variable>=<Value>" )
 MESSAGE( STATUS "-------------------------------------------------------------------------------" )
 MESSAGE( STATUS )
@@ -107,15 +140,17 @@ MESSAGE( STATUS )
 # force some variables that could be defined in the command line
 # to be written to cache
 SET( BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS}" CACHE BOOL
-	"Build shared libraries flag" FORCE )
+    "Build shared libraries flag" FORCE )
 SET( CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" CACHE PATH
-	"Where to install ${PROJECT_NAME}" FORCE )
+    "Where to install ${PROJECT_NAME}" FORCE )
 SET( CMAKE_BUILD_TYPE "${CMAKE_BUILD_TYPE}" CACHE STRING
-	"Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel." FORCE )
+    "Choose the type of build, options are: None Debug Release RelWithDebInfo MinSizeRel." FORCE )
 SET( CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" CACHE PATH
-	"Path to custom CMake Modules" FORCE )
+    "Path to custom CMake Modules" FORCE )
 SET( BUILD_GEAR_TESTS "${BUILD_GEAR_TESTS}" CACHE BOOL
-	"Set to ON to build GEAR tests" FORCE )
+    "Set to ON to build GEAR tests" FORCE )
+SET( BUILD_DOC "${BUILD_DOC}" CACHE BOOL
+    "Set to ON to build Documentation" FORCE )
 
 # export library dependencies (keep this as the last line in the file)
 EXPORT_LIBRARY_DEPENDENCIES( "${PROJECT_NAME}LibDeps.cmake" )
