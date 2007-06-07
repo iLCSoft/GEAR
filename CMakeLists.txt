@@ -78,17 +78,28 @@ IF( BUILD_DOC )
     IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
 
         # add doc target for building documentation
-        ADD_CUSTOM_TARGET( doc
-            "${CMAKE_COMMAND}" -E chdir
-            "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-            "${DOXYGEN_EXECUTABLE}" VERBATIM )
+        #ADD_CUSTOM_TARGET( doc
+        #    "${CMAKE_COMMAND}" -E chdir
+        #    "${${PROJECT_NAME}_SOURCE_DIR}/doc"
+        #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
+        ADD_CUSTOM_COMMAND(
+            OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/doc/html"
+            COMMAND "${CMAKE_COMMAND}" -E echo "Building API Documentation..."
+            COMMAND "${DOXYGEN_EXECUTABLE}"
+            WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/doc"
+            VERBATIM )
+        
+        ADD_CUSTOM_TARGET( doc DEPENDS
+            "${${PROJECT_NAME}_SOURCE_DIR}/doc/html" )
 
         # make sure doxygen is executed before make install
-        INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
+        #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
+        INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${${PROJECT_NAME}_BINARY_DIR} ARGS doc)" )
         
         # install documentation
         INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-                DESTINATION . )
+                DESTINATION .
+                PATTERN "*CVS*" EXCLUDE )
     ELSE()
         IF( NOT DOXYGEN_FOUND )
             MESSAGE( SEND_ERROR
