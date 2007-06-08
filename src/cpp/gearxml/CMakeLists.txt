@@ -12,6 +12,8 @@ SET( ${PROJECT_NAME}_MINOR_VERSION 5 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
 SET( ${PROJECT_NAME}_VERSION
     "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
+SET( ${PROJECT_NAME}_SOVERSION
+    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
 
 # require proper c++
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
@@ -36,7 +38,7 @@ ADD_CUSTOM_TARGET( lib DEPENDS lib_${PROJECT_NAME} )
 SET_TARGET_PROPERTIES( lib_${PROJECT_NAME} PROPERTIES
 	# create *nix style library versions + symbolic links
 	VERSION ${${PROJECT_NAME}_VERSION}
-	SOVERSION ${${PROJECT_NAME}_MAJOR_VERSION}
+	SOVERSION ${${PROJECT_NAME}_SOVERSION}
 	# allow building static and shared libraries on the same build tree
 	CLEAN_DIRECT_OUTPUT 1
 	# avoid conflicts between library and binary target names
