@@ -141,17 +141,6 @@ IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
         "${${PROJECT_NAME}_SOURCE_DIR}/doc/html" )
         #"${${PROJECT_NAME}_SOURCE_DIR}/doc/latex" )
 
-    IF( INSTALL_DOC )
-        # make sure doxygen is executed before make install
-        #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
-        # by just calling "make doc" doxygen won't run if the documentation has already been built
-        INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${${PROJECT_NAME}_BINARY_DIR} ARGS doc)" )
-        
-        # install documentation
-        INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-                DESTINATION .
-                PATTERN "*CVS*" EXCLUDE )
-    ENDIF()
 ELSE()
     IF( NOT DOXYGEN_FOUND )
         MESSAGE( SEND_ERROR "Doxygen not found in your system!!" )
@@ -163,6 +152,18 @@ ELSE()
         MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
         SET( INSTALL_DOC OFF )
     ENDIF()
+ENDIF()
+
+IF( INSTALL_DOC )
+    # make sure doxygen is executed before make install
+    #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
+    # by just calling "make doc" doxygen won't run if the documentation has already been built
+    INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${${PROJECT_NAME}_BINARY_DIR} ARGS doc)" )
+    
+    # install documentation
+    INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
+            DESTINATION .
+            PATTERN "*CVS*" EXCLUDE )
 ENDIF()
 
 # create uninstall configuration file 
