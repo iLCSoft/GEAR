@@ -115,7 +115,9 @@ FIND_PACKAGE( Doxygen )
 FIND_PACKAGE( LATEX )
 IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
 
-    # add doc target for building documentation
+    # this code is not viable because cmake cannot check if the documentation
+    # has already been built, so we better define a custom command + custom
+    # target
     #ADD_CUSTOM_TARGET( doc
     #    "${CMAKE_COMMAND}" -E chdir
     #    "${${PROJECT_NAME}_SOURCE_DIR}/doc"
@@ -123,16 +125,16 @@ IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
 
     ADD_CUSTOM_COMMAND(
         OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/doc/html"
-        COMMAND "${CMAKE_COMMAND}" -E echo "Building API Documentation..."
         COMMAND "${DOXYGEN_EXECUTABLE}"
         WORKING_DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
+        COMMENT "Building API Documentation..."
         VERBATIM )
-
+    
     #ADD_CUSTOM_COMMAND(
     #    OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/doc/latex"
-    #    COMMAND "${CMAKE_COMMAND}" -E echo "Building API Documentation..."
     #    COMMAND "${DOXYGEN_EXECUTABLE}"
     #    WORKING_DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
+    #    COMMENT "Building API Documentation..."
     #    VERBATIM )
 
     ADD_CUSTOM_TARGET( doc DEPENDS
@@ -142,6 +144,7 @@ IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
     IF( INSTALL_DOC )
         # make sure doxygen is executed before make install
         #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
+        # by just calling "make doc" doxygen won't run if the documentation has already been built
         INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${${PROJECT_NAME}_BINARY_DIR} ARGS doc)" )
         
         # install documentation
