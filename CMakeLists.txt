@@ -71,33 +71,9 @@ IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gearimpl" )
 ENDIF()
 
 # generate header files with ant aid.generate
-IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
-    #FIXME dereference links
-    #IF( NOT ENV{JDK_HOME} )
-    #    FIND_PACKAGE( Java )
-    #    IF( JAVA_RUNTIME )
-    #        STRING( REGEX REPLACE "(.*)\\/java$" "\\1" jdk_path ${JAVA_RUNTIME} )
-    #        MESSAGE( FATAL_ERROR "DEBUG: ${jdk_path}" )
-    #        SET(ENV{JDK_HOME} "${jdk_path}" )
-    #    ENDIF()
-    #ENDIF()
-    SET( ENV{GEAR} "${${PROJECT_NAME}_SOURCE_DIR}" )
-    SET( ENV{PATH} "${${PROJECT_NAME}_SOURCE_DIR}/tools:$ENV{PATH}" )
-    MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
-    EXEC_PROGRAM( ant "${${PROJECT_NAME}_SOURCE_DIR}"
-        ARGS aid.generate
-        OUTPUT_VARIABLE out_tmp
-        RETURN_VALUE out_ret )
-    # check if everything went ok
-    IF( NOT out_ret )
-        MESSAGE( STATUS "Header files generated in ${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear..." )
-    ELSE()
-        MESSAGE( SEND_ERROR "Problems ocurred generating header files!!" )
-        MESSAGE( FATAL_ERROR "${out_tmp}" )
-    ENDIF()
-ENDIF()
-
-# generate header files with ant aid.generate
+# FIXME this code is better, but not possible
+# because environment variables cannot be set
+# for CUSTOM_COMMANDS
 #ADD_CUSTOM_COMMAND(
 #    OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h"
 #    COMMAND "${CMAKE_COMMAND}" -E echo "Generating header files..."
@@ -111,6 +87,24 @@ ENDIF()
 
 #ADD_CUSTOM_TARGET( gen_headers ALL DEPENDS
 #    "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
+#
+# alternative solution:
+IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
+    SET( ENV{GEAR} "${${PROJECT_NAME}_SOURCE_DIR}" )
+    SET( ENV{PATH} "${${PROJECT_NAME}_SOURCE_DIR}/tools:$ENV{PATH}" )
+    MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
+    EXEC_PROGRAM( ant "${${PROJECT_NAME}_SOURCE_DIR}"
+        ARGS aid.generate
+        OUTPUT_VARIABLE out_tmp
+        RETURN_VALUE out_ret )
+    # check if everything went ok
+    IF( NOT out_ret )
+        MESSAGE( STATUS "Header files generated in ${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear..." )
+    ELSE()
+        MESSAGE( SEND_ERROR "Error generating header files!!" )
+        MESSAGE( FATAL_ERROR "${out_tmp}" )
+    ENDIF()
+ENDIF()
 
 # input directories
 ADD_SUBDIRECTORY( src/cpp/gearxml gearxml )
@@ -163,7 +157,7 @@ ELSE()
         MESSAGE( SEND_ERROR "Latex not found in your system!!" )
     ENDIF()
     IF( INSTALL_DOC )
-        MESSAGE( STATUS "INSTALL_DOC switched to OFF" )
+        MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
         SET( INSTALL_DOC OFF )
     ENDIF()
 ENDIF()
