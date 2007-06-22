@@ -17,15 +17,15 @@ SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
 # project name
 PROJECT( GEAR )
 
-# project options
-OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
-OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
-OPTION( INSTALL_DOC "Set to ON to install Documentation" ON )
-
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 5 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
+
+# project options
+OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
+OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
+OPTION( INSTALL_DOC "Set to ON to install Documentation" ON )
 
 # set default cmake build type to RelWithDebInfo
 IF( NOT CMAKE_BUILD_TYPE )
@@ -33,10 +33,118 @@ IF( NOT CMAKE_BUILD_TYPE )
 ENDIF()
 
 # set default install prefix to project root directory
-#IF( CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT )
 IF( CMAKE_INSTALL_PREFIX STREQUAL "/usr/local" )
-    SET( CMAKE_INSTALL_PREFIX "${${PROJECT_NAME}_SOURCE_DIR}" )
+    SET( CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}" )
 ENDIF()
+
+# create symbolic link for include files
+IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml" )
+    MESSAGE( STATUS "Creating symlink: ${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml..." )
+    EXEC_PROGRAM( "${CMAKE_COMMAND}"
+        "${CMAKE_SOURCE_DIR}/src/cpp/include"
+        ARGS -E create_symlink "../gearxml/include" "gearxml"
+        OUTPUT_VARIABLE out_tmp )
+ENDIF()
+IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gearimpl" )
+    MESSAGE( STATUS "Creating symlink: ${CMAKE_SOURCE_DIR}/src/cpp/include/gearimpl..." )
+    EXEC_PROGRAM( "${CMAKE_COMMAND}"
+        "${CMAKE_SOURCE_DIR}/src/cpp/include"
+        ARGS -E create_symlink "../gearimpl/include" "gearimpl"
+        OUTPUT_VARIABLE out_tmp )
+ENDIF()
+
+# generate header files with ant aid.generate
+# FIXME this code is better, but not possible
+# because environment variables cannot be set
+# for CUSTOM_COMMANDS
+#ADD_CUSTOM_COMMAND(
+#    OUTPUT  "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h"
+#    COMMAND "${CMAKE_COMMAND}" -E echo "Generating header files..."
+#    #COMMAND "GEAR=${CMAKE_SOURCE_DIR} PATH=${CMAKE_SOURCE_DIR}/tools:$ENV{PATH} ant aid.generate"
+#    COMMAND ${CMAKE_COMMAND} -E environment
+#    "GEAR=${CMAKE_SOURCE_DIR}"
+#    "PATH=${CMAKE_SOURCE_DIR}/tools:$ENV{PATH}"
+#    ant aid.generate
+#    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+#    VERBATIM )
+
+#ADD_CUSTOM_TARGET( gen_headers ALL DEPENDS
+#    "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
+#
+# alternative solution:
+IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
+    SET( ENV{GEAR} "${CMAKE_SOURCE_DIR}" )
+    SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:$ENV{PATH}" )
+    MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
+    EXEC_PROGRAM( ant "${CMAKE_SOURCE_DIR}"
+        ARGS aid.generate
+        OUTPUT_VARIABLE out_tmp
+        RETURN_VALUE out_ret )
+    # check if everything went ok
+    IF( NOT out_ret )
+        MESSAGE( STATUS "Header files generated in ${CMAKE_SOURCE_DIR}/src/cpp/include/gear..." )
+    ELSE()
+        MESSAGE( SEND_ERROR "Error generating header files!!" )
+        MESSAGE( FATAL_ERROR "${out_tmp}" )
+    ENDIF()
+ENDIF()
+
+# DOCUMENTATION
+FIND_PACKAGE( Doxygen )
+FIND_PACKAGE( LATEX )
+IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
+
+    # this code is not ok because cmake cannot check if the documentation
+    # has already been built. we better define a custom command + target
+    #ADD_CUSTOM_TARGET( doc
+    #    "${CMAKE_COMMAND}" -E chdir
+    #    "${CMAKE_SOURCE_DIR}/doc"
+    #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
+
+    ADD_CUSTOM_COMMAND(
+        OUTPUT  "${CMAKE_SOURCE_DIR}/doc/html"
+        COMMAND "${DOXYGEN_EXECUTABLE}"
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+        COMMENT "Building API Documentation..."
+        VERBATIM )
+    
+    #ADD_CUSTOM_COMMAND(
+    #    OUTPUT  "${CMAKE_SOURCE_DIR}/doc/latex"
+    #    COMMAND "${DOXYGEN_EXECUTABLE}"
+    #    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+    #    COMMENT "Building API Documentation..."
+    #    VERBATIM )
+
+    ADD_CUSTOM_TARGET( doc DEPENDS
+        "${CMAKE_SOURCE_DIR}/doc/html" )
+        #"${CMAKE_SOURCE_DIR}/doc/latex" )
+
+ELSE()
+    IF( NOT DOXYGEN_FOUND )
+        MESSAGE( SEND_ERROR "Doxygen not found in your system!!" )
+    ENDIF()
+    IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
+        MESSAGE( SEND_ERROR "Latex not found in your system!!" )
+    ENDIF()
+    IF( INSTALL_DOC )
+        MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
+        SET( INSTALL_DOC OFF )
+    ENDIF()
+ENDIF()
+
+IF( INSTALL_DOC )
+    # make sure doxygen is executed before make install
+    #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/doc)" )
+    # by just calling "make doc" doxygen won't run if the documentation has already been built
+    INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${CMAKE_BINARY_DIR} ARGS doc)" )
+    
+    # install documentation
+    INSTALL( DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+            DESTINATION .
+            PATTERN "*CVS*" EXCLUDE )
+ENDIF()
+
+##########################################################################################
 
 # library *nix style versioning
 SET( ${PROJECT_NAME}_VERSION
@@ -53,63 +161,11 @@ SET( CMAKE_INSTALL_RPATH_USE_LINK_PATH 1 )
 MARK_AS_ADVANCED( CMAKE_INSTALL_RPATH_USE_LINK_PATH )
 
 # output directories
-SET( EXECUTABLE_OUTPUT_PATH "${${PROJECT_NAME}_BINARY_DIR}/bin" CACHE PATH
+SET( EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin" CACHE PATH
     "EXECUTABLE_OUTPUT_PATH" FORCE )
-SET( LIBRARY_OUTPUT_PATH "${${PROJECT_NAME}_BINARY_DIR}/lib" CACHE PATH
+SET( LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib" CACHE PATH
     "LIBRARY_OUTPUT_PATH" FORCE )
 MARK_AS_ADVANCED( EXECUTABLE_OUTPUT_PATH LIBRARY_OUTPUT_PATH )
-
-# create symbolic link for include files
-IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gearxml" )
-    MESSAGE( STATUS "Creating symlink: ${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gearxml..." )
-    EXEC_PROGRAM( "${CMAKE_COMMAND}"
-        "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include"
-        ARGS -E create_symlink "../gearxml/include" "gearxml"
-        OUTPUT_VARIABLE out_tmp )
-ENDIF()
-IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gearimpl" )
-    MESSAGE( STATUS "Creating symlink: ${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gearimpl..." )
-    EXEC_PROGRAM( "${CMAKE_COMMAND}"
-        "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include"
-        ARGS -E create_symlink "../gearimpl/include" "gearimpl"
-        OUTPUT_VARIABLE out_tmp )
-ENDIF()
-
-# generate header files with ant aid.generate
-# FIXME this code is better, but not possible
-# because environment variables cannot be set
-# for CUSTOM_COMMANDS
-#ADD_CUSTOM_COMMAND(
-#    OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h"
-#    COMMAND "${CMAKE_COMMAND}" -E echo "Generating header files..."
-#    #COMMAND "GEAR=${${PROJECT_NAME}_SOURCE_DIR} PATH=${${PROJECT_NAME}_SOURCE_DIR}/tools:$ENV{PATH} ant aid.generate"
-#    COMMAND ${CMAKE_COMMAND} -E environment
-#    "GEAR=${${PROJECT_NAME}_SOURCE_DIR}"
-#    "PATH=${${PROJECT_NAME}_SOURCE_DIR}/tools:$ENV{PATH}"
-#    ant aid.generate
-#    WORKING_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}"
-#    VERBATIM )
-
-#ADD_CUSTOM_TARGET( gen_headers ALL DEPENDS
-#    "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
-#
-# alternative solution:
-IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
-    SET( ENV{GEAR} "${${PROJECT_NAME}_SOURCE_DIR}" )
-    SET( ENV{PATH} "${${PROJECT_NAME}_SOURCE_DIR}/tools:$ENV{PATH}" )
-    MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
-    EXEC_PROGRAM( ant "${${PROJECT_NAME}_SOURCE_DIR}"
-        ARGS aid.generate
-        OUTPUT_VARIABLE out_tmp
-        RETURN_VALUE out_ret )
-    # check if everything went ok
-    IF( NOT out_ret )
-        MESSAGE( STATUS "Header files generated in ${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear..." )
-    ELSE()
-        MESSAGE( SEND_ERROR "Error generating header files!!" )
-        MESSAGE( FATAL_ERROR "${out_tmp}" )
-    ENDIF()
-ENDIF()
 
 # DEPENDENCIES: this code has to be placed before adding any library or
 # executable so that these are linked properly against the dependencies
@@ -130,79 +186,23 @@ ADD_SUBDIRECTORY( src/cpp/gearxml gearxml )
 ADD_SUBDIRECTORY( src/cpp/gearimpl gear )
 ADD_SUBDIRECTORY( src/cpp/test test )
 
-FIND_PACKAGE( Doxygen )
-FIND_PACKAGE( LATEX )
-IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
-
-    # this code is not viable because cmake cannot check if the documentation
-    # has already been built, so we better define a custom command + custom
-    # target
-    #ADD_CUSTOM_TARGET( doc
-    #    "${CMAKE_COMMAND}" -E chdir
-    #    "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-    #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
-
-    ADD_CUSTOM_COMMAND(
-        OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/doc/html"
-        COMMAND "${DOXYGEN_EXECUTABLE}"
-        WORKING_DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-        COMMENT "Building API Documentation..."
-        VERBATIM )
-    
-    #ADD_CUSTOM_COMMAND(
-    #    OUTPUT  "${${PROJECT_NAME}_SOURCE_DIR}/doc/latex"
-    #    COMMAND "${DOXYGEN_EXECUTABLE}"
-    #    WORKING_DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-    #    COMMENT "Building API Documentation..."
-    #    VERBATIM )
-
-    ADD_CUSTOM_TARGET( doc DEPENDS
-        "${${PROJECT_NAME}_SOURCE_DIR}/doc/html" )
-        #"${${PROJECT_NAME}_SOURCE_DIR}/doc/latex" )
-
-ELSE()
-    IF( NOT DOXYGEN_FOUND )
-        MESSAGE( SEND_ERROR "Doxygen not found in your system!!" )
-    ENDIF()
-    IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
-        MESSAGE( SEND_ERROR "Latex not found in your system!!" )
-    ENDIF()
-    IF( INSTALL_DOC )
-        MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
-        SET( INSTALL_DOC OFF )
-    ENDIF()
-ENDIF()
-
-IF( INSTALL_DOC )
-    # make sure doxygen is executed before make install
-    #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${${PROJECT_NAME}_SOURCE_DIR}/doc)" )
-    # by just calling "make doc" doxygen won't run if the documentation has already been built
-    INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${${PROJECT_NAME}_BINARY_DIR} ARGS doc)" )
-    
-    # install documentation
-    INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/doc"
-            DESTINATION .
-            PATTERN "*CVS*" EXCLUDE )
-ENDIF()
-
 # create uninstall configuration file 
-CONFIGURE_FILE( "${CMAKE_CURRENT_SOURCE_DIR}/cmake_uninstall.cmake.in"
-                "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake"
+CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
+                "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
                 IMMEDIATE @ONLY )
 
 # create uninstall target
-ADD_CUSTOM_TARGET( uninstall
-  "${CMAKE_COMMAND}" -P "${CMAKE_CURRENT_BINARY_DIR}/cmake_uninstall.cmake" )
+ADD_CUSTOM_TARGET( uninstall "${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake" )
 
 # create configuration file from .in file
-CONFIGURE_FILE( "${${PROJECT_NAME}_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
-                "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
+CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
+                "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
 
 # install configuration file
-INSTALL( FILES "${${PROJECT_NAME}_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION . )
+INSTALL( FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION . )
 
 # install include files
-INSTALL( DIRECTORY "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include"
+INSTALL( DIRECTORY "${CMAKE_SOURCE_DIR}/src/cpp/include"
         DESTINATION .
         PATTERN "*~" EXCLUDE
         PATTERN "*CVS*" EXCLUDE )
