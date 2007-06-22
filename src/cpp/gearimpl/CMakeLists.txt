@@ -24,19 +24,19 @@ ADD_CUSTOM_TARGET( lib DEPENDS lib_${PROJECT_NAME} )
 
 # change lib_target properties
 SET_TARGET_PROPERTIES( lib_${PROJECT_NAME} PROPERTIES
-	# create *nix style library versions + symbolic links
-	VERSION ${${PROJECT_NAME}_VERSION}
-	SOVERSION ${${PROJECT_NAME}_SOVERSION}
-	# allow building static and shared libraries on the same build tree
-	CLEAN_DIRECT_OUTPUT 1
-	# avoid conflicts between library and binary target names
-	OUTPUT_NAME gear )
+    # create *nix style library versions + symbolic links
+    VERSION ${${PROJECT_NAME}_VERSION}
+    SOVERSION ${${PROJECT_NAME}_SOVERSION}
+    # allow building static and shared libraries on the same build tree
+    CLEAN_DIRECT_OUTPUT 1
+    # avoid conflicts between library and binary target names
+    OUTPUT_NAME gear )
 
 # link gear library with gearxml
 TARGET_LINK_LIBRARIES( lib_${PROJECT_NAME} lib_GEARXML )
 
 # install library
 INSTALL( TARGETS lib_${PROJECT_NAME} DESTINATION lib PERMISSIONS
-		OWNER_READ OWNER_WRITE OWNER_EXECUTE
-		GROUP_READ GROUP_EXECUTE
-		WORLD_READ WORLD_EXECUTE )
+        OWNER_READ OWNER_WRITE OWNER_EXECUTE
+        GROUP_READ GROUP_EXECUTE
+        WORLD_READ WORLD_EXECUTE )

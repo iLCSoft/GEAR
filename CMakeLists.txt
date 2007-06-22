@@ -3,19 +3,22 @@
 # @author Jan Engels, DESY
 #################################
 
-# cmake minimum required version
-CMAKE_MINIMUM_REQUIRED( VERSION 2.4 )
-#SET( CMAKE_BACKWARDS_COMPATIBILITY 2.4 )
-MARK_AS_ADVANCED(CMAKE_BACKWARDS_COMPATIBILITY)
 
+########################################################
+# CMake compatibility issues: don't modify this, please!
+CMAKE_MINIMUM_REQUIRED( VERSION 2.4.6 )
+#SET( CMAKE_BACKWARDS_COMPATIBILITY 2.4.6 )
+MARK_AS_ADVANCED(CMAKE_BACKWARDS_COMPATIBILITY)
 # allow more human readable "if then else" constructs
 SET( CMAKE_ALLOW_LOOSE_LOOP_CONSTRUCTS TRUE )
+########################################################
+
 
 # project name
 PROJECT( GEAR )
 
 # project options
-OPTION( BUILD_SHARED_LIBS "Set this to OFF to build static libraries " ON )
+OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
 OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
 OPTION( INSTALL_DOC "Set to ON to install Documentation" ON )
 
@@ -23,10 +26,6 @@ OPTION( INSTALL_DOC "Set to ON to install Documentation" ON )
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 5 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
-SET( ${PROJECT_NAME}_VERSION
-    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
-SET( ${PROJECT_NAME}_SOVERSION
-    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
 
 # set default cmake build type to RelWithDebInfo
 IF( NOT CMAKE_BUILD_TYPE )
@@ -38,6 +37,12 @@ ENDIF()
 IF( CMAKE_INSTALL_PREFIX STREQUAL "/usr/local" )
     SET( CMAKE_INSTALL_PREFIX "${${PROJECT_NAME}_SOURCE_DIR}" )
 ENDIF()
+
+# library *nix style versioning
+SET( ${PROJECT_NAME}_VERSION
+    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
+SET( ${PROJECT_NAME}_SOVERSION
+    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
 
 # add library install path to the rpath list
 SET( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
@@ -104,6 +109,20 @@ IF( NOT EXISTS "${${PROJECT_NAME}_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
         MESSAGE( SEND_ERROR "Error generating header files!!" )
         MESSAGE( FATAL_ERROR "${out_tmp}" )
     ENDIF()
+ENDIF()
+
+# DEPENDENCIES: this code has to be placed before adding any library or
+# executable so that these are linked properly against the dependencies
+IF( DEFINED ${PROJECT_NAME}_DEPENDS OR DEFINED BUILD_WITH OR DEFINED LINK_WITH )
+    # load macro
+    IF( NOT EXISTS "${CMAKE_MODULE_PATH}/MacroCheckDeps.cmake" )
+        MESSAGE( FATAL_ERROR
+            "\nSorry, could not find MacroCheckDeps.cmake...\n"
+            "Please set CMAKE_MODULE_PATH correctly with: "
+            "cmake -DCMAKE_MODULE_PATH=<path_to_cmake_modules>" )
+    ENDIF()
+    INCLUDE( "${CMAKE_MODULE_PATH}/MacroCheckDeps.cmake" )
+    CHECK_DEPS()
 ENDIF()
 
 # input directories
@@ -204,7 +223,7 @@ MESSAGE( STATUS )
 # force some variables that could be defined in the command line
 # to be written to cache
 SET( BUILD_SHARED_LIBS "${BUILD_SHARED_LIBS}" CACHE BOOL
-    "Build shared libraries flag" FORCE )
+    "Set to OFF to build static libraries" FORCE )
 SET( CMAKE_INSTALL_PREFIX "${CMAKE_INSTALL_PREFIX}" CACHE PATH
     "Where to install ${PROJECT_NAME}" FORCE )
 SET( CMAKE_BUILD_TYPE "${CMAKE_BUILD_TYPE}" CACHE STRING

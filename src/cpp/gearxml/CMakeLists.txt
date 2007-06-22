@@ -10,6 +10,8 @@ PROJECT( GEARXML )
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 5 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
+
+# library *nix style versioning
 SET( ${PROJECT_NAME}_VERSION
     "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
 SET( ${PROJECT_NAME}_SOVERSION
@@ -36,16 +38,16 @@ ADD_CUSTOM_TARGET( lib DEPENDS lib_${PROJECT_NAME} )
 
 # change lib_target properties
 SET_TARGET_PROPERTIES( lib_${PROJECT_NAME} PROPERTIES
-	# create *nix style library versions + symbolic links
-	VERSION ${${PROJECT_NAME}_VERSION}
-	SOVERSION ${${PROJECT_NAME}_SOVERSION}
-	# allow building static and shared libraries on the same build tree
-	CLEAN_DIRECT_OUTPUT 1
-	# avoid conflicts between library and binary target names
-	OUTPUT_NAME gearxml )
+    # create *nix style library versions + symbolic links
+    VERSION ${${PROJECT_NAME}_VERSION}
+    SOVERSION ${${PROJECT_NAME}_SOVERSION}
+    # allow building static and shared libraries on the same build tree
+    CLEAN_DIRECT_OUTPUT 1
+    # avoid conflicts between library and binary target names
+    OUTPUT_NAME gearxml )
 
 # install library
 INSTALL( TARGETS lib_${PROJECT_NAME} DESTINATION lib PERMISSIONS
-		OWNER_READ OWNER_WRITE OWNER_EXECUTE
-		GROUP_READ GROUP_EXECUTE
-		WORLD_READ WORLD_EXECUTE )
+        OWNER_READ OWNER_WRITE OWNER_EXECUTE
+        GROUP_READ GROUP_EXECUTE
+        WORLD_READ WORLD_EXECUTE )
