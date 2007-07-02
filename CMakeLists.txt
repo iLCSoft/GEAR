@@ -25,7 +25,7 @@ SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
 # project options
 OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
 OPTION( BUILD_GEAR_TESTS "Set to ON to build GEAR tests" OFF )
-OPTION( INSTALL_DOC "Set to ON to install Documentation" ON )
+OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" ON )
 
 # set default cmake build type to RelWithDebInfo
 IF( NOT CMAKE_BUILD_TYPE )
@@ -54,28 +54,74 @@ IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gearimpl" )
 ENDIF()
 
 # generate header files with ant aid.generate
-# FIXME this code is better, but not possible
-# because environment variables cannot be set
-# for CUSTOM_COMMANDS
-#ADD_CUSTOM_COMMAND(
-#    OUTPUT  "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h"
-#    COMMAND "${CMAKE_COMMAND}" -E echo "Generating header files..."
-#    #COMMAND "GEAR=${CMAKE_SOURCE_DIR} PATH=${CMAKE_SOURCE_DIR}/tools:$ENV{PATH} ant aid.generate"
-#    COMMAND ${CMAKE_COMMAND} -E environment
-#    "GEAR=${CMAKE_SOURCE_DIR}"
-#    "PATH=${CMAKE_SOURCE_DIR}/tools:$ENV{PATH}"
-#    ant aid.generate
-#    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-#    VERBATIM )
-
-#ADD_CUSTOM_TARGET( gen_headers ALL DEPENDS
-#    "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
-#
-# alternative solution:
 IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
-    SET( ENV{GEAR} "${CMAKE_SOURCE_DIR}" )
-    SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:$ENV{PATH}" )
     MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
+    IF( NOT DEFINED ENV{JDK_HOME} AND NOT DEFINED ENV{JAVA_HOME} )
+        MESSAGE( STATUS "Autodetecting java..." )
+        FIND_PACKAGE( Java )
+        IF( NOT JAVA_RUNTIME OR NOT JAVA_COMPILE )
+            MESSAGE( FATAL_ERROR "Java not found!!" )
+        ENDIF()
+        SET( java_bin "${JAVA_RUNTIME}" )
+        # extract java_bin_path out of full path to java runtime
+        STRING( REGEX REPLACE "(.*)\\/java$" "\\1" java_bin_path ${java_bin} )
+    ELSE()
+        # in case JDK_HOME or JAVA_HOME already set ensure that both variables
+        # are set correctly (JDK_HOME as well as JAVA_HOME)
+        IF( DEFINED ENV{JDK_HOME} AND DEFINED ENV{JAVA_HOME} )
+            IF( "$ENV{JDK_HOME}" STREQUAL "$ENV{JAVA_HOME}" )
+                SET( java_path "$ENV{JDK_HOME}" )
+            ELSE()
+                MESSAGE( STATUS
+                    "JDK_HOME and JAVA_HOME are set to different paths!!" )
+                MESSAGE( STATUS "JDK_HOME: $ENV{JDK_HOME}" )
+                MESSAGE( STATUS "JAVA_HOME: $ENV{JAVA_HOME}" )
+                MESSAGE( FATAL_ERROR
+                    "Please unset one of them or set both correctly!!" )
+            ENDIF()
+        ELSE()
+            IF( DEFINED ENV{JDK_HOME} )
+                SET( java_path "$ENV{JDK_HOME}" )
+            ENDIF()
+            IF( DEFINED ENV{JAVA_HOME} )
+                SET( java_path "$ENV{JAVA_HOME}" )
+            ENDIF()
+        ENDIF()
+        # find java, javac and jar
+        FIND_PROGRAM( java_bin
+            java
+            ${java_path}/bin
+            NO_DEFAULT_PATH )
+        FIND_PROGRAM( javac_bin
+            javac
+            ${java_path}/bin
+            NO_DEFAULT_PATH )
+        # abort if not found
+        IF( java_bin-NOTFOUND )
+            MESSAGE( FATAL_ERROR "Could not find java!!" )
+        ENDIF()
+        IF( javac_bin-NOTFOUND )
+            MESSAGE( FATAL_ERROR "Could not find javac!!" )
+        ENDIF()
+        # extract bin path from full path
+        STRING( REGEX REPLACE "(.*)\\/java$" "\\1" java_bin_path ${java_bin} )
+    ENDIF()
+
+    # parse the output of java -version
+    EXEC_PROGRAM( "${java_bin}" ARGS "-version"
+            OUTPUT_VARIABLE out_tmp
+            RETURN_VALUE out_ret )
+    IF( out_ret )
+        MESSAGE( STATUS "Error executing java -version!!" )
+    ENDIF()
+    STRING( REGEX REPLACE ".* version \"([0-9]+\\.[0-9]+\\.[0-9]+).*"
+            "\\1" java_version "${out_tmp}" )
+
+    # display info
+    MESSAGE( STATUS "Java version ${java_version} configured successfully!" )
+
+    SET( ENV{GEAR} "${CMAKE_SOURCE_DIR}" )
+    SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:${java_bin_path}:$ENV{PATH}" )
     EXEC_PROGRAM( ant "${CMAKE_SOURCE_DIR}"
         ARGS aid.generate
         OUTPUT_VARIABLE out_tmp
@@ -147,10 +193,10 @@ ENDIF()
 ##########################################################################################
 
 # library *nix style versioning
-SET( ${PROJECT_NAME}_VERSION
-    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
 SET( ${PROJECT_NAME}_SOVERSION
     "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
+SET( ${PROJECT_NAME}_VERSION
+    "${${PROJECT_NAME}_SOVERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
 
 # add library install path to the rpath list
 SET( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
@@ -184,7 +230,9 @@ ENDIF()
 # input directories
 ADD_SUBDIRECTORY( src/cpp/gearxml gearxml )
 ADD_SUBDIRECTORY( src/cpp/gearimpl gear )
-ADD_SUBDIRECTORY( src/cpp/test test )
+IF( BUILD_GEAR_TESTS )
+    ADD_SUBDIRECTORY( src/cpp/test test )
+ENDIF()
 
 # create uninstall configuration file 
 CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
@@ -233,7 +281,11 @@ SET( CMAKE_MODULE_PATH "${CMAKE_MODULE_PATH}" CACHE PATH
 SET( BUILD_GEAR_TESTS "${BUILD_GEAR_TESTS}" CACHE BOOL
     "Set to ON to build GEAR tests" FORCE )
 SET( INSTALL_DOC "${INSTALL_DOC}" CACHE BOOL
-    "Set to ON to install Documentation" FORCE )
+    "Set to OFF to skip build/install Documentation" FORCE )
+
+# export build settings
+INCLUDE( CMakeExportBuildSettings )
+CMAKE_EXPORT_BUILD_SETTINGS( "${PROJECT_NAME}BuildSettings.cmake" )
 
 # export library dependencies (keep this as the last line in the file)
 EXPORT_LIBRARY_DEPENDENCIES( "${PROJECT_NAME}LibDeps.cmake" )
