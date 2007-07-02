@@ -120,8 +120,12 @@ IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
     # display info
     MESSAGE( STATUS "Java version ${java_version} configured successfully!" )
 
+    # set environment variables for
+    # generating header files with ant aid.generate
     SET( ENV{GEAR} "${CMAKE_SOURCE_DIR}" )
     SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:${java_bin_path}:$ENV{PATH}" )
+
+    # generate header files with ant aid.generate
     EXEC_PROGRAM( ant "${CMAKE_SOURCE_DIR}"
         ARGS aid.generate
         OUTPUT_VARIABLE out_tmp
@@ -133,6 +137,37 @@ IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
         MESSAGE( STATUS "Error generating header files!!" )
         MESSAGE( FATAL_ERROR "${out_tmp}" )
     ENDIF()
+ENDIF()
+
+# generate shell script for setting environment
+# and calling ant aid.generate
+MESSAGE( STATUS "Generating shell script for calling ant..." )
+FILE( WRITE "${CMAKE_BINARY_DIR}/script.sh"
+            "export GEAR=${CMAKE_SOURCE_DIR}\n"
+            "export PATH=${java_bin_path}/bin:${CMAKE_SOURCE_DIR}/tools:$PATH\n"
+            "ant $1" )
+
+# find shell
+FIND_PROGRAM( SH
+  sh
+  ${CYGWIN_INSTALL_PATH}/bin
+  /bin
+  /usr/bin
+  /usr/local/bin
+  /sbin
+  # FIXME add path to MacOS here
+)
+MARK_AS_ADVANCED( SH )
+
+IF( SH-NOTFOUND )
+    MESSAGE( STATUS "Unix Shell not found - cannot enable headers target!!" )
+ELSE()
+    # create "always out-of-date" headers target
+    ADD_CUSTOM_TARGET( headers
+        COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" aid.generate
+        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+        COMMENT "Generating header files with ant aid.generate..."
+        VERBATIM )
 ENDIF()
 
 # DOCUMENTATION
