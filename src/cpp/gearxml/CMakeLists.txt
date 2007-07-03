@@ -6,17 +6,6 @@
 # project name
 PROJECT( GEARXML )
 
-# project version
-#SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
-#SET( ${PROJECT_NAME}_MINOR_VERSION 5 )
-#SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
-#
-## library *nix style versioning
-#SET( ${PROJECT_NAME}_VERSION
-#    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
-#SET( ${PROJECT_NAME}_SOVERSION
-#    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
-
 # require proper c++
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
