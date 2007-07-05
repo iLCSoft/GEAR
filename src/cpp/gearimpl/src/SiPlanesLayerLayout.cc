@@ -10,29 +10,47 @@ namespace gear{
 			      double layerSizeX, double layerSizeY, double layerThickness,
 			      double layerRadLength,
 			      // sensitive
+			      int sensitiveID,
 			      double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
 			      double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
-			      double sensitiveRadLength)
+			      int sensitiveNpixelX, int sensitiveNpixelY,
+			      double sensitivePitchX,double sensitivePitchY,
+			      double sensitiveResolution,
+			      double sensitiveRotation1,
+			      double sensitiveRotation2,
+			      double sensitiveRotation3,
+			      double sensitiveRotation4,
+			      double sensitiveRadLength )
   {
 
-    Layer lL, sL ;
-    lL.ID = layerID ;
+    Layer lL ;
+    SensLayer sL ;
+    lL.ID         = layerID ;
     lL.PositionX  = layerPositionX ;
     lL.PositionY  = layerPositionY ;
     lL.PositionZ  = layerPositionZ ;
-    lL.SizeX  = layerSizeX ;
-    lL.SizeY  = layerSizeY ;
+    lL.SizeX      = layerSizeX ;
+    lL.SizeY      = layerSizeY ;
     lL.Thickness  = layerThickness ;
-    lL.RadLength = layerRadLength ;
+    lL.RadLength  = layerRadLength ;
 
-    sL.ID = layerID ;
+    sL.ID         = sensitiveID ;
     sL.PositionX  = sensitivePositionX ;
     sL.PositionY  = sensitivePositionY ;
     sL.PositionZ  = sensitivePositionZ ;
-    sL.SizeX  = sensitiveSizeX ;
-    sL.SizeY  = sensitiveSizeY ;
+    sL.SizeX      = sensitiveSizeX ;
+    sL.SizeY      = sensitiveSizeY ;
     sL.Thickness  = sensitiveThickness ;
-    sL.RadLength = sensitiveRadLength ;
+    sL.NpixelX    = sensitiveNpixelX;
+    sL.NpixelY    = sensitiveNpixelY;
+    sL.PitchX     = sensitivePitchX;
+    sL.PitchY     = sensitivePitchY;
+    sL.Resolution = sensitiveResolution,
+    sL.Rotation1  = sensitiveRotation1;
+    sL.Rotation2  = sensitiveRotation2;
+    sL.Rotation3  = sensitiveRotation3;
+    sL.Rotation4  = sensitiveRotation4;
+    sL.RadLength  = sensitiveRadLength ;
 
     _lVec.push_back( lL ) ;
     _sVec.push_back( sL ) ;
@@ -46,29 +64,47 @@ namespace gear{
 			      double dutSizeX, double dutSizeY, double dutThickness,
 			      double dutRadLength,
 			      // sensitive
+			      int dutsensitiveID,
 			      double dutsensitivePositionX, double dutsensitivePositionY, double dutsensitivePositionZ,
 			      double dutsensitiveSizeX, double dutsensitiveSizeY, double dutsensitiveThickness,
+			      int dutsensitiveNpixelX, int dutsensitiveNpixelY,
+			      double dutsensitivePitchX,double dutsensitivePitchY,
+			      double dutsensitiveResolution,
+			      double dutsensitiveRotation1,
+			      double dutsensitiveRotation2,
+			      double dutsensitiveRotation3,
+			      double dutsensitiveRotation4,
 			      double dutsensitiveRadLength)
   {
 
-    Layer lDUT, sDUT ;
-    lDUT.ID = dutID ;
+    Layer lDUT ;
+    SensLayer sDUT ;
+    lDUT.ID         = dutID ;
     lDUT.PositionX  = dutPositionX ;
     lDUT.PositionY  = dutPositionY ;
     lDUT.PositionZ  = dutPositionZ ;
-    lDUT.SizeX  = dutSizeX ;
-    lDUT.SizeY  = dutSizeY ;
+    lDUT.SizeX      = dutSizeX ;
+    lDUT.SizeY      = dutSizeY ;
     lDUT.Thickness  = dutThickness ;
-    lDUT.RadLength = dutRadLength ;
+    lDUT.RadLength  = dutRadLength ;
 
-    sDUT.ID = dutID ;
+    sDUT.ID         = dutsensitiveID ;
     sDUT.PositionX  = dutsensitivePositionX ;
     sDUT.PositionY  = dutsensitivePositionY ;
     sDUT.PositionZ  = dutsensitivePositionZ ;
-    sDUT.SizeX  = dutsensitiveSizeX ;
-    sDUT.SizeY  = dutsensitiveSizeY ;
+    sDUT.SizeX      = dutsensitiveSizeX ;
+    sDUT.SizeY      = dutsensitiveSizeY ;
     sDUT.Thickness  = dutsensitiveThickness ;
-    sDUT.RadLength = dutsensitiveRadLength ;
+    sDUT.NpixelX    = dutsensitiveNpixelX;
+    sDUT.NpixelY    = dutsensitiveNpixelY;
+    sDUT.PitchX     = dutsensitivePitchX;
+    sDUT.PitchY     = dutsensitivePitchY;
+    sDUT.Resolution = dutsensitiveResolution;
+    sDUT.Rotation1  = dutsensitiveRotation1;
+    sDUT.Rotation2  = dutsensitiveRotation2;
+    sDUT.Rotation3  = dutsensitiveRotation3;
+    sDUT.Rotation4  = dutsensitiveRotation4;
+    sDUT.RadLength  = dutsensitiveRadLength ;
 
     _lDut = lDUT ;
     _sDut = sDUT  ;

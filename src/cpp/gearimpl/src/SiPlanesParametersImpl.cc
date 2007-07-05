@@ -2,13 +2,12 @@
 #include <math.h>
 #include <iostream>
 
-#define _EPSILON 0.0001
-
 namespace gear{
 
 
   SiPlanesParametersImpl::SiPlanesParametersImpl
-  ( int siplanesType, int siplanesNumber) :
+  (int siplanesID, int siplanesType, int siplanesNumber) :
+    _siplanesID( siplanesID ),
     _siplanesType( siplanesType ) ,
     _siplanesNumber( siplanesNumber ) {}
  

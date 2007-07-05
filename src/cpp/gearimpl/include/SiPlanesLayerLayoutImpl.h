@@ -7,9 +7,8 @@
 
 namespace gear {
 
-/** Abstract description of layers in beam telescope or FTD detector. <br>
- *  This assumes a number of silicon layers, arranged perpendicular to the beam <br>
- *  The sensitive area is assumed to be inside the layers but can be positioned independently.
+/** Abstract description of layers in pixel beam telescope. <br>
+ *  This assumes a number of silicon layers arranged perpendicular to the beam.
  * 
  * @author T. Klimkovich, DESY
  * @version $Id: 
@@ -18,7 +17,7 @@ namespace gear {
 class SiPlanesLayerLayoutImpl : public SiPlanesLayerLayout {
 
 public: 
-  
+
   /** Helper class for layer properties */
   struct Layer {
     int ID ;
@@ -31,120 +30,165 @@ public:
     double RadLength ;
   } ;
 
+  struct SensLayer {
+    int ID ;
+    double PositionX ;
+    double PositionY ;
+    double PositionZ ;
+    double SizeX ;
+    double SizeY ;
+    double Thickness ;
+    int NpixelX;
+    int NpixelY;
+    double PitchX;
+    double PitchY;
+    double Resolution;
+    double Rotation1;
+    double Rotation2;
+    double Rotation3;
+    double Rotation4;
+    double RadLength ;
+  } ;
+
   typedef std::vector<Layer> LayerVec ;
-  //  typedef Layer DUT ;
+  typedef std::vector<SensLayer> SensLayerVec ;
   typedef Layer DUT ;
+  typedef SensLayer SensDUT ;
 
   // Destructor.
   virtual ~SiPlanesLayerLayoutImpl() { /* nop */; }
   
-  /** The total number of layers.
-   */
   virtual int getNLayers() const { return _lVec.size() ; }
   
-  /** The ID of the layer.
-   */
   virtual int getID(int layerIndex) const { return _lVec.at( layerIndex ).ID  ; }
 
-  /** The radiation length in the support structure of layer layerIndex - layer indexing starts at 0
-   *  for the layer closest to the beam source
-   */
   virtual double getLayerRadLength(int layerIndex) const { return _lVec.at( layerIndex ).RadLength  ; }
   
-  /** The position of layer layerIndex
-   */
   virtual double getLayerPositionX(int layerIndex) const { return _lVec.at( layerIndex ).PositionX  ; }
   virtual double getLayerPositionY(int layerIndex) const { return _lVec.at( layerIndex ).PositionY  ; }
   virtual double getLayerPositionZ(int layerIndex) const { return _lVec.at( layerIndex ).PositionZ  ; }
 
-  /** The size in mm of layer layerIndex.
-   */
   virtual double getLayerSizeX(int layerIndex) const { return _lVec.at( layerIndex ).SizeX  ; }
   virtual double getLayerSizeY(int layerIndex) const { return _lVec.at( layerIndex ).SizeY  ; }
   virtual double getLayerThickness(int layerIndex) const { return _lVec.at( layerIndex ).Thickness  ; }
 
+  virtual int getSensitiveID(int layerIndex) const { return _sVec.at( layerIndex ).ID  ; }
+
   virtual double getSensitiveRadLength(int layerIndex) const { return _sVec.at( layerIndex ).RadLength  ; }
 
-  /** The position of sensitive area in layer layerIndex
-   */
   virtual double getSensitivePositionX(int layerIndex) const { return _sVec.at( layerIndex ).PositionX  ; }
   virtual double getSensitivePositionY(int layerIndex) const { return _sVec.at( layerIndex ).PositionY  ; }
   virtual double getSensitivePositionZ(int layerIndex) const { return _sVec.at( layerIndex ).PositionZ  ; }
 
-  /** The size in mm of the sensitive area in layer layerIndex.
-   */
   virtual double getSensitiveSizeX(int layerIndex) const { return _sVec.at( layerIndex ).SizeX  ; }
   virtual double getSensitiveSizeY(int layerIndex) const { return _sVec.at( layerIndex ).SizeY  ; }
   virtual double getSensitiveThickness(int layerIndex) const { return _sVec.at( layerIndex ).Thickness  ; }
 
-  /** Add a new layer at the given positon
+  virtual int getSensitiveNpixelX(int layerIndex) const { return _sVec.at( layerIndex ).NpixelX  ; }
+  virtual int getSensitiveNpixelY(int layerIndex) const { return _sVec.at( layerIndex ).NpixelY  ; }
+
+  virtual double getSensitiveResolution(int layerIndex) const { return _sVec.at( layerIndex ).Resolution  ; }
+
+  virtual double getSensitivePitchX(int layerIndex) const { return _sVec.at( layerIndex ).PitchX  ; }
+  virtual double getSensitivePitchY(int layerIndex) const { return _sVec.at( layerIndex ).PitchY  ; }
+
+  virtual double getSensitiveRotation1(int layerIndex) const { return _sVec.at( layerIndex ).Rotation1  ; }
+  virtual double getSensitiveRotation2(int layerIndex) const { return _sVec.at( layerIndex ).Rotation2  ; }
+  virtual double getSensitiveRotation3(int layerIndex) const { return _sVec.at( layerIndex ).Rotation3  ; }
+  virtual double getSensitiveRotation4(int layerIndex) const { return _sVec.at( layerIndex ).Rotation4  ; }
+
+  /** Add a new layer at the given position
    */
   virtual void addLayer(int layerID,
                         double layerPositionX, double layerPositionY, double layerPositionZ,
 			double layerSizeX, double layerSizeY, double layerThickness,
 			double layerRadLength,
 			// sensitive
+			int sensitiveID,
 			double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
 			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
+			int sensitiveNpixelX, int sensitiveNpixelY,
+			double sensitivePitchX,double sensitivePitchY,
+			double sensitiveResolution,
+			double Rotation1,
+			double Rotation2,
+			double Rotation3,
+			double Rotation4,
 			double sensitiveRadLength);
 
 
-  /** The ID of the DUT
-   */
+  // the DUT
+
   virtual int getDUTID() const { return _lDut.ID  ; }
 
-  /** The radiation length in the support structure of the DUT.
-   */
   virtual double getDUTRadLength() const { return _lDut.RadLength  ; }
-  
-  /** The position of DUT.
-   */
+
   virtual double getDUTPositionX() const { return _lDut.PositionX  ; }
   virtual double getDUTPositionY() const { return _lDut.PositionY  ; }
   virtual double getDUTPositionZ() const { return _lDut.PositionZ  ; }
 
-  /** The size in mm of DUT.
-   */
   virtual double getDUTSizeX() const { return _lDut.SizeX  ; }
   virtual double getDUTSizeY() const { return _lDut.SizeY  ; }
   virtual double getDUTThickness() const { return _lDut.Thickness  ; }
 
-  /** The radiation length in the sensitive volume of the DUT.
-   */
+  virtual int getDUTSensitiveID() const { return _sDut.ID  ; }
+
   virtual double getDUTSensitiveRadLength() const { return _sDut.RadLength  ; }
 
-  /** The position of sensitive area of DUT.
-   */
   virtual double getDUTSensitivePositionX() const { return _sDut.PositionX  ; }
   virtual double getDUTSensitivePositionY() const { return _sDut.PositionY  ; }
   virtual double getDUTSensitivePositionZ() const { return _sDut.PositionZ  ; }
 
-  /** The size in mm of the sensitive area of DUT.
-   */
   virtual double getDUTSensitiveSizeX() const { return _sDut.SizeX  ; }
   virtual double getDUTSensitiveSizeY() const { return _sDut.SizeY  ; }
   virtual double getDUTSensitiveThickness() const { return _sDut.Thickness  ; }
 
+  virtual int getDUTSensitiveNpixelX() const { return _sDut.NpixelX  ; }
+  virtual int getDUTSensitiveNpixelY() const { return _sDut.NpixelY  ; }
+
+  virtual double getDUTSensitivePitchX() const { return _sDut.PitchX  ; }
+  virtual double getDUTSensitivePitchY() const { return _sDut.PitchY  ; }
+
+  virtual double getDUTSensitiveResolution() const { return _sDut.Resolution  ; }
+
+  virtual double getDUTSensitiveRotation1() const { return _sDut.Rotation1  ; }
+  virtual double getDUTSensitiveRotation2() const { return _sDut.Rotation2  ; }
+  virtual double getDUTSensitiveRotation3() const { return _sDut.Rotation3  ; }
+  virtual double getDUTSensitiveRotation4() const { return _sDut.Rotation4  ; }
+
+  /** Add a DUT at the given position
+   */
+
   virtual void addDUT(int dutID,
-                        double dutPositionX, double dutPositionY, double dutPositionZ,
-			double dutSizeX, double dutSizeY, double dutThickness,
-			double dutRadLength,
-			// sensitive
-			double dutsensitivePositionX, double dutsensitivePositionY, double dutsensitivePositionZ,
-			double dutsensitiveSizeX, double dutsensitiveSizeY, double dutsensitiveThickness,
-			double dutsensitiveRadLength);
+                      double dutPositionX, double dutPositionY, double dutPositionZ,
+		      double dutSizeX, double dutSizeY, double dutThickness,
+		      double dutRadLength,
+		      // sensitive
+		      int dutsensitiveID,
+		      double dutsensitivePositionX, double dutsensitivePositionY, double dutsensitivePositionZ,
+		      double dutsensitiveSizeX, double dutsensitiveSizeY, double dutsensitiveThickness,
+		      int dutsensitiveNpixelX, int dutsensitiveNpixelY,
+		      double dutsensitivePitchX,double dutsensitivePitchY,
+		      double dutsensitiveResolution,
+		      double dutsensitiveRotation1,
+		      double dutsensitiveRotation2,
+		      double dutsensitiveRotation3,
+		      double dutsensitiveRotation4,
+		      double dutsensitiveRadLength);
   
 protected:
 
+  typedef double MyMatrix[2][2];
+  
   // Layer
   LayerVec _lVec ;
-  // Sensitive
-  LayerVec _sVec ;
+  // Sensitive layer
+  SensLayerVec _sVec ;
 
   // DUT plane
   DUT _lDut ;
   // Sensitive of DUT
-  DUT _sDut ;
+  SensDUT _sDut ;
 
 private:
 

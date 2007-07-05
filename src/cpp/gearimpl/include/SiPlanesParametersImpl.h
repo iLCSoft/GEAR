@@ -11,8 +11,8 @@ namespace gear {
 
 class SiPlanesLayerLayout;
 
-  /** Abstract description of layers in beam telescope with or without DUT. <br>
-   *  This assumes a number of silicon layers, arranged perpendicular to the beam <br>
+  /** Abstract description of layers in pixel beam telescope with or without DUT.
+   *  This assumes a number of silicon layers, arranged perpendicular to the beam.
    *  @author T Klimkovich, DESY
    *  @version $Id: 
    */
@@ -20,10 +20,11 @@ class SiPlanesParametersImpl : public GearParametersImpl, public SiPlanesParamet
 
 public: 
   /** C'tor  
-   *  @param siplanesType           the type of the Si Planes detector: Telescope, FTD
+   *  @param siplanesID             ID of SiPlanes detector setup   
+   *  @param siplanesType           the type of the SiPlanes detector: TelescopeWithDUT, TelescopeWithoutDUT
    *  @param siplanesNumber         the number of Si planes
    */
-  SiPlanesParametersImpl( int siplanesType, int siplanesNumber) ;
+  SiPlanesParametersImpl(int siplanesID, int siplanesType, int siplanesNumber) ;
 
   // Destructor.
   virtual ~SiPlanesParametersImpl() { /* nop */; }
@@ -33,68 +34,151 @@ public:
   static const int TelescopeWithDUT    = 1 ;
   static const int TelescopeWithoutDUT = 2 ;
 
-  /** adding a Layer to the Si planes
+  /** Adding a Layer to the SiPlanes detector
    *
-   * @param PositionX
-   * @param PositionY
-   * @param PositionZ   the length (mm) of the straigth line between the moddle of the DUT and spacepoint to 
-   *                   layer (layerDistance) or sensitive Area (sensitiveDistance)     
-   * @param SizeX
-   * @param SizeY
-   * @param Thickness  the thickness in mm of the ladder (ladderThickness) or the        
-   *                   sensitive area (sensitiveThickness)                     
-   * @param RadLenght  the radiation lenght of the layer (layerRadLength) or the       
-   *                   sensitive area (sensitiveRadLength) in mm                         
+   * @param layerID            ID of nonsensitive volume of telescope plane
+   * @param layerPositionX     x position of nonsensitive volume of telescope plane (mm)
+   * @param layerPositionY     y position of nonsensitive volume of telescope plane (mm)
+   * @param layerPositionZ     z position of nonsensitive volume of telescope plane (mm)
+   * @param layerSizeX         size in x direction of nonsensitive volume of telescope plane (mm)
+   * @param layerSizeY         size in y direction of nonsensitive volume of telescope plane (mm)
+   * @param layerThickness     the thickness of nonsensitive volume of telescope plane (mm)
+   * @param layerRadLenght     the radiation lenght of nonsensitive volume of telescope plane (mm)
+   * @param sensitiveID        ID of sensitive volume of telescope plane
+   * @param sensitivePositionX x position of sensitive volume of telescope plane (mm)
+   * @param sensitivePositionY y position of sensitive volume of telescope plane (mm)
+   * @param sensitivePositionZ z position of sensitive volume of telescope plane (mm)
+   * @param sensitiveSizeX     size in x direction of sensitive volume of telescope plane (mm)
+   * @param sensitiveSizeY     size in y direction of sensitive volume of telescope plane (mm)
+   * @param sensitiveThickness the thickness of sensitive volume of telescope plane (mm)
+   * @param sensitiveNpixelX   number of pixels in x direction of the sensitive area of telescope plane
+   * @param sensitiveNpixelY   number of pixels in y direction of the sensitive area of telescope plane
+   * @param sensitivePitchX    x size of pitch of sensitive area of telescope plane (mm)
+   * @param sensitivePitchY    y size of pitch of sensitive area of telescope plane (mm)
+   * @param sensitiveResolution intrinsic resolution of sensitive area of telescope plane (mm) 
+   * @param sensitiveRotation1 = cos(theta): element (11) of the rotation matrix of sensitive area of telescope plane
+   * @param sensitiveRotation2 = -sin(theta): element (12) of the rotation matrix of sensitive area of telescope plane
+   * @param sensitiveRotation3 = sin(theta): element (21) of the rotation matrix of sensitive area of telescope plane
+   * @param sensitiveRotation4 = cos(theta): element (22) of the rotation matrix of sensitive area of telescope plane
+   * @param sensitiveRadLenght the radiation lenght of sensitive area of telescope plane (mm)
    */
   virtual void addLayer(int layerID,
                         double layerPositionX, double layerPositionY, double layerPositionZ,
 			double layerSizeX, double layerSizeY, double layerThickness,
 			double layerRadLength,
 			// sensitive
+			int sensitiveID,
 			double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
 			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
+			int sensitiveNpixelX, int sensitiveNpixelY,
+			double sensitivePitchX,double sensitivePitchY,
+			double sensitiveResolution,
+			double sensitiveRotation1,
+			double sensitiveRotation2,
+			double sensitiveRotation3,
+			double sensitiveRotation4,
 			double sensitiveRadLength)
   {
     _layer.addLayer( layerID,
                      layerPositionX, layerPositionY, layerPositionZ,
                      layerSizeX, layerSizeY, layerThickness,
 		     layerRadLength,
+		     sensitiveID,
                      sensitivePositionX, sensitivePositionY, sensitivePositionZ,
 		     sensitiveSizeX, sensitiveSizeY, sensitiveThickness,
+		     sensitiveNpixelX, sensitiveNpixelY,
+		     sensitivePitchX, sensitivePitchY,
+		     sensitiveResolution,
+		     sensitiveRotation1,
+		     sensitiveRotation2,
+		     sensitiveRotation3,
+		     sensitiveRotation4,
 		     sensitiveRadLength ) ;
     return ;
   }
   
+  /** Adding DUT to the SiPlanes detector
+   *
+   * @param dutID                  ID of nonsensitive volume of the DUT
+   * @param dutPositionX           x position of nonsensitive volume of the DUT plane (mm)
+   * @param dutPositionY           y position of nonsensitive volume of the DUT plane (mm)
+   * @param dutPositionZ           z position of nonsensitive volume of the DUT plane (mm)    
+   * @param dutSizeX               size in x direction of nonsensitive volume of the DUT (mm)
+   * @param dutSizeY               size in y direction of nonsensitive volume of the DUT (mm)
+   * @param dutThickness           the thickness of nonsensitive volume of the DUT layer (mm)    
+   * @param dutRadLenght           the radiation lenght of nonsensitive volume of the DUT layer (mm)           
+   * @param dutsensitiveID         ID of nonsensitive volume of the DUT
+   * @param dutsensitivePositionX  x position of sensitive volume of the DUT plane (mm)
+   * @param dutsensitivePositionY  y position of sensitive volume of the DUT plane (mm)
+   * @param dutsensitivePositionZ  z position of sensitive volume of the DUT plane (mm)    
+   * @param dutsensitiveSizeX      size in x direction of sensitive volume of the DUT (mm)
+   * @param dutsensitiveSizeY      size in y direction of sensitive volume of the DUT (mm)
+   * @param dutsensitiveThickness  the thickness of sensitive volume of the DUT layer (mm)
+   * @param dutsensitiveNpixelX    number of pixels in x direction of sensitive area of the DUT
+   * @param dutsensitiveNpixelY    number of pixels in y direction of sensitive area of the DUT
+   * @param dutsensitivePitchX     x size of pitch of sensitive area of the DUT (mm)
+   * @param dutsensitivePitchY     y size of pitch of sensitive area of the DUT(mm)
+   * @param dutsensitiveResolution intrinsic resolution of sensitive area of the DUT(mm), not relevant, just for completeness
+   * @param dutsensitiveRotation1  = cos(theta): element (11) of the rotation matrix of sensitive area of the DUT
+   * @param dutsensitiveRotation2  = -sin(theta): element (12) of the rotation matrix of sensitive area of the DUT
+   * @param dutsensitiveRotation3  = sin(theta): element (21) of the rotation matrix of sensitive area of the DUT
+   * @param dutsensitiveRotation4  = cos(theta): element (22) of the rotation matrix of sensitive area of the DUT
+   * @param dutsensitiveRadLenght  radiation lenght of sensitive area of the DUT layer (mm)                         
+   */
+
+
   virtual void addDUT(int dutID,
-                        double dutPositionX, double dutPositionY, double dutPositionZ,
-			double dutSizeX, double dutSizeY, double dutThickness,
-			double dutRadLength,
-			// sensitive
-			double dutsensitivePositionX, double dutsensitivePositionY, double dutsensitivePositionZ,
-			double dutsensitiveSizeX, double dutsensitiveSizeY, double dutsensitiveThickness,
-			double dutsensitiveRadLength)
+		      double dutPositionX, double dutPositionY, double dutPositionZ,
+		      double dutSizeX, double dutSizeY, double dutThickness,
+		      double dutRadLength,
+		      // sensitive
+		      int dutsensitiveID,
+		      double dutsensitivePositionX, double dutsensitivePositionY, double dutsensitivePositionZ,
+		      double dutsensitiveSizeX, double dutsensitiveSizeY, double dutsensitiveThickness,
+		      int dutsensitiveNpixelX, int dutsensitiveNpixelY,
+		      double dutsensitivePitchX,double dutsensitivePitchY,
+		      double dutsensitiveResolution,
+		      double dutsensitiveRotation1,
+		      double dutsensitiveRotation2,
+		      double dutsensitiveRotation3,
+		      double dutsensitiveRotation4,
+		      double dutsensitiveRadLength)
   {
     _layer.addDUT( dutID,
-                     dutPositionX, dutPositionY, dutPositionZ,
-                     dutSizeX, dutSizeY, dutThickness,
-		     dutRadLength,
-                     dutsensitivePositionX, dutsensitivePositionY, dutsensitivePositionZ,
-		     dutsensitiveSizeX, dutsensitiveSizeY, dutsensitiveThickness,
-		     dutsensitiveRadLength ) ;
+		   dutPositionX, dutPositionY, dutPositionZ,
+		   dutSizeX, dutSizeY, dutThickness,
+		   dutRadLength,
+		   dutsensitiveID,
+		   dutsensitivePositionX, dutsensitivePositionY, dutsensitivePositionZ,
+		   dutsensitiveSizeX, dutsensitiveSizeY, dutsensitiveThickness,
+		   dutsensitiveNpixelX, dutsensitiveNpixelY,
+		   dutsensitivePitchX, dutsensitivePitchY,
+		   dutsensitiveResolution,
+		   dutsensitiveRotation1,
+		   dutsensitiveRotation2,
+		   dutsensitiveRotation3,
+		   dutsensitiveRotation4,
+		   dutsensitiveRadLength ) ;
     return ;
   }
   
       
-  /** Returns the layer layout in the SiPlanes detector 
+  /** Returns the layer layout of SiPlanes detector 
    */
   virtual const SiPlanesLayerLayout & getSiPlanesLayerLayout() const { return _layer ; }
   
-  /** The type of SiPlanes detector: SiPlanesParametersImpl.TelescopeWithDUT 
+
+  /** Returns the ID of SiPlanes detector setup
+   */
+
+  virtual int getSiPlanesID() const { return _siplanesID ; }
+
+  /** Returns the type of SiPlanes detector: SiPlanesParametersImpl.TelescopeWithDUT 
    *  or SiPlanesParametersImpl.TelescopeWithoutDUT
    */
   virtual int getSiPlanesType() const { return _siplanesType ; }
 
-  /** Number of Si planes
+  /** Returns the number of Si planes
    */
   virtual int getSiPlanesNumber() const { return _siplanesNumber ; }
   
@@ -102,6 +186,8 @@ protected:
   
   SiPlanesLayerLayoutImpl _layer ;
   
+  int _siplanesID;
+
   int _siplanesType ;
   
   int _siplanesNumber ;
