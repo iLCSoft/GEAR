@@ -18,9 +18,14 @@
  $ cmake ..
  $ make install
 
+ To build the gear example you should also set BUILD_GEAR_TESTS to ON
 
+ instead of step 3 in the instructions above type:
+ $ cmake -DBUILD_GEAR_TESTS=ON ..
+
+ 
  For more information on CMake for the ILCSoftware check:
- http://www-flc.desy.de/ilcsoft/
+ http://www-flc.desy.de/ilcsoft (will be available soon!)
 
  CMake's official website:
  http://www.cmake.org
@@ -28,7 +33,7 @@
 
  
  build instructions (with ant): -> Deprecated, please use cmake!
- ------------------------------
+ ---------------------------------------------------------------
 
  modify the env.sh  ( path to java ! ) and then source it:
 
@@ -38,9 +43,10 @@
  ant cpp
  ant cpp.doc   
 
+ ---------------------------------------------------------------
+
 
  run the example ( ./src/cpp/test/testgear.cc )
- ----------------------------------------------
 
   ./bin/testgear gear_ldc.xml
  
