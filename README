@@ -18,9 +18,8 @@
  $ cmake ..
  $ make install
 
- To build the gear example you should also set BUILD_GEAR_TESTS to ON
-
- instead of step 3 in the instructions above type:
+ To build the gear tests you should also set BUILD_GEAR_TESTS=ON
+ For this replace step 3 in the instructions above with:
  $ cmake -DBUILD_GEAR_TESTS=ON ..
 
  
