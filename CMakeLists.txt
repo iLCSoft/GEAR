@@ -56,74 +56,30 @@ ENDIF()
 # generate header files with ant aid.generate
 IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
     MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
-    IF( NOT DEFINED ENV{JDK_HOME} AND NOT DEFINED ENV{JAVA_HOME} )
-        MESSAGE( STATUS "Autodetecting java..." )
-        FIND_PACKAGE( Java )
-        IF( NOT JAVA_RUNTIME OR NOT JAVA_COMPILE )
-            MESSAGE( FATAL_ERROR "Java not found!!" )
-        ENDIF()
-        SET( java_bin "${JAVA_RUNTIME}" )
-        # extract java_bin_path out of full path to java runtime
-        STRING( REGEX REPLACE "(.*)\\/java$" "\\1" java_bin_path ${java_bin} )
-    ELSE()
-        # in case JDK_HOME or JAVA_HOME already set ensure that both variables
-        # are set correctly (JDK_HOME as well as JAVA_HOME)
-        IF( DEFINED ENV{JDK_HOME} AND DEFINED ENV{JAVA_HOME} )
-            IF( "$ENV{JDK_HOME}" STREQUAL "$ENV{JAVA_HOME}" )
-                SET( java_path "$ENV{JDK_HOME}" )
-            ELSE()
-                MESSAGE( STATUS
-                    "JDK_HOME and JAVA_HOME are set to different paths!!" )
-                MESSAGE( STATUS "JDK_HOME: $ENV{JDK_HOME}" )
-                MESSAGE( STATUS "JAVA_HOME: $ENV{JAVA_HOME}" )
-                MESSAGE( FATAL_ERROR
-                    "Please unset one of them or set both correctly!!" )
-            ENDIF()
-        ELSE()
-            IF( DEFINED ENV{JDK_HOME} )
-                SET( java_path "$ENV{JDK_HOME}" )
-            ENDIF()
-            IF( DEFINED ENV{JAVA_HOME} )
-                SET( java_path "$ENV{JAVA_HOME}" )
-            ENDIF()
-        ENDIF()
-        # find java, javac and jar
-        FIND_PROGRAM( java_bin
-            java
-            ${java_path}/bin
-            NO_DEFAULT_PATH )
-        FIND_PROGRAM( javac_bin
-            javac
-            ${java_path}/bin
-            NO_DEFAULT_PATH )
-        # abort if not found
-        IF( java_bin-NOTFOUND )
-            MESSAGE( FATAL_ERROR "Could not find java!!" )
-        ENDIF()
-        IF( javac_bin-NOTFOUND )
-            MESSAGE( FATAL_ERROR "Could not find javac!!" )
-        ENDIF()
-        # extract bin path from full path
-        STRING( REGEX REPLACE "(.*)\\/java$" "\\1" java_bin_path ${java_bin} )
+    MESSAGE( STATUS "Autodetecting java..." )
+    FIND_PACKAGE( Java )
+    IF( NOT JAVA_RUNTIME OR NOT JAVA_COMPILE )
+        MESSAGE( FATAL_ERROR "Java not found!! Please make sure that java is in your PATH." )
     ENDIF()
-
+    # extract java bin path out of full path to java runtime
+    STRING( REGEX REPLACE "(.*)\\/java$" "\\1" JAVA_RUNTIME_PATH ${JAVA_RUNTIME} )
     # parse the output of java -version
-    EXEC_PROGRAM( "${java_bin}" ARGS "-version"
+    EXEC_PROGRAM( "${JAVA_RUNTIME}" ARGS "-version"
             OUTPUT_VARIABLE out_tmp
             RETURN_VALUE out_ret )
     IF( out_ret )
         MESSAGE( STATUS "Error executing java -version!!" )
     ENDIF()
     STRING( REGEX REPLACE ".* version \"([0-9]+\\.[0-9]+\\.[0-9]+).*"
-            "\\1" java_version "${out_tmp}" )
+            "\\1" JAVA_VERSION "${out_tmp}" )
 
     # display info
-    MESSAGE( STATUS "Java version ${java_version} configured successfully!" )
+    MESSAGE( STATUS "Detected Java version ${JAVA_VERSION}..." )
 
     # set environment variables for
     # generating header files with ant aid.generate
     SET( ENV{GEAR} "${CMAKE_SOURCE_DIR}" )
-    SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:${java_bin_path}:$ENV{PATH}" )
+    SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:${JAVA_RUNTIME_PATH}:$ENV{PATH}" )
 
     # generate header files with ant aid.generate
     EXEC_PROGRAM( ant "${CMAKE_SOURCE_DIR}"
@@ -144,7 +100,7 @@ ENDIF()
 MESSAGE( STATUS "Generating shell script for calling ant..." )
 FILE( WRITE "${CMAKE_BINARY_DIR}/script.sh"
             "export GEAR=${CMAKE_SOURCE_DIR}\n"
-            "export PATH=${java_bin_path}/bin:${CMAKE_SOURCE_DIR}/tools:$PATH\n"
+            "export PATH=${JAVA_RUNTIME_PATH}/bin:${CMAKE_SOURCE_DIR}/tools:$PATH\n"
             "ant $1" )
 
 # find shell
