@@ -5,11 +5,14 @@
   ----------
  | v00-06   |
   ----------
-  - added SiPlanes detector for pixel telescope (and FTD?)
+  - added SiPlanes detector for pixel telescope
     (author T.Klimkovich, DESY)
  
   - bug fix for BField: warning if not present
 
+  - improved CMake  - now default build tool
+
+ 
   ----------
  | v00-05   |
   ----------
