@@ -37,6 +37,12 @@ IF( CMAKE_INSTALL_PREFIX STREQUAL "/usr/local" )
     SET( CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}" )
 ENDIF()
 
+# library *nix style versioning
+SET( ${PROJECT_NAME}_SOVERSION
+    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
+SET( ${PROJECT_NAME}_VERSION
+    "${${PROJECT_NAME}_SOVERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
+
 # create symbolic link for include files
 IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml" )
     MESSAGE( STATUS "Creating symlink: ${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml..." )
@@ -95,77 +101,87 @@ IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
     ENDIF()
 ENDIF()
 
-# generate shell script for setting environment
-# and calling ant aid.generate
-MESSAGE( STATUS "Generating shell script for calling ant..." )
-FILE( WRITE "${CMAKE_BINARY_DIR}/script.sh"
-            "export GEAR=${CMAKE_SOURCE_DIR}\n"
-            "export PATH=${JAVA_RUNTIME_PATH}/bin:${CMAKE_SOURCE_DIR}/tools:$PATH\n"
-            "ant $1" )
 
-# find shell
-FIND_PROGRAM( SH
-  sh
-  ${CYGWIN_INSTALL_PATH}/bin
-  /bin
-  /usr/bin
-  /usr/local/bin
-  /sbin
-  # FIXME add path to MacOS here
-)
-MARK_AS_ADVANCED( SH )
+# code for *nix only!
+IF( UNIX )
+    # find shell
+    FIND_PROGRAM( SH
+      sh
+      ${CYGWIN_INSTALL_PATH}/bin
+      /bin
+      /usr/bin
+      /usr/local/bin
+      /sbin
+      # FIXME add path to MacOS here
+    )
+    MARK_AS_ADVANCED( SH )
 
-IF( SH-NOTFOUND )
-    MESSAGE( STATUS "Unix Shell not found - cannot enable headers target!!" )
-ELSE()
-    # create "always out-of-date" headers target
-    ADD_CUSTOM_TARGET( headers
-        COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" aid.generate
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
-        COMMENT "Generating header files with ant aid.generate..."
-        VERBATIM )
-ENDIF()
+    IF( SH )
+        # generate shell script for setting environment before running a command
+        MESSAGE( STATUS "Generating shell environment script..." )
+        FILE( WRITE "${CMAKE_BINARY_DIR}/script.sh"
+                    "export GEAR=${CMAKE_SOURCE_DIR}\n"
+                    "export GEARVERSION=${${PROJECT_NAME}_VERSION}\n"
+                    "export PATH=${JAVA_RUNTIME_PATH}/bin:${CMAKE_SOURCE_DIR}/tools:$PATH\n"
+                    "$1 $2" )
 
-# DOCUMENTATION
-FIND_PACKAGE( Doxygen )
-FIND_PACKAGE( LATEX )
-IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
+        # create "always out-of-date" headers target
+        ADD_CUSTOM_TARGET( headers
+            COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" ant aid.generate
+            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+            COMMENT "Generating header files with ant aid.generate..."
+            VERBATIM )
 
-    # this code is not ok because cmake cannot check if the documentation
-    # has already been built. we better define a custom command + target
-    #ADD_CUSTOM_TARGET( doc
-    #    "${CMAKE_COMMAND}" -E chdir
-    #    "${CMAKE_SOURCE_DIR}/doc"
-    #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
+        # DOCUMENTATION
+        # FIXME Documentation needs GEARVERSION env var, so we can only
+        # build it with script.sh
+        FIND_PACKAGE( Doxygen )
+        FIND_PACKAGE( LATEX )
+        IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
 
-    ADD_CUSTOM_COMMAND(
-        OUTPUT  "${CMAKE_SOURCE_DIR}/doc/html"
-        COMMAND "${DOXYGEN_EXECUTABLE}"
-        WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
-        COMMENT "Building API Documentation..."
-        VERBATIM )
-    
-    #ADD_CUSTOM_COMMAND(
-    #    OUTPUT  "${CMAKE_SOURCE_DIR}/doc/latex"
-    #    COMMAND "${DOXYGEN_EXECUTABLE}"
-    #    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
-    #    COMMENT "Building API Documentation..."
-    #    VERBATIM )
+            # this code is not ok because cmake cannot check if the documentation
+            # has already been built. we better define a custom command + target
+            #ADD_CUSTOM_TARGET( doc
+            #    "${CMAKE_COMMAND}" -E chdir
+            #    "${CMAKE_SOURCE_DIR}/doc"
+            #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
 
-    ADD_CUSTOM_TARGET( doc DEPENDS
-        "${CMAKE_SOURCE_DIR}/doc/html" )
-        #"${CMAKE_SOURCE_DIR}/doc/latex" )
+            ADD_CUSTOM_COMMAND(
+                OUTPUT "${CMAKE_SOURCE_DIR}/doc/html"
+                COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
+                WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+                COMMENT "Building API Documentation..."
+                VERBATIM )
+            
+            #ADD_CUSTOM_COMMAND(
+            #    OUTPUT "${CMAKE_SOURCE_DIR}/doc/latex"
+            #    COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
+            #    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+            #    COMMENT "Building API Documentation..."
+            #    VERBATIM )
 
-ELSE()
-    IF( NOT DOXYGEN_FOUND )
-        MESSAGE( STATUS "Doxygen not found in your system!!" )
-    ENDIF()
-    IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
-        MESSAGE( STATUS "Latex not found in your system!!" )
-    ENDIF()
-    IF( INSTALL_DOC )
-        MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
-        SET( INSTALL_DOC OFF )
+            ADD_CUSTOM_TARGET( doc DEPENDS
+                "${CMAKE_SOURCE_DIR}/doc/html" )
+                #"${CMAKE_SOURCE_DIR}/doc/latex" )
+
+        ELSE()
+            IF( NOT DOXYGEN_FOUND )
+                MESSAGE( STATUS "Doxygen not found in your system!!" )
+            ENDIF()
+            IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
+                MESSAGE( STATUS "Latex not found in your system!!" )
+            ENDIF()
+            IF( INSTALL_DOC )
+                MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
+                SET( INSTALL_DOC OFF )
+            ENDIF()
+        ENDIF()
+    ELSE()
+        MESSAGE( STATUS "Unix Shell not found - cannot enable headers target!!" )
+        IF( INSTALL_DOC )
+            MESSAGE( STATUS "Unix Shell not found - INSTALL_DOC forced to OFF" )
+            SET( INSTALL_DOC OFF )
+        ENDIF()
     ENDIF()
 ENDIF()
 
@@ -181,13 +197,8 @@ IF( INSTALL_DOC )
             PATTERN "*CVS*" EXCLUDE )
 ENDIF()
 
-##########################################################################################
 
-# library *nix style versioning
-SET( ${PROJECT_NAME}_SOVERSION
-    "${${PROJECT_NAME}_MAJOR_VERSION}.${${PROJECT_NAME}_MINOR_VERSION}" )
-SET( ${PROJECT_NAME}_VERSION
-    "${${PROJECT_NAME}_SOVERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
+##########################################################################################
 
 # add install path to the rpath list
 SET( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
