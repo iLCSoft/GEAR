@@ -304,7 +304,7 @@ namespace gear {
     int nPad = _rows.at(rn).NPad ;
     
     if( pn > nPad-1 ){ 
-
+      throw Exception("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
       throw std::out_of_range("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
     }
     
