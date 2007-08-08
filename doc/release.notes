@@ -3,6 +3,12 @@
  ======================
 
   ----------
+ | v00-06-01|
+  ----------
+
+   - changed xml output format to scientific with precision 9: "%.9e"
+
+  ----------
  | v00-06   |
   ----------
   - added SiPlanes detector for pixel telescope
