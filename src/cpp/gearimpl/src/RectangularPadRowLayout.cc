@@ -305,7 +305,7 @@ namespace gear {
     
     if( pn > nPad-1 ){ 
       throw Exception("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
-      throw std::out_of_range("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
+//       throw std::out_of_range("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
     }
     
     return getPadIndex(  rn , pn ) ;
@@ -317,9 +317,9 @@ namespace gear {
     int rn = getRowNumber( padIndex)  ;
     
     if( pn < 0  ){ 
-      std::cerr << " hgoing top throw exception: getLeftNeighbour: no left neighbour pad !" << std::endl ;
+//       std::cerr << " hgoing top throw exception: getLeftNeighbour: no left neighbour pad !" << std::endl ;
       throw Exception("RectangularPadRowLayout::getLeftNeighbour: no left neighbour pad !");
-      throw std::out_of_range("RectangularPadRowLayout::getLeftNeighbour: no left neighbour pad !");
+//       throw std::out_of_range("RectangularPadRowLayout::getLeftNeighbour: no left neighbour pad !");
     }
     
     return getPadIndex(  rn , pn ) ;
