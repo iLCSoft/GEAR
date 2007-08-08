@@ -25,9 +25,9 @@ distribution.
  F.Gaede, DESY : changed extension to .cc  for use with gear
                  and include from "gearxml/tinyxml.h"
                : put in namespace gear
-               : changed "%lf" to "%f" in 1155 (ISO C++)
+               : changed output format to scientific with precision 9: "%.9e"
               
-   $Id: tinyxml.cc,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   $Id: tinyxml.cc,v 1.2 2007-08-08 08:58:32 gaede Exp $
 */
 
 
@@ -737,7 +737,7 @@ void TiXmlElement::SetAttribute( const char * name, int val )
 void TiXmlElement::SetDoubleAttribute( const char * name, double val )
 {	
 	char buf[256];
-	sprintf( buf, "%f", val );
+	sprintf( buf, "%.9e", val );
 	SetAttribute( name, buf );
 }
 
@@ -1140,7 +1140,7 @@ int TiXmlAttribute::QueryIntValue( int* ival ) const
 
 int TiXmlAttribute::QueryDoubleValue( double* dval ) const
 {
-	if ( sscanf( value.c_str(), "%lf", dval ) == 1 )
+	if ( sscanf( value.c_str(), "%le", dval ) == 1 )
 		return TIXML_SUCCESS;
 	return TIXML_WRONG_TYPE;
 }
@@ -1157,7 +1157,7 @@ void TiXmlAttribute::SetDoubleValue( double _value )
 	char buf [256];
 //fg: 	sprintf (buf, "%lf", _value);
 //      %lf is not ISO C++
-	sprintf (buf, "%f", _value);
+	sprintf (buf, "%.9e", _value);
 	SetValue (buf);
 }
 
