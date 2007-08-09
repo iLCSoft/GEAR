@@ -35,16 +35,19 @@ namespace gear{
 
     int nLayer = _layout.getNLayers() ;
 
-    if( _type == CalorimeterParameters::BARREL  &&  nLayer > 0 ) { 
 
-      // the first layer starts at rMin and the last layer ends at its distance from the origin plus its thickness 
+    if(  nLayer > 0 ) {
 
-      _extent[1] = _layout.getDistance( nLayer-1 )  +  _layout.getThickness( nLayer-1 )  ;
+      if( _type == CalorimeterParameters::BARREL ) { 
 
-    } else {
-
-      _extent[3] = _layout.getDistance( nLayer-1 )  +  _layout.getThickness( nLayer-1 )  ;
-
+	// the first layer starts at rMin and the last layer ends at its distance from the origin plus its thickness 
+	
+	_extent[1] = _layout.getDistance( nLayer-1 )  +  _layout.getThickness( nLayer-1 )  ;
+	
+      } else {
+	
+	_extent[3] = _layout.getDistance( nLayer-1 )  +  _layout.getThickness( nLayer-1 )  ;
+      }
     }
 
     return _extent ; 
