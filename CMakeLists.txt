@@ -34,7 +34,7 @@ ENDIF()
 
 # set default install prefix to project root directory
 IF( CMAKE_INSTALL_PREFIX STREQUAL "/usr/local" )
-    SET( CMAKE_INSTALL_PREFIX "${CMAKE_SOURCE_DIR}" )
+    SET( CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}" )
 ENDIF()
 
 # library *nix style versioning
@@ -44,23 +44,23 @@ SET( ${PROJECT_NAME}_VERSION
     "${${PROJECT_NAME}_SOVERSION}.${${PROJECT_NAME}_PATCH_LEVEL}" )
 
 # create symbolic link for include files
-IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml" )
-    MESSAGE( STATUS "Creating symlink: ${CMAKE_SOURCE_DIR}/src/cpp/include/gearxml..." )
+IF( NOT EXISTS "${PROJECT_SOURCE_DIR}/src/cpp/include/gearxml" )
+    MESSAGE( STATUS "Creating symlink: ${PROJECT_SOURCE_DIR}/src/cpp/include/gearxml..." )
     EXEC_PROGRAM( "${CMAKE_COMMAND}"
-        "${CMAKE_SOURCE_DIR}/src/cpp/include"
-        ARGS -E create_symlink "../gearxml/include" "gearxml"
+        "${PROJECT_SOURCE_DIR}/src/cpp/include"
+        ARGS -E create_symlink "${PROJECT_SOURCE_DIR}/src/cpp/gearxml/include" "gearxml"
         OUTPUT_VARIABLE out_tmp )
 ENDIF()
-IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gearimpl" )
-    MESSAGE( STATUS "Creating symlink: ${CMAKE_SOURCE_DIR}/src/cpp/include/gearimpl..." )
+IF( NOT EXISTS "${PROJECT_SOURCE_DIR}/src/cpp/include/gearimpl" )
+    MESSAGE( STATUS "Creating symlink: ${PROJECT_SOURCE_DIR}/src/cpp/include/gearimpl..." )
     EXEC_PROGRAM( "${CMAKE_COMMAND}"
-        "${CMAKE_SOURCE_DIR}/src/cpp/include"
-        ARGS -E create_symlink "../gearimpl/include" "gearimpl"
+        "${PROJECT_SOURCE_DIR}/src/cpp/include"
+        ARGS -E create_symlink "${PROJECT_SOURCE_DIR}/src/cpp/gearimpl/include" "gearimpl"
         OUTPUT_VARIABLE out_tmp )
 ENDIF()
 
 # generate header files with ant aid.generate
-IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
+IF( NOT EXISTS "${PROJECT_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
     MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
     MESSAGE( STATUS "Autodetecting java..." )
     FIND_PACKAGE( Java )
@@ -84,17 +84,17 @@ IF( NOT EXISTS "${CMAKE_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
 
     # set environment variables for
     # generating header files with ant aid.generate
-    SET( ENV{GEAR} "${CMAKE_SOURCE_DIR}" )
-    SET( ENV{PATH} "${CMAKE_SOURCE_DIR}/tools:${JAVA_RUNTIME_PATH}:$ENV{PATH}" )
+    SET( ENV{GEAR} "${PROJECT_SOURCE_DIR}" )
+    SET( ENV{PATH} "${PROJECT_SOURCE_DIR}/tools:${JAVA_RUNTIME_PATH}:$ENV{PATH}" )
 
     # generate header files with ant aid.generate
-    EXEC_PROGRAM( ant "${CMAKE_SOURCE_DIR}"
+    EXEC_PROGRAM( ant "${PROJECT_SOURCE_DIR}"
         ARGS aid.generate
         OUTPUT_VARIABLE out_tmp
         RETURN_VALUE out_ret )
     # check if everything went ok
     IF( NOT out_ret )
-        MESSAGE( STATUS "Header files generated in ${CMAKE_SOURCE_DIR}/src/cpp/include/gear..." )
+        MESSAGE( STATUS "Header files generated in ${PROJECT_SOURCE_DIR}/src/cpp/include/gear..." )
     ELSE()
         MESSAGE( STATUS "Error generating header files!!" )
         MESSAGE( FATAL_ERROR "${out_tmp}" )
@@ -119,16 +119,16 @@ IF( UNIX )
     IF( SH )
         # generate shell script for setting environment before running a command
         MESSAGE( STATUS "Generating shell environment script..." )
-        FILE( WRITE "${CMAKE_BINARY_DIR}/script.sh"
-                    "export GEAR=${CMAKE_SOURCE_DIR}\n"
+        FILE( WRITE "${PROJECT_BINARY_DIR}/script.sh"
+                    "export GEAR=${PROJECT_SOURCE_DIR}\n"
                     "export GEARVERSION=${${PROJECT_NAME}_VERSION}\n"
-                    "export PATH=${JAVA_RUNTIME_PATH}/bin:${CMAKE_SOURCE_DIR}/tools:$PATH\n"
+                    "export PATH=${JAVA_RUNTIME_PATH}/bin:${PROJECT_SOURCE_DIR}/tools:$PATH\n"
                     "$1 $2" )
 
         # create "always out-of-date" headers target
         ADD_CUSTOM_TARGET( headers
-            COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" ant aid.generate
-            WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}"
+            COMMAND ${SH} "${PROJECT_BINARY_DIR}/script.sh" ant aid.generate
+            WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
             COMMENT "Generating header files with ant aid.generate..."
             VERBATIM )
 
@@ -143,26 +143,26 @@ IF( UNIX )
             # has already been built. we better define a custom command + target
             #ADD_CUSTOM_TARGET( doc
             #    "${CMAKE_COMMAND}" -E chdir
-            #    "${CMAKE_SOURCE_DIR}/doc"
+            #    "${PROJECT_SOURCE_DIR}/doc"
             #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
 
             ADD_CUSTOM_COMMAND(
-                OUTPUT "${CMAKE_SOURCE_DIR}/doc/html"
-                COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
-                WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+                OUTPUT "${PROJECT_SOURCE_DIR}/doc/html"
+                COMMAND ${SH} "${PROJECT_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
+                WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
                 COMMENT "Building API Documentation..."
                 VERBATIM )
             
             #ADD_CUSTOM_COMMAND(
-            #    OUTPUT "${CMAKE_SOURCE_DIR}/doc/latex"
-            #    COMMAND ${SH} "${CMAKE_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
-            #    WORKING_DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+            #    OUTPUT "${PROJECT_SOURCE_DIR}/doc/latex"
+            #    COMMAND ${SH} "${PROJECT_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
+            #    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
             #    COMMENT "Building API Documentation..."
             #    VERBATIM )
 
             ADD_CUSTOM_TARGET( doc DEPENDS
-                "${CMAKE_SOURCE_DIR}/doc/html" )
-                #"${CMAKE_SOURCE_DIR}/doc/latex" )
+                "${PROJECT_SOURCE_DIR}/doc/html" )
+                #"${PROJECT_SOURCE_DIR}/doc/latex" )
 
         ELSE()
             IF( NOT DOXYGEN_FOUND )
@@ -187,12 +187,12 @@ ENDIF()
 
 IF( INSTALL_DOC )
     # make sure doxygen is executed before make install
-    #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${CMAKE_SOURCE_DIR}/doc)" )
+    #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doc)" )
     # by just calling "make doc" doxygen won't run if the documentation has already been built
-    INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${CMAKE_BINARY_DIR} ARGS doc)" )
+    INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
     
     # install documentation
-    INSTALL( DIRECTORY "${CMAKE_SOURCE_DIR}/doc"
+    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
             DESTINATION .
             PATTERN "*CVS*" EXCLUDE )
 ENDIF()
@@ -215,9 +215,9 @@ SET( CMAKE_INSTALL_RPATH_USE_LINK_PATH 1 )
 MARK_AS_ADVANCED( CMAKE_INSTALL_RPATH_USE_LINK_PATH )
 
 # output directories
-SET( EXECUTABLE_OUTPUT_PATH "${CMAKE_BINARY_DIR}/bin" CACHE PATH
+SET( EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin" CACHE PATH
     "EXECUTABLE_OUTPUT_PATH" FORCE )
-SET( LIBRARY_OUTPUT_PATH "${CMAKE_BINARY_DIR}/lib" CACHE PATH
+SET( LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib" CACHE PATH
     "LIBRARY_OUTPUT_PATH" FORCE )
 MARK_AS_ADVANCED( EXECUTABLE_OUTPUT_PATH LIBRARY_OUTPUT_PATH )
 
@@ -243,22 +243,22 @@ IF( BUILD_GEAR_TESTS )
 ENDIF()
 
 # create uninstall configuration file 
-CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/cmake_uninstall.cmake.in"
-                "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake"
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+                "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
                 IMMEDIATE @ONLY )
 
 # create uninstall target
-ADD_CUSTOM_TARGET( uninstall "${CMAKE_COMMAND}" -P "${CMAKE_BINARY_DIR}/cmake_uninstall.cmake" )
+ADD_CUSTOM_TARGET( uninstall "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake" )
 
 # create configuration file from .in file
-CONFIGURE_FILE( "${CMAKE_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
-                "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
+                "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
 
 # install configuration file
-INSTALL( FILES "${CMAKE_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION . )
+INSTALL( FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION . )
 
 # install include files
-INSTALL( DIRECTORY "${CMAKE_SOURCE_DIR}/src/cpp/include"
+INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/src/cpp/include"
         DESTINATION .
         PATTERN "*~" EXCLUDE
         PATTERN "*CVS*" EXCLUDE )
