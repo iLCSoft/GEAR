@@ -251,6 +251,7 @@ CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
 ADD_CUSTOM_TARGET( uninstall "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake" )
 
 # create configuration file from .in file
+LIST( APPEND GEAR_DEFINITIONS "-Wno-long-long;-DUSE_GEAR" )
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/${PROJECT_NAME}Config.cmake.in"
                 "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY )
 
