@@ -27,7 +27,7 @@ FOREACH( bin ${test_bins} )
     # avoid conflicts between library and binary target names
     SET_TARGET_PROPERTIES( bin_${bin} PROPERTIES OUTPUT_NAME ${bin} )
     # link binary against library
-    TARGET_LINK_LIBRARIES( bin_${bin} lib_${PROJECT_NAME} )
+    TARGET_LINK_LIBRARIES( bin_${bin} lib_GEAR lib_GEARXML )
     # install binary commando
     INSTALL( TARGETS bin_${bin} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 ENDFOREACH()

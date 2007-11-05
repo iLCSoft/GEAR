@@ -1,3 +1,4 @@
+
 ##################################
 # cmake file for building GEAR
 # @author Jan Engels, DESY
@@ -33,7 +34,7 @@ SET_TARGET_PROPERTIES( lib_${PROJECT_NAME} PROPERTIES
     OUTPUT_NAME gear )
 
 # link gear library with gearxml
-TARGET_LINK_LIBRARIES( lib_${PROJECT_NAME} lib_GEARXML )
+#TARGET_LINK_LIBRARIES( lib_${PROJECT_NAME} lib_GEARXML )
 
 # install library
 INSTALL( TARGETS lib_${PROJECT_NAME} DESTINATION lib PERMISSIONS
