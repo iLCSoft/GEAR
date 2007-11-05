@@ -3,6 +3,15 @@
  ======================
 
   ----------
+ | v00-07   |
+  ----------
+   - bug fixes:
+     - 	 FixedPadSizeDiskLayout::getPadIndex
+	 throws std::out_of_range if needed
+     -   src/cpp/gearimpl/src/CalorimeterParametersImpl.cc: bug fix
+	 K.Harder: getExtent: nLayer>0
+
+  ----------
  | v00-06-01|
   ----------
 
