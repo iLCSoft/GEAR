@@ -25,6 +25,9 @@ ADD_LIBRARY( lib_${PROJECT_NAME} ${lib_srcs} )
 # create symbolic lib target for calling target lib_XXX
 ADD_CUSTOM_TARGET( lib DEPENDS lib_${PROJECT_NAME} )
 
+# link gear library with gear
+TARGET_LINK_LIBRARIES( lib_${PROJECT_NAME} lib_GEAR )
+
 # change lib_target properties
 SET_TARGET_PROPERTIES( lib_${PROJECT_NAME} PROPERTIES
     # create *nix style library versions + symbolic links
