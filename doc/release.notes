@@ -5,11 +5,20 @@
   ----------
  | v00-07   |
   ----------
+   - no interface change wrt. v00-06
+
+   - improved CMake files 
+
+   - made compatible with MacOs
+
    - bug fixes:
      - 	 FixedPadSizeDiskLayout::getPadIndex
 	 throws std::out_of_range if needed
+
      -   src/cpp/gearimpl/src/CalorimeterParametersImpl.cc: bug fix
 	 K.Harder: getExtent: nLayer>0
+
+     -  fixed minor memory leaks in globals/singletons
 
   ----------
  | v00-06-01|
