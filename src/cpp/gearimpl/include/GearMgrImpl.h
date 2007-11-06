@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.5 2007-05-23 10:36:21 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.6 2007-11-06 09:06:00 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -28,7 +28,7 @@ namespace gear {
     GearMgrImpl() ;
     
     /// Destructor.
-    virtual ~GearMgrImpl() { /* nop */; }
+    virtual ~GearMgrImpl() ;
 	
     /** Get named parameters for key. This can be used to describe a subdetector that is not 
      *  yet forseen in the Gear API.

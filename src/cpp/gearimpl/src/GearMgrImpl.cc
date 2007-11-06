@@ -2,6 +2,11 @@
 #include "gearimpl/GearMgrImpl.h"
 #include "gearimpl/GearParametersImpl.h"
 #include "gear/CalorimeterParameters.h"
+#include "gear/VXDParameters.h"
+#include "gear/SiPlanesParameters.h"
+#include "gear/GearPointProperties.h"
+#include "gear/GearDistanceProperties.h"
+#include "gear/BField.h"
 
 namespace gear{
 
@@ -20,6 +25,31 @@ namespace gear{
     _bField(0){
   }
   
+  GearMgrImpl::~GearMgrImpl() {
+    
+    // clean up all parameters
+    if( _tpcParameters ) delete _tpcParameters ;
+    if( _ecalBarrelParameters ) delete _ecalBarrelParameters ;
+    if( _ecalEndcapParameters ) delete _ecalEndcapParameters ;
+    if( _hcalBarrelParameters ) delete _hcalBarrelParameters ;
+    if( _hcalEndcapParameters ) delete _hcalEndcapParameters ;
+    if( _lcalParameters ) delete  _lcalParameters;
+    if( _vxdParameters ) delete _vxdParameters ;
+    if( _siplanesParameters ) delete _siplanesParameters ;
+    if( _pointProperties ) delete _pointProperties ;
+    if( _distanceProperties ) delete _distanceProperties ;
+    if( _bField  ) delete  _bField ;
+    
+    
+    ParameterMap::iterator it_end = _map.end() ;
+
+    for( ParameterMap::iterator it = _map.begin() ; it != it_end ; ++ it ) {
+      delete it->second ;
+    }
+    
+  }
+  
+
   const GearParameters & GearMgrImpl::getGearParameters(const std::string & key) const 
     
     throw (UnknownParameterException, std::exception ) {
@@ -144,11 +174,30 @@ namespace gear{
 
   void GearMgrImpl::setGearParameters( const std::string & key, GearParameters* parameters ) {
 
-    _map[ key ] = parameters ; 
+    if( parameters == 0 )   // don't allow  null pointers 
+      return  ;    
+    
+    ParameterMap::iterator it = _map.find( key ) ;
+
+    if( it != _map.end() ) {
+      
+      delete it->second ;
+      it->second = parameters ;
+      
+    } else {
+      
+      _map[ key ] = parameters ; 
+      
+    }
+    
+    
   }
   
   void GearMgrImpl::setTPCParameters( TPCParameters* tpcParameters ) {
     
+    if(  _tpcParameters ) 
+      delete _tpcParameters ;
+
     _tpcParameters = tpcParameters ;
   }
 

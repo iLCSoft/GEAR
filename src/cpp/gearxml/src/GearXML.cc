@@ -29,6 +29,11 @@ namespace gear{
 
   } 
 
+  GearXML::~GearXML(){
+
+    if( _gearMgr != 0 ) 
+      delete _gearMgr ;
+  }
 
   void GearXML::createXMLFile( GearMgr* mgr, const std::string& fileName ) {
 
@@ -230,6 +235,8 @@ namespace gear{
   }
 
 
+
+
   GearMgr* GearXML::createGearMgr() {
 
     if( _gearMgr != 0 ){
@@ -244,23 +251,26 @@ namespace gear{
     
     // parse the XML file
     
-    TiXmlDocument* doc = new TiXmlDocument ;
-    bool loadOkay = doc->LoadFile( _fileName  ) ;
+    //    TiXmlDocument* doc = new TiXmlDocument ;
+    TiXmlDocument doc ;
+    //    TiXmlDocument* doc = &xmldoc ;
+
+    bool loadOkay = doc.LoadFile( _fileName  ) ;
     
     if( !loadOkay ) {
 
       std::stringstream str ;
       
       str  << "GearXML::createGearMgr error in file [" << _fileName 
-	   << ", row: " << doc->ErrorRow() << ", col: " << doc->ErrorCol() << "] : "
-	   << doc->ErrorDesc() ;
+	   << ", row: " << doc.ErrorRow() << ", col: " << doc.ErrorCol() << "] : "
+	   << doc.ErrorDesc() ;
       
       throw ParseException( str.str() ) ;
     }
     
-//     TiXmlHandle docHandle( doc );
+//     TiXmlHandle docHandle( &doc );
     
-    TiXmlElement* root = doc->RootElement();
+    TiXmlElement* root = doc.RootElement();
 
     if( root == 0 ){
       throw ParseException( std::string( "GearXML::createGearMgr : no root tag found in  ") 

@@ -30,11 +30,13 @@ namespace gear {
   PadRowLayout2DXML::Map& PadRowLayout2DXML::map() {
     
     static  PadRowLayout2DXML::Map theMap ;
+    static FixedPadSizeDiskLayoutXML  aFixedPadSizeDiskLayoutXML ;
+    static RectangularPadRowLayoutXML aRectangularPadRowLayoutXML ;
 
     if( theMap.size() == 0 ) {
       
-      theMap["FixedPadSizeDiskLayout"] = new  FixedPadSizeDiskLayoutXML ;
-      theMap["RectangularPadRowLayout"] = new  RectangularPadRowLayoutXML ;
+      theMap["FixedPadSizeDiskLayout"] = & aFixedPadSizeDiskLayoutXML ;
+      theMap["RectangularPadRowLayout"] = & aRectangularPadRowLayoutXML ;
 
     }
     return theMap ;

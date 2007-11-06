@@ -15,7 +15,7 @@ namespace gear {
   /** Manager for  XML handlers of GEAR classes.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: XMLHandlerMgr.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id: XMLHandlerMgr.h,v 1.2 2007-11-06 09:06:00 gaede Exp $
    */
   
   class XMLHandlerMgr {
@@ -35,6 +35,7 @@ namespace gear {
      */
     const void setHandler( const std::string& type , XMLHandler* handler )  ;
    
+    ~XMLHandlerMgr() ;
 
   protected:
 
@@ -42,7 +43,7 @@ namespace gear {
 
   private:
     XMLHandlerMgr() ;
-    static XMLHandlerMgr* _me ;
+    //    static XMLHandlerMgr* _me ;
 
   }; // class
   
