@@ -168,11 +168,31 @@ namespace gear{
   Vector3D VXDParametersImpl::distanceToNearestVXD( Vector3D p , bool sensitive ) const
   {
 
+    Vector3D origin( 0,0,0 ) ;
+    
     // check if point is in already
     if( isPointInVXD( p , sensitive ) ) {
-      Vector3D v ( 0,0,0 ) ;
-      return v ;
+      
+      return origin ;
     }
+    
+    // check if point is origin
+
+    if( origin.x() == p.x() &&  origin.y() == p.y() && origin.z() == p.z()  ) {
+
+       if( _layer.getNLayers() > 0 ){
+
+ 	// simply use first ladder - distance d , phi0 , gap/2  :
+	 //fg: fixme: review definition of phi...
+ 	return Vector3D( _layer.getLadderDistance(0) ,  -_layer.getPhi0(0)  , _shellGap/2  , Vector3D::cylindrical ) ;
+       }
+
+       return origin ;
+    }
+
+    //fg:  FIXME: this code needs to be cleaned up and checked 
+    //  it can also probably be made a bit faster ...
+
 
     double pPhi = getPhiPoint( p ) ;
 
@@ -294,7 +314,7 @@ namespace gear{
 // 	  }
 	  
 	  double thisDistance = sqrt( myVec[0] * myVec[0] + myVec[1] * myVec[1] + myVec[2] * myVec[2] ) ;
-	  if ( thisDistance < minDistance ) {
+	  if ( thisDistance <= minDistance ) {
 	    minDistance = thisDistance ;
 	    vPointPlane = myVec ;
 	    
@@ -383,6 +403,7 @@ namespace gear{
       } // for i -- all ladders in layer
 
     } // for nearestLayer -- all layers in vxd
+
 
     return vPointPlane ;
 
@@ -782,27 +803,31 @@ namespace gear{
   
 
   double VXDParametersImpl::getPhiPoint( Vector3D p ) const {
-      // get phi of point in projection 2D
+
+    //fg: definition of phi - seems like this is the the angle with the negative y-axis ????
+    //    return correctPhiRange( p.phi() ) ;
+
+    // get phi of point in projection 2D
     double pPhi = 0. ;
     if( ( p[0] >= 0 ) && ( p[1] == 0 ) )
       pPhi = -M_PI/2 ;
-
+    
     if( ( p[0] < 0 ) && ( p[1] == 0 ) )
       pPhi = M_PI/2 ;
-
+    
     if( ( p[0] == 0 ) && ( p[1] < 0 ) ) 
       pPhi = 0 ;
-
+    
     if( ( p[0] != 0 ) && ( p[1] < 0 ) )
       pPhi = atan( p[0] / p[1] ) + M_PI ;
-
+    
     else
       pPhi = atan( p[0] / p[1] ) ;
-
+    
     pPhi = correctPhiRange( pPhi ) ;  
-
+    
     return pPhi ;
-
+    
   } // function getPhiPoint
 
 
