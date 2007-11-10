@@ -30,9 +30,9 @@ namespace gear{
   } 
 
   GearXML::~GearXML(){
-
-    if( _gearMgr != 0 ) 
-      delete _gearMgr ;
+// cant delete this as GearXML is used as a factory by Marlin ....
+//    if( _gearMgr != 0 ) 
+//      delete _gearMgr ;
   }
 
   void GearXML::createXMLFile( GearMgr* mgr, const std::string& fileName ) {
