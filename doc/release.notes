@@ -10,7 +10,10 @@
    - improved CMake files 
 
    - made compatible with MacOs
-
+ 
+   - build the mergeXML tool by default
+     -> added example file gear_merge_reco.xml
+   
    - bug fixes:
      - 	 FixedPadSizeDiskLayout::getPadIndex
 	 throws std::out_of_range if needed
