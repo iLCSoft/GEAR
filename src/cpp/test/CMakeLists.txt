@@ -8,7 +8,7 @@ INCLUDE_DIRECTORIES( ../include )
 
 # list of test binaries
 SET( test_bins
-    mergeXML
+#    mergeXML
     testgear
     testtpcproto
     testVTXgear

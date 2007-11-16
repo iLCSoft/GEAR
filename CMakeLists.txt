@@ -242,6 +242,13 @@ IF( BUILD_GEAR_TESTS )
     ADD_SUBDIRECTORY( src/cpp/test test )
 ENDIF()
 
+#--- add mergeXML to be build by default
+INCLUDE_DIRECTORIES( ./include )
+ADD_EXECUTABLE( mergeXML src/cpp/test/mergeXML.cc )
+TARGET_LINK_LIBRARIES( mergeXML lib_GEAR lib_GEARXML )
+# install binary commando
+INSTALL( TARGETS mergeXML DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+
 # create uninstall configuration file 
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
                 "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"

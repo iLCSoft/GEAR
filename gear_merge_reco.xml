@@ -1,0 +1,26 @@
+
+<!---- 
+
+     example file for mergeXMl :
+
+     this can be used to overwrite and/or replace values in a gear file
+     which is needed for parameters that are not known in Mokka or that
+     need to be changed for example to use a different  digitization    
+    
+     this example defines the pad layout of the TPC to pads with 6X2 mm and sets the Hcal cell size to 3 cm 
+--->
+
+
+<gear>
+      <detectors>     
+        <detector name="TPC" geartype="TPCParameters">
+            <PadRowLayout2D type="FixedPadSizeDiskLayout" padHeight="6." padWidth="2." padGap="0." />
+        </detector>
+      <detector name="HcalBarrel" geartype="CalorimeterParameters">
+            <layer cellSize0="30." cellSize1="30." />
+      </detector>
+      <detector name="HcalEndcap" geartype="CalorimeterParameters">
+            <layer cellSize0="30." cellSize1="30." />
+        </detector>
+    </detectors>
+</gear>

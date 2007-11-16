@@ -11,7 +11,7 @@
  * are taken. 
  * 
  * @author R.Lippe, DESY
- * @version $Id: mergeXML.cc,v 1.2 2006-09-05 08:52:26 gaede Exp $
+ * @version $Id: mergeXML.cc,v 1.3 2007-11-16 17:10:30 gaede Exp $
  */
 
 
@@ -29,6 +29,8 @@ int main( int argc, char *argv[] ) {
 		<< " exists in either input file the attribute values from the primary file" << std::endl
 		<< " are taken." << std::endl
 		<< std::endl
+		<< "usage: " << std::endl
+		<< "  mergeXML  <secondary>  <primary>  <target> " << std::endl
 		<< "   <secondary>   filename for base-file that will be overwritten" << std::endl
 		<< "   <primary>     filename for file that overrules secondary file" << std::endl
 		<< "   <target>      filename for output file " << std::endl
