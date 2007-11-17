@@ -243,7 +243,7 @@ IF( BUILD_GEAR_TESTS )
 ENDIF()
 
 #--- add mergeXML to be build by default
-INCLUDE_DIRECTORIES( ./include )
+INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/src/cpp/include )
 ADD_EXECUTABLE( mergeXML src/cpp/test/mergeXML.cc )
 TARGET_LINK_LIBRARIES( mergeXML lib_GEAR lib_GEARXML )
 # install binary commando
