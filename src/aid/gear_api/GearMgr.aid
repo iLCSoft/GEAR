@@ -6,7 +6,7 @@ package hep.gear.api ;
  * 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearMgr.aid,v 1.5 2007-05-23 10:36:21 gaede Exp $
+ * @version $Id: GearMgr.aid,v 1.6 2007-12-06 17:30:52 gaede Exp $
  */
 public interface GearMgr {
     
@@ -43,6 +43,12 @@ public interface GearMgr {
      */
     public const CalorimeterParameters&  getEcalEndcapParameters() const throws UnknownParameterException ;
 
+    /** Get the Ecal plug parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const CalorimeterParameters&  getEcalPlugParameters() const throws UnknownParameterException ;
+
     /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
@@ -54,6 +60,14 @@ public interface GearMgr {
      *  @throws UnknownParameterException
      */
     public const CalorimeterParameters&  getHcalEndcapParameters() const throws UnknownParameterException ;
+
+
+    /** Get the Hcal ring parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    public const CalorimeterParameters&  getHcalRingParameters() const throws UnknownParameterException ;
+
 
     /** Get the Lcal parameters.
      *
@@ -118,6 +132,10 @@ public interface GearMgr {
      */
     public void setEcalEndcapParameters( CalorimeterParameters* ecalEndcapParameters ) ;
     
+    /** Set the EcalPlugParameters.
+     */
+    public void setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) ;
+    
     /** Set the HcalBarrelParameters.
      */
     public void setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) ;
@@ -125,6 +143,10 @@ public interface GearMgr {
     /** Set the HcalEndcapParameters.
      */
     public void setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) ;
+    
+    /** Set the HcalRingParameters.
+     */
+    public void setHcalRingParameters( CalorimeterParameters* hcalRingParameters ) ;
     
     /** Set the VXDParameters.
      */

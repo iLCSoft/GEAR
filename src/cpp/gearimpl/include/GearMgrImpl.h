@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.6 2007-11-06 09:06:00 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.7 2007-12-06 17:30:52 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -62,6 +62,13 @@ namespace gear {
     virtual const CalorimeterParameters & getEcalEndcapParameters() const 
 	throw (UnknownParameterException, std::exception )  ;
 
+    /** Get the Ecal plug parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getEcalPlugParameters() const 
+	throw (UnknownParameterException, std::exception )  ;
+
     /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
@@ -69,11 +76,20 @@ namespace gear {
     virtual const CalorimeterParameters & getHcalBarrelParameters() const 
 	throw (UnknownParameterException, std::exception )  ;
 
+
     /** Get the Hcal endcap parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getHcalEndcapParameters() const 
+	throw (UnknownParameterException, std::exception )  ;
+
+
+    /** Get the Hcal ring parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getHcalRingParameters() const 
 	throw (UnknownParameterException, std::exception )  ;
 
 
@@ -137,6 +153,10 @@ namespace gear {
      */
     virtual void setEcalEndcapParameters( CalorimeterParameters* ecalEndcapParameters ) ;
     
+    /** Set the EcalPlugParameters.
+     */
+    virtual void setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) ;
+    
     /** Set the HcalBarrelParameters.
      */
     virtual void setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) ;
@@ -144,6 +164,10 @@ namespace gear {
     /** Set the HcalEndcapParameters.
      */
     virtual void setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) ;
+
+    /** Set the HcalRingParameters.
+     */
+    virtual void setHcalRingParameters( CalorimeterParameters* hcalRingParameters ) ;
 
     /** Set the LcalParameters.
      */
@@ -179,8 +203,10 @@ namespace gear {
     TPCParameters* _tpcParameters ;
     CalorimeterParameters* _ecalBarrelParameters ;
     CalorimeterParameters* _ecalEndcapParameters ;
+    CalorimeterParameters* _ecalPlugParameters ;
     CalorimeterParameters* _hcalBarrelParameters ;
     CalorimeterParameters* _hcalEndcapParameters ;
+    CalorimeterParameters* _hcalRingParameters ;
     CalorimeterParameters* _lcalParameters ;
     VXDParameters* _vxdParameters ;
     SiPlanesParameters* _siplanesParameters ;

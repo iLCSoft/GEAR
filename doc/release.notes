@@ -3,6 +3,11 @@
  ======================
 
   ----------
+ | v00-08   |
+  ----------
+   - added HcalRing and EcalPlug calorimeter parameters
+
+  ----------
  | v00-07   |
   ----------
    - no interface change wrt. v00-06

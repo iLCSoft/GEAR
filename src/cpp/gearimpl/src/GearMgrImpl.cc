@@ -15,8 +15,10 @@ namespace gear{
     _tpcParameters(0) ,
     _ecalBarrelParameters(0) ,
     _ecalEndcapParameters(0) ,
+    _ecalPlugParameters(0) ,
     _hcalBarrelParameters(0) ,
     _hcalEndcapParameters(0) ,
+    _hcalRingParameters(0) ,
     _lcalParameters(0) ,
     _vxdParameters(0) ,
     _siplanesParameters(0) ,
@@ -31,8 +33,10 @@ namespace gear{
     if( _tpcParameters ) delete _tpcParameters ;
     if( _ecalBarrelParameters ) delete _ecalBarrelParameters ;
     if( _ecalEndcapParameters ) delete _ecalEndcapParameters ;
+    if( _ecalPlugParameters ) delete _ecalPlugParameters ;
     if( _hcalBarrelParameters ) delete _hcalBarrelParameters ;
     if( _hcalEndcapParameters ) delete _hcalEndcapParameters ;
+    if( _hcalRingParameters ) delete _hcalRingParameters ;
     if( _lcalParameters ) delete  _lcalParameters;
     if( _vxdParameters ) delete _vxdParameters ;
     if( _siplanesParameters ) delete _siplanesParameters ;
@@ -101,6 +105,16 @@ namespace gear{
 
   }
   
+  const CalorimeterParameters & GearMgrImpl::getEcalPlugParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _ecalPlugParameters == 0 )
+      throw UnknownParameterException( "No EcalPlugParameters set ") ;
+
+    return  *_ecalPlugParameters ;
+
+  }
+
   const CalorimeterParameters & GearMgrImpl::getHcalBarrelParameters() const
     throw (UnknownParameterException, std::exception ) {
     
@@ -117,6 +131,16 @@ namespace gear{
       throw UnknownParameterException( "No HcalEndcapParameters set ") ;
 
     return  *_hcalEndcapParameters ;
+
+  }
+
+  const CalorimeterParameters & GearMgrImpl::getHcalRingParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _hcalRingParameters == 0 )
+      throw UnknownParameterException( "No HcalRingParameters set ") ;
+
+    return  *_hcalRingParameters ;
 
   }
 
@@ -215,6 +239,12 @@ namespace gear{
     _ecalEndcapParameters = ecalEndcapParameters ;
   }
 
+  void GearMgrImpl::setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) {
+    
+    _ecalPlugParameters = ecalPlugParameters ;
+  }
+
+
   void GearMgrImpl::setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) {
     
     _hcalBarrelParameters = hcalBarrelParameters ;
@@ -223,6 +253,11 @@ namespace gear{
   void GearMgrImpl::setHcalEndcapParameters( CalorimeterParameters* hcalEndcapParameters ) {
 
     _hcalEndcapParameters = hcalEndcapParameters ;
+  }
+
+  void GearMgrImpl::setHcalRingParameters( CalorimeterParameters* hcalRingParameters ) {
+
+    _hcalRingParameters = hcalRingParameters ;
   }
 
   void GearMgrImpl::setLcalParameters( CalorimeterParameters* lcalParameters ) {

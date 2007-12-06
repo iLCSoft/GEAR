@@ -263,23 +263,32 @@ namespace gear {
       std::transform( caloName.begin() , caloName.end() , 
 		      caloName.begin(), tolower ) ;
 
-
+      
       if( caloName.find("ecal") != std::string::npos ){
 	
-	if( isBarrelCalorimeter )
+	if( caloName.find("plug" ) != std::string::npos ){
+	  
+	  gearMgr->setEcalPlugParameters( caloParams ) ;	  
+	}
+	else if( isBarrelCalorimeter )
 	  gearMgr->setEcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setEcalEndcapParameters( caloParams ) ;
 	
-      }else if( caloName.find("hcal" ) != std::string::npos ) {
+      } else if( caloName.find("hcal" ) != std::string::npos ) {
 	
-	if( isBarrelCalorimeter )
+	// the additional hcal ring might be endcap or barrel like..
+	if( caloName.find("ring" ) != std::string::npos ){
+
+	  gearMgr->setHcalRingParameters( caloParams ) ;	  
+	}
+	else if( isBarrelCalorimeter )
 	  gearMgr->setHcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setHcalEndcapParameters( caloParams ) ;
 	
-      }else if( caloName.find("lcal" ) != std::string::npos ) {
-
+      } else if( caloName.find("lcal" ) != std::string::npos ) {
+	
 	gearMgr->setLcalParameters( caloParams ) ;	
       }
       

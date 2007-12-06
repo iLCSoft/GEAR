@@ -70,6 +70,11 @@ namespace gear{
     } catch(UnknownParameterException &e){}
     
     try{ 
+      s  << "   ----  Ecal plug   ---- "  << std::endl 
+	 <<  m.getEcalPlugParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    try{ 
       s  << "   ----  Hcal barrel    ---- "  << std::endl 
 	 <<  m.getHcalBarrelParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
@@ -77,6 +82,11 @@ namespace gear{
     try{ 
       s  << "   ----  Hcal endcap    ---- "  << std::endl 
 	 <<  m.getHcalEndcapParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+       
+    try{ 
+      s  << "   ----  Hcal ring    ---- "  << std::endl 
+	 <<  m.getHcalRingParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
        
     try{ 
