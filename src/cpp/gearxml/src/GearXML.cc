@@ -117,6 +117,22 @@ namespace gear{
     catch( UnknownParameterException& e){
     }
 
+    // --------- add EcalPlug parameters -------------------
+    try{
+      
+      CalorimeterParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getEcalPlugParameters() )  ;
+      
+      detector.SetAttribute( "name" , "EcalPlug" ) ;
+      detector.SetAttribute( "geartype" , GEAR::CALORIMETERPARAMETERS ) ;
+
+      detectors.InsertEndChild( detector ) ;
+
+    }
+    catch( UnknownParameterException& e){
+    }
+
     // --------- add HcalBarrel parameters -------------------
     try{
       
@@ -141,6 +157,22 @@ namespace gear{
       TiXmlElement detector = handler.toXML( mgr->getHcalEndcapParameters() )  ;
       
       detector.SetAttribute( "name" , "HcalEndcap" ) ;
+      detector.SetAttribute( "geartype" , GEAR::CALORIMETERPARAMETERS ) ;
+
+      detectors.InsertEndChild( detector ) ;
+
+    }
+    catch( UnknownParameterException& e){
+    }
+
+    // --------- add HcalRing parameters -------------------
+    try{
+      
+      CalorimeterParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getHcalRingParameters() )  ;
+      
+      detector.SetAttribute( "name" , "HcalRing" ) ;
       detector.SetAttribute( "geartype" , GEAR::CALORIMETERPARAMETERS ) ;
 
       detectors.InsertEndChild( detector ) ;
