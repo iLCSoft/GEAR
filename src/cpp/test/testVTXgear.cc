@@ -168,7 +168,7 @@ void testVXD( const VXDParameters& vxdParams ) {
   testVXDDist( p4, vxdParams ) ;
   
   // testAllVXDDist( vxdParams ) ;
-  //  testAllVXDPoint( vxdParams ) ;
+  testAllVXDPoint( vxdParams ) ;
 }
 
 #ifdef GEAR_USE_AIDA
@@ -486,7 +486,7 @@ void testAllVXDPoint( const VXDParameters& vxdParams ) {
   int nLadder = 0 , nSensitive = 0 ;
 
   std::ofstream myfile;
-  const char *fileName = "/scratch/lippe/myOutput.txt" ;
+  const char *fileName = "./gearVXDTest.txt" ;
   myfile.open (fileName, std::ios::out | std::ios::trunc );
 
   
@@ -578,8 +578,8 @@ void testAllVXDDist( const VXDParameters& vxdParams ) {
   float myStatusP = 0, myStatusL = 0;
   
   std::ofstream myfile, myHisto;
-  const char *fileName     = "/scratch/lippe/myOutput.txt" ;
-  const char *histoName  = "/scratch/lippe/myHistogram.txt" ;
+  const char *fileName     = "./gearVXDTest_out.txt" ;
+  const char *histoName  = "./gearVXDTest_Histogram.txt" ;
   myfile.open (fileName, std::ios::out | std::ios::trunc );
   myHisto.open( histoName, std::ios::out | std::ios::trunc ) ;
   
