@@ -40,7 +40,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -55,7 +55,7 @@ typedef std::vector<std::string> StringVec ;
     virtual ~Exception() throw() { /*no_op*/; } 
     
     Exception( const std::string& text ){
-      message = "lcio::Exception: " + text ;
+      message = "gear::Exception: " + text ;
     }
 
     virtual const char* what() const  throw() { return  message.c_str() ; } 
@@ -65,7 +65,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -81,7 +81,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -99,7 +99,7 @@ typedef std::vector<std::string> StringVec ;
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.8 2007-05-23 10:36:21 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 
