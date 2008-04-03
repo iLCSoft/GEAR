@@ -2,6 +2,15 @@
   Gear release notes
  ======================
 
+  -----------
+ | v00-08-01 |
+  -----------
+   - bug fix release:
+
+     - clarified definition of phi0 and offset in VCXDParameters:
+       phi0: azimuthal angle of normal to first ladder
+       offset: shift of ladder in direction of increasing phi
+      
   ----------
  | v00-08   |
   ----------

@@ -111,7 +111,6 @@ int main(int argc, char**argv){
 	    << std::endl ;
 
 
-  testVXD( vp ) ;
 
 #ifdef GEAR_USE_AIDA  
 
@@ -141,6 +140,9 @@ int main(int argc, char**argv){
   
 #endif
   
+
+  testVXD( vp ) ;
+
 }
 
 void testVXD( const VXDParameters& vxdParams ) {

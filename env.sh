@@ -1,10 +1,10 @@
 
 export GEAR=$PWD
 
-export GEARVERSION=v00-05
+export GEARVERSION=v00-08-01
 
 export PATH=$GEAR/tools:$GEAR/bin:$PATH
-export JDK_HOME=/afs/desy.de/group/it/ilcsoft/java/1.5.0
+export JDK_HOME=/afs/desy.de/group/it/ilcsoft/java/1.6.0
 
 #export GEARDEBUG=1
 
@@ -17,7 +17,7 @@ export GEAR_USE_AIDA=1
 
 if [ $GEAR_USE_AIDA ] ; then
     export ROOTSYS=/afs/desy.de/group/it/ilcsoft/root/5.08.00
-    export RAIDA_HOME=/afs/desy.de/group/it/ilcsoft/RAIDA/v01-01
+    export RAIDA_HOME=/afs/desy.de/group/it/ilcsoft/v01-03-03/RAIDA/v01-03
     
     export LD_LIBRARY_PATH=$ROOTSYS/lib:$LD_LIBRARY_PATH
     export PATH=$ROOTSYS/bin:$PATH

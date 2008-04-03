@@ -6,6 +6,14 @@
 
 namespace gear{
 
+  // F. Gaede, 03.04.2008 : phi0 and offset have not been defined properly in the past
+  // what we want is:  phi0: azimuthal angle of first ladder's normal and the offset
+  // going in the direction of increasing phi
+
+  // >>>> however in this code  phi0 is the negtaive angle with the y-axis and the offset is in this direction <<<<<<<<
+  //
+  // the converion is done in VXDLayerLayoutImpl::addLayer()  !!!!
+
 
   VXDParametersImpl::VXDParametersImpl
   ( int vxdType, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) :
@@ -804,8 +812,8 @@ namespace gear{
 
   double VXDParametersImpl::getPhiPoint( Vector3D p ) const {
 
-    //fg: definition of phi - seems like this is the the angle with the negative y-axis ????
-    //    return correctPhiRange( p.phi() ) ;
+    //FG: this is the the angle with the negative y-axis 
+    // see comment at the top !
 
     // get phi of point in projection 2D
     double pPhi = 0. ;

@@ -19,8 +19,9 @@ public interface VXDLayerLayout {
      */
     public int getNLadders(int layerIndex) const ;
 
-    /** The angle phi0 for a straight line connecting IP and ladder perpendicular to ladder.
-     *  for layerIndex - layer indexing starting at 0 for the layer closest to IP.
+    /** Azimuthal angle of the (outward pointing) normal of the first ladder.
+     *  Phi0==0 corresponds to the first ladder's normal coinciding (if offset==0) with the x-axis.
+     *  The layerIndex starts at 0 for the layer closest to IP.
      */
     public double getPhi0(int layerIndex) const ;
   
@@ -44,11 +45,12 @@ public interface VXDLayerLayout {
      */
     public double getLadderThickness(int layerIndex) const ;
 
-    /** The offset of the ladder measured from space point perpendicular to z
-     *  and perpendicular to connecting line IP-ladder to middle of ladder in mm 
-     *  (e.g. if phi0=0 --> x)
-     *  for ladder in layerIndex - layer indexing starting at 0
-     *  for the layer closest to IP.
+    /** The offset of the ladder in mm defines the shift of the ladder in the direction of increasing phi
+     *  perpendicular to the ladder's normal. For example if the first ladder is at phi0==0 then the offset 
+     *  defines an upward shift of the ladder (parallel to the y-axis).  
+     *  Layer indexing starts at 0 for the layer closest to IP.
+     *  @see getPhi0
+     *  @see getSensitiveOffset
      */
     public double getLadderOffset(int layerIndex) const ;
 
@@ -71,10 +73,8 @@ public interface VXDLayerLayout {
      */
     public double getSensitiveThickness(int layerIndex) const ;
 
-    /** The offset of the sensitive area in ladder measured from space point perpendicular to z
-     *  and perpendicular to connecting line IP-sensArea to middle of sensitive area in mm 
-     *  (e.g. if phi0=0 --> x)
-     *  for the sensitive area in ladders in layerIndex
+    /** Same as getLadderOffset() except for the sensitive part of the ladder.
+     * @see getLadderOffset
      */
     public double getSensitiveOffset(int layerIndex) const ;
 

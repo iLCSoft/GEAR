@@ -14,19 +14,27 @@ namespace gear{
 
     Layer lL, sL ;
     
+    // F. Gaede, 03.04.2008 : phi0 and offset have not been defined properly in the past
+    // what we want is:  phi0: azimuthal angle of first ladder's normal and the offset
+    // going in the direction of increasing phi 
+    // however what is used in the code is phi0 as the angle w/ the y-axis (and wrong orientation) and 
+    // wrong sign of the offset :(
+    // -> we keep the internal representation and only change the phi0 and offset here !
+
+
     lL.NLadders  = nLadders ;
-    lL.Phi0      = phi0 ;
+    lL.Phi0      = M_PI/2. - phi0 ;   // phi0 given wrt x-axis  - lL.Phi0 is wrt yaxis , negative orientation
     lL.Distance  = ladderDistance ;
-    lL.Offset    = ladderOffset ;
+    lL.Offset    = -ladderOffset ;   // offset given in direction of positive rotation (increasing phi)
     lL.Thickness = ladderThickness ;
     lL.Length    = ladderLength ;
     lL.Width     = ladderWidth ;
     lL.RadLength = ladderRadLength ;
 
     sL.NLadders  = nLadders ;
-    sL.Phi0      = phi0 ;
+    sL.Phi0      = M_PI/2. - phi0 ;  // phi0 given wrt x-axis  - sL.Phi0 is wrt yaxis , negative orientation
     sL.Distance  = sensitiveDistance ;
-    sL.Offset    = sensitiveOffset ;
+    sL.Offset    = -sensitiveOffset ;  // offset given in direction of positive rotation (increasing phi)
     sL.Thickness = sensitiveThickness ;
     sL.Length    = sensitiveLength ;
     sL.Width     = sensitiveWidth ;
