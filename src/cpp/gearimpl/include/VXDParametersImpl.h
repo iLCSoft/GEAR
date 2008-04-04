@@ -51,11 +51,11 @@ public:
    *  connection IP-spacepoint) and thickness (extension to connection IP-spacepoint).
    *
    * @param nLadders   the number of ladders and sensitive areas inside the layer        
-   * @param phi0       the starting angle for straight connection to the spacepoint      
+   * @param phi0       azimuthal angle of normal to first ladder
    * @param Distance   the length (mm) of the straigth line between IP and spacepoint to 
    *                   ladder (ladderDistance) or sensitive Area (sensitiveDistance)     
    * @param Offset     the offset of ladder (ladderOffset) or sensitive area             
-   *                   (sensitiveOffset) in clockwise direction in mm between spacepoint 
+   *                   (sensitiveOffset) in direction of increasing phi in mm between spacepoint 
    *                   and middle of ladder/sensitive                                    
    * @param Thickness  the thickness in mm of the ladder (ladderThickness) or the        
    *                   sensitive area (sensitiveThickness)                               

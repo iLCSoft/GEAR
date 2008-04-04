@@ -6,13 +6,12 @@
 
 namespace gear{
 
-  // F. Gaede, 03.04.2008 : phi0 and offset have not been defined properly in the past
-  // what we want is:  phi0: azimuthal angle of first ladder's normal and the offset
-  // going in the direction of increasing phi
-
-  // >>>> however in this code  phi0 is the negtaive angle with the y-axis and the offset is in this direction <<<<<<<<
-  //
-  // the converion is done in VXDLayerLayoutImpl::addLayer()  !!!!
+    // F. Gaede, 04.04.2008 : phi0 and offset have not been defined properly in the past
+    // what we want is:  phi0: azimuthal angle of first ladder's normal and the offset
+    //                   going in the direction of increasing phi 
+    // however what is used in the code is phi0 as the angle w/ the y-axis (and wrong orientation) 
+    //
+    // -> we keep the internal representation of phi0 in the variable internalPhi0 and use this here
 
 
   VXDParametersImpl::VXDParametersImpl
@@ -74,15 +73,15 @@ namespace gear{
       double zStart, zEnd, left, right, thick, d ;
       if( !sensitive ) {
 	zEnd = _layer.getLadderLength( possibleLayer ) + _shellGap/2 ;
-	left = -_layer.getLadderWidth( possibleLayer ) / 2 + _layer.getLadderOffset( possibleLayer ) ;
-	right = _layer.getLadderWidth( possibleLayer ) / 2 + _layer.getLadderOffset( possibleLayer ) ;
+	left = -_layer.getLadderWidth( possibleLayer ) / 2 - _layer.getLadderOffset( possibleLayer ) ; //-
+	right = _layer.getLadderWidth( possibleLayer ) / 2 - _layer.getLadderOffset( possibleLayer ) ;
 	thick = _layer.getLadderThickness( possibleLayer ) ;
 	d = _layer.getLadderDistance( possibleLayer ) ;
       }
       if (sensitive ) {
 	zEnd = _layer.getSensitiveLength( possibleLayer ) + _shellGap/2 ;
-	left = -_layer.getSensitiveWidth( possibleLayer ) / 2 + _layer.getSensitiveOffset( possibleLayer ) ;
-	right = _layer.getSensitiveWidth( possibleLayer ) / 2 + _layer.getSensitiveOffset( possibleLayer ) ;
+	left = -_layer.getSensitiveWidth( possibleLayer ) / 2 - _layer.getSensitiveOffset( possibleLayer ) ;
+	right = _layer.getSensitiveWidth( possibleLayer ) / 2 - _layer.getSensitiveOffset( possibleLayer ) ;
 	thick = _layer.getSensitiveThickness( possibleLayer ) ;
 	d = _layer.getSensitiveDistance( possibleLayer ) ;
       }
@@ -97,7 +96,7 @@ namespace gear{
       // go through all ladders/sensitive
       for( int i = 0 ; i < _layer.getNLadders( possibleLayer ) ; i++ ) {
 
-	double phi = _layer.getPhi0( possibleLayer ) + i*deltaPhi ;
+	double phi = _layer.getInternalPhi0( possibleLayer ) + i*deltaPhi ;
 	phi = correctPhiRange( phi ) ;
 	
 	// check start and end phi for this layer
@@ -192,7 +191,7 @@ namespace gear{
 
  	// simply use first ladder - distance d , phi0 , gap/2  :
 	 //fg: fixme: review definition of phi...
- 	return Vector3D( _layer.getLadderDistance(0) ,  -_layer.getPhi0(0)  , _shellGap/2  , Vector3D::cylindrical ) ;
+ 	return Vector3D( _layer.getLadderDistance(0) ,  -_layer.getInternalPhi0(0)  , _shellGap/2  , Vector3D::cylindrical ) ;
        }
 
        return origin ;
@@ -218,15 +217,15 @@ namespace gear{
       double dist, zStart, zEnd, left, right, thick ;
       if( !sensitive ) {
 	zEnd = _layer.getLadderLength( nearestLayer ) + _shellGap/2 ;
-	left = -_layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
-	right = _layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
+	left = -_layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
+	right = _layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
 	thick = _layer.getLadderThickness( nearestLayer ) ;
 	dist = _layer.getLadderDistance( nearestLayer ) ;
       }
       if (sensitive ) {
 	zEnd = _layer.getSensitiveLength( nearestLayer ) + _shellGap/2 ;
-	left = -_layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
-	right = _layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
+	left = -_layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
+	right = _layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
 	thick = _layer.getSensitiveThickness( nearestLayer ) ;
 	dist = _layer.getSensitiveDistance( nearestLayer ) ;
       }
@@ -236,7 +235,7 @@ namespace gear{
       // go through all ladders/sensitive
       for( int i = 0 ; i < _layer.getNLadders( nearestLayer ) ; i++ ) {
 	
-	double phi = _layer.getPhi0( nearestLayer ) + i*deltaPhi ;
+	double phi = _layer.getInternalPhi0( nearestLayer ) + i*deltaPhi ;
 	phi = correctPhiRange( phi ) ;
 
 	// check start and end phi for this layer
@@ -345,16 +344,16 @@ namespace gear{
 	  
 	  double d = 0;
 	  if ( (!sensitive) and ( j == 1 ) ) {
-	    d = - _layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
+	    d = - _layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
 	  }
 	  if( (!sensitive) and ( j == 2 ) ) {
-	    d = _layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
+	    d = _layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
 	  }
 	  if( (sensitive) and ( j == 1 ) ) {
-	    d = - _layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
+	    d = - _layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
 	  }
 	  if( (sensitive) and ( j == 2 ) ) {
-	    d = _layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
+	    d = _layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
 	  }
 	  
 	  // lower left corner as r
@@ -436,14 +435,14 @@ namespace gear{
       double zStart, zEnd, left, right, thick ;
       if( !sensitive ) {
 	zEnd = _layer.getLadderLength( takeLayer ) + _shellGap/2 ;
-	left = -_layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) ;
-	right = _layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) ;
+	left = -_layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) ;
+	right = _layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) ;
 	thick = _layer.getLadderThickness( takeLayer ) ;
       }
       if (sensitive ) {
 	zEnd = _layer.getSensitiveLength( takeLayer ) + _shellGap/2 ;
-	left = -_layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ;
-	right = _layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ;
+	left = -_layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ;
+	right = _layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ;
 	thick = _layer.getSensitiveThickness( takeLayer ) ;
       }
 
@@ -460,7 +459,7 @@ namespace gear{
 	// go through all ladders/sensitive
 	for( int i = 0 ; i < _layer.getNLadders( takeLayer ) ; i++ ) {
 	  
-	  double phi = _layer.getPhi0( takeLayer ) + i*deltaPhi ;
+	  double phi = _layer.getInternalPhi0( takeLayer ) + i*deltaPhi ;
 	  phi = correctPhiRange( phi ) ;
 	  
 	  // take normal vector of planes, Base, Side, Z and spacePoint
@@ -539,16 +538,16 @@ namespace gear{
 	    
 	    double d = 0;
 	    if ( (!sensitive) and ( j == 1 ) ) {
-	      d = -( _layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) );
+	      d = -( _layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) );
 	    }
 	    if( (!sensitive) and ( j == 2 ) ) {
-	      d = _layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) ;
+	      d = _layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) ;
 	    }
 	    if( (sensitive) and ( j == 1 ) ) {
-	      d = -( _layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ) ;
+	      d = -( _layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ) ;
 	    }
 	    if( (sensitive) and ( j == 2 ) ) {
-	      d = _layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ;
+	      d = _layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ;
 	    }
 	    
 	    // lower left corner as r

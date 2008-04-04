@@ -4,6 +4,7 @@
 
 #include "gear/VXDLayerLayout.h"
 #include <vector>
+#include <math.h>
 
 namespace gear {
 
@@ -18,12 +19,15 @@ namespace gear {
 
 class VXDLayerLayoutImpl : public VXDLayerLayout {
 
+
+  friend class VXDParametersImpl ;
+
 public: 
   
   /** Helper class for layer properties */
   struct Layer {
     int    NLadders ;
-    double Phi0 ;
+    double internalPhi0 ;
     double Distance ;
     double Offset ;
     double Thickness ;
@@ -50,7 +54,7 @@ public:
    *  Phi0==0 corresponds to the first ladder's normal coinciding (if offset==0) with the x-axis.
    *  The layerIndex starts at 0 for the layer closest to IP.
    */
-  virtual double getPhi0(int layerIndex) const { return _lVec.at( layerIndex ).Phi0  ; }
+  virtual double getPhi0(int layerIndex) const { return M_PI/2. - _lVec.at( layerIndex ).internalPhi0  ; }
   
   /** The radiation length in the support structure ladders of layer layerIndex - layer indexing starts at 0
    *  for the layer closest to IP.
@@ -74,7 +78,7 @@ public:
    *  @see getPhi0
    *  @see getSensitiveOffset
    */
-  virtual double getLadderOffset(int layerIndex) const { return _lVec.at( layerIndex ).Offset  ; }
+  virtual double getLadderOffset(int layerIndex) const { return  _lVec.at( layerIndex ).Offset  ; }
 
   /** The width of the ladder in layer in mm for ladders in layer layerIndex -
    *  layer indexing starting at 0 from the layer closest to IP.
@@ -150,6 +154,9 @@ public:
   
   
 protected:
+
+  double getInternalPhi0(int layerIndex) const { return _lVec.at( layerIndex ).internalPhi0  ; }
+
 
   // Ladder
   LayerVec _lVec ;
