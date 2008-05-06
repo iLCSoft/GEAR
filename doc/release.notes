@@ -3,6 +3,12 @@
  ======================
 
   -----------
+ | v00-08-03 |
+  -----------
+   - bug fix release:
+      - fixed bug in VXDParameters::isEqual() w/ small values and exact zeros
+
+  -----------
  | v00-08-02 |
   -----------
    - bug fix release:
