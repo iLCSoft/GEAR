@@ -654,7 +654,7 @@ namespace gear{
     // check zeros
 
     if ( n[0]==0 && n[1]==0 && n[2]==0 ) {
-	
+      
       std::cout << "\ndistanceToPlane - Fatal error!" << std::endl ;
       std::cout << "normal vector (0,0,0)" << std::endl ;
       return Vector3D (0,0,0) ;
@@ -841,13 +841,27 @@ namespace gear{
 
   bool VXDParametersImpl::isEqual( double valueOne, double valueTwo ) const
   {
+
     // save calculating time if equal
     if ( valueOne == valueTwo ) return true ;
 
-    // check if values differ by less than maximal delta
-    return ( fabs( 2 * (valueOne - valueTwo) / (valueOne + valueTwo) ) < ( _EPSILON ) ) ;
+
+    // if one value is 0.0 we use the absolute distance 
+    if( valueOne * valueTwo == 0.0 )
+	       
+      return fabs( valueOne - valueTwo ) < _EPSILON ;
     
-  } // fucntion isEqual
+    
+    // if both values are smaller than epsilon they are equal for our purpose 
+    if ( fabs(valueOne)  < _EPSILON && fabs(valueTwo)  < _EPSILON )
+      
+      return true ;
+    
+
+    // otherwise we require the relative distance of the two values to be smaller than epsilon
+    return fabs( 2 * (valueOne - valueTwo) ) /  (fabs(valueOne) + fabs(valueTwo) ) <  _EPSILON  ;
+    
+  } 
 
 
   bool VXDParametersImpl::isEqual( Vector3D p1 , Vector3D p2 ) const
