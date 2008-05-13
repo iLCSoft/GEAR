@@ -6,10 +6,15 @@ package hep.gear.api ;
  * 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearMgr.aid,v 1.6 2007-12-06 17:30:52 gaede Exp $
+ * @version $Id: GearMgr.aid,v 1.7 2008-05-13 12:57:43 gaede Exp $
  */
 public interface GearMgr {
     
+
+   /** The unique detector name - typically the model name used in the simulation program
+    */
+    public const String& getDetectorName() const ;
+
     /** Get named parameters for key. This can be used to describe a subdetector that is not 
      *  yet forseen in the Gear API.
      * 
@@ -106,6 +111,10 @@ public interface GearMgr {
      */ 
     public const String[]& getGearParameterKeys() const ;
 
+
+    /** Set detector name.
+     */
+    public void setDetectorName(const String& name) ;
 
     /** Set named parameters for key. This can be used to describe a subdetector that is not 
      *  yet forseen in the Gear API.

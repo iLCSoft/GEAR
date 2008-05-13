@@ -47,6 +47,13 @@ namespace gear{
 
     TiXmlElement detectors("detectors") ;
 
+    TiXmlElement global("global") ;
+    
+    global.SetAttribute( "detectorName" , mgr->getDetectorName() ) ;
+    
+    root.InsertEndChild( global ) ;
+    
+
     TiXmlComment rootComment ;
     rootComment.SetValue( "Gear XML file automatically created with GearXML::createXMLFile ...."  ) ;
     root.InsertEndChild ( rootComment) ;
@@ -308,6 +315,13 @@ namespace gear{
       throw ParseException( std::string( "GearXML::createGearMgr : no root tag found in  ") 
 			   + _fileName  ) ;
     }
+    
+
+    TiXmlNode* global =  root->FirstChild("global") ;
+    if( global != 0 ){
+      std::string detName  =  getXMLAttribute( global, "detectorName" )  ;
+      _gearMgr->setDetectorName( detName  ) ;
+    }    
     
     TiXmlNode* detectors = root->FirstChild("detectors")  ;
     if( detectors == 0 ){

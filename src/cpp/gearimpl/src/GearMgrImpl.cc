@@ -24,7 +24,8 @@ namespace gear{
     _siplanesParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) ,
-    _bField(0){
+    _bField(0),
+    _detectorName("Unknwon"){
   }
   
   GearMgrImpl::~GearMgrImpl() {

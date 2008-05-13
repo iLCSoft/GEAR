@@ -1,5 +1,7 @@
 <gear>
-
+	
+	<global detectorName="LDCExample" />
+	
      <!--
 
          Example XML file for GEAR describing the LDC detector  

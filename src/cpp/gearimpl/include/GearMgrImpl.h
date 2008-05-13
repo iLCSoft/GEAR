@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.7 2007-12-06 17:30:52 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.8 2008-05-13 12:57:43 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -30,6 +30,11 @@ namespace gear {
     /// Destructor.
     virtual ~GearMgrImpl() ;
 	
+   /** The unique detector name - typically the model name used in the simulation program
+    */
+    virtual const std::string& getDetectorName() const { return _detectorName ; }
+
+
     /** Get named parameters for key. This can be used to describe a subdetector that is not 
      *  yet forseen in the Gear API.
      * 
@@ -135,6 +140,8 @@ namespace gear {
     virtual const std::vector<std::string>  & getGearParameterKeys() const ;
 
 
+    virtual void setDetectorName(const std::string& name) { _detectorName = name ; }
+
     /** Set the GearParameters for the given key - overwrites any 
      *  existing entries.
      */
@@ -213,6 +220,7 @@ namespace gear {
     GearPointProperties*  _pointProperties ;
     GearDistanceProperties*  _distanceProperties ;
     BField* _bField ;
+    std::string _detectorName ;
 
     mutable StringVec _keys ;
 

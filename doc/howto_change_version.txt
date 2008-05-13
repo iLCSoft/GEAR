@@ -11,6 +11,12 @@ SET( ${PROJECT_NAME}_MINOR_VERSION 7 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 0 )
 
 
+==== ./src/GEAR.aid
+
+#define GEAR_MAJOR_VERSION 0
+#define GEAR_MINOR_VERSION 9
+
+
 ==== ./doc/overview.html
 
 \mainpage <a href="http://ilcsoft.desy.de/gear">GEAR</a> (v00-07)
