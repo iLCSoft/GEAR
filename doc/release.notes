@@ -2,6 +2,14 @@
   Gear release notes
  ======================
 
+  --------
+ | v00-09 |
+  --------
+  - added new attribute GearMgr::get(set)DetectorName()
+    stored in <global detectorName="LDC01_06Sc"/> element
+	-> can be used for automated consistency checks of gear file and lcio file
+
+
   -----------
  | v00-08-03 |
   -----------
