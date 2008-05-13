@@ -8,6 +8,11 @@ package hep.gear.api ;
  #include <string>
  #include <exception> 
 
+#define GEAR_MAJOR_VERSION 0
+#define GEAR_MINOR_VERSION 9
+
+#define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
+
 }
 
 @endif
@@ -40,7 +45,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.10 2008-05-13 09:48:30 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -65,7 +70,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.10 2008-05-13 09:48:30 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -81,7 +86,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.10 2008-05-13 09:48:30 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -99,7 +104,7 @@ typedef std::vector<std::string> StringVec ;
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.9 2008-01-30 08:42:01 gaede Exp $
+   * @version $Id: GEAR.aid,v 1.10 2008-05-13 09:48:30 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 
