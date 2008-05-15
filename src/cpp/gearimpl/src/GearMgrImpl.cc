@@ -25,7 +25,7 @@ namespace gear{
     _pointProperties(0) ,
     _distanceProperties(0) ,
     _bField(0),
-    _detectorName("Unknwon"){
+    _detectorName(""){
   }
   
   GearMgrImpl::~GearMgrImpl() {
@@ -54,6 +54,18 @@ namespace gear{
     
   }
   
+
+  const std::string& GearMgrImpl::getDetectorName() const    
+
+    throw (UnknownParameterException, std::exception ) { 
+
+    if( _detectorName.size() == 0 )
+      throw UnknownParameterException( "No DetectorName set ") ;
+
+
+    return _detectorName ; 
+  }
+
 
   const GearParameters & GearMgrImpl::getGearParameters(const std::string & key) const 
     

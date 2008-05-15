@@ -36,6 +36,27 @@ namespace gear{
 
 
     try{ 
+
+      s << "   ----  DetectorName   ----   " << std::endl << std::endl 
+	<< "         " <<  m.getDetectorName() 
+	<< std::endl 
+	<<  std::endl  ;
+
+    } catch(UnknownParameterException &e){
+
+      s << "     WARNING:  NOT FOUND  !     " << std::endl 
+	<< "   please add  it to the <gear> element of your gear file: "
+	<< std::endl
+	<< std::endl
+	<< "   <gear> " << std::endl
+	<< "      <global detectorName=\"MyDetectorModle007\" /> " 
+	<< std::endl
+	<< "      <detectors> ... <detectors/>" << std::endl
+	<< "   <gear/> " << std::endl
+	<< std::endl ;  
+    }
+
+    try{ 
       s <<  m.getBField() <<  std::endl  ;
     } catch(UnknownParameterException &e){
 

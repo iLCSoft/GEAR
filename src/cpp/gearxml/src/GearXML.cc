@@ -49,7 +49,14 @@ namespace gear{
 
     TiXmlElement global("global") ;
     
-    global.SetAttribute( "detectorName" , mgr->getDetectorName() ) ;
+
+    std::string detName("Unknown") ;
+
+    try{   detName = mgr->getDetectorName()  ;
+    }
+    catch( UnknownParameterException ){}
+
+    global.SetAttribute( "detectorName" , detName ) ;
     
     root.InsertEndChild( global ) ;
     
