@@ -269,7 +269,7 @@ namespace gear {
 	dMin = d ; 
 	rowNum = i ;
 
-	if( dMin < 0.5 ) break ;
+	if( dMin < 0.0 ) break ; // if distance is negative we are already inside a pad
       }
     }
     
