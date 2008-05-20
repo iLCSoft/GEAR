@@ -13,6 +13,10 @@
 #include <algorithm>
 #include <sstream>
 
+ 
+#include <typeinfo>
+
+
 namespace gear {
 
 

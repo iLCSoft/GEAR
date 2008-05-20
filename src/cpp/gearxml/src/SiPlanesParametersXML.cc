@@ -11,6 +11,10 @@
 #include <vector>
 #include <string>
 
+ 
+#include <cstring>
+
+
 namespace gear {
 
   TiXmlElement SiPlanesParametersXML::toXML( const GearParameters & parameters ) const {
