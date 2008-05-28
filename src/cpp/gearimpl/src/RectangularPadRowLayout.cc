@@ -6,6 +6,7 @@
 #include <stdexcept>
 #include <sstream>
 #include <assert.h>
+#include <cstdlib>
 
 namespace gear {
   
