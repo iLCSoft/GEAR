@@ -10,6 +10,9 @@
 	-> can be used for automated consistency checks of gear file and lcio file
        throw UnknownParameterExeption if not set 
 
+  - improved  RectangularPadRowLayout::getNearestPad()  - (J.Abernathy)
+
+
   -----------
  | v00-08-03 |
   -----------

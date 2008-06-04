@@ -13,6 +13,7 @@ SET( test_bins
     testtpcproto
     testVTXgear
     testSiPlanesgear
+#    test_rectangular_layout_changes
 )
 
 # create symbolic bin target for calling targets bin_XXX

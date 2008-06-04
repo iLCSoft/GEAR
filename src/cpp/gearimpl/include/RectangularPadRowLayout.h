@@ -21,7 +21,7 @@ namespace gear {
  *  by M. Weber RWTH Aachen and J. McGeachie UVic, Ca..
  * 
  * @author F. Gaede, DESY
- * @version $Id: RectangularPadRowLayout.h,v 1.3 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id: RectangularPadRowLayout.h,v 1.4 2008-06-04 16:04:27 gaede Exp $
  */
   class RectangularPadRowLayout : public PadRowLayout2D {
     
@@ -138,6 +138,8 @@ namespace gear {
      * (x,y,) or (r,phi).
      */
     virtual int getNearestPad(double x, double y)  const;
+
+	int getNearestPadOld(double x, double y) const;
 
     /** The index of the right neighbour pad.
      */

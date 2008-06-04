@@ -236,8 +236,7 @@ namespace gear {
 
   }
 
-
-  int RectangularPadRowLayout::getNearestPad(double x, double y) const {
+int RectangularPadRowLayout::getNearestPadOld(double x, double y) const {
     
     //  move from outside of pad plane to edge of pad plane
     if(  x < _extent[0] ) x =  _extent[0] ;
@@ -270,6 +269,7 @@ namespace gear {
 	dMin = d ; 
 	rowNum = i ;
 
+
 	if( dMin < 0.0 ) break ; // if distance is negative we are already inside a pad
       }
     }
@@ -283,7 +283,7 @@ namespace gear {
       
       padNum = 0 ;  
         
-    } else if( x > (  _extent[1] - row.RightOffset ) ) {
+    } else if( x >= (  _extent[1] - row.RightOffset ) ) {
       
       padNum = row.NPad - 1 ; 
 
@@ -294,6 +294,95 @@ namespace gear {
     }
 
     return getPadIndex( rowNum , padNum ) ;
+  }
+
+
+int RectangularPadRowLayout::getNearestPad(double x, double y) const {
+
+    //  move from outside of pad plane to edge of pad plane
+    if(  x < _extent[0] ) x =  _extent[0] ;
+    if(  x > _extent[1] ) x =  _extent[1] ;
+    if(  y < _extent[2] ) y =  _extent[2] ;
+    if(  y > _extent[3] ) y =  _extent[3] ;
+
+	// make a best guess at the starting row by assuming all rows are the same height
+    int row_number = (int)( round( (_rows.size() - 1) * (y - _extent[2]) / (_extent[3] - _extent[2]) ) );
+
+    // do a binary search for the nearest row
+	while( true ) {
+
+		const Row &row = _rows[row_number];
+		const double y_displacement = y - row.Center;
+		
+		//std::cout << "Checking row " << row_number << ", centre: " << row.Center << ", displacement: " << y_displacement << "mm" << std::endl;
+
+		if( fabs(y_displacement) <= (row.PadHeight/2) ) {
+
+			// this is the correct row
+			break;
+		}
+		else if( fabs(y_displacement) <= (row.Height/2) ) {
+			
+			// check the next row of pads, it could be closer to them then this row
+			const int next_row_number = (y_displacement < 0)? row_number - 1: row_number + 1;
+			const Row &next_row = _rows[next_row_number];
+
+			const double y_distance_from_pads = fabs(y_displacement) - (row.PadHeight/2);
+			const double y_distance_from_next_pads = fabs(y - next_row.Center) - (next_row.PadHeight/2);
+
+			row_number = (y_distance_from_next_pads < y_distance_from_pads)? next_row_number: row_number;
+			break;
+		}
+		else {
+			// it wasn't in this row... find the next best guess
+			int remaining_rows;
+			double remaining_distance;
+			double offset;
+
+			if( y_displacement < 0 ) {
+				
+				remaining_rows = row_number;
+				remaining_distance = row.Center - _extent[2] - (row.Height/2.);
+				offset = y_displacement + (row.Height/2);
+			}
+			else {
+				
+				remaining_rows = _rows.size() - row_number - 1;
+				remaining_distance = _extent[3] - row.Center - (row.Height/2.);
+				offset = y_displacement - (row.Height/2);
+			}
+
+			const double param = remaining_rows * (offset / remaining_distance);
+			const int delta_row = (int)((param < 0)? floor(param): ceil(param));
+
+			row_number += delta_row;
+		}
+		
+		/*std::cout << "Hit Enter to continue... \n";
+		std::cin.get();*/
+	}
+
+	// we have the row number... find the pad number
+    int pad_number = 0 ;
+    
+    // now that we have the row we need the closest pad
+    const Row& row =  _rows[row_number] ;
+    
+    if( x <= (  _extent[0] + row.LeftOffset  ) ) {
+      
+      pad_number = 0 ;  
+        
+    } else if( x >= (  _extent[1] - row.RightOffset ) ) {
+      
+      pad_number = row.NPad - 1;
+
+    } else {
+
+      pad_number =  (int) ( ( x - (  _extent[0] + row.LeftOffset ) )  /  row.WidthPerPad ) ;  
+
+    }
+
+    return getPadIndex( row_number , pad_number ) ;
   }
 
   
