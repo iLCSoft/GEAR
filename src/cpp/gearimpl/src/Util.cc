@@ -17,24 +17,6 @@ namespace gear{
       << " ----------------------------------------------------- " << std::endl ;
     
     
-    s << std::endl 
-      << "   parameter sections (detectors) :  "
-      << std::endl ;
-    
-    const StringVec& keys = m.getGearParameterKeys() ;
-    
-    for(unsigned int i=0 ; i < keys.size() ; ++i ) {
-      
-      s << std::endl 
-	<< "   ------  name : "  <<  keys[i]  << " ------- "  << std::endl         ;
-
-      const GearParameters& p = m.getGearParameters( keys[i] ) ;
-
-      s <<  p <<  std::endl ;
-
-    }
-
-
     try{ 
 
       s << "   ----  DetectorName   ----   " << std::endl << std::endl 
@@ -71,6 +53,13 @@ namespace gear{
 	<< "   <gear/> " << std::endl
 	<< std::endl ;  
     }
+
+
+    try{ 
+      // VXD parameters
+      s <<  m.getVXDParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
 
 
     try{ 
@@ -119,18 +108,29 @@ namespace gear{
 
     }
        
-
-    try{ 
-      // VXD parameters
-      s <<  m.getVXDParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
- 
     try{ 
       // SiPlanes parameters
       s <<  m.getSiPlanesParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}  
     
+ 
+    s << std::endl 
+      << "   parameter sections (detectors) :  "
+      << std::endl ;
+    
+    const StringVec& keys = m.getGearParameterKeys() ;
+    
+    for(unsigned int i=0 ; i < keys.size() ; ++i ) {
+      
+      s << std::endl 
+	<< "   ------  name : "  <<  keys[i]  << " ------- "  << std::endl         ;
+
+      const GearParameters& p = m.getGearParameters( keys[i] ) ;
+
+      s <<  p <<  std::endl ;
+
+    }
+
     return s ;
   }
 
@@ -238,22 +238,6 @@ namespace gear{
     
     const DoubleVec& ext = pl.getPlaneExtent() ;
     
-    //     double rMin = ext[0] ;
-    //     double rMax = ext[1] ;
-    //     // getPadWidth() returns phi - need to multiply by r 
-    //     double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0)[0]; 
-    //     int nRow = pl.getNRows() ;
-    //     s <<  std::endl
-    //       << "   FixedPadSizeDiskLayout :  " << std::endl
-    //       << "         rMin:      " << rMin  << std::endl
-    //       << "         rMax:      " << rMax  << std::endl
-    //       << "         padHeight: " << pl.getPadHeight(0)  << std::endl 
-    //       << "         padWidth:  " <<  padWidth  << std::endl
-    //       << "         nRows :    " << nRow << std::endl 
-    //       << std::endl 
-    //       << std::endl ;
-    
-
     int nRow = pl.getNRows() ;
     int type = pl.getPadLayoutType() ;
     
@@ -265,6 +249,14 @@ namespace gear{
     
     s << "         nRows :    " << nRow << std::endl ; 
     s << "         extent:    [" << ext[0] << ","<< ext[1] << ","<< ext[2] << ","<< ext[3] << "]"  << std::endl ; 
+    
+    if( type == PadRowLayout2D::POLAR ){
+
+       s << "    sensitive Volume:  " << std::endl
+	 << "       inner radius:  " << ext[0] << std::endl
+	 << "       outer radius:  " << ext[1] << std::endl
+	 << "       half length :  " << p.getMaxDriftLength() << std::endl ;
+    }
     
     s <<  std::endl ;
     s << std::endl ;

@@ -249,6 +249,15 @@ TARGET_LINK_LIBRARIES( mergeXML lib_GEAR lib_GEARXML )
 # install binary commando
 INSTALL( TARGETS mergeXML DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 
+#--- add printParameters to be build by default
+INCLUDE_DIRECTORIES( ${PROJECT_SOURCE_DIR}/src/cpp/include )
+ADD_EXECUTABLE( printParameters src/cpp/test/printParameters.cc )
+TARGET_LINK_LIBRARIES( printParameters lib_GEAR lib_GEARXML )
+# install binary commando
+INSTALL( TARGETS printParameters DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+
+
+
 # create uninstall configuration file 
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
                 "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
