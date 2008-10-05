@@ -69,7 +69,7 @@ namespace gear{
     
     // Calorimeter parameters
     
-    try{ 
+     try{ 
       s << "   ----  Ecal barrel    ---- "  << std::endl 
 	<< m.getEcalBarrelParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
@@ -82,6 +82,21 @@ namespace gear{
     try{ 
       s  << "   ----  Ecal plug   ---- "  << std::endl 
 	 <<  m.getEcalPlugParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+
+	try{ 
+      s << "   ----  Yoke barrel    ---- "  << std::endl 
+	<< m.getYokeBarrelParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    try{ 
+      s  << "   ----  Yoke endcap   ---- "  << std::endl 
+	 <<  m.getYokeEndcapParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    try{ 
+      s  << "   ----  Yoke plug   ---- "  << std::endl 
+	 <<  m.getYokePlugParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
     
     try{ 

@@ -275,6 +275,17 @@ namespace gear {
 	else
 	  gearMgr->setEcalEndcapParameters( caloParams ) ;
 	
+      } else if( caloName.find("yoke") != std::string::npos ){
+	
+	if( caloName.find("plug" ) != std::string::npos ){
+	  
+	  gearMgr->setYokePlugParameters( caloParams ) ;	  
+	}
+	else if( isBarrelCalorimeter )
+	  gearMgr->setYokeBarrelParameters( caloParams ) ;
+	else
+	  gearMgr->setYokeEndcapParameters( caloParams ) ;
+	
       } else if( caloName.find("hcal" ) != std::string::npos ) {
 	
 	// the additional hcal ring might be endcap or barrel like..

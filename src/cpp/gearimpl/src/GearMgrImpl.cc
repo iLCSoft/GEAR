@@ -16,6 +16,9 @@ namespace gear{
     _ecalBarrelParameters(0) ,
     _ecalEndcapParameters(0) ,
     _ecalPlugParameters(0) ,
+    _yokeBarrelParameters(0) ,
+    _yokeEndcapParameters(0) ,
+    _yokePlugParameters(0) ,
     _hcalBarrelParameters(0) ,
     _hcalEndcapParameters(0) ,
     _hcalRingParameters(0) ,
@@ -128,6 +131,37 @@ namespace gear{
 
   }
 
+  const CalorimeterParameters & GearMgrImpl::getYokeBarrelParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _yokeBarrelParameters == 0 )
+      throw UnknownParameterException( "No YokeBarrelParameters set ") ;
+
+    return  *_yokeBarrelParameters ;
+
+  }
+  const CalorimeterParameters & GearMgrImpl::getYokeEndcapParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _yokeEndcapParameters == 0 )
+      throw UnknownParameterException( "No YokeEndcapParameters set ") ;
+
+    return  *_yokeEndcapParameters ;
+
+  }
+  
+  const CalorimeterParameters & GearMgrImpl::getYokePlugParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _yokePlugParameters == 0 )
+      throw UnknownParameterException( "No YokePlugParameters set ") ;
+
+    return  *_yokePlugParameters ;
+
+  }
+
+ 
+  
   const CalorimeterParameters & GearMgrImpl::getHcalBarrelParameters() const
     throw (UnknownParameterException, std::exception ) {
     
@@ -255,6 +289,20 @@ namespace gear{
   void GearMgrImpl::setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) {
     
     _ecalPlugParameters = ecalPlugParameters ;
+  }
+
+  void GearMgrImpl::setYokeBarrelParameters( CalorimeterParameters* yokeBarrelParameters ) {
+    
+    _yokeBarrelParameters = yokeBarrelParameters ;
+  }
+  void GearMgrImpl::setYokeEndcapParameters( CalorimeterParameters* yokeEndcapParameters ) {
+    
+    _yokeEndcapParameters = yokeEndcapParameters ;
+  }
+
+  void GearMgrImpl::setYokePlugParameters( CalorimeterParameters* yokePlugParameters ) {
+    
+    _yokePlugParameters = yokePlugParameters ;
   }
 
 

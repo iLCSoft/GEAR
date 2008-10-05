@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.9 2008-05-15 15:38:44 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.10 2008-10-05 18:45:51 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -74,7 +74,28 @@ namespace gear {
     virtual const CalorimeterParameters & getEcalPlugParameters() const 
 	throw (UnknownParameterException, std::exception )  ;
 
-    /** Get the Hcal barrel parameters.
+      /** Get the Yoke barrel parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getYokeBarrelParameters() const 
+	throw (UnknownParameterException, std::exception ) ;
+
+    /** Get the Yoke endcap parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getYokeEndcapParameters() const 
+	throw (UnknownParameterException, std::exception )  ;
+
+    /** Get the Yoke plug parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getYokePlugParameters() const 
+	throw (UnknownParameterException, std::exception )  ;
+
+   /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
      */
@@ -164,7 +185,20 @@ namespace gear {
      */
     virtual void setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) ;
     
-    /** Set the HcalBarrelParameters.
+    /** Set the YokeBarrelParameters.
+     */
+    virtual void setYokeBarrelParameters( CalorimeterParameters* yokeBarrelParameters ) ;
+
+    /** Set the YokeEndcapParameters.
+     */
+    virtual void setYokeEndcapParameters( CalorimeterParameters* yokeEndcapParameters ) ;
+    
+    /** Set the YokePlugParameters.
+     */
+    virtual void setYokePlugParameters( CalorimeterParameters* yokePlugParameters ) ;
+ 
+	
+	/** Set the HcalBarrelParameters.
      */
     virtual void setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) ;
 
@@ -211,6 +245,9 @@ namespace gear {
     CalorimeterParameters* _ecalBarrelParameters ;
     CalorimeterParameters* _ecalEndcapParameters ;
     CalorimeterParameters* _ecalPlugParameters ;
+    CalorimeterParameters* _yokeBarrelParameters ;
+    CalorimeterParameters* _yokeEndcapParameters ;
+    CalorimeterParameters* _yokePlugParameters ;
     CalorimeterParameters* _hcalBarrelParameters ;
     CalorimeterParameters* _hcalEndcapParameters ;
     CalorimeterParameters* _hcalRingParameters ;

@@ -1,7 +1,12 @@
  ======================
   Gear release notes
  ======================
-
+  -------
+ | v00-10 |  
+  --------
+   - added Yoke calorimeter parameters :
+	   YokeBarrel, YokeEndcap and YokePlug
+				   
   -----------
  | v00-09-01 |
   -----------
