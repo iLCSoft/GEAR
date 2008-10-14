@@ -3,32 +3,29 @@
 # @author Jan Engels, DESY
 #############################################
 
-# include directories
-INCLUDE_DIRECTORIES( ../include )
+# mergeXML
+ADD_EXECUTABLE( mergeXML mergeXML.cc )
+TARGET_LINK_LIBRARIES( mergeXML lib_GEAR lib_GEARXML )
+INSTALL( TARGETS mergeXML DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 
-# list of test binaries
+# printParameters
+ADD_EXECUTABLE( printParameters printParameters.cc )
+TARGET_LINK_LIBRARIES( printParameters lib_GEAR lib_GEARXML )
+INSTALL( TARGETS printParameters DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+
+# test binaries
 SET( test_bins
-#    mergeXML
     testgear
     testtpcproto
     testVTXgear
     testSiPlanesgear
-#    test_rectangular_layout_changes
 )
 
-# create symbolic bin target for calling targets bin_XXX
-ADD_CUSTOM_TARGET( bin VERBATIM )
+ADD_CUSTOM_TARGET( tests )
 
-# loop through list of test binaries
 FOREACH( bin ${test_bins} )
-    # create target for binary
-    ADD_EXECUTABLE( bin_${bin} EXCLUDE_FROM_ALL ${bin}.cc )
-    # tell bin target to call this bin_XXX target
-    ADD_DEPENDENCIES( bin bin_${bin} )
-    # avoid conflicts between library and binary target names
-    SET_TARGET_PROPERTIES( bin_${bin} PROPERTIES OUTPUT_NAME ${bin} )
-    # link binary against library
-    TARGET_LINK_LIBRARIES( bin_${bin} lib_GEAR lib_GEARXML )
-    # install binary commando
-    INSTALL( TARGETS bin_${bin} DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+    ADD_EXECUTABLE( ${bin} EXCLUDE_FROM_ALL ${bin}.cc )
+    ADD_DEPENDENCIES( tests ${bin} )
+    TARGET_LINK_LIBRARIES( ${bin} lib_GEAR lib_GEARXML )
 ENDFOREACH()
+
