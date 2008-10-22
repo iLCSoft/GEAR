@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.10 2008-10-05 18:45:51 gaede Exp $
+   * @version $Id: GearMgrImpl.h,v 1.11 2008-10-22 15:10:46 engels Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -126,6 +126,20 @@ namespace gear {
     virtual const CalorimeterParameters & getLcalParameters() const 
       throw (UnknownParameterException, std::exception ) ;
     
+    /** Get the LHcal parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getLHcalParameters() const 
+      throw (UnknownParameterException, std::exception ) ;
+ 
+    /** Get the BeamCal parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const CalorimeterParameters & getBeamCalParameters() const 
+      throw (UnknownParameterException, std::exception ) ;
+ 
     /** Get the VXD parameters.
      *
      *  @throws UnknownParameterException
@@ -214,6 +228,14 @@ namespace gear {
      */
     virtual void setLcalParameters(CalorimeterParameters * lcalParameters) ;
 
+    /** Set the LHcalParameters.
+     */
+    virtual void setLHcalParameters(CalorimeterParameters * lhcalParameters) ;
+
+    /** Set the BeamCalParameters.
+     */
+    virtual void setBeamCalParameters(CalorimeterParameters * beamcalParameters) ;
+
      /** Set the VXDParameters.
      */
     virtual void setVXDParameters( VXDParameters * vxdParameters ) ;
@@ -252,6 +274,8 @@ namespace gear {
     CalorimeterParameters* _hcalEndcapParameters ;
     CalorimeterParameters* _hcalRingParameters ;
     CalorimeterParameters* _lcalParameters ;
+    CalorimeterParameters* _lhcalParameters ;
+    CalorimeterParameters* _beamcalParameters ;
     VXDParameters* _vxdParameters ;
     SiPlanesParameters* _siplanesParameters ;
     GearPointProperties*  _pointProperties ;

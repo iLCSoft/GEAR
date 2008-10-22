@@ -259,6 +259,39 @@ namespace gear{
     catch( UnknownParameterException& e){
     }
 
+    // --------- add LHcal parameters -------------------
+    try{
+      
+      CalorimeterParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getLHcalParameters() )  ;
+      
+      detector.SetAttribute( "name" , "LHcal" ) ;
+      detector.SetAttribute( "geartype" , GEAR::CALORIMETERPARAMETERS ) ;
+
+      detectors.InsertEndChild( detector ) ;
+
+    }
+    catch( UnknownParameterException& e){
+    }
+
+    // --------- add BeamCal parameters -------------------
+    try{
+      
+      CalorimeterParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getBeamCalParameters() )  ;
+      
+      detector.SetAttribute( "name" , "BeamCal" ) ;
+      detector.SetAttribute( "geartype" , GEAR::CALORIMETERPARAMETERS ) ;
+
+      detectors.InsertEndChild( detector ) ;
+
+    }
+    catch( UnknownParameterException& e){
+    }
+
+
 
     // ------- add VXD parameters ----------------------------
     try{

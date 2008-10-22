@@ -122,6 +122,18 @@ namespace gear{
       s << "   ----  Lcal   ----  NOT FOUND :( " << std::endl ;
 
     }
+    try{ 
+        s  << "   ----  LHcal   ---- "  << std::endl 
+            <<  m.getLHcalParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){
+        s << "   ----  LHcal   ----  NOT FOUND :( " << std::endl ;
+    }
+    try{ 
+        s  << "   ----  BeamCal   ---- "  << std::endl 
+            <<  m.getBeamCalParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){
+        s << "   ----  BeamCal   ----  NOT FOUND :( " << std::endl ;
+    }
        
     try{ 
       // SiPlanes parameters

@@ -301,8 +301,13 @@ namespace gear {
       } else if( caloName.find("lcal" ) != std::string::npos ) {
 	
 	gearMgr->setLcalParameters( caloParams ) ;	
+      } else if( caloName.find("lhcal" ) != std::string::npos ) {
+	
+    gearMgr->setLHcalParameters( caloParams ) ;	
+      } else if( caloName.find("beamcal" ) != std::string::npos ) {
+	
+	gearMgr->setBeamCalParameters( caloParams ) ;	
       }
-      
     }
     
     return caloParams ;
