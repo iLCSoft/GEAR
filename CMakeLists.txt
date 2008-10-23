@@ -19,7 +19,7 @@ PROJECT( GEAR )
 
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
-SET( ${PROJECT_NAME}_MINOR_VERSION 10)
+SET( ${PROJECT_NAME}_MINOR_VERSION 11 )
 SET( ${PROJECT_NAME}_PATCH_LEVEL 0 )
 
 # project options
@@ -311,3 +311,4 @@ INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARBuildSettings.cmake" DESTINATION lib/c
 # export library dependencies (keep this as the last line in the file)
 EXPORT_LIBRARY_DEPENDENCIES( "GEARLibDeps.cmake" )
 INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARLibDeps.cmake" DESTINATION lib/cmake )
+

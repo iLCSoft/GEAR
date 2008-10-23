@@ -2,6 +2,18 @@
   Gear release notes
  ======================
   -------
+ | v00-11 |  
+  --------
+  - added parameters for BeamCal and LHcal:
+        just like Lcal, BeamCal and LHcal sections in xml also need mandatory user
+        parameter 'beam_crossing_angle' - enforced in GearMgr::setLcalParameters
+        ( will also be written with MokkaGear)
+  - cmake improvements:
+    - added GEAR_LIBRARY_DIRS
+    - added 32 bit compatibility build option
+    - made cmake 2.6 compatible
+	
+  -------
  | v00-10 |  
   --------
    - added Yoke calorimeter parameters :
