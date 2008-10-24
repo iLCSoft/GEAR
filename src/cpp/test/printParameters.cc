@@ -6,8 +6,7 @@
 
 
 #include <iostream>
-
-
+#include <cstdlib>
 #include <sstream>
 
 using namespace gear ;
