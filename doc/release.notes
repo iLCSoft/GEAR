@@ -1,6 +1,12 @@
  ======================
   Gear release notes
  ======================
+   ----------
+ | v00-11-01 |  
+  -----------
+     bug fix release
+	 - fixed reading of lhcal/hcal parameters (hcal endcap had lhcal params...)
+  
   -------
  | v00-11 |  
   --------
