@@ -5,8 +5,9 @@
  | v00-11-01 |  
   -----------
      bug fix release
-	 - fixed reading of lhcal/hcal parameters (hcal endcap had lhcal params...)
-  
+	- fixed reading of lhcal/hcal parameters (hcal endcap had lhcal params...)
+        - added FixedPadAngleDiskLayout: new padlayout for const-phi segments (M.Killenberg)
+
   -------
  | v00-11 |  
   --------
