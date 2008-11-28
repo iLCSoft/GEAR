@@ -85,9 +85,6 @@ int main(int argc, char**argv){
     
     testFixedPadSizeDiskLayout( pl ) ;
   }
-  catch( gear::UnknownParameterException& e ){
-    std::cout << "  oops - no TPC available :( " << std::endl ;
-  }
   catch(std::bad_cast& e){
     std::cout << "  wrong type of layout - expected FixedPadSizeDiskLayout ! " << std::endl ;
   }
@@ -95,21 +92,6 @@ int main(int argc, char**argv){
   // --- test writing of XML file ---------
 
   GearXML::createXMLFile( gearMgr, "testgear_out.xml" ) ;
-
-
-  // ----- getting Bz from the field map
-  try{
-    double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ; 
-    
-    std::cout << std::endl  
-	      <<	" --  Bz at origin [double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ;]  : " << bfield
-	      << std::endl << std::endl ;
-    
-
-  }catch( gear::UnknownParameterException& e ){
-    std::cout << "  oops - no BField available :( " << std::endl ;
-  }
-  
 
   // --- testing gearcga ---
 #ifdef CGA

@@ -4,7 +4,6 @@
 
 #include "gear/VXDLayerLayout.h"
 #include <vector>
-#include <math.h>
 
 namespace gear {
 
@@ -19,15 +18,12 @@ namespace gear {
 
 class VXDLayerLayoutImpl : public VXDLayerLayout {
 
-
-  friend class VXDParametersImpl ;
-
 public: 
   
   /** Helper class for layer properties */
   struct Layer {
     int    NLadders ;
-    double internalPhi0 ;
+    double Phi0 ;
     double Distance ;
     double Offset ;
     double Thickness ;
@@ -50,11 +46,10 @@ public:
    */
   virtual int getNLadders(int layerIndex) const { return _lVec.at( layerIndex ).NLadders  ; }
 
-  /** Azimuthal angle of the (outward pointing) normal of the first ladder.
-   *  Phi0==0 corresponds to the first ladder's normal coinciding (if offset==0) with the x-axis.
-   *  The layerIndex starts at 0 for the layer closest to IP.
+  /** The angle phi0 for a straight line connecting IP and ladder perpendicular to ladder.
+   *  for layerIndex - layer indexing starting at 0 for the layer closest to IP.
    */
-  virtual double getPhi0(int layerIndex) const { return M_PI/2. - _lVec.at( layerIndex ).internalPhi0  ; }
+  virtual double getPhi0(int layerIndex) const { return _lVec.at( layerIndex ).Phi0  ; }
   
   /** The radiation length in the support structure ladders of layer layerIndex - layer indexing starts at 0
    *  for the layer closest to IP.
@@ -71,14 +66,13 @@ public:
    */
   virtual double getLadderThickness(int layerIndex) const { return _lVec.at( layerIndex ).Thickness  ; }
 
-  /** The offset of the ladder in mm defines the shift of the ladder in the direction of increasing phi
-   *  perpendicular to the ladder's normal. For example if the first ladder is at phi0==0 then the offset 
-   *  defines an upward shift of the ladder (parallel to the y-axis).  
-   *  Layer indexing starts at 0 for the layer closest to IP.
-   *  @see getPhi0
-   *  @see getSensitiveOffset
+  /** The offset of the ladder measured from space point perpendicular to z
+   *  and perpendicular to connecting line IP-ladder to middle of ladder in mm 
+   *  (e.g. if phi0=0 --> x)
+   *  for ladder in layerIndex - layer indexing starting at 0
+   *  for the layer closest to IP.
    */
-  virtual double getLadderOffset(int layerIndex) const { return  _lVec.at( layerIndex ).Offset  ; }
+  virtual double getLadderOffset(int layerIndex) const { return _lVec.at( layerIndex ).Offset  ; }
 
   /** The width of the ladder in layer in mm for ladders in layer layerIndex -
    *  layer indexing starting at 0 from the layer closest to IP.
@@ -103,8 +97,10 @@ public:
    */
   virtual double getSensitiveThickness(int layerIndex) const { return _sVec.at( layerIndex ).Thickness  ; }
 
-  /** Same as getLadderOffset() except for the sensitive part of the ladder.
-   * @see getLadderOffset
+  /** The offset of the sensitive area in ladder measured from space point perpendicular to z
+   *  and perpendicular to connecting line IP-sensArea to middle of sensitive area in mm 
+   *  (e.g. if phi0=0 --> x)
+   *  for the sensitive area in ladders in layerIndex
    */
   virtual double getSensitiveOffset(int layerIndex) const { return _sVec.at( layerIndex ).Offset  ; }
 
@@ -154,9 +150,6 @@ public:
   
   
 protected:
-
-  double getInternalPhi0(int layerIndex) const { return _lVec.at( layerIndex ).internalPhi0  ; }
-
 
   // Ladder
   LayerVec _lVec ;

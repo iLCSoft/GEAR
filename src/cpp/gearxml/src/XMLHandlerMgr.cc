@@ -4,7 +4,6 @@
 #include "gearxml/TPCParametersXML.h"
 #include "gearxml/CalorimeterParametersXML.h"
 #include "gearxml/VXDParametersXML.h"
-#include "gearxml/SiPlanesParametersXML.h"
 #include "gearxml/tinyxml.h"
 
 #include "gear/GEAR.h"
@@ -15,29 +14,16 @@
 
 namespace gear{
   
-  //  XMLHandlerMgr* XMLHandlerMgr::_me  = 0 ;
+  XMLHandlerMgr* XMLHandlerMgr::_me  = 0 ;
   
   
   
   XMLHandlerMgr* XMLHandlerMgr::instance() {
     
-    static XMLHandlerMgr _me ;
-      return &_me ;
-    
-    //     if( _me == 0 ) {
-    //       _me = new XMLHandlerMgr ;
-    //     }
-    //     return _me ;
-  }
-
-  XMLHandlerMgr::~XMLHandlerMgr() {
-
-    XMLHandlerMap::iterator it_end = _map.end() ;
-
-    for( XMLHandlerMap::iterator it = _map.begin() ; it != it_end ; ++ it  ) {
-      
-      delete it->second ;
+    if( _me == 0 ) {
+      _me = new XMLHandlerMgr ;
     }
+    return _me ;
   }
   
 
@@ -47,7 +33,6 @@ namespace gear{
     _map[ GEAR::TPCPARAMETERS ]  = new TPCParametersXML ;
     _map[ GEAR::CALORIMETERPARAMETERS ]  = new CalorimeterParametersXML ;
     _map[ GEAR::VXDPARAMETERS ] = new VXDParametersXML ;
-    _map[ GEAR::SIPLANESPARAMETERS ] = new SiPlanesParametersXML ;
 
   }
     
@@ -59,9 +44,6 @@ namespace gear{
   
   
   const void XMLHandlerMgr::setHandler( const std::string& type , XMLHandler* handler ) {
-
-    if( handler == 0 )  // don't allow null pointer
-      return  ;
 
     XMLHandlerMap::iterator it = _map.find( type ) ;
     
@@ -78,7 +60,10 @@ namespace gear{
     
   }
   
- 
+  
+
+
+
 
   // helper function (declared in XMLHandler.h )
 
