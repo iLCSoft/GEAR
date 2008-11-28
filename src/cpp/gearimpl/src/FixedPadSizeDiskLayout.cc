@@ -152,23 +152,7 @@ namespace gear {
 
   int FixedPadSizeDiskLayout::getPadIndex(int rowNum, int padNum) const {
 
-    if( (unsigned) rowNum > _rows.size() - 1 ) {
-      
-      throw std::out_of_range(" FixedPadSizeDiskLayout::getPadIndex row number too large !");
-    }
-    
-    if( padNum > _rows[rowNum].NPad - 1 ) {
-      
-      std::stringstream sstr ;
-      
-      sstr << "FixedPadSizeDiskLayout::getPadIndex: pad number too large: "
-	   << padNum << " only " <<   _rows[rowNum].NPad << " pads in row " << rowNum ;
-
-      throw std::out_of_range( sstr.str() );
-    }
-    
     return  (rowNum << 16 ) | ( 0x0000ffff & padNum ) ;
-
 
   }
 
