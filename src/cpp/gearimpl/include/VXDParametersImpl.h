@@ -51,11 +51,11 @@ public:
    *  connection IP-spacepoint) and thickness (extension to connection IP-spacepoint).
    *
    * @param nLadders   the number of ladders and sensitive areas inside the layer        
-   * @param phi0       azimuthal angle of normal to first ladder
+   * @param phi0       the starting angle for straight connection to the spacepoint      
    * @param Distance   the length (mm) of the straigth line between IP and spacepoint to 
    *                   ladder (ladderDistance) or sensitive Area (sensitiveDistance)     
    * @param Offset     the offset of ladder (ladderOffset) or sensitive area             
-   *                   (sensitiveOffset) in direction of increasing phi in mm between spacepoint 
+   *                   (sensitiveOffset) in clockwise direction in mm between spacepoint 
    *                   and middle of ladder/sensitive                                    
    * @param Thickness  the thickness in mm of the ladder (ladderThickness) or the        
    *                   sensitive area (sensitiveThickness)                               
@@ -110,39 +110,39 @@ public:
   
   /** returns whether a point is inside a ladder
    */
-  virtual bool isPointInLadder(Vector3D p) const {
+  virtual bool isPointInLadder(Point3D p) const {
     return isPointInVXD( p, false );
   }
   
   /** returns wheter a point is inside a sensitive volume
    */
-  virtual bool isPointInSensitive(Vector3D p) const {
+  virtual bool isPointInSensitive(Point3D p) const {
     return isPointInVXD( p, true ) ;
   }
   
   /** returns vector from given point p to nearest ladder
    */
-  virtual Vector3D distanceToNearestLadder(Vector3D p) const {
+  virtual Vector3D distanceToNearestLadder(Point3D p) const {
     return distanceToNearestVXD( p, false ) ;
   }
 
   /** returns vector from given point p to nearest sensitive volume
    */
-  virtual Vector3D distanceToNearestSensitive(Vector3D p) const {
+  virtual Vector3D distanceToNearestSensitive(Point3D p) const {
     return distanceToNearestVXD( p, true ) ;
   }
 
   /** returns the first point where a given strainght line
    *  (parameters point p and direction v)  crosses a ladder
    */
-  virtual Vector3D intersectionLadder( Vector3D p, Vector3D v ) const {
+  virtual Point3D intersectionLadder( Point3D p, Vector3D v ) const {
     return intersectionVXD( p, v, false ) ;
   }
 
   /** returns the first point where a given strainght line
    *  (parameters point p and direction v)  crosses a sensitive volume
    */
-  virtual Vector3D intersectionSensitive( Vector3D p, Vector3D v ) const {
+  virtual Point3D intersectionSensitive( Point3D p, Vector3D v ) const {
     return intersectionVXD( p, v, true ) ;
   }
 
@@ -166,11 +166,11 @@ private:
 
   /** returns if a point is in ladder (sensitive == false) or in sensitive (sensitive == true)
    */
-  bool isPointInVXD(Vector3D p , bool sensitive = false) const ;
+  bool isPointInVXD(Point3D p , bool sensitive = false) const ;
 
   /** returns distance to nearest ladder (sensitive == false) or nearest sensitiv (sensitive == true)
    */
-  Vector3D distanceToNearestVXD(Vector3D p, bool sensitive = false) const ;
+  Vector3D distanceToNearestVXD(Point3D p, bool sensitive = false) const ;
 
   /** returns vector to from point to closest point in described plane
    *  r as spacepoint vector
@@ -179,20 +179,20 @@ private:
    *  minU and maxU as min/max sizes of vector u still in plane
    *  minV and maxV as min/max sizes of vector v still in plane
    */
-  Vector3D distanceToPlane(Vector3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV) const ;
+  Vector3D distanceToPlane(Point3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV) const ;
 
   /** returns the first point on the vxd, where it intersects with a given straight line (parameters point p and direction v)
    */     
-  Vector3D intersectionVXD( Vector3D p, Vector3D v, bool sensitive = false) const ;
+  Point3D intersectionVXD( Point3D p, Vector3D v, bool sensitive = false) const ;
 
   /** returns the intersection point of a plane and a straight line
    */
-  Vector3D planeLineIntersection( Vector3D r, Vector3D n, Vector3D linePoint, Vector3D lineDir) const ;
+  Point3D planeLineIntersection( Vector3D r, Vector3D n, Point3D linePoint, Vector3D lineDir) const ;
 
   /** returns the confiningRatio of a point p in a plane when the plane (r,n) is reduced to a finite square
    *  extensions in direction u (minU to maxU) and in direction v (minV to maxV)
    */
-  double confiningRatio( Vector3D p , Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const ;
+  double confiningRatio( Point3D p , Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const ;
   
   /** corrects the vector vPlane into the given borders, given by
    *  direction u (minU to maxU) and in direction v (minV to maxV)
@@ -202,7 +202,7 @@ private:
 
   bool isEqual( double valueOne , double valueTwo ) const ;
 
-  bool isEqual( Vector3D p1 , Vector3D p2 ) const ;
+  bool isEqual( Point3D p1 , Point3D p2 ) const ;
 
   bool differsLess( double valueOne , double valueTwo ) const ;
 
@@ -213,7 +213,7 @@ private:
 
   /** returns Phi for a point
    */
-  double getPhiPoint( Vector3D p ) const ;
+  double getPhiPoint( Point3D p ) const ;
 
 }; // class
 

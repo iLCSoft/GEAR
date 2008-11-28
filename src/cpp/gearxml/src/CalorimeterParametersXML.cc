@@ -14,7 +14,6 @@
 #include <algorithm>
 #include <sstream>
 #include <math.h>
-#include <string>
 
 #define _EPSILON 0.0001
 
@@ -258,58 +257,22 @@ namespace gear {
 
       std::string caloName = getXMLAttribute( xmlElement , "name" ) ;
 
-//       bool isEcal = ( caloName[0] == 'E' || caloName[0] == 'e' ) ; 
+      bool isEcal = ( caloName[0] == 'E' || caloName[0] == 'e' ) ; 
 
-      std::transform( caloName.begin() , caloName.end() , 
-		      caloName.begin(), tolower ) ;
+      if( isEcal ){
 
-      
-      if( caloName.find("ecal") != std::string::npos ){
-	
-	if( caloName.find("plug" ) != std::string::npos ){
-	  
-	  gearMgr->setEcalPlugParameters( caloParams ) ;	  
-	}
-	else if( isBarrelCalorimeter )
+	if( isBarrelCalorimeter )
 	  gearMgr->setEcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setEcalEndcapParameters( caloParams ) ;
-	
-      } else if( caloName.find("yoke") != std::string::npos ){
-	
-	if( caloName.find("plug" ) != std::string::npos ){
-	  
-	  gearMgr->setYokePlugParameters( caloParams ) ;	  
-	}
-	else if( isBarrelCalorimeter )
-	  gearMgr->setYokeBarrelParameters( caloParams ) ;
-	else
-	  gearMgr->setYokeEndcapParameters( caloParams ) ;
-	
-      }  else if( caloName.find("lcal" ) != std::string::npos ) {
-	
-	gearMgr->setLcalParameters( caloParams ) ;	
-	
-      } else if( caloName.find("lhcal" ) != std::string::npos ) {
-	
-        gearMgr->setLHcalParameters( caloParams ) ;	
-	
-      } else if( caloName.find("beamcal" ) != std::string::npos ) {
-	
-	gearMgr->setBeamCalParameters( caloParams ) ;	
 
-      } else if( caloName.find("hcal" ) != std::string::npos ) {
-	
-	// the additional hcal ring might be endcap or barrel like..
-	if( caloName.find("ring" ) != std::string::npos ){
+      } else {
 
-	  gearMgr->setHcalRingParameters( caloParams ) ;	  
-	}
-	else if( isBarrelCalorimeter )
+	if( isBarrelCalorimeter )
 	  gearMgr->setHcalBarrelParameters( caloParams ) ;
 	else
 	  gearMgr->setHcalEndcapParameters( caloParams ) ;
-	
+
       }
     }
     

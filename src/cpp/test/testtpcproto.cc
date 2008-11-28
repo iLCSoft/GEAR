@@ -169,7 +169,7 @@ void testRectangularPadRowLayout( const  RectangularPadRowLayout& pl ) {
       }
 
 
-      Vector2D p = pl.getPadCenter( pads[j] ) ;
+      Point2D p = pl.getPadCenter( pads[j] ) ;
 
 
 #ifdef GEAR_USE_AIDA  

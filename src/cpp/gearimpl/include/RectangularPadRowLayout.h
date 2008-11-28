@@ -21,7 +21,7 @@ namespace gear {
  *  by M. Weber RWTH Aachen and J. McGeachie UVic, Ca..
  * 
  * @author F. Gaede, DESY
- * @version $Id: RectangularPadRowLayout.h,v 1.4 2008-06-04 16:04:27 gaede Exp $
+ * @version $Id: RectangularPadRowLayout.h,v 1.2 2006-05-12 12:56:31 gaede Exp $
  */
   class RectangularPadRowLayout : public PadRowLayout2D {
     
@@ -109,7 +109,7 @@ namespace gear {
 
     /** The center of the pad in 2d coordinates, (x,y) or (r,phi).
      */
-    virtual Vector2D getPadCenter(int padIndex)  const;
+    virtual Point2D getPadCenter(int padIndex)  const;
 
 
     /** Indices of all pads in row rowNumber (row indices start from 0 at the
@@ -138,8 +138,6 @@ namespace gear {
      * (x,y,) or (r,phi).
      */
     virtual int getNearestPad(double x, double y)  const;
-
-	int getNearestPadOld(double x, double y) const;
 
     /** The index of the right neighbour pad.
      */
@@ -170,7 +168,7 @@ namespace gear {
     /** Helper function for finding the nearest pad - returns the distance for points outside 
      *  the box and -1. for points inside.*/
 
-    double distanceToBox( const Vector2D& p , double xMin, double yMin, double xMax, double yMax ) const ;
+    double distanceToBox( const Point2D& p , double xMin, double yMin, double xMax, double yMax ) const ;
 
   }; // class
 
