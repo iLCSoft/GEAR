@@ -6,7 +6,7 @@ package hep.gear.api ;
  * 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearMgr.aid,v 1.9 2008-10-22 15:10:46 engels Exp $
+ * @version $Id: GearMgr.aid,v 1.7 2008-05-13 12:57:43 gaede Exp $
  */
 public interface GearMgr {
     
@@ -54,26 +54,6 @@ public interface GearMgr {
      */
     public const CalorimeterParameters&  getEcalPlugParameters() const throws UnknownParameterException ;
 
-    /** Get the Yoke barrel parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    public const CalorimeterParameters&  getYokeBarrelParameters() const throws UnknownParameterException ;
-
-    /** Get the Yoke endcap parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    public const CalorimeterParameters&  getYokeEndcapParameters() const throws UnknownParameterException ;
-
-    /** Get the Yoke plug parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    public const CalorimeterParameters&  getYokePlugParameters() const throws UnknownParameterException ;
-
-
-
     /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
@@ -100,18 +80,7 @@ public interface GearMgr {
      */
     public const CalorimeterParameters & getLcalParameters() const throws UnknownParameterException ;  
 	
-    /** Get the LHcal parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    public const CalorimeterParameters & getLHcalParameters() const throws UnknownParameterException ;  
-	
-    /** Get the BeamCal parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    public const CalorimeterParameters & getBeamCalParameters() const throws UnknownParameterException ;  
-	
+
     /** Get the VXD parameters.
      *
      *  @throws UnknownParameterException
@@ -176,19 +145,6 @@ public interface GearMgr {
      */
     public void setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) ;
     
-    /** Set the YokeBarrelParameters.
-     */
-    public void setYokeBarrelParameters( CalorimeterParameters* ecalBarrelParameters ) ;
-
-    /** Set the YokeEndcapParameters.
-     */
-    public void setYokeEndcapParameters( CalorimeterParameters* ecalEndcapParameters ) ;
-    
-    /** Set the YokePlugParameters.
-     */
-    public void setYokePlugParameters( CalorimeterParameters* ecalPlugParameters ) ;
- 
-
     /** Set the HcalBarrelParameters.
      */
     public void setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) ;
@@ -213,14 +169,6 @@ public interface GearMgr {
     /** Set the LcalParameters.
      */
     public void setLcalParameters( CalorimeterParameters* lcalParameters ) ;
-
-    /** Set the LHcalParameters.
-     */
-    public void setLHcalParameters( CalorimeterParameters* lhcalParameters ) ;
-
-    /** Set the BeamCalParameters.
-     */
-    public void setBeamCalParameters( CalorimeterParameters* beamcalParameters ) ;
 
     /** Set the point properties object.
      */
