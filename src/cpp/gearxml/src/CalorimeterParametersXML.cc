@@ -286,18 +286,6 @@ namespace gear {
 	else
 	  gearMgr->setYokeEndcapParameters( caloParams ) ;
 	
-      }  else if( caloName.find("lcal" ) != std::string::npos ) {
-	
-	gearMgr->setLcalParameters( caloParams ) ;	
-	
-      } else if( caloName.find("lhcal" ) != std::string::npos ) {
-	
-        gearMgr->setLHcalParameters( caloParams ) ;	
-	
-      } else if( caloName.find("beamcal" ) != std::string::npos ) {
-	
-	gearMgr->setBeamCalParameters( caloParams ) ;	
-
       } else if( caloName.find("hcal" ) != std::string::npos ) {
 	
 	// the additional hcal ring might be endcap or barrel like..
@@ -310,7 +298,11 @@ namespace gear {
 	else
 	  gearMgr->setHcalEndcapParameters( caloParams ) ;
 	
+      } else if( caloName.find("lcal" ) != std::string::npos ) {
+	
+	gearMgr->setLcalParameters( caloParams ) ;	
       }
+      
     }
     
     return caloParams ;
