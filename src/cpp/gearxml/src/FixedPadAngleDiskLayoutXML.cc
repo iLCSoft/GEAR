@@ -53,7 +53,7 @@ namespace gear {
     double rMax       =  atof(  getXMLAttribute( layout , "rMax" ) .c_str() ) ;
     int nRow       =  atoi(  getXMLAttribute( layout , "nRow" ) .c_str() ) ;
     double phiMin     =  atof(  getXMLAttribute( layout , "phiMin" ) .c_str() ) ;
-    int    phiMax     =  atoi(  getXMLAttribute( layout , "phiMax" ) .c_str() ) ;
+    double phiMax     =  atof(  getXMLAttribute( layout , "phiMax" ) .c_str() ) ;
     int nPadsInRow =  atoi(  getXMLAttribute( layout , "nPadsInRow" ) .c_str() ) ;
     
     

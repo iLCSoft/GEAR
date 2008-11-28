@@ -225,26 +225,32 @@ namespace gear {
 	return getPadIndex( rowNum , padNumber ) ;
     }
 
-    // the difficult part has not been imlemented yet
-    throw gear::NotImplementedException("FixedPadAngleDiskLayout::getNearestPad: coordinates out of plane extend are not implemented yet");
+    // calculate pca to straight line along radius with _phiMin
 
-    // calculate pca to straight line with phi = _phiMin
+    // determine r_intersect for x = r_intersect * cos(_phiMin) = r* cos(phi) - m * sin(_phiMin)
+    //                           y = r_intersect * sin(_phiMin) = r*sin(phi) + m * cos(_phiMin)
+    // solve this to r_intersect and m
+    double r_intersect_min = r * (cos(phi)*cos(_phiMin) + sin(phi)*sin(_phiMin));
+//    double m_min =  r * (cos(phi)*sin(_phiMin) - sin(phi)*cos(_phiMin));
 
-    // determine r_intersect for x = r_intersect * cos(_phiMin) = x(r, phi) - m * sin(_phiMin)
-    //                           y = r_intersect * sin(_phiMin) = y(r, phi) + m * cos(_phiMin)
-//    double dist_right_edge = -1.;
-//    if ( r_intersect >= rMin &&  r_intersect <= rMin)
-//	// possible candidate for closest distance
-//	dist_right_edge = m;
-//    else
-//
-//    double dist_left_edge = -1.;
-//    if ( r_intersect >= rMax &&  r_intersect <= rMax)
-//	// possible candidate for closest distance
-//	dist_left_edge = m;
+    // determine the nearest pad on the rightmost edge
+    int rowNum_right = r_intersect_min < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
+    if( rowNum_right >= _nRow  )       
+	rowNum_right = _nRow -1 ;
+	    
+    // now the same for _phiMax
+    double r_intersect_max = r * (cos(phi)*cos(_phiMax) + sin(phi)*sin(_phiMax));
+//    double m_max =  r * (cos(phi)*sin(_phiMax) - sin(phi)*cos(_phiMax));
 
-    return 0;
-//    return getPadIndex( rowNum , padNum ) ;
+    // determine the nearest pad on the leftmost edge
+    int rowNum_left = r_intersect_max < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
+    if( rowNum_left >= _nRow  )       
+	rowNum_left = _nRow -1 ;
+    
+    double distance_right = getDistanceToPad( r, phi, getPadIndex( rowNum_right , 0 ) );
+    double distance_left  = getDistanceToPad( r, phi, getPadIndex( rowNum_left  , _nPadsInRow - 1 ) );
+
+    return (distance_right < distance_left ? getPadIndex( rowNum_right , 0 ) : getPadIndex( rowNum_left  , _nPadsInRow - 1 ) );
 				  
   }
 
@@ -261,7 +267,7 @@ namespace gear {
 	if (fabs(_phiMax - _phiMin - 2*M_PI) < 1e-6 )
 	    pn = 0 ;
 	else
-	    throw Exception("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
+	    throw Exception("FixedPadAngleDiskLayout::getRightNeighbour: no right neighbour pad !");
     }
 
     return getPadIndex(  rn , pn ) ;
@@ -280,7 +286,7 @@ namespace gear {
 	if (fabs(_phiMax - _phiMin - 2*M_PI) < 1e-6 )
 	    pn = 0 ;
 	else
-	    throw Exception("RectangularPadRowLayout::getRightNeighbour: no right neighbour pad !");
+	    throw Exception("FixedPadAngleDiskLayout::getRightNeighbour: no right neighbour pad !");
     }
 
     return getPadIndex(  rn , pn ) ;
@@ -299,7 +305,7 @@ namespace gear {
       Vector2D padCenter = getPadCenter( padIndex);
 
       if( (r  < padCenter[0] - _rowHeight/2.) || (r > padCenter[0] + _rowHeight/2.) ||
-	  (phi < padCenter[1]- _padAngle/2.)  || (phi < padCenter[1]+_padAngle/2. ) )
+	  (phi < padCenter[1]- _padAngle/2.)  || (phi > padCenter[1]+_padAngle/2. ) )
 	  return false ;
       else
 	  return true;

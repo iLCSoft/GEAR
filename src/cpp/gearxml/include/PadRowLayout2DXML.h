@@ -20,7 +20,7 @@ namespace gear {
   /** Abstract XML handler for PadRowLayout2DXML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: PadRowLayout2DXML.h,v 1.1 2006-05-12 12:53:55 gaede Exp $
+   * @version $Id: PadRowLayout2DXML.h,v 1.2 2008-11-28 09:50:09 engels Exp $
    */
   class PadRowLayout2DXML {
     
@@ -28,6 +28,8 @@ namespace gear {
 
 
   public: 
+
+    virtual ~PadRowLayout2DXML(){ /* nop */ ; }
     
     /** Creates an XML node for the given  PadRowLayout2D.
      */
