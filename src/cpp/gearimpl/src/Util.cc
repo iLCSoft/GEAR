@@ -3,7 +3,6 @@
 
 #include "gear/PadRowLayout2D.h"
 #include "gear/VXDLayerLayout.h"
-#include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 
 
@@ -17,130 +16,6 @@ namespace gear{
       << " ----------------------------------------------------- " << std::endl ;
     
     
-    try{ 
-
-      s << "   ----  DetectorName   ----   " << std::endl << std::endl 
-	<< "         " <<  m.getDetectorName() 
-	<< std::endl 
-	<<  std::endl  ;
-
-    } catch(UnknownParameterException &e){
-
-      s << "     WARNING:  NOT FOUND  !     " << std::endl 
-	<< "   please add  it to the <gear> element of your gear file: "
-	<< std::endl
-	<< std::endl
-	<< "   <gear> " << std::endl
-	<< "      <global detectorName=\"MyDetectorModle007\" /> " 
-	<< std::endl
-	<< "      <detectors> ... <detectors/>" << std::endl
-	<< "   <gear/> " << std::endl
-	<< std::endl ;  
-    }
-
-    try{ 
-      s <<  m.getBField() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
-
-      s << "   ----  BField   ----   " << std::endl 
-	<< "     WARNING:  NOT FOUND  !     " << std::endl 
-	<< "   please add  it to the <gear> element of your gear file, e.g.: "
-	<< std::endl
-	<< "   <gear> " << std::endl
-	<< "      <BField type=\"ConstantBField\" x=\"0.0\" y=\"0.0\" z=\"4.0\"/> " 
-	<< std::endl
-	<< "      <detectors> ... <detectors/>" << std::endl
-	<< "   <gear/> " << std::endl
-	<< std::endl ;  
-    }
-
-
-    try{ 
-      // VXD parameters
-      s <<  m.getVXDParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-
-
-    try{ 
-      // TPC parameters
-      s <<  m.getTPCParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    // Calorimeter parameters
-    
-     try{ 
-      s << "   ----  Ecal barrel    ---- "  << std::endl 
-	<< m.getEcalBarrelParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    try{ 
-      s  << "   ----  Ecal endcap   ---- "  << std::endl 
-	 <<  m.getEcalEndcapParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    try{ 
-      s  << "   ----  Ecal plug   ---- "  << std::endl 
-	 <<  m.getEcalPlugParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-
-	try{ 
-      s << "   ----  Yoke barrel    ---- "  << std::endl 
-	<< m.getYokeBarrelParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    try{ 
-      s  << "   ----  Yoke endcap   ---- "  << std::endl 
-	 <<  m.getYokeEndcapParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    try{ 
-      s  << "   ----  Yoke plug   ---- "  << std::endl 
-	 <<  m.getYokePlugParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    try{ 
-      s  << "   ----  Hcal barrel    ---- "  << std::endl 
-	 <<  m.getHcalBarrelParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-    
-    try{ 
-      s  << "   ----  Hcal endcap    ---- "  << std::endl 
-	 <<  m.getHcalEndcapParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-       
-    try{ 
-      s  << "   ----  Hcal ring    ---- "  << std::endl 
-	 <<  m.getHcalRingParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}
-       
-    try{ 
-      s  << "   ----  Lcal   ---- "  << std::endl 
-	 <<  m.getLcalParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
-
-      s << "   ----  Lcal   ----  NOT FOUND :( " << std::endl ;
-
-    }
-    try{ 
-        s  << "   ----  LHcal   ---- "  << std::endl 
-            <<  m.getLHcalParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
-        s << "   ----  LHcal   ----  NOT FOUND :( " << std::endl ;
-    }
-    try{ 
-        s  << "   ----  BeamCal   ---- "  << std::endl 
-            <<  m.getBeamCalParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
-        s << "   ----  BeamCal   ----  NOT FOUND :( " << std::endl ;
-    }
-       
-    try{ 
-      // SiPlanes parameters
-      s <<  m.getSiPlanesParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){}  
-    
- 
     s << std::endl 
       << "   parameter sections (detectors) :  "
       << std::endl ;
@@ -157,6 +32,50 @@ namespace gear{
       s <<  p <<  std::endl ;
 
     }
+
+
+    try{ 
+      // TPC parameters
+      s <<  m.getTPCParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    // Calorimeter parameters
+    
+    try{ 
+      s << "   ----  Ecal barrel    ---- "  << std::endl 
+	<< m.getEcalBarrelParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    try{ 
+      s  << "   ----  Ecal endcap   ---- "  << std::endl 
+	 <<  m.getEcalEndcapParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    try{ 
+      s  << "   ----  Hcal barrel    ---- "  << std::endl 
+	 <<  m.getHcalBarrelParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
+    try{ 
+      s  << "   ----  Hcal endcap    ---- "  << std::endl 
+	 <<  m.getHcalEndcapParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+       
+    try{ 
+      s  << "   ----  Lcal   ---- "  << std::endl 
+	 <<  m.getLcalParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){
+
+      s << "   ----  Lcal   ----  NOT FOUND :( " << std::endl ;
+
+    }
+       
+
+    try{ 
+      // VXD parameters
+      s <<  m.getVXDParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
 
     return s ;
   }
@@ -231,21 +150,6 @@ namespace gear{
     return s ;
   }
 
-  std::ostream& operator<< (  std::ostream& s,  const BField& b ) {
-
-    s << std::endl 
-      << "   -----------   BField   ------- "  << std::endl  << std::endl        ;
-
-    Vector3D bv = b.at(  Vector3D ( 0., 0., 0. ) ) ;
-
-    s << "       field vector at origin :   Bx = " << bv.x() <<  " , By = " << bv.y() << " , Bz = " << bv.z()  << " [Tesla] " << std::endl ;
-
-    s << dynamic_cast<const GearParameters&>( b )  ;
-    
-    return s ;
-
-  }
-
 
 
 
@@ -265,6 +169,22 @@ namespace gear{
     
     const DoubleVec& ext = pl.getPlaneExtent() ;
     
+    //     double rMin = ext[0] ;
+    //     double rMax = ext[1] ;
+    //     // getPadWidth() returns phi - need to multiply by r 
+    //     double padWidth = pl.getPadWidth(0) * pl.getPadCenter(0)[0]; 
+    //     int nRow = pl.getNRows() ;
+    //     s <<  std::endl
+    //       << "   FixedPadSizeDiskLayout :  " << std::endl
+    //       << "         rMin:      " << rMin  << std::endl
+    //       << "         rMax:      " << rMax  << std::endl
+    //       << "         padHeight: " << pl.getPadHeight(0)  << std::endl 
+    //       << "         padWidth:  " <<  padWidth  << std::endl
+    //       << "         nRows :    " << nRow << std::endl 
+    //       << std::endl 
+    //       << std::endl ;
+    
+
     int nRow = pl.getNRows() ;
     int type = pl.getPadLayoutType() ;
     
@@ -276,14 +196,6 @@ namespace gear{
     
     s << "         nRows :    " << nRow << std::endl ; 
     s << "         extent:    [" << ext[0] << ","<< ext[1] << ","<< ext[2] << ","<< ext[3] << "]"  << std::endl ; 
-    
-    if( type == PadRowLayout2D::POLAR ){
-
-       s << "    sensitive Volume:  " << std::endl
-	 << "       inner radius:  " << ext[0] << std::endl
-	 << "       outer radius:  " << ext[1] << std::endl
-	 << "       half length :  " << p.getMaxDriftLength() << std::endl ;
-    }
     
     s <<  std::endl ;
     s << std::endl ;
@@ -441,153 +353,4 @@ namespace gear{
     
   }
   
-  std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) {
-    
-    s << std::endl 
-      << "   -----------   SiPlanesParameters  ------- "  << std::endl         ;
-    
-    s << dynamic_cast<const GearParameters&>( p )  ;
-    
-    const SiPlanesLayerLayout & l = p.getSiPlanesLayerLayout() ;
-
-
-    s <<  std::endl << " Setup ID : " << p.getSiPlanesID() << std::endl;
-
-    int type = p.getSiPlanesType() ;
-    
-    s << " Telescope type : " ;
-    std::string strType ;
-
-    switch( type ) {
-      
-    case SiPlanesParameters::TelescopeWithDUT : 
-      strType = "TelescopeWithDUT" ;
-      s << " TelescopeWithDUT" << std::endl ;       
-      break ;
-    case SiPlanesParameters::TelescopeWithoutDUT : 
-      strType = "TelescopeWithoutDUT" ;
-      s << " TelescopeWithoutDUT " << std::endl ;      
-      break ;
-      
-    default :  
-      
-      s << " unknown " << std::endl ; 
-    }
-
-    s << " Number of telescope planes : " << p.getSiPlanesNumber() << std::endl;
-    
-    
-    // layers
-    
-									      
-    s << " Number of layers : " << l.getNLayers() << std::endl << std::endl ;
-
-    s <<  " layer parameters : "  << std::endl ;
-
-    char buffer[1024] ;
-    
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
-    s << buffer ;
-
-    sprintf(buffer,"  |              ladder:                        |                    sensitive part:                                                                |\n") ;
-    s << buffer ;
-
-    sprintf(buffer,"  | ID | pozX| pozY|  pozZ | sizeX| sizeY| Thick| ID| pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Resol| Rot1| Rot2| Rot3| Rot4| \n") ;
-
-    s << buffer ;
-
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
-    s << buffer ;
-
-    for( int i = 0 ; i < l.getNLayers() ; i++ ) {
-
-      char buffer1[1024] ;
-      sprintf(buffer1,"  |%4d|%5.2f|%5.2f|%7.2f|%6.2f|%6.2f|%6.3f|%3d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f| %4d| %4d|%6.2f|%6.2f|%6.4f| %4.2f| %4.2f| %4.2f| %4.2f|\n"
-	      , l.getID(i) 
-	      , l.getLayerPositionX(i) 
-	      , l.getLayerPositionY(i) 
-	      , l.getLayerPositionZ(i)
-	      , l.getLayerSizeX(i) 
-	      , l.getLayerSizeY(i) 
-	      , l.getLayerThickness(i)
-  	      , l.getSensitiveID(i) 
- 	      , l.getSensitivePositionX(i) 
-	      , l.getSensitivePositionY(i) 
-	      , l.getSensitivePositionZ(i)
-	      , l.getSensitiveSizeX(i) 
-	      , l.getSensitiveSizeY(i) 
-	      , l.getSensitiveThickness(i) 
-	      , l.getSensitiveNpixelX(i) 
-	      , l.getSensitiveNpixelY(i) 
-	      , l.getSensitivePitchX(i) 
-	      , l.getSensitivePitchY(i) 
-	      , l.getSensitiveResolution(i)
-	      , l.getSensitiveRotation1(i) 
-	      , l.getSensitiveRotation2(i) 
-	      , l.getSensitiveRotation3(i) 
-	      , l.getSensitiveRotation4(i) ) ;
-      
-      s << buffer1 ;
-
-    }
-
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
-    s << buffer ;
-
-    // DUT
-
-    if (strType == "TelescopeWithDUT"){
-
-      s <<  " DUT parameters : "  << std::endl ;
-      
-      s << buffer ;
-      
-      sprintf(buffer,"  |              ladder:                        |                    sensitive part:                                                         |\n") ;
-      s << buffer ;
-      
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
-      s << buffer ;
-      
-      sprintf(buffer,"  | ID | pozX| pozY|  pozZ | sizeX| sizeY| Thick| ID| pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Rot1| Rot2| Rot3| Rot4| \n") ;
-      s << buffer ;
-      
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
-      s << buffer ;
-      
-      char buffer1[1024] ;
-      sprintf(buffer1,"  |%4d|%5.2f|%5.2f|%7.2f|%6.2f|%6.2f|%6.3f|%3d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f| %4d| %4d|%6.2f|%6.2f| %4.2f| %4.2f| %4.2f| %4.2f|\n"
-	      , l.getDUTID() 
-	      , l.getDUTPositionX() 
-	      , l.getDUTPositionY() 
-	      , l.getDUTPositionZ()
-	      , l.getDUTSizeX() 
-	      , l.getDUTSizeY() 
-	      , l.getDUTThickness() 
-	      , l.getDUTSensitiveID() 
-	      , l.getDUTSensitivePositionX() 
-	      , l.getDUTSensitivePositionY() 
-	      , l.getDUTSensitivePositionZ()
-	      , l.getDUTSensitiveSizeX()
-	      , l.getDUTSensitiveSizeY() 
-	      , l.getDUTSensitiveThickness() 
-	      , l.getDUTSensitiveNpixelX() 
-	      , l.getDUTSensitiveNpixelY() 
-	      , l.getDUTSensitivePitchX() 
-	      , l.getDUTSensitivePitchY() 
-	      , l.getDUTSensitiveRotation1() 
-	      , l.getDUTSensitiveRotation2() 
-	      , l.getDUTSensitiveRotation3() 
-	      , l.getDUTSensitiveRotation4() ) ;
-      
-      s << buffer1 ;
-      
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
-      s << buffer ;
-      
-    }
-    return s ;
-    
-    
-  }
-
 }
