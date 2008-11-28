@@ -240,12 +240,6 @@ namespace gear {
 
       std::for_each( value.begin(), value.end(), t ) ; 
 
-
-	  // fg: protect against empty value strings  in the gear file
-	  if( stringValues.size() == 0 )
-
-		  continue ;
-
  
 
       std::string name = getXMLAttribute( par, "name" ) ;

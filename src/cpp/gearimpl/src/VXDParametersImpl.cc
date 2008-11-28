@@ -6,13 +6,6 @@
 
 namespace gear{
 
-    // F. Gaede, 04.04.2008 : phi0 and offset have not been defined properly in the past
-    // what we want is:  phi0: azimuthal angle of first ladder's normal and the offset
-    //                   going in the direction of increasing phi 
-    // however what is used in the code is phi0 as the angle w/ the y-axis (and wrong orientation) 
-    //
-    // -> we keep the internal representation of phi0 in the variable internalPhi0 and use this here
-
 
   VXDParametersImpl::VXDParametersImpl
   ( int vxdType, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) :
@@ -73,15 +66,15 @@ namespace gear{
       double zStart, zEnd, left, right, thick, d ;
       if( !sensitive ) {
 	zEnd = _layer.getLadderLength( possibleLayer ) + _shellGap/2 ;
-	left = -_layer.getLadderWidth( possibleLayer ) / 2 - _layer.getLadderOffset( possibleLayer ) ; //-
-	right = _layer.getLadderWidth( possibleLayer ) / 2 - _layer.getLadderOffset( possibleLayer ) ;
+	left = -_layer.getLadderWidth( possibleLayer ) / 2 + _layer.getLadderOffset( possibleLayer ) ;
+	right = _layer.getLadderWidth( possibleLayer ) / 2 + _layer.getLadderOffset( possibleLayer ) ;
 	thick = _layer.getLadderThickness( possibleLayer ) ;
 	d = _layer.getLadderDistance( possibleLayer ) ;
       }
       if (sensitive ) {
 	zEnd = _layer.getSensitiveLength( possibleLayer ) + _shellGap/2 ;
-	left = -_layer.getSensitiveWidth( possibleLayer ) / 2 - _layer.getSensitiveOffset( possibleLayer ) ;
-	right = _layer.getSensitiveWidth( possibleLayer ) / 2 - _layer.getSensitiveOffset( possibleLayer ) ;
+	left = -_layer.getSensitiveWidth( possibleLayer ) / 2 + _layer.getSensitiveOffset( possibleLayer ) ;
+	right = _layer.getSensitiveWidth( possibleLayer ) / 2 + _layer.getSensitiveOffset( possibleLayer ) ;
 	thick = _layer.getSensitiveThickness( possibleLayer ) ;
 	d = _layer.getSensitiveDistance( possibleLayer ) ;
       }
@@ -96,7 +89,7 @@ namespace gear{
       // go through all ladders/sensitive
       for( int i = 0 ; i < _layer.getNLadders( possibleLayer ) ; i++ ) {
 
-	double phi = _layer.getInternalPhi0( possibleLayer ) + i*deltaPhi ;
+	double phi = _layer.getPhi0( possibleLayer ) + i*deltaPhi ;
 	phi = correctPhiRange( phi ) ;
 	
 	// check start and end phi for this layer
@@ -175,31 +168,11 @@ namespace gear{
   Vector3D VXDParametersImpl::distanceToNearestVXD( Vector3D p , bool sensitive ) const
   {
 
-    Vector3D origin( 0,0,0 ) ;
-    
     // check if point is in already
     if( isPointInVXD( p , sensitive ) ) {
-      
-      return origin ;
+      Vector3D v ( 0,0,0 ) ;
+      return v ;
     }
-    
-    // check if point is origin
-
-    if( origin.x() == p.x() &&  origin.y() == p.y() && origin.z() == p.z()  ) {
-
-       if( _layer.getNLayers() > 0 ){
-
- 	// simply use first ladder - distance d , phi0 , gap/2  :
-	 //fg: fixme: review definition of phi...
- 	return Vector3D( _layer.getLadderDistance(0) ,  -_layer.getInternalPhi0(0)  , _shellGap/2  , Vector3D::cylindrical ) ;
-       }
-
-       return origin ;
-    }
-
-    //fg:  FIXME: this code needs to be cleaned up and checked 
-    //  it can also probably be made a bit faster ...
-
 
     double pPhi = getPhiPoint( p ) ;
 
@@ -217,15 +190,15 @@ namespace gear{
       double dist, zStart, zEnd, left, right, thick ;
       if( !sensitive ) {
 	zEnd = _layer.getLadderLength( nearestLayer ) + _shellGap/2 ;
-	left = -_layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
-	right = _layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
+	left = -_layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
+	right = _layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
 	thick = _layer.getLadderThickness( nearestLayer ) ;
 	dist = _layer.getLadderDistance( nearestLayer ) ;
       }
       if (sensitive ) {
 	zEnd = _layer.getSensitiveLength( nearestLayer ) + _shellGap/2 ;
-	left = -_layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
-	right = _layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
+	left = -_layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
+	right = _layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
 	thick = _layer.getSensitiveThickness( nearestLayer ) ;
 	dist = _layer.getSensitiveDistance( nearestLayer ) ;
       }
@@ -235,7 +208,7 @@ namespace gear{
       // go through all ladders/sensitive
       for( int i = 0 ; i < _layer.getNLadders( nearestLayer ) ; i++ ) {
 	
-	double phi = _layer.getInternalPhi0( nearestLayer ) + i*deltaPhi ;
+	double phi = _layer.getPhi0( nearestLayer ) + i*deltaPhi ;
 	phi = correctPhiRange( phi ) ;
 
 	// check start and end phi for this layer
@@ -321,7 +294,7 @@ namespace gear{
 // 	  }
 	  
 	  double thisDistance = sqrt( myVec[0] * myVec[0] + myVec[1] * myVec[1] + myVec[2] * myVec[2] ) ;
-	  if ( thisDistance <= minDistance ) {
+	  if ( thisDistance < minDistance ) {
 	    minDistance = thisDistance ;
 	    vPointPlane = myVec ;
 	    
@@ -344,16 +317,16 @@ namespace gear{
 	  
 	  double d = 0;
 	  if ( (!sensitive) and ( j == 1 ) ) {
-	    d = - _layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
+	    d = - _layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
 	  }
 	  if( (!sensitive) and ( j == 2 ) ) {
-	    d = _layer.getLadderWidth( nearestLayer ) / 2 - _layer.getLadderOffset( nearestLayer ) ;
+	    d = _layer.getLadderWidth( nearestLayer ) / 2 + _layer.getLadderOffset( nearestLayer ) ;
 	  }
 	  if( (sensitive) and ( j == 1 ) ) {
-	    d = - _layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
+	    d = - _layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
 	  }
 	  if( (sensitive) and ( j == 2 ) ) {
-	    d = _layer.getSensitiveWidth( nearestLayer ) / 2 - _layer.getSensitiveOffset( nearestLayer ) ;
+	    d = _layer.getSensitiveWidth( nearestLayer ) / 2 + _layer.getSensitiveOffset( nearestLayer ) ;
 	  }
 	  
 	  // lower left corner as r
@@ -411,7 +384,6 @@ namespace gear{
 
     } // for nearestLayer -- all layers in vxd
 
-
     return vPointPlane ;
 
   } // function distanceToVXD
@@ -435,14 +407,14 @@ namespace gear{
       double zStart, zEnd, left, right, thick ;
       if( !sensitive ) {
 	zEnd = _layer.getLadderLength( takeLayer ) + _shellGap/2 ;
-	left = -_layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) ;
-	right = _layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) ;
+	left = -_layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) ;
+	right = _layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) ;
 	thick = _layer.getLadderThickness( takeLayer ) ;
       }
       if (sensitive ) {
 	zEnd = _layer.getSensitiveLength( takeLayer ) + _shellGap/2 ;
-	left = -_layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ;
-	right = _layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ;
+	left = -_layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ;
+	right = _layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ;
 	thick = _layer.getSensitiveThickness( takeLayer ) ;
       }
 
@@ -459,7 +431,7 @@ namespace gear{
 	// go through all ladders/sensitive
 	for( int i = 0 ; i < _layer.getNLadders( takeLayer ) ; i++ ) {
 	  
-	  double phi = _layer.getInternalPhi0( takeLayer ) + i*deltaPhi ;
+	  double phi = _layer.getPhi0( takeLayer ) + i*deltaPhi ;
 	  phi = correctPhiRange( phi ) ;
 	  
 	  // take normal vector of planes, Base, Side, Z and spacePoint
@@ -538,16 +510,16 @@ namespace gear{
 	    
 	    double d = 0;
 	    if ( (!sensitive) and ( j == 1 ) ) {
-	      d = -( _layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) );
+	      d = -( _layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) );
 	    }
 	    if( (!sensitive) and ( j == 2 ) ) {
-	      d = _layer.getLadderWidth( takeLayer ) / 2 - _layer.getLadderOffset( takeLayer ) ;
+	      d = _layer.getLadderWidth( takeLayer ) / 2 + _layer.getLadderOffset( takeLayer ) ;
 	    }
 	    if( (sensitive) and ( j == 1 ) ) {
-	      d = -( _layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ) ;
+	      d = -( _layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ) ;
 	    }
 	    if( (sensitive) and ( j == 2 ) ) {
-	      d = _layer.getSensitiveWidth( takeLayer ) / 2 - _layer.getSensitiveOffset( takeLayer ) ;
+	      d = _layer.getSensitiveWidth( takeLayer ) / 2 + _layer.getSensitiveOffset( takeLayer ) ;
 	    }
 	    
 	    // lower left corner as r
@@ -654,7 +626,7 @@ namespace gear{
     // check zeros
 
     if ( n[0]==0 && n[1]==0 && n[2]==0 ) {
-      
+	
       std::cout << "\ndistanceToPlane - Fatal error!" << std::endl ;
       std::cout << "normal vector (0,0,0)" << std::endl ;
       return Vector3D (0,0,0) ;
@@ -810,58 +782,40 @@ namespace gear{
   
 
   double VXDParametersImpl::getPhiPoint( Vector3D p ) const {
-
-    //FG: this is the the angle with the negative y-axis 
-    // see comment at the top !
-
-    // get phi of point in projection 2D
+      // get phi of point in projection 2D
     double pPhi = 0. ;
     if( ( p[0] >= 0 ) && ( p[1] == 0 ) )
       pPhi = -M_PI/2 ;
-    
+
     if( ( p[0] < 0 ) && ( p[1] == 0 ) )
       pPhi = M_PI/2 ;
-    
+
     if( ( p[0] == 0 ) && ( p[1] < 0 ) ) 
       pPhi = 0 ;
-    
+
     if( ( p[0] != 0 ) && ( p[1] < 0 ) )
       pPhi = atan( p[0] / p[1] ) + M_PI ;
-    
+
     else
       pPhi = atan( p[0] / p[1] ) ;
-    
+
     pPhi = correctPhiRange( pPhi ) ;  
-    
+
     return pPhi ;
-    
+
   } // function getPhiPoint
 
 
 
   bool VXDParametersImpl::isEqual( double valueOne, double valueTwo ) const
   {
-
     // save calculating time if equal
     if ( valueOne == valueTwo ) return true ;
 
-
-    // if one value is 0.0 we use the absolute distance 
-    if( valueOne * valueTwo == 0.0 )
-	       
-      return fabs( valueOne - valueTwo ) < _EPSILON ;
+    // check if values differ by less than maximal delta
+    return ( fabs( 2 * (valueOne - valueTwo) / (valueOne + valueTwo) ) < ( _EPSILON ) ) ;
     
-    
-    // if both values are smaller than epsilon they are equal for our purpose 
-    if ( fabs(valueOne)  < _EPSILON && fabs(valueTwo)  < _EPSILON )
-      
-      return true ;
-    
-
-    // otherwise we require the relative distance of the two values to be smaller than epsilon
-    return fabs( 2 * (valueOne - valueTwo) ) /  (fabs(valueOne) + fabs(valueTwo) ) <  _EPSILON  ;
-    
-  } 
+  } // fucntion isEqual
 
 
   bool VXDParametersImpl::isEqual( Vector3D p1 , Vector3D p2 ) const
