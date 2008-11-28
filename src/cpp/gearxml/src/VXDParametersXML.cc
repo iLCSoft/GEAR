@@ -118,25 +118,22 @@ namespace gear {
 
     const TiXmlElement* vxdType = xmlElement->FirstChildElement( "vxdType" ) ;
     int intType = 0 ;
-    
-	std::string type =  getXMLAttribute( vxdType , "technology" )  ; 
-	//const char* strType = type.c_str() ;
+    const char* strType = getXMLAttribute( vxdType , "technology" ) .c_str() ;
 
-    //std::cout << "VXDParameters::fromXML vxdType == '" << strType << "'" 
-	//		<< " string: " << type << std::endl ; // debug
+    //std::cout << "VXDParameters::fromXML vxdType == '" << strType << "'" << std::endl ; // debug
 
-    if(  type == "CCD"  ) {
+    if( !std::strcmp( strType , "CCD" ) ) {
       intType = VXDParameters::CCD ;
      }
-	else if( type =="CMOS"  ) {
+    if( !std::strcmp( strType ,"CMOS" ) ) {
       intType = VXDParameters::CMOS ;
     }
-	else if( type == "HYBRID"  ) {
+    if( !std::strcmp( strType , "HYBRID" ) ) {
       intType = VXDParameters::HYBRID ;
     }
-	else{
-	  throw Exception( "VXDParametersXML::fromXML technology of vxdType not known: " + type + 
-	                   " - Needs to be 'CCD', 'CMOS' or 'HYBRID'." ) ;
+    if( std::strcmp( strType , "CCD" ) && std::strcmp( strType ,"CMOS" )  && std::strcmp( strType , "HYBRID" ) ) {
+      throw Exception( "VXDParametersXML::fromXML technology of vxdType not known."
+		       "Needs to be 'CCD', 'CMOS' or 'HYBRID'." ) ;
     }
 
     const TiXmlElement* shell = xmlElement->FirstChildElement( "shell" ) ;

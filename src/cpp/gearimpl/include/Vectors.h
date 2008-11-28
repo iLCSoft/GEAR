@@ -2,7 +2,6 @@
 #define GEAR_Vectors_H 1
 
 #include <stdexcept> 
-#include "Vector3D.h"
 
 namespace gear {
 
@@ -13,7 +12,7 @@ namespace gear {
    *  e.g. from CLHEP or root::MathCore in the future.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: Vectors.h,v 1.5 2007-03-16 15:43:17 gaede Exp $
+   * @version $Id: Vectors.h,v 1.3 2006-08-24 14:23:07 gaede Exp $
    */
   
   template <int N, typename Float_T=double>
@@ -78,27 +77,10 @@ namespace gear {
 
   typedef Vector2D_T<double> Vector2D ;
   
-//   typedef Vector3D_T<double> Vector3D ;
+  typedef Vector3D_T<double> Vector3D ;
   
+  //  gear::Vector3D_T<Float_T>::Vector3D_T()
   
-
-//   /** Defined for backward compatibility */
-//   struct Point2D : public Vector2D{
-    
-//     Point2D() : Vector2D( 0., 0. ) {}
-//     Point2D(double d0, double d1 ) : Vector2D( d0, d1 ) {}
-
-//   } ;
-
-//   /** Defined for backward compatibility */
-//   struct Point3D : public Vector3D{
-    
-//     Point3D() : Vector3D( 0., 0., 0.) {}
-//     Point3D(double d0, double d1, double d2 ) : Vector3D( d0, d1,d2 ) {}
-
-//   } ;
-
-
 } // namespace gear
 
 #endif /* ifndef GEAR_Vectors_H */

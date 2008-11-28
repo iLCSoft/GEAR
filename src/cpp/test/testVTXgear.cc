@@ -34,9 +34,9 @@ void testVXD( const VXDParameters& vxdParams ) ;
 
 void createCheckPlots( const VXDParameters& vxdParams ) ;
 
-void testVXDPoint( const Vector3D p , const VXDParameters& vxdParams ) ;
+void testVXDPoint( const Point3D p , const VXDParameters& vxdParams ) ;
 
-void testVXDDist( const Vector3D p , const VXDParameters& vxdParams ) ;
+void testVXDDist( const Point3D p , const VXDParameters& vxdParams ) ;
 
 void testAllVXDPoint( const VXDParameters& vxdParams ) ;
 
@@ -111,7 +111,6 @@ int main(int argc, char**argv){
 	    << std::endl ;
 
 
-
 #ifdef GEAR_USE_AIDA  
 
   std::string storeName("vxdCheckPlot.root");
@@ -140,21 +139,17 @@ int main(int argc, char**argv){
   
 #endif
   
-
-  testVXD( vp ) ;
-
 }
 
 void testVXD( const VXDParameters& vxdParams ) {
 
   // Methods for special debugging
 
-  Vector3D p0 ( 0, 0 , 0  ) ;
-  Vector3D p1 ( 12 , 2 , 0 ) ;
-//   Vector3D p1 ( -36.8 , 7 , 10 ) ;
-  Vector3D p2 ( -15 ,-8, .5 ) ;
-  Vector3D p3 ( -30 , -2 , .5 ) ;
-  Vector3D p4 ( -25 ,-25.0 , 0 ) ;
+  //  Point3D p0 ( 17.8191 , 3.67696 , 10 ) ;
+  //  Point3D p1 ( -36.8 , 7 , 10 ) ;
+  //   Point3D p2 ( -15 ,-8, .5 ) ;
+//   Point3D p3 ( -30 , -2 , .5 ) ;
+//   Point3D p4 ( -25 ,-25.0 , 0 ) ;
  
 //   testVXDPoint( p0 , vxdParams ) ;
 //   testVXDPoint( p1 , vxdParams ) ;
@@ -163,14 +158,14 @@ void testVXD( const VXDParameters& vxdParams ) {
 //   testVXDPoint( p4 , vxdParams ) ;
  
 
-  testVXDDist( p0, vxdParams ) ;
-  testVXDDist( p1, vxdParams ) ;
-  testVXDDist( p2, vxdParams ) ;
-  testVXDDist( p3, vxdParams ) ;
-  testVXDDist( p4, vxdParams ) ;
-  
+//  testVXDDist( p0, vxdParams ) ;
+//   testVXDDist( p1, vxdParams ) ;
+//   testVXDDist( p2, vxdParams ) ;
+//   testVXDDist( p3, vxdParams ) ;
+//   testVXDDist( p4, vxdParams ) ;
+
   // testAllVXDDist( vxdParams ) ;
-  testAllVXDPoint( vxdParams ) ;
+  //  testAllVXDPoint( vxdParams ) ;
 }
 
 #ifdef GEAR_USE_AIDA
@@ -266,7 +261,7 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
       // z
       for ( double z = zStart ; z < zEnd ; z += zStep ) {
 	
-	Vector3D p ( x , y , z ) ;
+	Point3D p ( x , y , z ) ;
 	bool isPoint = vxdParams.isPointInLadder( p ) ;
 	bool isSensitive = vxdParams.isPointInSensitive( p ) ;
 	
@@ -288,10 +283,10 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
 	  // points pointed on
 	  // ladder
 	  Vector3D v = vxdParams.distanceToNearestLadder( p ) ;
-	  Vector3D np (  p[0] + v[0] , p[1] + v[1] , p[2] + v[2] ) ;
+	  Point3D np (  p[0] + v[0] , p[1] + v[1] , p[2] + v[2] ) ;
 	  // sensitive
 	  v = vxdParams.distanceToNearestSensitive( p ) ;
-	  Vector3D nps (  p[0] + v[0] , p[1] + v[1] , p[2] + v[2] ) ;
+	  Point3D nps (  p[0] + v[0] , p[1] + v[1] , p[2] + v[2] ) ;
 	  
 	  vxdSurfaceMap->fill( 0 , np[0] ) ;
 	  vxdSurfaceMap->fill( 1 , np[1] ) ;
@@ -344,7 +339,7 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
       // z
       for ( double z = zStart ; z < zEnd ; z += zStep ) {
 	
-	Vector3D p ( x , y , z ) ;
+	Point3D p ( x , y , z ) ;
 	bool isPoint = vxdParams.isPointInLadder( p ) ;
 	bool isSensitive = vxdParams.isPointInSensitive( p ) ;
 	
@@ -371,15 +366,15 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
  
   std::cout << "Testing intersection " << std::flush ;
 
-  Vector3D p0 (0. , 0. , 10. ) ;
-  Vector3D p1 (75. , 75. , 10. ) ;
+  Point3D p0 (0. , 0. , 10. ) ;
+  Point3D p1 (75. , 75. , 10. ) ;
   
   Vector3D lineVec ;
 
   for( double phi=-M_PI ; phi < M_PI ; phi += (M_PI/180) ) {
     lineVec = Vector3D ( sin(phi) , cos(phi) , 0 ) ;
-    Vector3D iPoint0 = vxdParams.intersectionLadder( p0 , lineVec ) ;
-    Vector3D iPoint1 = vxdParams.intersectionLadder( p1 , lineVec ) ;
+    Point3D iPoint0 = vxdParams.intersectionLadder( p0 , lineVec ) ;
+    Point3D iPoint1 = vxdParams.intersectionLadder( p1 , lineVec ) ;
     vxdIntersectionMap->fill( 0, iPoint0[0] ) ;
     vxdIntersectionMap->fill( 1, iPoint0[1] ) ;
     vxdIntersectionMap->fill( 2, iPoint0[2] ) ;
@@ -409,7 +404,7 @@ void createCheckPlots( const VXDParameters& vxdParams ) {
 #endif
 
 
-void testVXDPoint( const Vector3D p , const VXDParameters& vxdParams ) {
+void testVXDPoint( const Point3D p , const VXDParameters& vxdParams ) {
   
   std::cout <<  p[0] <<" " <<  p[1] <<" "<<  p[2] ;
   bool isPoint = vxdParams.isPointInLadder( p ) ;
@@ -422,57 +417,41 @@ void testVXDPoint( const Vector3D p , const VXDParameters& vxdParams ) {
   
 }
 
-void testVXDDist( const Vector3D p , const VXDParameters& vxdParams ) {
+void testVXDDist( const Point3D p , const VXDParameters& vxdParams ) {
   
   Vector3D v = vxdParams.distanceToNearestLadder( p ) ;
 
-  std::cout << "\nPoint  (" << p[0] << "," << p[1] << "," << p[2] << ") "
-	    << "\ndistance Vector " << v << std::endl;
-// 	    << "\ndistance Vector (" << v[0] << "," << v[1] << "," << v[2] << ") " << std::endl;
+  std::cout << "testVXDDist " << std::endl 
+	    << "\nPoint  (" << p[0] << "," << p[1] << "," << p[2] << ") "
+	    << "\nVector (" << v[0] << "," << v[1] << "," << v[2] << ") " << std::endl;
 
+  bool isFound = false ;
 
-  Vector3D paL = p +  v ;
+  double myStep =1 ;
+  double lBound = 1 ;
+  double uBound = 1 ;
 
-//   //FG: test the point found:
-//   std::cout << " is point in ladder : " << vxdParams.isPointInLadder( paL )  << std::endl ;
-  
-  // how far are we still from the ladder ?
-  Vector3D v2 = vxdParams.distanceToNearestLadder( paL ) ;
+  for(double r1 = lBound ; r1 <= uBound ; r1+= myStep ) {
+    for(double r2 = lBound ; r2 <= uBound ; r2+= myStep ) {
+      for(double r3 = lBound ; r3 <= uBound ; r3+= myStep ) {
 
-  std::cout << " distance to ladder : " << v2.r()  << std::endl ;
-  
+	Point3D iP ( p[0] + r1* v[0] , p[1] + r2* v[1] , p[2] + r3*v[2] ) ;
 
-
-
-//   bool isFound = false ;
-
-//   double myStep =1 ;
-//   double lBound = 1 ;
-//   double uBound = 1 ;
-
-//   for(double r1 = lBound ; r1 <= uBound ; r1+= myStep ) {
-//     for(double r2 = lBound ; r2 <= uBound ; r2+= myStep ) {
-//       for(double r3 = lBound ; r3 <= uBound ; r3+= myStep ) {
-
-// 	Vector3D iP ( p[0] + r1* v[0] , p[1] + r2* v[1] , p[2] + r3*v[2] ) ;
-
-// 	bool isPoint = vxdParams.isPointInLadder( iP ) ;
-// 	if( isPoint ) {
-// 	  std::cout << "Vector point withhin Ladder at r =" << r1 <<" , " << r2 <<" , " << r3 << std::endl ;
-// 	  std::cout << "                                  " << iP[0] << " , " << iP[1] << " , " << iP[2] << std::endl ;
-// 	  isFound = true ;
-// 	  break ;
-// 	}
-// 	else{
-// 	  std::cout << "ERROR Vector NOT pointin in Ladder." << std::endl ;
-// 	}
-//       }
-//       if (isFound ) break ;
-//     }
-//     if (isFound ) break ;
-//   }
-
-
+	bool isPoint = vxdParams.isPointInLadder( iP ) ;
+	if( isPoint ) {
+	  std::cout << "Vector point withhin Ladder at r =" << r1 <<" , " << r2 <<" , " << r3 << std::endl ;
+	  std::cout << "                                  " << iP[0] << " , " << iP[1] << " , " << iP[2] << std::endl ;
+	  isFound = true ;
+	  break ;
+	}
+	else{
+	  std::cout << "ERROR Vector NOT pointin in Ladder." << std::endl ;
+	}
+      }
+      if (isFound ) break ;
+    }
+    if (isFound ) break ;
+  }
 }
 
 void testAllVXDPoint( const VXDParameters& vxdParams ) {
@@ -488,7 +467,7 @@ void testAllVXDPoint( const VXDParameters& vxdParams ) {
   int nLadder = 0 , nSensitive = 0 ;
 
   std::ofstream myfile;
-  const char *fileName = "./gearVXDTest.txt" ;
+  const char *fileName = "/scratch/lippe/myOutput.txt" ;
   myfile.open (fileName, std::ios::out | std::ios::trunc );
 
   
@@ -535,7 +514,7 @@ void testAllVXDPoint( const VXDParameters& vxdParams ) {
       // z
       for ( double z = zStart ; z < zEnd ; z += zStep ) {
 	
-	Vector3D p ( x , y , z ) ;
+	Point3D p ( x , y , z ) ;
 	bool isPoint = vxdParams.isPointInLadder( p ) ;
 	bool isSensitive = vxdParams.isPointInSensitive( p ) ;
 
@@ -580,8 +559,8 @@ void testAllVXDDist( const VXDParameters& vxdParams ) {
   float myStatusP = 0, myStatusL = 0;
   
   std::ofstream myfile, myHisto;
-  const char *fileName     = "./gearVXDTest_out.txt" ;
-  const char *histoName  = "./gearVXDTest_Histogram.txt" ;
+  const char *fileName     = "/scratch/lippe/myOutput.txt" ;
+  const char *histoName  = "/scratch/lippe/myHistogram.txt" ;
   myfile.open (fileName, std::ios::out | std::ios::trunc );
   myHisto.open( histoName, std::ios::out | std::ios::trunc ) ;
   
@@ -609,9 +588,9 @@ void testAllVXDDist( const VXDParameters& vxdParams ) {
       // z
       for ( double z = zStart ; z < zEnd ; z += zStep ) {
 	
-	Vector3D p ( x , y , z ) ;
+	Point3D p ( x , y , z ) ;
 	Vector3D nv = vxdParams.distanceToNearestLadder( p ) ;
-	Vector3D np ( p[0] + nv[0] , p[1] + nv[1] , p[2] + nv[2] ) ;
+	Point3D np ( p[0] + nv[0] , p[1] + nv[1] , p[2] + nv[2] ) ;
 	  
 	//bool isPoint = vxdParams.isPointInLadder( np ) ;
 	

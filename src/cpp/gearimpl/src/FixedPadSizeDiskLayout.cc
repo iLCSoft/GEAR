@@ -3,7 +3,6 @@
 #include <cmath>
 #include <math.h>
 #include <iostream>
-#include <sstream>
 #include <stdexcept>
 
 namespace gear {
@@ -25,17 +24,6 @@ namespace gear {
     _padGap( padGap ) 
   {
     
-    // minimal sanity check:
-    if ( _padHeight <= 0.0  || _padWidth <= 0.0 ) {
-
-      std::stringstream s ;
-      s << " FixedPadSizeDiskLayout: missing or inconsistent parameters"
-	<< " - padHeight: " << _padHeight 
-	<< " - padWidth : " << _padWidth ;
-
-      throw ParseException( s.str() ) ;
-    }
-
     _extent.resize(4) ;
     _extent[0] = _rMin ;
     _extent[1] = _rMax ;
@@ -110,7 +98,7 @@ namespace gear {
 
 
 
-  Vector2D FixedPadSizeDiskLayout::getPadCenter(int padIndex)  const {
+  Point2D FixedPadSizeDiskLayout::getPadCenter(int padIndex)  const {
     
     int rowNum =  getRowNumber( padIndex ) ;
     int padNum =  getPadNumber( padIndex ) ;
@@ -119,7 +107,7 @@ namespace gear {
 
     double phi =  ( padNum + 0.5 ) * _rows[ rowNum ].PhiPad ; 
     
-    return Vector2D( r , phi ) ;
+    return Point2D( r , phi ) ;
 //     return std::make_pair( r , phi ) ;
   }
 
@@ -152,23 +140,7 @@ namespace gear {
 
   int FixedPadSizeDiskLayout::getPadIndex(int rowNum, int padNum) const {
 
-    if( (unsigned) rowNum > _rows.size() - 1 ) {
-      
-      throw std::out_of_range(" FixedPadSizeDiskLayout::getPadIndex row number too large !");
-    }
-    
-    if( padNum > _rows[rowNum].NPad - 1 ) {
-      
-      std::stringstream sstr ;
-      
-      sstr << "FixedPadSizeDiskLayout::getPadIndex: pad number too large: "
-	   << padNum << " only " <<   _rows[rowNum].NPad << " pads in row " << rowNum ;
-
-      throw std::out_of_range( sstr.str() );
-    }
-    
     return  (rowNum << 16 ) | ( 0x0000ffff & padNum ) ;
-
 
   }
 
@@ -242,7 +214,7 @@ namespace gear {
     if( r < _rMin || r > _rMax )
       return false ;
     
-    Vector2D p  = getPadCenter( padIndex ) ;
+    Point2D p  = getPadCenter( padIndex ) ;
     
 //     double phiPadHalf = 0.5 * _padWidth / rCenter ;
     
