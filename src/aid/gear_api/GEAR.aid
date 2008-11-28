@@ -8,11 +8,6 @@ package hep.gear.api ;
  #include <string>
  #include <exception> 
 
-#define GEAR_MAJOR_VERSION 0
-#define GEAR_MINOR_VERSION 11
-
-#define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
-
 }
 
 @endif
@@ -45,7 +40,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
 
   class Exception : public std::exception {
@@ -60,7 +55,7 @@ typedef std::vector<std::string> StringVec ;
     virtual ~Exception() throw() { /*no_op*/; } 
     
     Exception( const std::string& text ){
-      message = "gear::Exception: " + text ;
+      message = "lcio::Exception: " + text ;
     }
 
     virtual const char* what() const  throw() { return  message.c_str() ; } 
@@ -70,7 +65,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
   class ParseException : public Exception{
     
@@ -86,7 +81,7 @@ typedef std::vector<std::string> StringVec ;
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
   class NotImplementedException : public Exception{
 
@@ -104,7 +99,7 @@ typedef std::vector<std::string> StringVec ;
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id: GEAR.aid,v 1.7 2007-03-16 15:43:17 gaede Exp $
    */
    class UnknownParameterException : public Exception{
 
@@ -136,7 +131,6 @@ public interface GEAR{
    static const char*  TPCPARAMETERS  ;
    static const char*  CALORIMETERPARAMETERS  ;
    static const char*  VXDPARAMETERS  ;
-   static const char*  SIPLANESPARAMETERS  ;
 
 
 }
@@ -146,7 +140,6 @@ public interface GEAR{
   public static const String TPCPARAMETERS = "TPCParameters" ;
   public static const String CALORIMETERPARAMETERS = "CalorimeterParameters" ;
   public static const String VXDPARAMETERS = "VXDParameters" ;
-  public static const String SIPLANESPARAMETERS = "SiPlanesParameters" ;
 
 @endif
 
