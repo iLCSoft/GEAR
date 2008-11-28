@@ -14,27 +14,19 @@ namespace gear{
 
     Layer lL, sL ;
     
-    // F. Gaede, 04.04.2008 : phi0 and offset have not been defined properly in the past
-    // what we want is:  phi0: azimuthal angle of first ladder's normal and the offset
-    //                   going in the direction of increasing phi 
-    // however what is used in the code is phi0 as the angle w/ the y-axis (and wrong orientation) 
-    //
-    // -> we keep the internal representation of phi0 in the variable internalPhi0 and return
-    //    M_PI/2. - internalPhi0
-    
     lL.NLadders  = nLadders ;
-    lL.internalPhi0      = M_PI/2. - phi0 ;   // phi0 given wrt x-axis  - internalPhi0 is wrt yaxis , negative orientation
+    lL.Phi0      = phi0 ;
     lL.Distance  = ladderDistance ;
-    lL.Offset    = ladderOffset ;   // offset given in direction of positive rotation (increasing phi)
+    lL.Offset    = ladderOffset ;
     lL.Thickness = ladderThickness ;
     lL.Length    = ladderLength ;
     lL.Width     = ladderWidth ;
     lL.RadLength = ladderRadLength ;
 
     sL.NLadders  = nLadders ;
-    sL.internalPhi0      = M_PI/2. - phi0 ;  // phi0 given wrt x-axis  - internalPhi0 is wrt yaxis , negative orientation
+    sL.Phi0      = phi0 ;
     sL.Distance  = sensitiveDistance ;
-    sL.Offset    = sensitiveOffset ;  // offset given in direction of positive rotation (increasing phi)
+    sL.Offset    = sensitiveOffset ;
     sL.Thickness = sensitiveThickness ;
     sL.Length    = sensitiveLength ;
     sL.Width     = sensitiveWidth ;
@@ -74,7 +66,7 @@ namespace gear{
     else {
       l = _sVec.at( layerIndex ) ;
     }
-    return ( l.internalPhi0 + atan( (-l.Width /2 - l.Offset) / l.Distance) ) ;
+    return ( l.Phi0 + atan( (-l.Width /2 + l.Offset) / l.Distance) ) ;
   }
 
   // returns ending phi for first ladder in layer (on side to IP)
@@ -87,7 +79,7 @@ namespace gear{
     else {
       l = _sVec.at( layerIndex ) ;
     }
-    return ( l.internalPhi0 + atan( (l.Width/2 - l.Offset)  / l.Distance ) ) ;
+    return ( l.Phi0 + atan( (l.Width/2 + l.Offset)  / l.Distance ) ) ;
   }
 
 
@@ -101,7 +93,7 @@ namespace gear{
     else {
       l = _sVec.at( layerIndex ) ;
     }
-    return ( l.internalPhi0 - atan( (l.Width /2 + l.Offset) / (l.Distance + l.Thickness) ) )  ;
+    return ( l.Phi0 - atan( (l.Width /2 - l.Offset) / (l.Distance + l.Thickness) ) )  ;
   }
 
   // returns ending phi for first ladder in layer (on side away from IP)
@@ -114,7 +106,7 @@ namespace gear{
     else {
       l = _sVec.at( layerIndex ) ;
     }
-    return ( l.internalPhi0 + atan( (l.Width/2 - l.Offset)  / (l.Distance + l.Thickness) ) ) ;
+    return ( l.Phi0 + atan( (l.Width/2 + l.Offset)  / (l.Distance + l.Thickness) ) ) ;
   }
 
   // returns thickness under a certain angle
@@ -146,7 +138,7 @@ namespace gear{
     double distanceSpacePoint = l.Distance * tan( phi ) ;
     
     // calculate length of edge that is cut away on side facing IP
-    double cutAwayLength = l.Width/2 - l.Offset - distanceSpacePoint ;
+    double cutAwayLength = l.Width/2 + l.Offset - distanceSpacePoint ;
 
     // now one can calculate the angular thickness
     angularThickness = cutAwayLength / sin( phi ) ;
