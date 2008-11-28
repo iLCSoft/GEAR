@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.11 2008-10-22 15:10:46 engels Exp $
+   * @version $Id: GearMgrImpl.h,v 1.9 2008-05-15 15:38:44 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -74,28 +74,7 @@ namespace gear {
     virtual const CalorimeterParameters & getEcalPlugParameters() const 
 	throw (UnknownParameterException, std::exception )  ;
 
-      /** Get the Yoke barrel parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    virtual const CalorimeterParameters & getYokeBarrelParameters() const 
-	throw (UnknownParameterException, std::exception ) ;
-
-    /** Get the Yoke endcap parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    virtual const CalorimeterParameters & getYokeEndcapParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
-
-    /** Get the Yoke plug parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    virtual const CalorimeterParameters & getYokePlugParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
-
-   /** Get the Hcal barrel parameters.
+    /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
      */
@@ -126,20 +105,6 @@ namespace gear {
     virtual const CalorimeterParameters & getLcalParameters() const 
       throw (UnknownParameterException, std::exception ) ;
     
-    /** Get the LHcal parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    virtual const CalorimeterParameters & getLHcalParameters() const 
-      throw (UnknownParameterException, std::exception ) ;
- 
-    /** Get the BeamCal parameters.
-     *
-     *  @throws UnknownParameterException
-     */
-    virtual const CalorimeterParameters & getBeamCalParameters() const 
-      throw (UnknownParameterException, std::exception ) ;
- 
     /** Get the VXD parameters.
      *
      *  @throws UnknownParameterException
@@ -199,20 +164,7 @@ namespace gear {
      */
     virtual void setEcalPlugParameters( CalorimeterParameters* ecalPlugParameters ) ;
     
-    /** Set the YokeBarrelParameters.
-     */
-    virtual void setYokeBarrelParameters( CalorimeterParameters* yokeBarrelParameters ) ;
-
-    /** Set the YokeEndcapParameters.
-     */
-    virtual void setYokeEndcapParameters( CalorimeterParameters* yokeEndcapParameters ) ;
-    
-    /** Set the YokePlugParameters.
-     */
-    virtual void setYokePlugParameters( CalorimeterParameters* yokePlugParameters ) ;
- 
-	
-	/** Set the HcalBarrelParameters.
+    /** Set the HcalBarrelParameters.
      */
     virtual void setHcalBarrelParameters( CalorimeterParameters* hcalBarrelParameters ) ;
 
@@ -227,14 +179,6 @@ namespace gear {
     /** Set the LcalParameters.
      */
     virtual void setLcalParameters(CalorimeterParameters * lcalParameters) ;
-
-    /** Set the LHcalParameters.
-     */
-    virtual void setLHcalParameters(CalorimeterParameters * lhcalParameters) ;
-
-    /** Set the BeamCalParameters.
-     */
-    virtual void setBeamCalParameters(CalorimeterParameters * beamcalParameters) ;
 
      /** Set the VXDParameters.
      */
@@ -267,15 +211,10 @@ namespace gear {
     CalorimeterParameters* _ecalBarrelParameters ;
     CalorimeterParameters* _ecalEndcapParameters ;
     CalorimeterParameters* _ecalPlugParameters ;
-    CalorimeterParameters* _yokeBarrelParameters ;
-    CalorimeterParameters* _yokeEndcapParameters ;
-    CalorimeterParameters* _yokePlugParameters ;
     CalorimeterParameters* _hcalBarrelParameters ;
     CalorimeterParameters* _hcalEndcapParameters ;
     CalorimeterParameters* _hcalRingParameters ;
     CalorimeterParameters* _lcalParameters ;
-    CalorimeterParameters* _lhcalParameters ;
-    CalorimeterParameters* _beamcalParameters ;
     VXDParameters* _vxdParameters ;
     SiPlanesParameters* _siplanesParameters ;
     GearPointProperties*  _pointProperties ;
