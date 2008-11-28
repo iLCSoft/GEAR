@@ -3,6 +3,8 @@
 #
 #  GEAR: GEometry Api for Reconstruction 
 #
+#  v00-03:  VXD, TPC, ECal, HCal
+# 
 #  F.Gaede, DESY
 #  
 ##############################################################
@@ -47,17 +49,4 @@
 
   ./bin/testgear gear_ldc.xml
  
-
----------------------------------------------------------------
-
-binary tools:
-
-  mergeXMl:   merges two xml files -> can be used to add additional parameters 
-              to an xml file that has been automatically created (by Mokka)
-
-  printParameters:  print detector parameters 
-                    (slighly more human readable then xml)
-
-
-
 
