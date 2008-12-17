@@ -1,0 +1,42 @@
+<gear>
+
+     <!--
+         Example XML file for GEAR describing a TPC prototype 
+         with a rectangular pad plane 
+      -->
+
+
+  <detectors> 
+ 
+<detector name="TPC" geartype="TPCParameters">
+
+  <maxDriftLength  value="600.0" />
+  <coordinateType  value="cartesian" />
+
+  <modules moduleIDStartCount="20">
+
+    <default>
+      <readoutFrequency value="2.0e+07" />
+      
+       <PadRowLayout2D  type="RectangularPadRowLayout" 
+                        xMin="-50." xMax="50." yMin="-50." repeatRows="5">
+         <row nPad="10"  leftOffset="4.5." padHeight="9.0" 
+	                 padWidth="9.0" rowHeight="10.0" />
+         <row nPad="10" rightOffset="4.5." padHeight="9.0"
+	                padWidth="9.0" rowHeight="10.0" />
+       </PadRowLayout2D>
+     </default>
+
+     <module>
+       <angle value="6" />
+       <offset x_r="50" y_phi="0" />
+       <enlargeActiveAreaBy value="10"/>
+     </module>
+  </modules>
+
+</detector>
+
+  </detectors> 
+
+</gear>
+   
