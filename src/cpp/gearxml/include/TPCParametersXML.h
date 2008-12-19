@@ -3,44 +3,41 @@
 
 
 #include "gearxml/XMLHandler.h"
-
-#include <string>
-
+#include "gearxml/TPCModuleXML.h"
+#include "gear/TPCParameters.h"
+ 
+//#include <string>
+//#include <map>
 
 namespace gear {
   
-  
-  class TiXmlNode ;
-  
-  
-  /** XML handler for TPCParameters.
+   
+  /** Abstract XML handler for TPCParameters.
+   *  This is the modular version.
    * 
-   * @author F. Gaede, DESY
-   * @version $Id: TPCParametersXML.h,v 1.2 2005-11-25 16:08:15 gaede Exp $
+   * @author Martin Killenberg, University of Bonn
+   * @version $Id: TPCParametersXML.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
    */
-  class TPCParametersXML : public XMLHandler {
+    class TPCParametersXML : public XMLHandler {
     
   public: 
     
-    /** Creates an XML node for the given parameters 
+    /** Creates an XML node for the given  TPCParameters.
      */
-    virtual TiXmlElement toXML( const GearParameters & parameters ) const ;
+    virtual TiXmlElement toXML( const GearParameters & modularTPC ) const ;
     
     
-    /** Creates the appropriate GearParameters subclass from the given
+    /** Creates the appropriate TPCParameters class from the given
      *  XML element (node) 
      */
-    virtual GearParameters* fromXML( const TiXmlElement* xmlElement, GearMgr* gearMgr=0) const ;
-    
+    virtual GearParameters* fromXML( const TiXmlElement* xmlElement, GearMgr* gearMgr = 0) const ;
 
-  protected:
-    
-    //  std::string getAttribute(const  TiXmlNode* node , const std::string& name ) const ;    
+  private:
+    /** An instance of the parser for modules
+     */
+    TPCModuleXML _tpcModuleXML;
 
-    
-    
   }; // class
-  
 } // namespace gear
 
 #endif /* ifndef GEAR_TPCParametersXML_H */

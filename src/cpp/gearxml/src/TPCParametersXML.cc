@@ -1,147 +1,189 @@
 #include "gearxml/TPCParametersXML.h"
+#include "gearimpl/TPCParametersImpl.h"
 
-#include "gearxml/XMLHandlerMgr.h"
+#include "gearxml/XMLHandler.h"
 #include "gearxml/GearParametersXML.h"
 #include "gearxml/PadRowLayout2DXML.h"
 
 #include "gearxml/tinyxml.h"
-#include "gearimpl/TPCParametersImpl.h"
-#include "gearimpl/FixedPadSizeDiskLayout.h"
 #include "gear/GearMgr.h"
+//modulesElement
+#include "gear/PadRowLayout2D.h"
 
-#include <vector>
-#include <algorithm>
 #include <sstream>
 
- 
-#include <typeinfo>
-
-
 namespace gear {
-
-
-  TiXmlElement TPCParametersXML::toXML( const GearParameters & parameters ) const {
-
-    // Check whether parameters is valid TPCParameters
-    
-    const TPCParameters* param=dynamic_cast<const TPCParameters*>(&parameters);
-
-    if(param==NULL) {
-            
-      throw ParseException ("XML TPCParametersXML::toXML given parameter not of correct type. " 
-			    "Needs to be a gear::TPCParameter");
-    }
-    
-    // Set up TPC Detector as Element
-    TiXmlElement det("detector");
-    
-    
-    TiXmlElement driftVelocity("driftVelocity");
-    driftVelocity.SetDoubleAttribute("value", param->getDriftVelocity());
-    
-    
-    TiXmlElement maxDriftLength("maxDriftLength");
-    maxDriftLength.SetDoubleAttribute("value", param->getMaxDriftLength());
-    
-    
-    TiXmlElement readoutFrequency("readoutFrequency");
-    readoutFrequency.SetDoubleAttribute("value", param->getReadoutFrequency());
-
-
-    // Set up PadRowLayout2D
-    const PadRowLayout2D* padLayout = &( param->getPadLayout() ) ;
   
-    PadRowLayout2DXML* layoutXML = PadRowLayout2DXML::getHandler( padLayout ) ;
 
-    if( layoutXML == 0 ) {
+  TiXmlElement TPCParametersXML::toXML( const GearParameters& modularTPC ) const {
 
-      throw ParseException( "TPCParametersXML::toXML: no handler for " + std::string(typeid(padLayout).name()) + " found !" ) ;
+      const TPCParameters *mTPC = dynamic_cast<const TPCParameters *>(&modularTPC);
+      if (!mTPC)
+	  throw ParseException("TPCParametersXML::toXML : Wrong GearParameters type !");
+
+    // append data to PadRowLayout2D
+    TiXmlElement modularTPCXML("detector");    
+    modularTPCXML.SetAttribute("geartype","TPCParameters"); 
+
+    TiXmlElement maxDriftLengthElement("maxDriftLength");
+    maxDriftLengthElement.SetDoubleAttribute( "value", mTPC->getMaxDriftLength() );
+    modularTPCXML.InsertEndChild(maxDriftLengthElement);
+
+    TiXmlElement coordinateTypeElement("coordinateType");
+    switch( mTPC->getCoordinateType() )
+    {
+	case PadRowLayout2D::CARTESIAN : 
+	    coordinateTypeElement.SetAttribute( "value", "cartesian" ); break;
+	case PadRowLayout2D::POLAR : 
+	    coordinateTypeElement.SetAttribute( "value", "polar" ); break;
+	default:
+	    throw ParseException("TPCParametersXML::toXML : Unknown coordinateType !");
     }
+    modularTPCXML.InsertEndChild(coordinateTypeElement);
     
-    TiXmlElement padRowLayout2DXML = layoutXML->toXML( padLayout ) ;
+//    TiXmlElement nModulesElement("numberOfModules");
+//    maxDriftLengthElement.SetDoubleAttribute( "value", mTPC->getNModules() );
+//    modularTPCXML.InsertEndChild(nModulesElement);
 
-
-    // Assemble all items to detector
-    det.InsertEndChild(driftVelocity);
+    TiXmlElement modulesElement("modules");
     
-    det.InsertEndChild(maxDriftLength);
-
-    det.InsertEndChild(readoutFrequency);
-
-    det.InsertEndChild(padRowLayout2DXML);
-
-
-    // Write all other parameters to detecotor as attributes
-    GearParametersXML::getXMLForParameters( &det ,  param ) ;
-
-    
-    // return XMLElement
-    return det;
-     
- }
-  
-  
-  GearParameters* TPCParametersXML::fromXML( const TiXmlElement* xmlElement, GearMgr* gearMgr) const {
-    
-    
-    TPCParametersImpl* tpcParams = new TPCParametersImpl ;
-    
-    // first we read the generic parameters
-    GearParametersXML::setParametersFromXML( xmlElement, tpcParams  ) ;
-    
-    tpcParams->setMaxDriftLength(   atof(  getChildElementValue( xmlElement, "maxDriftLength"   ).c_str() )) ;
-    tpcParams->setDriftVelocity(    atof(  getChildElementValue( xmlElement, "driftVelocity"    ).c_str() )) ;
-    tpcParams->setReadoutFrequency( atof(  getChildElementValue( xmlElement, "readoutFrequency" ).c_str() )) ;
-    
-
-    // get the pad layout
-    const TiXmlElement* layout = xmlElement->FirstChildElement( "PadRowLayout2D" ) ;
-
-    if( layout == 0 ) {
-      
-      std::stringstream str ;
-      str  << "XMLParser::getChildElementValue missing element \"PadRowLayout2D\" " 
-	   << " in element <" << xmlElement->Value() << "/> " ;
-      
-      throw ParseException( str.str() ) ;
+    const std::vector<TPCModule *> modules = mTPC->getModules();
+    for ( std::vector<TPCModule *>::const_iterator moduleIter = modules.begin();
+	  moduleIter < modules.end(); moduleIter++)
+    {
+	modulesElement.InsertEndChild( (_tpcModuleXML.toXML( *moduleIter ) ) );
     }
 
-    std::string layoutType = getXMLAttribute( layout , "type" )   ;
-  
-    PadRowLayout2DXML* layoutXML = PadRowLayout2DXML::getHandler( layoutType ) ;
+    modularTPCXML.InsertEndChild( modulesElement );
 
-    if( layoutXML == 0 ) {
-
-      throw ParseException( "TPCParametersXML::fromXML: no handler for " + layoutType + " found !" ) ;
-    }
-
-    PadRowLayout2D* dLayout = layoutXML->fromXML( layout ) ;
-
-
-//     <PadRowLayout2D  type="FixedPadSizeDiskLayout" rMin="320.0" rMax="1680.0" padHeight="6.0" padWidth="2.0" />
-
-//     double rMin      =  atof(  getXMLAttribute( layout , "rMin" ) .c_str() ) ;
-//     double rMax      =  atof(  getXMLAttribute( layout , "rMax" ) .c_str() ) ;
-//     double padHeight =  atof(  getXMLAttribute( layout , "padHeight" ) .c_str() ) ;
-//     double padWidth  =  atof(  getXMLAttribute( layout , "padWidth" ) .c_str() ) ;
-//     int    maxRow    =  atoi(  getXMLAttribute( layout , "maxRow" ) .c_str() ) ;
-//     double padGap    =  atof(  getXMLAttribute( layout , "padGap" ) .c_str() ) ;
-
-    
-//     PadRowLayout2D* dLayout = 
-//       new FixedPadSizeDiskLayout( rMin, rMax, padHeight, padWidth, maxRow, padGap ) ;
-    
-    tpcParams->setPadLayout( dLayout ) ;
-    
-    
-    if( gearMgr != 0 ) {
-      
-      gearMgr->setTPCParameters( tpcParams ) ;
-    }
-    
-    
-    return tpcParams ;
+    return modularTPCXML ;
   }
   
-  
-} // namespace
+    
+  GearParameters* TPCParametersXML::fromXML( const TiXmlElement* xmlElement,
+						    GearMgr* gearMgr ) const
+  {
+      // debug information
+      //std::cout << "GEARDEBUG: " << "This is TPCParametersXML::fromXML" << std::endl;
+
+      // a flag whether to use old or new syntax
+      bool oldsyntax=false;
+
+    double maxDriftLength =  atof(  getChildElementValue( xmlElement , "maxDriftLength" ) .c_str() ) ;
+    int coordinateType;
+    std::string deaultString;
+    std::string typeString = getOptionalChildElementValue( xmlElement , "coordinateType" , deaultString);
+    if ( typeString.empty() )
+    {
+	std::cout << "TPCParametersXML::fromXML : "
+		  << "No coordinate type given for TPCParameters,"
+		  << " switching to old, non-modular syntax (deprecated)" << std::endl;
+	oldsyntax = true;
+	coordinateType = PadRowLayout2D::CARTESIAN;
+    }
+    else
+    if ( typeString==std::string("cartesian") )
+	coordinateType = PadRowLayout2D::CARTESIAN;
+    else
+    if ( typeString==std::string("polar") )
+	coordinateType = PadRowLayout2D::POLAR;
+    else
+	throw ParseException("TPCParametersXML::fromXML : Unknown coordinateType !");
+	
+    
+    TPCParametersImpl* modularTPC = new TPCParametersImpl( maxDriftLength ,coordinateType ) ;
+
+    // first we read the generic parameters
+    GearParametersXML::setParametersFromXML( xmlElement, modularTPC  ) ;
+
+    // check for old syntax
+    if (oldsyntax)
+    {
+	// get the pad layout
+	const TiXmlElement* layout = xmlElement->FirstChildElement( "PadRowLayout2D" ) ;
+	
+	if( layout == 0 ) {
+	    
+	    std::stringstream str ;
+	    str  << "XMLParser::getChildElementValue missing element \"PadRowLayout2D\" " 
+		 << " in element <" << xmlElement->Value() << "/> " ;
+	    
+	    throw ParseException( str.str() ) ;
+	}
+	
+	std::string layoutType = getXMLAttribute( layout , "type" )   ;
+	
+	PadRowLayout2DXML* layoutXML = PadRowLayout2DXML::getHandler( layoutType ) ;
+	
+	if( layoutXML == 0 ) {
+	    
+	    throw ParseException( "TPCParametersXML::fromXML: no handler for " + layoutType + " found !" ) ;
+	}
+	
+	PadRowLayout2D* dLayout = layoutXML->fromXML( layout ) ;
+    
+	modularTPC->setPadLayout( dLayout ) ;
+    
+	// the module has to be set first, now the frequency can be set
+	modularTPC->setDriftVelocity(    atof(  getChildElementValue( xmlElement, "driftVelocity"    ).c_str() )) ;
+	modularTPC->setReadoutFrequency( atof(  getChildElementValue( xmlElement, "readoutFrequency" ).c_str() )) ;
+
+    }
+    else // new syntax with modules
+    {
+	// try to find a default module
+//	const TiXmlElement* defaultModuleElement = xmlElement->FirstChildElement("default");
+//	// no need to check whether the default module was found, the module parser can run without
+//	std::cout << "GEARDEBUG: " << "defaultModuleElement = "<<defaultModuleElement<<  std::endl;
+	
+	// loop the modules section (there might be mor than one)
+	const TiXmlElement* modulesElement=0;
+	while( ( modulesElement =dynamic_cast<const TiXmlElement*>(
+		     xmlElement->IterateChildren( "modules", modulesElement ) )  )  != 0  )
+	{
+	    //std::cout << "GEARDEBUG: " << "TPCParametersXML::fromXML : found modules section" << std::endl;
+	    
+	    int moduleIDOffset=0;
+	    int moduleIDStartCount = atoi(  getOptionalXMLAttribute( modulesElement,
+								     "moduleIDStartCount" ,
+								     "0"            ) .c_str() ) ;
+	    //std::cout << "GEARDEBUG: " << "TPCParametersXML::fromXML : moduleIDStartCount = " 
+	    //      <<moduleIDStartCount<< std::endl;
+
+	    // try to find a default module for this section
+	    const TiXmlElement* defaultModuleElement = modulesElement->FirstChildElement("default");
+	    // no need to check whether the default module was found, the module parser can run without
+	    //std::cout << "GEARDEBUG: " << "defaultModuleElement = "<<defaultModuleElement<<  std::endl;
+	    
+	    // now loop all modules
+	    
+	    // modulesElement (with s ) is for a block of (all) modules
+	    // moduleElement (without s ) is for a single module
+	    const TiXmlElement* moduleElement =0;
+	    
+	    while( ( moduleElement = dynamic_cast<const TiXmlElement*>(
+			 modulesElement->IterateChildren( "module", moduleElement ) )  ) != 0  )
+	    {
+		//std::cout << "GEARDEBUG: " << "looping modules "<<  std::endl;
+		
+		modularTPC->addModule (_tpcModuleXML.fromXML(moduleElement,
+							     defaultModuleElement, 
+							     coordinateType,
+							     moduleIDStartCount +  moduleIDOffset++ ) );
+	    }
+	} 
+	
+    } // else (oldsyntax)
+
+    if( gearMgr != 0 )
+    {
+	gearMgr->setTPCParameters( modularTPC ) ;
+    }
+	
+    //std::cout << "GEARDEBUG: " << "TPCParametersXML: vector size is "<< modularTPC->getModules().size() << std::endl;
+    return modularTPC ;
+ }// TPCParametersXML::fromXML 
+    
+}//namespace gear
+
+    

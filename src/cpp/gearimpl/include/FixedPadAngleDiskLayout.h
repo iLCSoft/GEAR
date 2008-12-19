@@ -19,7 +19,7 @@ namespace gear {
  *  (the only thing that matters is the effective pitch).
  * 
  * @author M. Killenberg, University of Bonn
- * @version $Id: FixedPadAngleDiskLayout.h,v 1.2 2008-11-28 09:50:09 engels Exp $
+ * @version $Id: FixedPadAngleDiskLayout.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
  */
   class FixedPadAngleDiskLayout : public FixedDiskLayoutBase {
     
@@ -77,6 +77,11 @@ namespace gear {
     /// Destructor.
     virtual ~FixedPadAngleDiskLayout() ; 
     
+    /* The clone function. Used to access the copy-constructor if this class via the
+     * acstract PadRowLayout2D interface.
+     */
+    PadRowLayout2D* clone() const;
+
 
     /** The gap width in mm that was given in the C'tor. Always 0 in this implementation. */
     virtual double getPadGap() const { return 0 ; } 
@@ -86,11 +91,17 @@ namespace gear {
     virtual double getFixedPadAngle() const { return _padAngle ; }
     
 
+    /** The type of the row layout implementation:
+     *  PadRowLayout2D.FIXEDPADANGLEDISKLAYOUT
+     */
+    virtual int getPadLayoutImplType() const { return PadRowLayout2D::FIXEDPADANGLEDISKLAYOUT; } 
+
     /* The type of the row layout: PadRowLayout2D::POLAR.
      */
     //
     // Already implemented in FixedDiskLayoutBase
-    //virtual int getPadLayoutType() const { return PadRowLayout2D::POLAR ; } 
+    //virtual int getCoordinateType() const { return PadRowLayout2D::POLAR ; } 
+    //virtual int getPadLayoutType() const;
     
     /* The shape of the pads: PadRowLayout2D::RECTANGLE (i.e.\ keystone).
      */ 

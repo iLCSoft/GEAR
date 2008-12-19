@@ -2,7 +2,7 @@
 #define FixedPadSizeDiskLayout_h 1
 
 #include <vector>
-#include "gear/PadRowLayout2D.h"
+#include "gearimpl/FixedDiskLayoutBase.h"
 
 
 namespace gear {
@@ -17,9 +17,9 @@ namespace gear {
  *  (through the pad center).
  * 
  * @author F. Gaede, DESY
- * @version $Id: FixedPadSizeDiskLayout.h,v 1.4 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id: FixedPadSizeDiskLayout.h,v 1.5 2008-12-19 13:52:34 gaede Exp $
  */
-  class FixedPadSizeDiskLayout : public PadRowLayout2D {
+  class FixedPadSizeDiskLayout : public FixedDiskLayoutBase {
     
   public:
 
@@ -44,6 +44,18 @@ namespace gear {
     std::vector<double> _extent ;
     mutable std::vector< std::vector<int>* > _padIndices ;
 
+  /** function to copy all internal variables, incl. the objects
+   *  pointed to and owned by the FixedPadSizeDiskLayout.
+   *  Used by constructor and assigment operator to avoid code duplication
+   */
+  void copy_and_assign(const  FixedPadSizeDiskLayout & );
+
+  /** function to delete all the objects
+   *  pointed to and owned by the FixedPadSizeDiskLayout.
+   *  Used by desctructor and assigment operator to avoid code duplication
+   */
+  void cleanup();
+    
 
   public: 
 
@@ -56,10 +68,23 @@ namespace gear {
     FixedPadSizeDiskLayout( double rMin, double rMax, double padHeight, double PadWidth, 
 			    int nRow=0 , 
 			    double padGap=0.) ;
+
+    /** The copy constructor.
+     *	Needed because _padIndices allocates memory dynamically
+     */
+    FixedPadSizeDiskLayout( const FixedPadSizeDiskLayout &);
     
+    /// The assignment operator
+    FixedPadSizeDiskLayout & operator = ( const FixedPadSizeDiskLayout &);
+
     /// Destructor.
     virtual ~FixedPadSizeDiskLayout() ; 
     
+    /* The clone function. Used to access the copy-constructor if this class via the
+     * acstract PadRowLayout2D interface.
+     */
+    PadRowLayout2D* clone() const;
+
 
     /** The gap width in mm that was given in the C'tor. */
     virtual double getPadGap() const { return _padGap ; } 
@@ -69,9 +94,17 @@ namespace gear {
     virtual double getFixedPadWidth() const { return _padWidth ; }
     
 
-    /** The type of the row layout: PadRowLayout2D::POLAR.
+    /** The type of the row layout implementation:
+     *  PadRowLayout2D.FIXEDPADSIZEDISKLAYOUT
      */
-    virtual int getPadLayoutType() const { return PadRowLayout2D::POLAR ; } 
+    virtual int getPadLayoutImplType() const { return PadRowLayout2D::FIXEDPADSIZEDISKLAYOUT; } 
+
+    /* The type of the row layout: PadRowLayout2D::POLAR.
+     */
+    //
+    // Already implemented in FixedDiskLayoutBase
+    //virtual int getCoordinateType() const { return PadRowLayout2D::POLAR ; } 
+    //virtual int getPadLayoutType() const;
     
     /** The shape of the pads: PadRowLayout2D::RECTANGLE (i.e. keystone).
      */ 

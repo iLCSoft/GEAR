@@ -3,15 +3,13 @@
 #include "gearxml/FixedPadSizeDiskLayoutXML.h"
 #include "gearxml/FixedPadAngleDiskLayoutXML.h"
 #include "gearxml/RectangularPadRowLayoutXML.h"
-
-#include "gearimpl/FixedPadSizeDiskLayout.h"
-#include "gearimpl/FixedPadAngleDiskLayout.h"
-#include "gearimpl/RectangularPadRowLayout.h"
+#include "gear/PadRowLayout2D.h"
 
 #include <typeinfo>
 #include <iostream>
 
 namespace gear {
+
   
   PadRowLayout2DXML* PadRowLayout2DXML::getHandler( const std::string& typeName ) {
 
@@ -22,10 +20,19 @@ namespace gear {
     
     std::string typeName("UNKNOWN") ;
     
-    if( dynamic_cast<const FixedPadSizeDiskLayout*>(l) != 0 ) typeName = "FixedPadSizeDiskLayout" ;
-    if( dynamic_cast<const FixedPadAngleDiskLayout*>(l) != 0 ) typeName = "FixedPadAngleDiskLayout" ;
-    if( dynamic_cast<const RectangularPadRowLayout*>(l) != 0 ) typeName = "RectangularPadRowLayout" ;
-    
+    switch(l->getPadLayoutImplType() )
+    {
+	case  PadRowLayout2D::FIXEDPADSIZEDISKLAYOUT:
+	    typeName = "FixedPadSizeDiskLayout" ; break;
+	case  PadRowLayout2D::FIXEDPADANGLEDISKLAYOUT:
+	    typeName = "FixedPadAngleDiskLayout" ; break;
+	case  PadRowLayout2D::RECTANGULARPADROWLAYOUT:
+	    typeName = "RectangularPadRowLayout" ; break;
+	// The TPCMODULE is not treated by PadRowLayout2DXML, as 
+	// PadRowLayout2DXML only treats PadLayouts contained by a module,
+	// which cannot be a module itself.
+    }
+
     return getHandler( typeName ) ;
   }
   
@@ -42,7 +49,6 @@ namespace gear {
       theMap["FixedPadSizeDiskLayout"] = & aFixedPadSizeDiskLayoutXML ;
       theMap["FixedPadAngleDiskLayout"] = & aFixedPadAngleDiskLayoutXML ;
       theMap["RectangularPadRowLayout"] = & aRectangularPadRowLayoutXML ;
-
     }
     return theMap ;
   }

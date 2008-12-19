@@ -8,6 +8,15 @@
 namespace gear {
   
   
+int FixedDiskLayoutBase::getPadLayoutType() const 
+{
+    std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
+	      << "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
+	      << "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
+    return getCoordinateType();
+} 
+
+
 double FixedDiskLayoutBase::getDistanceToPad(double r, double phi, int padIndex) const
 {
 	// calculate the outer coordinates of the pad (for code readability)

@@ -19,6 +19,14 @@ SET( test_bins
     testtpcproto
     testVTXgear
     testSiPlanesgear
+
+    testAngularLayout
+    testDistanceToModule
+    testGearMgr
+    testIsInsideModule
+    testPlaneExtent
+    testTPCModule
+    testXMLOut
 )
 
 ADD_CUSTOM_TARGET( tests )

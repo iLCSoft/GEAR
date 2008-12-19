@@ -24,7 +24,7 @@ distribution.
  F.Gaede, DESY : changed extension to .cc  for use with gear
                  and include from "gearxml/tinyxml.h"
                : put in namespace gear
-   $Id: tinyxmlparser.cc,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   $Id: tinyxmlparser.cc,v 1.2 2008-12-19 13:52:34 gaede Exp $
 */
 
 #include "gearxml/tinyxml.h"
@@ -353,7 +353,7 @@ const char* TiXmlBase::SkipWhiteSpace( const char* p, TiXmlEncoding encoding )
 	}
 	else
 	{
-		while ( *p && IsWhiteSpace( *p ) || *p == '\n' || *p =='\r' )
+	    while ( ( *p && IsWhiteSpace( *p ) ) || *p == '\n' || *p =='\r' )
 			++p;
 	}
 

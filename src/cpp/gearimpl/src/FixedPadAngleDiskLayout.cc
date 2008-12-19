@@ -13,6 +13,11 @@ namespace gear {
       cleanup();
   }
       
+    PadRowLayout2D* FixedPadAngleDiskLayout::clone() const
+    {
+	return new  FixedPadAngleDiskLayout(*this);
+    }
+
   void FixedPadAngleDiskLayout::cleanup()  
   { 
     for( unsigned i=0; i<_padIndices.size(); ++i ){

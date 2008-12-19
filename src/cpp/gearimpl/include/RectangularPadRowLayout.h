@@ -21,7 +21,7 @@ namespace gear {
  *  by M. Weber RWTH Aachen and J. McGeachie UVic, Ca..
  * 
  * @author F. Gaede, DESY
- * @version $Id: RectangularPadRowLayout.h,v 1.4 2008-06-04 16:04:27 gaede Exp $
+ * @version $Id: RectangularPadRowLayout.h,v 1.5 2008-12-19 13:52:34 gaede Exp $
  */
   class RectangularPadRowLayout : public PadRowLayout2D {
     
@@ -49,7 +49,19 @@ namespace gear {
     mutable std::vector< std::vector<int>* > _padIndices ;
     std::vector<unsigned> _nRows ;  // helper vector to keep track of equal rows
 
-  public: 
+     /** function to copy all internal variables, incl. the objects
+     *  pointed to and owned by the GearMgr.
+     *  Used by constructor and assigment operator to avoid code duplication
+     */
+     void copy_and_assign(const RectangularPadRowLayout & );
+
+    /** function to delete all the objects
+     *  pointed to and owned by the GearMgr.
+     *  Used by desctructor and assigment operator to avoid code duplication
+     */
+     void cleanup();
+
+ public: 
 
     /** Construct the empty RectangularPadRowLayout with the width and x position
      *  specified through  xMin and xMax and an optional yMin - yMax will be computed from 
@@ -57,9 +69,21 @@ namespace gear {
      */
     RectangularPadRowLayout( double xMin, double xMax , double yMin=0.0) ;
     
+    /** The copy constructor.
+     *	Needed because _padIndices allocates memory dynamically
+     */
+    RectangularPadRowLayout( const RectangularPadRowLayout &);
+ 
+    /// The assignment operator
+    RectangularPadRowLayout & operator = ( const RectangularPadRowLayout &);
+
     /// Destructor.
     virtual ~RectangularPadRowLayout() ; 
     
+    /* The clone function. Used to access the copy-constructor if this class via the
+     * acstract PadRowLayout2D interface.
+     */
+    PadRowLayout2D* clone() const;
 
     /** Add nRow rows with the given parameters.
      */
@@ -79,9 +103,26 @@ namespace gear {
     int getRepeatRowCount() const { return _repeatRows ; } 
 
 
-    /** The type of the row layout: PadRowLayout2D::CARTESIAN.
+    /** \deprecated{
+     *  As there now is more than one implementation for each coordinate type
+     *  this is not sufficient to distinguish the implementations any more.
+     *  Use getPadLayoutImplType() to get the implementation type.
+     *  Use getCoordinateType() to get the type of the coordinate system.
+     *  
+     *  For backward compatibility this function returns
+     *  PadRowLayout2D.CARTESIAN, i. e. getCoordinateType().}
      */
-    virtual int getPadLayoutType() const { return PadRowLayout2D::CARTESIAN ; } 
+    virtual int getPadLayoutType() const;
+
+    /** The type of the row layout implementation:
+     *  PadRowLayout2D.RECTANGULARPADROWLAYOUT
+     */
+    virtual int getPadLayoutImplType() const { return  PadRowLayout2D::RECTANGULARPADROWLAYOUT ; } 
+
+    /** The type of the row layouts coordinate system:
+      *  PadRowLayout2D.CARTESIAN
+      */
+    virtual int getCoordinateType()    const { return PadRowLayout2D::CARTESIAN ; } 
     
     /** The shape of the pads: PadRowLayout2D::RECTANGLE (i.e. keystone).
      */ 
@@ -157,13 +198,16 @@ namespace gear {
      */
     virtual bool isInsidePad(double x, double y)  const;
 
+    /** Returns the closest distance to the edge (outer border) of the pad.
+     */
+    virtual double getDistanceToPad(double c0, double c1, int padIndex) const;
+    
 
     /** Helper method to identify equal row numbers in this layout (as they have been added).*/
     const std::vector<unsigned>& equalRowNumbers() const { return _nRows ; }
 
     /** Helper method with all row data.*/
     const std::vector<Row>& rows() const { return _rows ; }
-
 
   protected:
     

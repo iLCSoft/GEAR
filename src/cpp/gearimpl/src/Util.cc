@@ -68,7 +68,6 @@ namespace gear{
     } catch(UnknownParameterException &e){}
     
     // Calorimeter parameters
-    
      try{ 
       s << "   ----  Ecal barrel    ---- "  << std::endl 
 	<< m.getEcalBarrelParameters() <<  std::endl  ;
@@ -257,33 +256,51 @@ namespace gear{
     s << dynamic_cast<const GearParameters&>( p )  ;
     
     s << std::endl  << "  maxDriftLength :      "  <<  p.getMaxDriftLength() ;
-    s << std::endl  << "  driftVelocity :       "  <<  p.getDriftVelocity() ;
-    s << std::endl  << "  readoutFrequency :    "  <<  p.getReadoutFrequency() ;
-
-    // FIXME: needs to be generalized ....
-    const PadRowLayout2D& pl = p.getPadLayout() ;
-    
-    const DoubleVec& ext = pl.getPlaneExtent() ;
-    
-    int nRow = pl.getNRows() ;
-    int type = pl.getPadLayoutType() ;
-    
-    s <<  std::endl
-      << "   PadRowLayout2D ( type: " ;
-    
-    if( type == PadRowLayout2D::CARTESIAN )   s << "CARTESIAN )" ;
-    if( type == PadRowLayout2D::POLAR )       s << "POLAR )" ;
-    
-    s << "         nRows :    " << nRow << std::endl ; 
-    s << "         extent:    [" << ext[0] << ","<< ext[1] << ","<< ext[2] << ","<< ext[3] << "]"  << std::endl ; 
-    
-    if( type == PadRowLayout2D::POLAR ){
-
-       s << "    sensitive Volume:  " << std::endl
-	 << "       inner radius:  " << ext[0] << std::endl
-	 << "       outer radius:  " << ext[1] << std::endl
-	 << "       half length :  " << p.getMaxDriftLength() << std::endl ;
+    s << std::endl  << "  coordinateType :      ";
+    switch( p.getCoordinateType() )
+    {
+	case PadRowLayout2D::CARTESIAN : s << "cartesian"; break;
+	case PadRowLayout2D::POLAR     : s << "polar";     break;
+	default                        : s << "unknown";
     }
+
+    s << std::endl  << "  Number of modules :   "  <<  p.getNModules() ;
+
+    std::vector<TPCModule *> moduleVec= p.getModules();
+    for (std::vector<TPCModule *>::iterator moduleIter = moduleVec.begin();
+	 moduleIter <  moduleVec.end(); moduleIter++)
+    {
+	s << *moduleIter;
+    }
+    
+    s <<  std::endl ;
+    s << std::endl ;
+    
+    return s ;
+  }
+
+  std::ostream& operator<< (  std::ostream& s,  const  TPCModule& m ) {
+    
+    s << std::endl 
+      << "     -----------   TPCModule  ------- "  << std::endl         ;
+    
+    s << dynamic_cast<const GearParameters&>( m )  ;
+    
+    s << std::endl  << "  Readout frequency :   "  <<  m.getReadoutFrequency() ;
+    s << std::endl  << "  Type :                 ";
+
+    switch( m.getCoordinateType() )
+    {
+	case PadRowLayout2D::CARTESIAN : s << "cartesian"; break;
+	case PadRowLayout2D::POLAR     : s << "polar";     break;
+	default                        : s << "unknown";
+    }
+    
+    s << std::endl  << "  Number of pads :      "  <<  m.getNPads() ;
+    s << std::endl  << "  Offset :              "  <<  m.getOffset()[0] << "  ;  "
+                                                   <<  m.getOffset()[1] ;
+    s << std::endl  << "  Angle :               "  <<  m.getAngle();
+    
     
     s <<  std::endl ;
     s << std::endl ;

@@ -13,12 +13,14 @@ namespace gear {
   /** Abstract XML handler for RectangularPadRowLayoutXML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: RectangularPadRowLayoutXML.h,v 1.1 2006-05-12 12:53:55 gaede Exp $
+   * @version $Id: RectangularPadRowLayoutXML.h,v 1.2 2008-12-19 13:52:34 gaede Exp $
    */
   class RectangularPadRowLayoutXML : public PadRowLayout2DXML {
     
   public: 
     
+      virtual ~RectangularPadRowLayoutXML(){}
+
     /** Creates an XML node for the given  PadRowLayout2D.
      */
     virtual TiXmlElement toXML( const PadRowLayout2D* layout ) const ;

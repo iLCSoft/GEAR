@@ -7,6 +7,14 @@
 #include "gear/GearPointProperties.h"
 #include "gear/GearDistanceProperties.h"
 #include "gear/BField.h"
+#include "gear/TPCParameters.h"
+#include "gearimpl/TPCParametersImpl.h"
+#include "gearimpl/CalorimeterParametersImpl.h"
+#include "gearimpl/VXDParametersImpl.h"
+#include "gearimpl/SiPlanesParametersImpl.h"
+#include "gearimpl/ConstantBField.h"
+//#include "gear/GearPointProperties.h"
+//#include "gear/GearDistanceProperties.h"
 
 namespace gear{
 
@@ -33,13 +41,67 @@ namespace gear{
     _detectorName(""){
   }
   
-  GearMgrImpl::~GearMgrImpl() {
+  GearMgrImpl::GearMgrImpl(const  GearMgrImpl & right)
+  {
+      // the same code will be called in the assigment operator, so it's in 
+      // a separate function to avoid code replication
+      copy_and_assign(right);
+  }
+
+  void GearMgrImpl::copy_and_assign(const  GearMgrImpl & right)
+  {
+    ///FIXME!!! this also contains pointers
+    //ParameterMap::iterator it_end = _map.end() ;
+
+    for( ParameterMap::iterator paramIter = _map.begin() ; paramIter != _map.end() ; paramIter++ )
+    {
+	// the map should only have GearParametersImpl, not anything derrived from it
+	paramIter->second = new GearParametersImpl( *dynamic_cast<GearParametersImpl *>(paramIter->second) );
+    }
+
+    _tpcParameters = new TPCParametersImpl( *dynamic_cast<TPCParametersImpl *> (right._tpcParameters ));
+    _ecalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalBarrelParameters));
+    _ecalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalEndcapParameters));
+    _ecalPlugParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalPlugParameters));
+    _hcalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalBarrelParameters));
+    _hcalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalEndcapParameters));
+    _hcalRingParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalRingParameters));
+    _lcalParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lcalParameters));
+    _vxdParameters = new VXDParametersImpl( *dynamic_cast<VXDParametersImpl *>(right._vxdParameters));
+    _siplanesParameters = new SiPlanesParametersImpl( *dynamic_cast<SiPlanesParametersImpl *>(right._siplanesParameters));
+
+    // 
+//    _pointProperties = new GearPointProperties(right._pointProperties);
+//    _distanceProperties = new GearDistanceProperties(right._distanceProperties);
+
+    // there might be different implementations for bField , so test whether casting works
+    if (dynamic_cast<ConstantBField *>(right._bField) != 0)
+	_bField = new ConstantBField(*dynamic_cast<ConstantBField *>(right._bField));
+	else
+	    throw gear::Exception(" GearMgrImpl::GearMgrImpl(const  GearMgrImpl & r) Unknown BField type");
+
+    _detectorName = right._detectorName;
+    _keys = right._keys;      
+  }
+
+  GearMgrImpl::~GearMgrImpl() 
+  {
+      // the same code will be called in the assigment operator, so it's in 
+      // a separate function to avoid code replication
+      cleanup();
+  }
+
+  void GearMgrImpl::cleanup() {
     
     // clean up all parameters
     if( _tpcParameters ) delete _tpcParameters ;
     if( _ecalBarrelParameters ) delete _ecalBarrelParameters ;
     if( _ecalEndcapParameters ) delete _ecalEndcapParameters ;
     if( _ecalPlugParameters ) delete _ecalPlugParameters ;
+    // no need to check for 0, it's save to delete  a 0-pointer
+    delete _yokeBarrelParameters ;
+    delete _yokeEndcapParameters ;
+    delete _yokePlugParameters ;
     if( _hcalBarrelParameters ) delete _hcalBarrelParameters ;
     if( _hcalEndcapParameters ) delete _hcalEndcapParameters ;
     if( _hcalRingParameters ) delete _hcalRingParameters ;
@@ -52,15 +114,20 @@ namespace gear{
     if( _distanceProperties ) delete _distanceProperties ;
     if( _bField  ) delete  _bField ;
     
-    
-    ParameterMap::iterator it_end = _map.end() ;
-
-    for( ParameterMap::iterator it = _map.begin() ; it != it_end ; ++ it ) {
+    for( ParameterMap::iterator it = _map.begin() ; it != _map.end() ; ++ it ) {
       delete it->second ;
     }
     
   }
-  
+
+  GearMgrImpl& GearMgrImpl::operator = (const GearMgrImpl &right)
+  {
+      // call the cleanup and the copy and assignment afterwards
+      cleanup();
+      copy_and_assign(right);
+
+      return *this;
+  }
 
   const std::string& GearMgrImpl::getDetectorName() const    
 
@@ -94,7 +161,6 @@ namespace gear{
     return  *_tpcParameters ;
 
   }
-
 
   const BField & GearMgrImpl::getBField() const
     throw (UnknownParameterException, std::exception ) {

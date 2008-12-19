@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.11 2008-10-22 15:10:46 engels Exp $
+   * @version $Id: GearMgrImpl.h,v 1.12 2008-12-19 13:52:34 gaede Exp $
    */
   class GearMgrImpl : public GearMgr {
 	
@@ -26,6 +26,12 @@ namespace gear {
 
     // C'tor 
     GearMgrImpl() ;
+
+    // Copy constructor. Needed because the mgr own the objects it has pointer to 
+    GearMgrImpl(const GearMgrImpl &) ;
+
+    // we also need an assigment operator
+    GearMgrImpl& operator = (const GearMgrImpl&);
     
     /// Destructor.
     virtual ~GearMgrImpl() ;
@@ -52,7 +58,7 @@ namespace gear {
      */
     virtual const TPCParameters & getTPCParameters() const
       throw (UnknownParameterException, std::exception ) ;
-    
+
      /** Get the Ecal barrel parameters.
      *
      *  @throws UnknownParameterException
@@ -257,9 +263,6 @@ namespace gear {
      */
     virtual void setBField( BField* bField ) ;
     
-    
-    
-    
   protected:
     
     ParameterMap _map ;
@@ -284,6 +287,19 @@ namespace gear {
     std::string _detectorName ;
 
     mutable StringVec _keys ;
+
+    /** function to copy all internal variables, incl. the objects
+     *  pointed to and owned by the GearMgr.
+     *  Used by constructor and assigment operator to avoid code duplication
+     */
+     void copy_and_assign(const  GearMgrImpl & );
+
+    /** function to delete all the objects
+     *  pointed to and owned by the GearMgr.
+     *  Used by desctructor and assigment operator to avoid code duplication
+     */
+     void cleanup();
+
 
   }; // class
 } // namespace gear

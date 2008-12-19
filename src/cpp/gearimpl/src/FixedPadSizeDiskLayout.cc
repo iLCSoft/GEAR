@@ -8,7 +8,18 @@
 
 namespace gear {
   
-  FixedPadSizeDiskLayout::~FixedPadSizeDiskLayout() { 
+  FixedPadSizeDiskLayout::~FixedPadSizeDiskLayout()
+  {
+      cleanup();
+  }
+      
+    PadRowLayout2D* FixedPadSizeDiskLayout::clone() const
+    {
+	return new  FixedPadSizeDiskLayout(*this);
+    }
+
+  void FixedPadSizeDiskLayout::cleanup()  
+  { 
     for( unsigned i=0; i<_padIndices.size(); ++i ){
       delete _padIndices[i] ;
     }
@@ -61,6 +72,14 @@ namespace gear {
     } 
 
     _padIndices.resize( _nRow ) ;
+    // initialise all pointers to 0
+    // this thing is only filled when accessed by getPadsInRow() the first time
+    // to allocate the memory only when needed
+    for (std::vector< std::vector<int>* >::iterator rowIter = _padIndices.begin() ; 
+	 rowIter < _padIndices.end(); rowIter++)
+    {
+	*rowIter=0;
+    }
 
     _rowHeight =  ( rMax - rMin ) / _nRow ;
 
@@ -86,6 +105,45 @@ namespace gear {
       _rows.push_back( row ) ;
     }
     
+  }
+
+  FixedPadSizeDiskLayout::FixedPadSizeDiskLayout( const FixedPadSizeDiskLayout & right) 
+  {
+      copy_and_assign(right);
+  }
+
+  FixedPadSizeDiskLayout & FixedPadSizeDiskLayout::operator = ( const FixedPadSizeDiskLayout & right) 
+  {
+      cleanup();
+      copy_and_assign(right);
+      return *this;
+  }
+
+  void FixedPadSizeDiskLayout::copy_and_assign(const  FixedPadSizeDiskLayout & right)
+  {
+      _rMin = right._rMin;
+      _rMax = right._rMax;
+      _rowHeight = right._rowHeight;
+      _padWidth = right._padWidth;
+      _padHeight = right._padHeight;
+      _padGap = right._padGap;
+      _nRow = right._nRow;
+      _nPad = right._nPad;
+      _rows = right._rows;
+      _extent = right._extent;
+
+      // just set the _padIndices to an vector of empty entries.
+      // In every instance, also the copied ones, it is filled only at first
+      // usage to save memory
+      // just like in the constructor
+      _padIndices.resize( _nRow ) ;
+      for (std::vector< std::vector<int>* >::iterator rowIter = _padIndices.begin() ; 
+	   rowIter < _padIndices.end(); rowIter++)
+      {
+	  *rowIter=0;
+      }
+      
+     
   }
   
   int FixedPadSizeDiskLayout::getNRows() const {

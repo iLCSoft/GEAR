@@ -26,7 +26,37 @@ namespace gear {
     
   }
   
-  
+  RectangularPadRowLayout::RectangularPadRowLayout( const RectangularPadRowLayout & right)
+  {
+      copy_and_assign(right);
+  }
+
+  void RectangularPadRowLayout::copy_and_assign(const RectangularPadRowLayout & right)
+  {
+      _nRow = right._nRow;
+      _nPad = right._nPad;
+      _repeatRows = right._repeatRows;
+      _rows = right._rows;
+      _extent = right._extent;
+      _nRows = right._nRows;
+
+      // just set the _padIndices to an vector of empty entries.
+      // In every instance, also the copied ones, it is filled only at first
+      // usage to save memory
+      // just like in the constructor
+      _padIndices.resize( _nRow ) ;
+      for (std::vector< std::vector<int>* >::iterator rowIter = _padIndices.begin() ; 
+	   rowIter < _padIndices.end(); rowIter++)
+      {
+	  *rowIter=0;
+      }
+  }
+   
+    PadRowLayout2D* RectangularPadRowLayout::clone() const
+    {
+	return new RectangularPadRowLayout(*this);
+    }
+
   void RectangularPadRowLayout::addRow( int nRow, int nPad , double padWidth , double padHeight , 
 				   double rowHeight , double leftOffset, 
 				   double rightOffset ) {
@@ -160,8 +190,28 @@ namespace gear {
     return Vector2D( x , y  ) ;
   }
   
+  int RectangularPadRowLayout::getPadLayoutType() const 
+  {
+      std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
+		<< "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
+		<< "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
+      return getCoordinateType();
+  } 
 
-  RectangularPadRowLayout::~RectangularPadRowLayout() { 
+  RectangularPadRowLayout::~RectangularPadRowLayout()
+  {
+      cleanup();
+  }
+    
+    RectangularPadRowLayout & RectangularPadRowLayout::operator = (const  RectangularPadRowLayout & right)
+    {
+	cleanup();
+	copy_and_assign(right);
+	return *this;
+    }
+
+  void RectangularPadRowLayout::cleanup()
+  { 
     for( unsigned i=0; i<_padIndices.size(); ++i ){
       delete _padIndices[i] ;
     }
@@ -511,6 +561,24 @@ int RectangularPadRowLayout::getNearestPad(double x, double y) const {
     return d ;
   }
   
+   double RectangularPadRowLayout::getDistanceToPad(double c0, double c1, int padIndex) const
+   {
+       // calculate xMin, xMax, yMin, yMax from pad coordinates
+       Vector2D padCentre = getPadCenter(padIndex);
 
+//       int rowNumber = getRowNumber(padIndex);
+       double padHeight = getPadHeight(padIndex);
+       double padWidth  = getPadWidth(padIndex);
+
+       Vector2D testCoordinates;
+       testCoordinates[0]=c0; testCoordinates[1]=c1;
+       
+       double distance = distanceToBox( testCoordinates, padCentre[0] - padWidth*0.5,
+					                 padCentre[0] + padWidth*0.5,
+                                                         padCentre[1] - padHeight*0.5,
+					                 padCentre[1] + padHeight*0.5);
+       
+       return (distance < 0. ? 0. : distance);
+   }
 } // namespace
 

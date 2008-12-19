@@ -15,7 +15,7 @@ namespace gear {
   /** Manager for  XML handlers of GEAR classes.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: XMLHandlerMgr.h,v 1.2 2007-11-06 09:06:00 gaede Exp $
+   * @version $Id: XMLHandlerMgr.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
    */
   
   class XMLHandlerMgr {
@@ -35,6 +35,10 @@ namespace gear {
      */
     const void setHandler( const std::string& type , XMLHandler* handler )  ;
    
+    // no need for copy-constructor or assignment operator
+    // this is a sinleton class
+
+    /// the destructor
     ~XMLHandlerMgr() ;
 
   protected:

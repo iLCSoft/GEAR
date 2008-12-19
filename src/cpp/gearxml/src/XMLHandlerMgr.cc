@@ -141,5 +141,26 @@ namespace gear{
     return getXMLAttribute( cE , "value" )   ;
 
   }
+
+  // helper function (declared in XMLHandler.h )
+
+  std::string getOptionalChildElementValue(const TiXmlNode* node , const std::string& name ,
+					  const std::string& defaultValue)
+  {
+      
+      const TiXmlElement* el = node->ToElement() ;
+      if( el == 0 ) 
+	  throw ParseException("XMLParser::getAttribute not an XMLElement " ) ;
+	
+      const TiXmlElement* cE = el->FirstChildElement( name );
+      
+      if( cE == 0 )
+      {
+	  return defaultValue;
+      }
+
+      return getXMLAttribute( cE , "value" ) ;
+
+  }
   
 }

@@ -13,15 +13,28 @@ namespace gear {
  *  classes to avoid code duplication (non-trivial distance calculations etc).
   * 
  * @author M. Killenberg, University of Bonn
- * @version $Id: FixedDiskLayoutBase.h,v 1.1 2008-11-28 09:50:09 engels Exp $
+ * @version $Id: FixedDiskLayoutBase.h,v 1.2 2008-12-19 13:52:34 gaede Exp $
  */
   class FixedDiskLayoutBase : public PadRowLayout2D {
     
   public: 
 
-    /** The type of the row layout: PadRowLayout2D::POLAR.
+
+    /** \deprecated{
+     *  As there now is more than one implementation for each coordinate type
+     *  this is not sufficient to distinguish the implementations any more.
+     *  Use getPadLayoutImplType() to get the implementation type.
+     *  Use getCoordinateType() to get the type of the coordinate system.
+     *  
+     *  For backward compatibility this function returns
+     *  PadRowLayout2D.CARTESIAN, i. e. getCoordinateType().}
      */
-    virtual int getPadLayoutType() const { return PadRowLayout2D::POLAR ; } 
+     virtual int getPadLayoutType() const; 
+
+    /** The type of the row layouts coordinate system:
+      *  PadRowLayout2D.POLAR
+      */
+    virtual int getCoordinateType() const { return PadRowLayout2D::POLAR ; } 
     
     /** The shape of the pads: PadRowLayout2D::RECTANGLE (i.e.\ keystone).
      */ 

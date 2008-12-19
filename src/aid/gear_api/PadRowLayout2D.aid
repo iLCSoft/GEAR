@@ -7,13 +7,18 @@ package hep.gear.api ;
  *  in one 32-bit word.
  * 
  * @author F. Gaede, DESY
- * @version $Id: PadRowLayout2D.aid,v 1.3 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id: PadRowLayout2D.aid,v 1.4 2008-12-19 13:52:34 gaede Exp $
  */
 public interface PadRowLayout2D {
     
     // Static constants (enums) for the type of the row layout 
 @ifdef cpp
 @cpp{
+    static const int RECTANGULARPADROWLAYOUT = 1 ;
+    static const int FIXEDPADSIZEDISKLAYOUT = 2 ;
+    static const int FIXEDPADANGLEDISKLAYOUT = 3 ;
+    static const int TPCMODULE = 100 ;
+
     static const int CARTESIAN = 1 ;
     static const int POLAR = 2 ;
 
@@ -23,6 +28,12 @@ public interface PadRowLayout2D {
     static const int CHEVRON = 4 ;
     
 }@else
+    public static const int RECTANGULARPADROWLAYOUT = 1 ;
+    public static const int FIXEDPADSIZEDISKLAYOUT = 2 ;
+    public static const int FIXEDPADANGLEDISKLAYOUT = 3 ;
+    public static const int TPCMODULE = 100 ;
+
+
     public static const int CARTESIAN = 1 ;
     public static const int POLAR = 2 ;
 
@@ -32,10 +43,37 @@ public interface PadRowLayout2D {
     public static const int CHEVRON = 4 ;
 @endif
 
-    /** The type of the row layout: PadRowLayout2D.CARTESIAN or
-     *  PadRowLayout2D.POLAR.
+    /** Returns a copy (clone) of this class. As PadRowLayout2D is an abstract
+     *  interface with several implementation, this is used get a copy of the
+     *  actual implementation without having to know what the actual
+     *	implementation is.
+     */
+     public PadRowLayout2D* clone() const;
+
+    /** \deprecated{
+     *  As there now is more than one implementation for each coordinate type
+     *  this is not sufficient to distinguish the implementations any more.
+     *  Use getPadLayoutImplType() to get the implementation type.
+     *  Use getCoordinateType() to get the type of the coordinate system.
+     *  
+     *  For backward compatibility this function returns
+     *  PadRowLayout2D.CARTESIAN or PadRowLayout2D.POLAR, i. e. getCoordinateType().}
      */
     public int getPadLayoutType()  const;
+
+    /** The type of the row layout implementation:
+     *  PadRowLayout2D.RECTANGULARPADROWLAYOUT,
+     *  PadRowLayout2D.FIXEDPADSIZEDISKLAYOUT, 
+     *  PadRowLayout2D.FIXEDPADANGLEDISKLAYOUT
+     *  or PadRowLayout2D.TPCMODULE.
+     */
+    public int getPadLayoutImplType()  const;
+
+    /** The type of the row layouts coordinate system:
+      *  PadRowLayout2D.CARTESIAN or
+      *  PadRowLayout2D.POLAR.
+      */
+    public int getCoordinateType()  const;    
 
     /** The shape of the pads, one of PadRowLayout2D.RECTANGLE (Keystone), PadRowLayout2D.DIAMOND, 
      *	PadRowLayout2D.HEXAGON, PadRowLayout2D.CHEVRON
@@ -109,4 +147,9 @@ public interface PadRowLayout2D {
     /** True if coordinate (c0,c1) is within any pad.
      */
     public boolean isInsidePad( double c0, double c1 ) const ;
+
+    /** Returns the closest distance to the edge (outer border) of the pad.
+     *  For coordinates inside the pad it returns 0.
+     */
+    public double getDistanceToPad( double c0, double c1 , int padIndex ) const ;
 }
