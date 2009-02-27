@@ -166,6 +166,21 @@ namespace gear {
     }
   } 
 
+  double FixedPadSizeDiskLayout::getPadPitch(int padIndex) const {
+
+    // phi of pad in row :
+    int rowNum =  getRowNumber( padIndex ) ;
+    try {  
+
+      // need to return padPitch in radians !!
+	return _rows.at( rowNum ).PhiPad;
+
+    } 
+    catch(std::out_of_range){
+      return 0. ;
+    }
+  } 
+
 
 
   Vector2D FixedPadSizeDiskLayout::getPadCenter(int padIndex)  const {

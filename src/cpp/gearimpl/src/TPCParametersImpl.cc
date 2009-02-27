@@ -2,12 +2,12 @@
 
 #include "gearimpl/TPCModuleImpl.h"
 #include <vector>
-
+#include <sstream>
 
 namespace gear {
 
  /** @author M, Killenberg, (Bonn)  S, Turnbull, (Saclay/Carleton) 
-  * @version $Id: TPCParametersImpl.cc,v 1.2 2008-12-19 13:52:34 gaede Exp $
+  * @version $Id: TPCParametersImpl.cc,v 1.3 2009-02-27 09:00:50 gaede Exp $
   */
 
      
@@ -18,10 +18,10 @@ namespace gear {
     {
 	if ( (maxDriftLength  == -1.) || (coordinateType == -1) )
 	{
-	    std::cerr << "TPCParametersImpl::TPCParametersImpl: Warning: "
-		      << "deprecated use of constructor without parameters." << std::endl
-		      << "   Please define maxDriftLength and coordinateType in constructor!"
-		      << std::endl;
+//	    std::cerr << "TPCParametersImpl::TPCParametersImpl: Warning: "
+//		      << "deprecated use of constructor without parameters." << std::endl
+//		      << "   Please define maxDriftLength and coordinateType in constructor!"
+//		      << std::endl;
 	    maxDriftLength = 0.;
 	    coordinateType = PadRowLayout2D::CARTESIAN;
 	}
@@ -89,7 +89,16 @@ namespace gear {
      *  \todo Throw exception if not found
      */
     const TPCModule & TPCParametersImpl::getModule(int moduleID) const{
-	int temp = _moduleIDMap.find(moduleID)->second;
+      std::map<int,int>::const_iterator moduleIter = _moduleIDMap.find(moduleID);
+      if ( moduleIter == _moduleIDMap.end() )
+      {
+	std::stringstream message;
+	message << "TPCParameters::getModule: No module with ID " << moduleID 
+		<< "  defined in the gear file! "<< std::endl;
+	throw gear::Exception(message.str());
+
+      }
+      int temp = _moduleIDMap.find(moduleID)->second;
 	TPCModule * tempMod = _TPCModules.at(temp);
 	return *tempMod;
     }
@@ -261,10 +270,10 @@ namespace gear {
 	//n.b. This ensures that there is at least one module,
 	// so it's save to use _TPCModules[0]
 	
-	std::cerr << "TPCParametersImpl: Warning: "
-		  << "deprecated use of getPadLayout()." << std::endl
-		  << "   Use getTPCModule( moduleID ) instead!"
-		  << std::endl;
+//	std::cerr << "TPCParametersImpl: Warning: "
+//		  << "deprecated use of getPadLayout()." << std::endl
+//		  << "   Use getTPCModule( moduleID ) instead!"
+//		  << std::endl;
 
 	if ( (_TPCModules[0]->getAngle() != 0) || ((_TPCModules[0]->getOffset())[0] != 0) 
 	     || ((_TPCModules[0]->getOffset())[1] != 0) ) 
@@ -280,10 +289,10 @@ namespace gear {
      */
     double TPCParametersImpl::getDriftVelocity() const
     {
-	std::cerr << "TPCParametersImpl: Warning: "
-		  << "deprecated use of getDriftVelocity()." << std::endl
-		  << "   Drift velosity should come from conditions data!"
-		  << std::endl;
+//	std::cerr << "TPCParametersImpl: Warning: "
+//		  << "deprecated use of getDriftVelocity()." << std::endl
+//		  << "   Drift velosity should come from conditions data!"
+//		  << std::endl;
 
 	return _driftVelocity ;
     }
@@ -308,30 +317,30 @@ namespace gear {
 	
     void TPCParametersImpl::setMaxDriftLength( double maxDriftLength )
     { 
-	std::cerr << "TPCParametersImpl: Warning: "
-		  << "deprecated use of setMaxDriftLength()." << std::endl
-		  << "   Please define maxDriftLength in constructor!"
-		  << std::endl;
+//	std::cerr << "TPCParametersImpl: Warning: "
+//		  << "deprecated use of setMaxDriftLength()." << std::endl
+//		  << "   Please define maxDriftLength in constructor!"
+//		  << std::endl;
 
 	_maxDriftLength = maxDriftLength ;
     } 
     
     void TPCParametersImpl::setDriftVelocity( double driftVelocity )
     { 
-	std::cerr << "TPCParametersImpl: Warning: "
-		  << "deprecated use of setDriftVelocity()." << std::endl
-		  << "   Drift velosity should come from conditions data!"
-		  << std::endl;
+//	std::cerr << "TPCParametersImpl: Warning: "
+//		  << "deprecated use of setDriftVelocity()." << std::endl
+//		  << "   Drift velosity should come from conditions data!"
+//		  << std::endl;
 
 	_driftVelocity = driftVelocity ;
     } 
     
     void TPCParametersImpl::setReadoutFrequency( double readoutFrequency )
     { 
-	std::cerr << "TPCParametersImpl: Warning: "
-		  << "deprecated use of setReadoutFrequency." << std::endl
-		  << "   Readout frequency is property of a TPCModule!"
-		  << std::endl;
+//	std::cerr << "TPCParametersImpl: Warning: "
+//		  << "deprecated use of setReadoutFrequency." << std::endl
+//		  << "   Readout frequency is property of a TPCModule!"
+//		  << std::endl;
 
 	if (_TPCModules.size() > 1) 
 	    throw gear::Exception("You cannot use TPCParametersImpl:::setReadoutFrequency() with more than one module. Use getModule(moduleID) instead!");
@@ -344,10 +353,10 @@ namespace gear {
 
     void TPCParametersImpl::setPadLayout( PadRowLayout2D * padLayout )
     { 
-	std::cerr << "TPCParametersImpl: Warning: "
-		  << "deprecated use of setPadLayout." << std::endl
-		  << "   Please use addModule instead!"
-		  << std::endl;
+//	std::cerr << "TPCParametersImpl: Warning: "
+//		  << "deprecated use of setPadLayout." << std::endl
+//		  << "   Please use addModule instead!"
+//		  << std::endl;
 
 	if (_TPCModules.size() != 0) 
 	    throw gear::Exception("There is already one module in TPCParametersImpl. Will not replace it!");

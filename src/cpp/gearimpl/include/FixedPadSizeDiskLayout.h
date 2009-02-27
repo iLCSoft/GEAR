@@ -17,7 +17,7 @@ namespace gear {
  *  (through the pad center).
  * 
  * @author F. Gaede, DESY
- * @version $Id: FixedPadSizeDiskLayout.h,v 1.5 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id: FixedPadSizeDiskLayout.h,v 1.6 2009-02-27 09:00:50 gaede Exp $
  */
   class FixedPadSizeDiskLayout : public FixedDiskLayoutBase {
     
@@ -126,9 +126,13 @@ namespace gear {
      */
     virtual double getPadHeight(int padIndex) const { return _padHeight ; }
 
-    /** The width of the pad in radians NB! 
+    /** The width of the pad in radians (only the metal)
      */
     virtual double getPadWidth(int padIndex) const ;
+
+    /** The pitch of the pad in radians (metal + gap)
+     */
+    virtual double getPadPitch(int padIndex) const ;
 
     /** The center of the pad in 2d coordinates, (x,y) or (r,phi).
      */

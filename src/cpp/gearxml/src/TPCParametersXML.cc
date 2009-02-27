@@ -75,9 +75,9 @@ namespace gear {
     std::string typeString = getOptionalChildElementValue( xmlElement , "coordinateType" , deaultString);
     if ( typeString.empty() )
     {
-	std::cout << "TPCParametersXML::fromXML : "
-		  << "No coordinate type given for TPCParameters,"
-		  << " switching to old, non-modular syntax (deprecated)" << std::endl;
+//	std::cout << "TPCParametersXML::fromXML : "
+//		  << "No coordinate type given for TPCParameters,"
+//		  << " switching to old, non-modular syntax (deprecated)" << std::endl;
 	oldsyntax = true;
 	coordinateType = PadRowLayout2D::CARTESIAN;
     }
@@ -91,10 +91,7 @@ namespace gear {
 	throw ParseException("TPCParametersXML::fromXML : Unknown coordinateType !");
 	
     
-    TPCParametersImpl* modularTPC = new TPCParametersImpl( maxDriftLength ,coordinateType ) ;
-
-    // first we read the generic parameters
-    GearParametersXML::setParametersFromXML( xmlElement, modularTPC  ) ;
+    TPCParametersImpl* modularTPC = 0;
 
     // check for old syntax
     if (oldsyntax)
@@ -121,6 +118,9 @@ namespace gear {
 	}
 	
 	PadRowLayout2D* dLayout = layoutXML->fromXML( layout ) ;
+
+	// we can only create the module here because now we know the type of coordinate system
+	modularTPC =  new TPCParametersImpl( maxDriftLength , dLayout->getCoordinateType() ) ;
     
 	modularTPC->setPadLayout( dLayout ) ;
     
@@ -131,6 +131,9 @@ namespace gear {
     }
     else // new syntax with modules
     {
+        // create the modular TPC
+        modularTPC = new TPCParametersImpl( maxDriftLength ,coordinateType ) ;
+
 	// try to find a default module
 //	const TiXmlElement* defaultModuleElement = xmlElement->FirstChildElement("default");
 //	// no need to check whether the default module was found, the module parser can run without
@@ -174,6 +177,9 @@ namespace gear {
 	} 
 	
     } // else (oldsyntax)
+
+    // now read the generic parameters
+    GearParametersXML::setParametersFromXML( xmlElement, modularTPC  ) ;
 
     if( gearMgr != 0 )
     {

@@ -175,6 +175,13 @@ namespace gear {
     return _rows[rowNum].PadWidth ; 
   } 
 
+  double RectangularPadRowLayout::getPadPitch(int padIndex) const {
+
+    int rowNum =  getRowNumber( padIndex ) ;
+
+    return _rows[rowNum].WidthPerPad ; 
+  } 
+
 
   Vector2D RectangularPadRowLayout::getPadCenter(int padIndex)  const {
     
@@ -192,9 +199,9 @@ namespace gear {
   
   int RectangularPadRowLayout::getPadLayoutType() const 
   {
-      std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
-		<< "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
-		<< "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
+//      std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
+//		<< "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
+//		<< "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
       return getCoordinateType();
   } 
 

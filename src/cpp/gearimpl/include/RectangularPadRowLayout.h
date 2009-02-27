@@ -21,7 +21,7 @@ namespace gear {
  *  by M. Weber RWTH Aachen and J. McGeachie UVic, Ca..
  * 
  * @author F. Gaede, DESY
- * @version $Id: RectangularPadRowLayout.h,v 1.5 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id: RectangularPadRowLayout.h,v 1.6 2009-02-27 09:00:50 gaede Exp $
  */
   class RectangularPadRowLayout : public PadRowLayout2D {
     
@@ -144,9 +144,16 @@ namespace gear {
      */
     virtual double getPadHeight(int padIndex) const ;
 
-    /** The width of the pad in radians NB! 
+    /** The width of the pad at padIndex in mm.
+     *  This is only the metal of the pad. Use getPadPitch() to get the
+     *  effective pitch.
      */
     virtual double getPadWidth(int padIndex) const ;
+
+    /** The pitch (i. e. pad width plus gap)
+     *  of the pad at padIndex in mm.
+     */
+    virtual double getPadPitch( int padIndex ) const ;
 
     /** The center of the pad in 2d coordinates, (x,y) or (r,phi).
      */

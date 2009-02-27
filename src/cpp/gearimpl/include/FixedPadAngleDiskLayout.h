@@ -19,7 +19,7 @@ namespace gear {
  *  (the only thing that matters is the effective pitch).
  * 
  * @author M. Killenberg, University of Bonn
- * @version $Id: FixedPadAngleDiskLayout.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id: FixedPadAngleDiskLayout.h,v 1.4 2009-02-27 09:00:50 gaede Exp $
  */
   class FixedPadAngleDiskLayout : public FixedDiskLayoutBase {
     
@@ -125,9 +125,15 @@ namespace gear {
      */
     virtual double getPadHeight(int padIndex) const { return _rowHeight ; }
 
-    /** The width of the pad in radians NB! 
+    /** The width of the pad in radians! 
+     *	(In this implementation there is no gap, identical to the pad pitch)
      */
     virtual double getPadWidth(int padIndex) const { return _padAngle;}
+
+    /** The pitch of the pad in radians! 
+     *	(In this implementation there is no gap, identical to the pad width)
+     */
+    virtual double getPadPitch(int padIndex) const { return _padAngle;}
 
     /** The center of the pad in 2d coordinates (r,phi).
      */

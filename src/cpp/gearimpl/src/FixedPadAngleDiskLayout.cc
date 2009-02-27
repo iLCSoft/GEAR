@@ -261,16 +261,16 @@ namespace gear {
 
   int FixedPadAngleDiskLayout::getRightNeighbour(int padIndex) const {
     
-    int pn = getPadNumber( padIndex ) + 1  ;
+    int pn = getPadNumber( padIndex ) - 1  ;
     int rn = getRowNumber( padIndex)  ;
     
     // anything larger than _nPadsInRow would have caused an out_of_range exception in
     // getPadNumber
-    if(pn == _nPadsInRow)
+    if(pn == -1)
     {
     // take into account wrap arround in case of full circle (incl. rounding errors)
 	if (fabs(_phiMax - _phiMin - 2*M_PI) < 1e-6 )
-	    pn = 0 ;
+	    pn = _nPadsInRow - 1;
 	else
 	    throw Exception("FixedPadAngleDiskLayout::getRightNeighbour: no right neighbour pad !");
     }
@@ -280,7 +280,7 @@ namespace gear {
 
   int FixedPadAngleDiskLayout::getLeftNeighbour(int padIndex) const {
 
-    int pn = getPadNumber( padIndex ) - 1  ;
+    int pn = getPadNumber( padIndex ) + 1  ;
     int rn = getRowNumber( padIndex)  ;
 
     // anything larger than _nPadsInRow would have caused an out_of_range exception in

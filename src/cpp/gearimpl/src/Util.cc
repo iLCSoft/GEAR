@@ -264,13 +264,13 @@ namespace gear{
 	default                        : s << "unknown";
     }
 
-    s << std::endl  << "  Number of modules :   "  <<  p.getNModules() ;
+    s << std::endl  << "  Number of modules :   "  <<  p.getNModules() << std::endl ;
 
     std::vector<TPCModule *> moduleVec= p.getModules();
     for (std::vector<TPCModule *>::iterator moduleIter = moduleVec.begin();
 	 moduleIter <  moduleVec.end(); moduleIter++)
     {
-	s << *moduleIter;
+	s << **moduleIter;
     }
     
     s <<  std::endl ;
@@ -289,7 +289,7 @@ namespace gear{
     s << std::endl  << "  Readout frequency :   "  <<  m.getReadoutFrequency() ;
     s << std::endl  << "  Type :                 ";
 
-    switch( m.getCoordinateType() )
+    switch( m.getLocalPadLayout().getCoordinateType() )
     {
 	case PadRowLayout2D::CARTESIAN : s << "cartesian"; break;
 	case PadRowLayout2D::POLAR     : s << "polar";     break;
@@ -297,11 +297,15 @@ namespace gear{
     }
     
     s << std::endl  << "  Number of pads :      "  <<  m.getNPads() ;
+    s << std::endl  << "  Number of Rows :      "  <<  m.getNRows() ;
     s << std::endl  << "  Offset :              "  <<  m.getOffset()[0] << "  ;  "
                                                    <<  m.getOffset()[1] ;
     s << std::endl  << "  Angle :               "  <<  m.getAngle();
-    
-    
+    s << std::endl;
+
+    const DoubleVec& ext = m.getPlaneExtent() ;
+    s << "         extent (global):    [" << ext[0] << ","<< ext[1] << ","<< ext[2] << ","<< ext[3] << "]"  << std::endl ; 
+   
     s <<  std::endl ;
     s << std::endl ;
     

@@ -26,6 +26,7 @@ SET( test_bins
     testIsInsideModule
     testPlaneExtent
     testTPCModule
+    testVersatileLayout
     testXMLOut
 )
 

@@ -10,9 +10,9 @@ namespace gear {
   
 int FixedDiskLayoutBase::getPadLayoutType() const 
 {
-    std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
-	      << "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
-	      << "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
+//    std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
+//	      << "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
+//	      << "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
     return getCoordinateType();
 } 
 
@@ -21,10 +21,11 @@ double FixedDiskLayoutBase::getDistanceToPad(double r, double phi, int padIndex)
 {
 	// calculate the outer coordinates of the pad (for code readability)
 	Vector2D padCenter = getPadCenter( padIndex);
-	double r_min = padCenter[0] - getPadHeight( padIndex ) /2.;
-	double r_max = padCenter[0] + getPadHeight( padIndex ) /2.;
-	double phi_min = padCenter[1]- getPadWidth( padIndex ) /2.;
-	double phi_max = padCenter[1]+ getPadWidth( padIndex ) /2.;
+
+	double r_min = padCenter[0] - getRowHeight( getRowNumber(padIndex) ) /2.;
+	double r_max = padCenter[0] + getRowHeight( getRowNumber(padIndex) ) /2.;
+	double phi_min = padCenter[1]- getPadPitch( padIndex ) /2.;
+	double phi_max = padCenter[1]+ getPadPitch( padIndex ) /2.;
 	
 //      if( (r  < padCenter[0] - _rowHeight/2.) || (r > padCenter[0] + _rowHeight/2.) ||
 //	  (phi < padCenter[1]- _padAngle/2.)  || (phi < padCenter[1]+_padAngle/2. ) )

@@ -323,13 +323,13 @@ namespace gear {
 	// test the possible new yMin
 	double testYMin = _offset[1] - localExtent[1]; // module centre - rMax
 	localPhi1 = globalToLocal( _offset[0], testYMin )[1];
-	std::cout <<"# localPhi1 for ymin "<< localPhi1<<std::endl;
+	// std::cout <<"#DEBUG localPhi1 for ymin "<< localPhi1<<std::endl;
 	// test for [0:2pi] and [-2pi:0]
 	if ( localPhi1 < 0 )
 	    localPhi2 = localPhi1 + 2*M_PI;
 	else
 	    localPhi2 = localPhi1 - 2*M_PI;
-	std::cout <<"# localPhi2 for ymin "<< localPhi2<<std::endl;
+	//std::cout <<"#DEBUG localPhi2 for ymin "<< localPhi2<<std::endl;
 
 	// change yMin if necessary
 	if (  ( (localPhi1 > localExtent[2]) && (localPhi1 < localExtent[3]) ) ||
@@ -377,8 +377,8 @@ namespace gear {
 	globalExtent.push_back(yMin);
 	globalExtent.push_back(yMax);
 
-	std::cout << "#global extent "<< xMin <<"\t" << xMax <<"\t" 
-		  << yMin <<"\t" << yMax <<std::endl;
+	//std::cout << "#DEBUG global extent "<< xMin <<"\t" << xMax <<"\t" 
+	//	  << yMin <<"\t" << yMax <<std::endl;
 
 	return globalExtent;
     }
@@ -999,9 +999,9 @@ namespace gear {
 
   int TPCModuleImpl::getPadLayoutType() const 
   {
-      std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
-		<< "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
-		<< "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
+//      std::cerr << "FixedDiskLayoutBase::getPadLayoutType() : Warning: " <<std::endl
+//		<< "  This is deprecated (ambiguous for polar coordinate systems)"<< std::endl
+//		<< "  Please use getCoordinateType() or getPadLayoutImplType() "<< std::endl;
       return getCoordinateType();
   } 
 
@@ -1012,7 +1012,7 @@ namespace gear {
 
     int TPCModuleImpl::getCoordinateType() const
     {
-	return _padRowLayout->getCoordinateType();
+	return _momsCoordinateType;
     }
 
     const std::vector<double>& TPCModuleImpl::getPlaneExtent()  const throw (gear::Exception, std::exception){
@@ -1241,10 +1241,10 @@ namespace gear {
     
     void TPCModuleImpl::setReadoutFrequency(double frequency) 
     {
-	std::cout << "TPCModuleImpl: Warning: "
-		  << "deprecated use of setReadoutFreuqency()." << std::endl
-		  << "   Please define readout freuqency in constructor!"
-		  << std::endl;
+//	std::cout << "TPCModuleImpl: Warning: "
+//		  << "deprecated use of setReadoutFreuqency()." << std::endl
+//		  << "   Please define readout freuqency in constructor!"
+//		  << std::endl;
 	
 	_readoutFrequency = frequency;
     }

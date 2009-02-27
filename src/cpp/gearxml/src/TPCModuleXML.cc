@@ -61,7 +61,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     // the values which have to be there: moduleID, readoutFrequency and the PadRowLayout2D
     
     const TiXmlElement* moduleIDElement = moduleElement->FirstChildElement( "moduleID" );
-    if ( moduleIDElement == 0 ) // tag has not been found
+    if ( ( moduleIDElement == 0 ) && defaultModuleElement) // tag has not been found
     {   //try to find it in the defaultModuleElement
 	moduleIDElement = defaultModuleElement->FirstChildElement( "moduleID" );
     }
@@ -74,7 +74,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     
     // the readout frequency
     const TiXmlElement* readoutFrequencyElement = moduleElement->FirstChildElement( "readoutFrequency" );
-    if ( readoutFrequencyElement == 0 ) // tag has not been found
+    if ( ( readoutFrequencyElement == 0 ) && defaultModuleElement) // tag has not been found
     {
 	//try to find it in the defaultModuleElement
 	readoutFrequencyElement = defaultModuleElement->FirstChildElement( "readoutFrequency" );
@@ -87,7 +87,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     
     // get the pad layout
     const TiXmlElement* padLayoutElement = moduleElement->FirstChildElement( "PadRowLayout2D" );
-    if( padLayoutElement == 0 ) // tag has not been found
+    if( ( padLayoutElement == 0 ) && defaultModuleElement) // tag has not been found
     {
 	//try to find it in the defaultModuleElement
 	padLayoutElement = defaultModuleElement->FirstChildElement( "PadRowLayout2D" );
@@ -118,7 +118,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     
     // offset
     const TiXmlElement* offsetElement = moduleElement->FirstChildElement( "offset" );
-    if ( offsetElement == 0 ) // tag has not been found
+    if ( ( offsetElement == 0 ) && defaultModuleElement) // tag has not been found
     {   //try to find it in the defaultModuleElement
 	offsetElement = defaultModuleElement->FirstChildElement( "offset" );
     }
@@ -130,7 +130,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     
 	// angle 
     const TiXmlElement* angleElement = moduleElement->FirstChildElement( "angle" );
-    if ( angleElement == 0 ) // tag has not been found
+    if ( ( angleElement == 0 ) && defaultModuleElement )// tag has not been found
     {   //try to find it in the defaultModuleElement
 	angleElement = defaultModuleElement->FirstChildElement( "angle" );
     }
@@ -141,7 +141,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     
     // enlargeActiveAreaBy
     const TiXmlElement* borderWidthElement = moduleElement->FirstChildElement( "enlargeActiveAreaBy" );
-    if ( borderWidthElement == 0 ) // tag has not been found
+    if ( ( borderWidthElement == 0 ) && defaultModuleElement) // tag has not been found
     {   //try to find it in the defaultModuleElement
 	borderWidthElement = defaultModuleElement->FirstChildElement( "enlargeActiveAreaBy" );
     }

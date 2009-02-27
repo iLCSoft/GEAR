@@ -11,7 +11,7 @@ namespace gear {
  * appropriate functionality.
  *
  * @author M. Killenberg, (Bonn)  S. Turnbull, (Saclay/Carleton)
- * @version $Id: TPCModuleImpl.h,v 1.1 2008-12-17 09:39:46 engels Exp $
+ * @version $Id: TPCModuleImpl.h,v 1.2 2009-02-27 09:00:50 gaede Exp $
  */
 
 class TPCModuleImpl : public GearParametersImpl, public TPCModule 
@@ -101,8 +101,9 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     virtual int getPadLayoutImplType() const;
 
-    /** The type of the contained pad layouts coordinate system.
-      */
+    /** Identical to getTPCCoordinateType(), because this is the type of coordinates
+     *  which are returned, so you need this to interpret what you are getting. 
+     */
     virtual int getCoordinateType()    const;
 
     
@@ -122,9 +123,13 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     virtual double getRowHeight(int rowNumber) const { return _padRowLayout->getRowHeight(rowNumber); }
 
-    /** The height of the pad in mm.
+    /** The width of the pad in mm. (only the metal)
      */
     virtual double getPadWidth(int padIndex) const { return _padRowLayout->getPadWidth(padIndex); } 
+
+    /** The pitch of the pad in mm. (metal + gap)
+     */
+    virtual double getPadPitch(int padIndex) const { return _padRowLayout->getPadPitch(padIndex); } 
 
     /** The center of the pad in mother's 2d coordinates, (x,y) or (r,phi). / AKA the TPC's coordinates.
      */

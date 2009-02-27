@@ -3,6 +3,7 @@
 #include "gearxml/FixedPadSizeDiskLayoutXML.h"
 #include "gearxml/FixedPadAngleDiskLayoutXML.h"
 #include "gearxml/RectangularPadRowLayoutXML.h"
+#include "gearxml/VersatileDiskRowLayoutXML.h"
 #include "gear/PadRowLayout2D.h"
 
 #include <typeinfo>
@@ -28,6 +29,8 @@ namespace gear {
 	    typeName = "FixedPadAngleDiskLayout" ; break;
 	case  PadRowLayout2D::RECTANGULARPADROWLAYOUT:
 	    typeName = "RectangularPadRowLayout" ; break;
+	case  PadRowLayout2D::VERSATILEDISKROWLAYOUT:
+	    typeName = "VersatileDiskRowLayout" ; break;
 	// The TPCMODULE is not treated by PadRowLayout2DXML, as 
 	// PadRowLayout2DXML only treats PadLayouts contained by a module,
 	// which cannot be a module itself.
@@ -43,12 +46,14 @@ namespace gear {
     static FixedPadSizeDiskLayoutXML  aFixedPadSizeDiskLayoutXML ;
     static FixedPadAngleDiskLayoutXML  aFixedPadAngleDiskLayoutXML ;
     static RectangularPadRowLayoutXML aRectangularPadRowLayoutXML ;
+    static VersatileDiskRowLayoutXML aVersatileDiskRowLayoutXML ;
 
     if( theMap.size() == 0 ) {
       
       theMap["FixedPadSizeDiskLayout"] = & aFixedPadSizeDiskLayoutXML ;
       theMap["FixedPadAngleDiskLayout"] = & aFixedPadAngleDiskLayoutXML ;
       theMap["RectangularPadRowLayout"] = & aRectangularPadRowLayoutXML ;
+      theMap["VersatileDiskRowLayout"] = & aVersatileDiskRowLayoutXML ;
     }
     return theMap ;
   }

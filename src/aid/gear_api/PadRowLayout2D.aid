@@ -7,7 +7,7 @@ package hep.gear.api ;
  *  in one 32-bit word.
  * 
  * @author F. Gaede, DESY
- * @version $Id: PadRowLayout2D.aid,v 1.4 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id: PadRowLayout2D.aid,v 1.5 2009-02-27 09:00:50 gaede Exp $
  */
 public interface PadRowLayout2D {
     
@@ -17,6 +17,7 @@ public interface PadRowLayout2D {
     static const int RECTANGULARPADROWLAYOUT = 1 ;
     static const int FIXEDPADSIZEDISKLAYOUT = 2 ;
     static const int FIXEDPADANGLEDISKLAYOUT = 3 ;
+    static const int VERSATILEDISKROWLAYOUT = 4 ;
     static const int TPCMODULE = 100 ;
 
     static const int CARTESIAN = 1 ;
@@ -31,6 +32,7 @@ public interface PadRowLayout2D {
     public static const int RECTANGULARPADROWLAYOUT = 1 ;
     public static const int FIXEDPADSIZEDISKLAYOUT = 2 ;
     public static const int FIXEDPADANGLEDISKLAYOUT = 3 ;
+    public static const int VERSATILEDISKROWLAYOUT = 4 ;
     public static const int TPCMODULE = 100 ;
 
 
@@ -93,8 +95,15 @@ public interface PadRowLayout2D {
     public double getRowHeight(int rowNumber) const ;
     
     /** The width of the pad at padIndex in mm (CARTESIAN) or radians (POLAR). 
+     *  This is only the metal of the pad. Use getPadPitch() to get the
+     *  effective pitch.
      */
     public double getPadWidth( int padIndex ) const ;
+
+    /** The pitch (i. e. pad width plus gap)
+     *  of the pad at padIndex in mm (CARTESIAN) or radians (POLAR). 
+     */
+    public double getPadPitch( int padIndex ) const ;
 
     /** The center of the pad in 2d coordinates, (x,y) or (r,phi).
      */
@@ -150,6 +159,9 @@ public interface PadRowLayout2D {
 
     /** Returns the closest distance to the edge (outer border) of the pad.
      *  For coordinates inside the pad it returns 0.
+     *  ATTENTION: This gives the distance to the effective pad, which is
+     *  the relevant one, and not the distance to the metal. I. e. it uses
+     *  the pad pitch and the row height instead of pad width and pad height. 
      */
     public double getDistanceToPad( double c0, double c1 , int padIndex ) const ;
 }
