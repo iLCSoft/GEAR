@@ -125,6 +125,7 @@ int main(int argc,char* argv[])
 {
     if (argc != 2)
     {
+      cout << "Tool to dump coordinates of the local plane extend, the module extent and the pad centres." << endl;
 	cout << "usage: testPlaneExtent gearfile.xml" << endl;
 	return 1;
     }

@@ -41,12 +41,12 @@ int main()
     rectangularModule1->setAngle(M_PI/4);
     dumpCoordinates( rectangularModule1 );
 
-    TPCModuleImpl *rectangularModule2 = new TPCModuleImpl(0, new RectangularPadRowLayout(*rectangularPadPlane), PadRowLayout2D::POLAR, 40 );
-    dumpCoordinates( rectangularModule2 );
-
-    rectangularModule2->setOffset(25. ,20.);
-    rectangularModule2->setAngle(M_PI/4);
-    dumpCoordinates( rectangularModule2 );
+//    TPCModuleImpl *rectangularModule2 = new TPCModuleImpl(0, new RectangularPadRowLayout(*rectangularPadPlane), PadRowLayout2D::POLAR, 40 );
+//    dumpCoordinates( rectangularModule2 );
+//
+//    rectangularModule2->setOffset(25. ,20.);
+//    rectangularModule2->setAngle(M_PI/4);
+//    dumpCoordinates( rectangularModule2 );
     
     FixedPadSizeDiskLayout *circularPadPlane = new FixedPadSizeDiskLayout(15., 30., 5., 2.);
    
@@ -63,5 +63,5 @@ int main()
     circularModule2->setAngle(M_PI/4);
     dumpCoordinates( circularModule2 );
 
-    delete circularModule2; delete circularModule1; delete rectangularModule2; delete rectangularModule1;
+    delete circularModule2; delete circularModule1; delete rectangularModule1; // delete rectangularModule2;
 }

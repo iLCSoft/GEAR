@@ -1,0 +1,12 @@
+Tool to test the isInsideModule function of TPCModule.
+
+If dumps coodinates on the border fo the module (plane extent) and of a square
+from -100 to 100 in x and y.
+
+Format: 6 columns
+column 1: x coordinate if point of square is INSIDE  the module, 0 otherwise
+column 2: y coordinate if point of square is INSIDE  the module, 0 otherwise
+column 3: x coordinate if point of square is OUTSIDE the module, 0 otherwise
+column 4: y coordinate if point of square is OUTSIDE the module, 0 otherwise
+column 5: x coodinate of point on plane border
+column 6: y coodinate of point on plane border

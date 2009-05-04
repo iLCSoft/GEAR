@@ -8,6 +8,7 @@
 #include <assert.h>
 
 #include <exception>
+#include <typeinfo>
 #include <cstdlib>
 
 #ifdef GEAR_USE_AIDA  

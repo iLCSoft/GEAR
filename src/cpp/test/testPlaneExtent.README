@@ -1,0 +1,9 @@
+Tool to dump coordinates of the local plane extend, the module extent and the
+pad centres.
+
+Format:
+First two colums: pad coordinate or global plane extent coordinate
+Colums 3 and 4: local plane extent coordinate
+
+The coordinates are x/y or r/phi, depending on the global coordinate type.
+

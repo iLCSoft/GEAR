@@ -1,6 +1,15 @@
  ======================
   Gear release notes
  ======================
+
+   ----------
+ | v00-11-01 |  
+  -----------
+    changes added by M.Killenberg:
+    - Added VersatileDiscRowLayout: new flexible pad layout for polar coordinates
+    - Implemented modular TPC endplate functionality
+    ( see doc/eudet_memo_GearModularTPC.pdf for documentation )
+
    ----------
  | v00-11-01 |  
   -----------

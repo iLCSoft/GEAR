@@ -117,6 +117,7 @@ int main(int argc,char* argv[] )
 {
     if (argc != 2)
     {
+        cout << "Tool to test the isInsideModule function of TPCModule."<< endl;
 	cout << "usage: testDistanceToModue gearfile.xml" << endl;
 	return 1;
     }

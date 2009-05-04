@@ -14,12 +14,11 @@
 #include <assert.h>
 
 #include <exception>
+#include <typeinfo>
 #include <cstdlib>
 
 #include <sstream>
 #include <fstream>
- 
-//#include <typeinfo>
 
 using namespace gear ;
 

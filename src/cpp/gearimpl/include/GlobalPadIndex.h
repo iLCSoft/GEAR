@@ -7,7 +7,7 @@ namespace gear {
   /** Global pad index implimentation .
    *
    * @author M, Killenberg, (Bonn)  S, Turnbull, (Saclay/Carleton)
-   * @version $Id: GlobalPadIndex.h,v 1.1 2008-12-17 09:39:46 engels Exp $ 
+   * @version $Id: GlobalPadIndex.h,v 1.2 2009-05-04 11:38:07 engels Exp $ 
    */
 	
 class GlobalPadIndex  {
@@ -20,6 +20,18 @@ public:
 	
 	GlobalPadIndex(int padIndex, int moduleID);
 	virtual ~GlobalPadIndex();
+
+	bool operator < (const  GlobalPadIndex & cmp) const
+	{
+	  if (this->getModuleID() == cmp.getModuleID() )
+	    { // the modules IDs are equal, distiguish using pad index
+	      return ( this->getPadIndex() < cmp.getPadIndex() );
+	    }
+	  else 
+	    { // the modules IDs are equal, distiguish using pad index
+	      return ( this->getModuleID() < cmp.getModuleID() );
+	    }
+	}
 
     /** Get pad index */
     virtual int getPadIndex() const;

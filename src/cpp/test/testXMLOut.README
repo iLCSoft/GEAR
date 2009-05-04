@@ -1,0 +1,4 @@
+Tool to test the XML output of TPCModule.
+
+No input parameters needed. This tool does not read in a gear xml file. It
+was used for debugging and is kept as example code.
