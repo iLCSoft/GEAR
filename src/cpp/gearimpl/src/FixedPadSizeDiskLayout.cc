@@ -271,7 +271,7 @@ namespace gear {
 				  
   }
 
-  int FixedPadSizeDiskLayout::getRightNeighbour(int padIndex) const {
+  int FixedPadSizeDiskLayout::getLeftNeighbour(int padIndex) const {
     
     int pn = getPadNumber( padIndex ) + 1  ;
     int rn = getRowNumber( padIndex)  ;
@@ -286,7 +286,7 @@ namespace gear {
     return getPadIndex(  rn , pn ) ;
   }
 
-  int FixedPadSizeDiskLayout::getLeftNeighbour(int padIndex) const {
+  int FixedPadSizeDiskLayout::getRightNeighbour(int padIndex) const {
 
     int pn = getPadNumber( padIndex ) - 1  ;
     int rn = getRowNumber( padIndex)  ;

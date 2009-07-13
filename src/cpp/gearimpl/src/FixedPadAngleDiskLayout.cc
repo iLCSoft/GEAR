@@ -291,7 +291,7 @@ namespace gear {
 	if (fabs(_phiMax - _phiMin - 2*M_PI) < 1e-6 )
 	    pn = 0 ;
 	else
-	    throw Exception("FixedPadAngleDiskLayout::getRightNeighbour: no right neighbour pad !");
+	    throw Exception("FixedPadAngleDiskLayout::getLeftNeighbour: no left neighbour pad !");
     }
 
     return getPadIndex(  rn , pn ) ;
