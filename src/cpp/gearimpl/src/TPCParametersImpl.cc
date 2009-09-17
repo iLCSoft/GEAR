@@ -22,8 +22,8 @@ namespace gear {
 //		      << "deprecated use of constructor without parameters." << std::endl
 //		      << "   Please define maxDriftLength and coordinateType in constructor!"
 //		      << std::endl;
-	    maxDriftLength = 0.;
-	    coordinateType = PadRowLayout2D::CARTESIAN;
+	    _maxDriftLength = 0.;
+	    _coordinateType = PadRowLayout2D::POLAR; // make polare (disk) the default
 	}
 
 	_planeExtent.push_back(0.0);
