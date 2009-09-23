@@ -41,16 +41,17 @@ int main()
 
     //
     TPCModuleImpl *rectangularModule1 = new TPCModuleImpl(0, rectangularPadPlane, PadRowLayout2D::CARTESIAN, 40);
+    rectangularModule1->setIntVal("myIntForForTheModule",43);
 
     rectangularModule1->setOffset(25. ,20.);
     rectangularModule1->setAngle(M_PI/4);
 //    dumpCoordinates( rectangularModule1 );
 
-    TPCModuleImpl *rectangularModule2 = new TPCModuleImpl(1, new RectangularPadRowLayout(*rectangularPadPlane), PadRowLayout2D::POLAR, 40);
+//    TPCModuleImpl *rectangularModule2 = new TPCModuleImpl(1, new RectangularPadRowLayout(*rectangularPadPlane), PadRowLayout2D::POLAR, 40);
 //    dumpCoordinates( rectangularModule2 );
 
-    rectangularModule2->setOffset(25. ,20.);
-    rectangularModule2->setAngle(M_PI/4);
+//    rectangularModule2->setOffset(25. ,20.);
+//    rectangularModule2->setAngle(M_PI/4);
 //    dumpCoordinates( rectangularModule2 );
     
     FixedPadSizeDiskLayout *circularPadPlane = new FixedPadSizeDiskLayout(15., 30., 5., 2.);
@@ -77,9 +78,10 @@ int main()
 
     TPCParametersImpl *modularTPCCircular = new TPCParametersImpl(260.4, PadRowLayout2D::POLAR );
 
-    modularTPCCircular->addModule(rectangularModule2);
+    //    modularTPCCircular->addModule(rectangularModule2);
     modularTPCCircular->addModule(circularModule2);
 
+    modularTPCRectangular->setIntVal("myIntForTheTPC",42);
 
     GearMgr *myGearMgr = new GearMgrImpl;
 

@@ -19,7 +19,9 @@ namespace gear {
 
       const TPCParameters *mTPC = dynamic_cast<const TPCParameters *>(&modularTPC);
       if (!mTPC)
-	  throw ParseException("TPCParametersXML::toXML : Wrong GearParameters type !");
+	throw ParseException ("XML TPCParametersXML::toXML given parameter not of correct type. " 
+			      "Needs to be a gear::TPCParameter");
+
 
     // append data to PadRowLayout2D
     TiXmlElement modularTPCXML("detector");    
@@ -28,6 +30,10 @@ namespace gear {
     TiXmlElement maxDriftLengthElement("maxDriftLength");
     maxDriftLengthElement.SetDoubleAttribute( "value", mTPC->getMaxDriftLength() );
     modularTPCXML.InsertEndChild(maxDriftLengthElement);
+
+    TiXmlElement driftVelocityElement("driftVelocity");
+    driftVelocityElement.SetDoubleAttribute("value", mTPC->getDriftVelocity());
+    modularTPCXML.InsertEndChild(driftVelocityElement);
 
     TiXmlElement coordinateTypeElement("coordinateType");
     switch( mTPC->getCoordinateType() )
@@ -55,6 +61,9 @@ namespace gear {
     }
 
     modularTPCXML.InsertEndChild( modulesElement );
+
+    // Write all other parameters to detecotor as attributes
+    GearParametersXML::getXMLForParameters( &modularTPCXML ,  mTPC ) ;
 
     return modularTPCXML ;
   }

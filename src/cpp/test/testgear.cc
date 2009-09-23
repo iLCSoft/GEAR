@@ -81,16 +81,41 @@ int main(int argc, char**argv){
   
 
   try{
-    const FixedPadSizeDiskLayout& pl = 
-      dynamic_cast<const FixedPadSizeDiskLayout&>( gearMgr->getTPCParameters().getPadLayout() );
-    
-    testFixedPadSizeDiskLayout( pl ) ;
+    // Please note that this is the old, deperated method which only works for 
+    // TPCs with only one pad plane.
+    // In general a TPC can have several modules. Use
+    //  const std::vector< TPCModule * > & TPCParametes::getModules()
+    // for more realistic examples. You will get an expection if you run 
+    // a multi module gear file with this programme.
+    const PadRowLayout2D & pl = gearMgr->getTPCParameters().getPadLayout() ;
+
+    // The following tests are only needed because testFixedPadSizeDiskLayout() is only working for
+    // the FixedPadSizeDiskLayout. (see comments in testFixedPadSizeDiskLayout() )
+    // Please note that gear code should work independently of the implementation and only use
+    // functionality of PadRowLayout2D, so it can be used with any geometry.
+    // You could use pl right away without the type casting and impl checking.
+
+    // This code is in here to demonstrate how to access the underlying implemntation
+    // in case you need some specialities of the pad layout (like the row() member function of
+    // RectangularPadRowLayout).
+    // Please do this only for specialised code which whould fale on other geometries.
+
+    if (pl.getPadLayoutImplType() != PadRowLayout2D::TPCMODULE){
+      std::cout << "  wrong type of layout - TPCParameters should return a TPCModule ! " << std::endl ;
+      throw gear::Exception("wrong type of layout - TPCParameters should return a TPCModule");
+    }
+
+    const TPCModule & module = dynamic_cast<const TPCModule &>(pl);
+
+    if ( module.getLocalPadLayout().getPadLayoutImplType() != PadRowLayout2D::FIXEDPADSIZEDISKLAYOUT) {
+      std::cout << "  wrong type of layout - expected FixedPadSizeDiskLayout ! " << std::endl ;      
+    }
+    else{
+      testFixedPadSizeDiskLayout(  dynamic_cast<const FixedPadSizeDiskLayout &>(module.getLocalPadLayout()) ) ;
+    }
   }
   catch( gear::UnknownParameterException& e ){
     std::cout << "  oops - no TPC available :( " << std::endl ;
-  }
-  catch(std::bad_cast& e){
-    std::cout << "  wrong type of layout - expected FixedPadSizeDiskLayout ! " << std::endl ;
   }
 
   // --- test writing of XML file ---------
@@ -166,6 +191,9 @@ int main(int argc, char**argv){
 
 
 
+// Except for an uncaught gear::Exception this code would also work for 
+// all other pad layout, because it only uses member functions of the
+// common PadRowLayout2D base class.
 void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
   
 //   const DoubleVec& ext = pl.getPlaneExtent() ;
@@ -207,6 +235,10 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
       int iRow = pl.getRowNumber( pads[j] ) ;
       int iPad = pl.getPadNumber( pads[j] ) ;
       
+      // This is the part which only works for FixedPadSizeDiskLayout:
+      // getLeftNeighbour() and getRightNeighbour() can throw a gear::Exception 
+      // in the other implementations, because there are pads at the edge of the pad plane
+      // which have no neighbour.
       if( j == 0 ) {
 	int ln = pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
 	assert(  pl.getPadNumber( ln ) ==  nPad-1 ) ;

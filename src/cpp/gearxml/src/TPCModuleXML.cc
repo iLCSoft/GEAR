@@ -2,6 +2,7 @@
 #include "gearimpl/TPCModuleImpl.h"
 
 #include "gearxml/XMLHandler.h"
+#include "gearxml/GearParametersXML.h"
 #include "gearxml/PadRowLayout2DXML.h"
 
 #include "gearxml/tinyxml.h"
@@ -49,6 +50,9 @@ TiXmlElement TPCModuleXML::toXML( const TPCModule* module ) const
     TiXmlElement borderWidthElement("enlargeActiveAreaBy");
     borderWidthElement.SetDoubleAttribute( "value", module->getBorderWidth() );
     tpcModuleXML.InsertEndChild(borderWidthElement);
+
+    // Write all other parameters to detecotor as attributes
+    GearParametersXML::getXMLForParameters( &tpcModuleXML ,  module ) ;
 
     return tpcModuleXML ;
 }
@@ -149,6 +153,9 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
     {
 	    tpcModule->setBorderWidth ( atof( getXMLAttribute( borderWidthElement , "value"  ).c_str() ) );
     }
+
+    // now read the generic parameters
+    GearParametersXML::setParametersFromXML( moduleElement, tpcModule  ) ;
 
     return tpcModule;
 }// TPCModuleXML::fromXML 
