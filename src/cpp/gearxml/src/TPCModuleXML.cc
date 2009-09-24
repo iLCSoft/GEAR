@@ -40,7 +40,7 @@ TiXmlElement TPCModuleXML::toXML( const TPCModule* module ) const
 
     TiXmlElement offsetElement("offset");
     offsetElement.SetDoubleAttribute( "x_r", module->getOffset()[0] );
-    offsetElement.SetDoubleAttribute( "r_phi", module->getOffset()[1] );
+    offsetElement.SetDoubleAttribute( "y_phi", module->getOffset()[1] );
     tpcModuleXML.InsertEndChild(offsetElement);
 
     TiXmlElement angleElement("angle");
