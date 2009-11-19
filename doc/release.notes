@@ -3,6 +3,20 @@
  ======================
 
    -------
+ | v00-13 |  
+  --------
+     * fixed missing xml in/output for generic parameters in TPCParametersXML
+       and TPCModuleXML
+        - made testgear work with modular TPC
+        - made testXMLOut example run
+          (M. Killenberg)
+     * bug fix: use class variable for _maxDriftLength and 
+       _coordinateType - make polar coordinates default
+          (F. Gaede)
+     * bug fix: swapped getRightNeighbour / getLeftNeighbour in FixedPadSizeDiskLayout
+          (M. Killenberg)
+
+   -------
  | v00-12 |  
   --------
     changes added by M.Killenberg:
