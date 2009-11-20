@@ -6,6 +6,7 @@
 #include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 
+#include <cstdio>
 
 namespace gear{
 
