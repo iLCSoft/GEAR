@@ -9,7 +9,7 @@ package hep.gear.api ;
  #include <exception> 
 
 #define GEAR_MAJOR_VERSION 0
-#define GEAR_MINOR_VERSION 11
+#define GEAR_MINOR_VERSION 13
 
 #define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
 
