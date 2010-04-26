@@ -7,10 +7,12 @@
 #include <string>
 #include <exception> 
 
-#define GEAR_MAJOR_VERSION 0
-#define GEAR_MINOR_VERSION 13
+#include "GearVersion.h"
 
-#define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
+// version macros are now generated with cmake
+//#define GEAR_MAJOR_VERSION 0
+//#define GEAR_MINOR_VERSION 14
+//#define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
 
 #include "gearimpl/Vectors.h"
 

@@ -1,6 +1,6 @@
 /**
  
-\mainpage <a href="http://ilcsoft.desy.de/gear">GEAR</a> (v00-13)
+\mainpage <a href="http://ilcsoft.desy.de/gear">GEAR</a> (@GEAR_VERSION@)
 
 \image html "../gear_banner.png"
 
