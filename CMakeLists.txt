@@ -161,6 +161,7 @@ INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" )
 # -----------------------------------------------------------------------------
 
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
+INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
 
 # install include files
 INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
