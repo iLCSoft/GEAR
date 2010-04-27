@@ -16,10 +16,8 @@
  $ cmake ..
  $ make install
 
- To build the gear tests you should also set BUILD_GEAR_TESTS=ON
- For this replace step 3 in the instructions above with:
- $ cmake -DBUILD_GEAR_TESTS=ON ..
-
+ To build the gear tests type:
+ $ make tests
  
  For more information on CMake for the ILCSoftware check:
  http://ilcsoft.desy.de/portal/general_documentation/index_eng.html
@@ -28,29 +26,15 @@
  http://www.cmake.org
  
 
- 
- build instructions (with ant): -> Deprecated, please use cmake!
- ---------------------------------------------------------------
-
- modify the env.sh  ( path to java ! ) and then source it:
-
-  . env.sh
-
- ant aid.generate
- ant cpp
- ant cpp.doc   
-
- ---------------------------------------------------------------
-
-
- run the example ( ./src/cpp/test/testgear.cc )
-
-  ./bin/testgear gear_ldc.xml
- 
 
 ---------------------------------------------------------------
 
-binary tools:
+ After building GEAR you can try out an example:
+
+  ./bin/testgear example/gear_ldc.xml
+
+
+ binary tools:
 
   mergeXMl:   merges two xml files -> can be used to add additional parameters 
               to an xml file that has been automatically created (by Mokka)
@@ -58,6 +42,8 @@ binary tools:
   printParameters:  print detector parameters 
                     (slighly more human readable then xml)
 
+
+---------------------------------------------------------------
 
 
 

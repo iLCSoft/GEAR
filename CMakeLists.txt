@@ -94,16 +94,27 @@ ELSE()
 ENDIF()
 
 IF( INSTALL_DOC )
+
+    # create documentation overview.html
+    CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/overview.html.in"
+                    "${PROJECT_SOURCE_DIR}/doc/overview.html" IMMEDIATE @ONLY )
+
     # make sure doxygen is executed before make install
     #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doc)" )
     # by just calling "make doc" doxygen won't run if the documentation has already been built
     INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
     
     # install documentation
-    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
-            DESTINATION .
-            PATTERN ".svn" EXCLUDE
-            PATTERN "*~" EXCLUDE )
+    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/doc/" DESTINATION "doc/gear"
+        PATTERN "Doxyfile" EXCLUDE
+        PATTERN "latex" EXCLUDE
+        PATTERN "overview.html*" EXCLUDE
+        PATTERN ".svn" EXCLUDE
+        )
+
+    # install examples
+    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc/gear" PATTERN ".svn" EXCLUDE )
+
 ENDIF()
 #------------------------------------------------------------------------------
 
@@ -141,27 +152,13 @@ ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
 
 # -------- generate GearVersion.h ---------------------------------------------
-SET( Gear_Version_Header "GearVersion.h" )
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GearVersion.h.in"
+    "${PROJECT_BINARY_DIR}/GearVersion.h" @ONLY )
 
-FILE( WRITE "${PROJECT_BINARY_DIR}/${Gear_Version_Header}"
-"#ifndef GearVersion_h
-#define GearVersion_h 1
-
-// version macros
-#define GEAR_MAJOR_VERSION ${GEAR_MAJOR_VERSION}
-#define GEAR_MINOR_VERSION ${GEAR_MINOR_VERSION}
-#define GEAR_PATCH_LEVEL ${GEAR_PATCH_LEVEL}
-#define GEAR_VERSION_GE( MAJV , MINV , PLEV)  ( (  GEAR_MAJOR_VERSION > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION > MINV ) ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION == MINV ) && ( GEAR_PATCH_LEVEL >= PLEV ) ))
-
-#endif
-"
-)
-
-INSTALL( FILES "${PROJECT_BINARY_DIR}/${Gear_Version_Header}" DESTINATION "include/gear/" )
+INSTALL( FILES "${PROJECT_BINARY_DIR}/GearVersion.h" DESTINATION "include/gear/" )
 
 INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" )
 # -----------------------------------------------------------------------------
-
 
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
 
@@ -175,7 +172,7 @@ INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
 ADD_SUBDIRECTORY( ./src )
 
 # create uninstall configuration file 
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
                 "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
                 IMMEDIATE @ONLY )
 
@@ -183,19 +180,11 @@ CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
 ADD_CUSTOM_TARGET( uninstall "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake" )
 
 # create configuration file from .in file
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/GEARConfig.cmake.in"
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GEARConfig.cmake.in"
                 "${PROJECT_BINARY_DIR}/GEARConfig.cmake" @ONLY )
 
 # install configuration file
 INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARConfig.cmake" DESTINATION . )
-
-
-# create documentation overview.html
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/overview.html.in"
-                "${PROJECT_BINARY_DIR}/overview.html" @ONLY )
-
-# install configuration file
-INSTALL( FILES "${PROJECT_BINARY_DIR}/overview.html" DESTINATION doc )
 
 
 # display status message for important variables

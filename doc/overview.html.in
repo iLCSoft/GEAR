@@ -36,36 +36,35 @@ In the current implementation XML-files are used to provide the subdetector para
 The user code however only applies the abstract interface and is thus independent from the XML-file
 implementation.
 <p>
-Gear is written in C++. However the abstract interface classes are written using the
-<a href="http://www.freehep.org/">AID tool.</a> which allows to also create Java interface files
-from the same source.
 
 <h3>Installation</h3>
-A tar-ball of released versions of Gear can be downloaded at 
-<a href="http://www-zeuthen.desy.de/lc-cgi-bin/cvsweb.cgi/gear/?cvsroot=gear">
-http://www-zeuthen.desy.de/lc-cgi-bin/cvsweb.cgi/gear/?cvsroot=gear</a> .
 
-Before the build process a few environment varibles have to be set in particular the path to the Java 
-run time. You can modify the <a href="../../env.sh">env.sh</a>  script then source it:<br>
+<p>
+Download instructions for gear can be found <a href="http://ilcsoft.desy.de/portal/software_packages/gear/">here</a>
 
-<code>
-   . env.sh <br>
-</code>
+<p>
+To build gear from source you need to have <a href="http://www.cmake.org">CMake</a> installed on your system
 
-To build issue the following commands:<br> 
-<code>
-   ant aid.generate <br> 
-   ant cpp <br>
-   ant cpp.doc <br>
-</code>
- 
+<p>
+build instructions (with cmake):
+
+<p>
+ $ mkdir build <br>
+ $ cd build <br>
+ $ cmake .. <br>
+ $ make install <br>
+
+<p>
+ To build the gear tests type:
+ $ make tests
+
 
 <h3>Example code</h3>
-The file  <b>./src/cpp/test/testgear.cc</b> serves as a simple test and example program.
-Also the <em>print</em>-methods in <b>./src/cpp/gearimpl/src/Util.cc</b> are a good starting point  
+The file  <b>./src/test/testgear.cc</b> serves as a simple test and example program.
+Also the <em>print</em>-methods in <b>./src/gearimpl/Util.cc</b> are a good starting point  
 for learning  how to access the information in Gear.
 <p>
-Here is an <a href="../../gear_ldc.xml">example XML-file</a> with a detector description in gear.
+Here is an <a href="../example/gear_ldc.xml">example XML-file</a> with a detector description in gear.
 
 <h3>Merging XML files</h3>
 Existing XML files with detector geometry definitions can be extended by a new tool that merges two
