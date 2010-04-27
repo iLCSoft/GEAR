@@ -55,7 +55,7 @@ build instructions (with cmake):
  $ make install <br>
 
 <p>
- To build the gear tests type:
+ To build the gear tests type:<br>
  $ make tests
 
 
