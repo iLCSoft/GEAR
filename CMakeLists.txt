@@ -220,7 +220,9 @@ IF( INSTALL_DOC )
     # install documentation
     INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
             DESTINATION .
-            PATTERN "*CVS*" EXCLUDE )
+            PATTERN "*CVS*" EXCLUDE
+            PATTERN "*/.svn*" EXCLUDE
+            )
 ENDIF()
 
 
@@ -280,7 +282,9 @@ INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARConfig.cmake" DESTINATION . )
 INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/src/cpp/include"
         DESTINATION .
         PATTERN "*~" EXCLUDE
-        PATTERN "*CVS*" EXCLUDE )
+        PATTERN "*CVS*" EXCLUDE
+        PATTERN "*/.svn*" EXCLUDE
+        )
 
 # display status message for important variables
 MESSAGE( STATUS )
