@@ -114,7 +114,7 @@ IF( INSTALL_DOC )
         PATTERN "Doxyfile" EXCLUDE
         PATTERN "latex" EXCLUDE
         PATTERN "overview.html*" EXCLUDE
-        PATTERN ".svn" EXCLUDE
+        PATTERN "*/.svn" EXCLUDE
         )
 
     # install examples
