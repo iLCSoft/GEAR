@@ -188,6 +188,8 @@ INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
         PATTERN "*~" EXCLUDE
         PATTERN "*/.svn" EXCLUDE )
 
+INSTALL( CODE "EXEC_PROGRAM( ${CMAKE_COMMAND} ${PROJECT_SOURCE_DIR}/include ARGS -E create_symlink gear/gearimpl gearimpl)" )
+INSTALL( CODE "EXEC_PROGRAM( ${CMAKE_COMMAND} ${PROJECT_SOURCE_DIR}/include ARGS -E create_symlink gear/gearxml gearxml)" )
 
 ADD_SUBDIRECTORY( ./src )
 
@@ -202,6 +204,8 @@ ADD_CUSTOM_TARGET( uninstall
     # cmake 2.4 does not know remove_directory
     #COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/gear"
     COMMAND rm -rf "${CMAKE_INSTALL_PREFIX}/doc/gear"
+    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
+    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearxml"
 )
 
 # create configuration file from .in file
