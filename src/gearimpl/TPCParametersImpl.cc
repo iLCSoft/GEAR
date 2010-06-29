@@ -172,23 +172,34 @@ namespace gear {
 	}
 	//For each module, get distance to nearest pad, compare, return shortest.
 	std::vector<TPCModule *>::const_iterator itr, best_itr;
-	itr = _TPCModules.begin(); 
+	itr = _TPCModules.begin();
 	best_itr = itr;
-	double distance =(*itr)->getDistanceToPad(c0,c1,(*itr)->getNearestPad(c0,c1)) ; 
-	double tempDistance; 
-	for(;itr!=_TPCModules.end();itr++){
- 	    tempDistance =(*itr)->getDistanceToPad(c0,c1,(*itr)->getNearestPad(c0,c1));
-	    if(tempDistance<distance){
-		best_itr = itr;		
-		distance = tempDistance;
-	    }
-	}
-	int tempIndex, tempModule;
- 	tempIndex=((*best_itr)->getNearestPad(c0,c1));
-	tempModule =(*best_itr)->getModuleID();
-	const GlobalPadIndex toReturn(tempIndex,tempModule);
 
-	return toReturn;
+	GlobalPadIndex closest_pad( (*itr)->getNearestPad(c0, c1), (*itr)->getModuleID() );
+
+	if( _TPCModules.size() == 1 ) {
+
+		return closest_pad;
+	}
+
+	// initialize the distance
+	double shortest_distance = (*itr)->getDistanceToPad( c0, c1, closest_pad.getPadIndex() );
+
+	// start at the second module
+	for( itr+1; itr!=_TPCModules.end(); itr++) {
+
+		GlobalPadIndex temp_pad( (*itr)->getNearestPad( c0, c1 ), (*itr)->getModuleID() );
+
+		const double distance = (*itr)->getDistanceToPad( c0, c1, temp_pad.getPadIndex() );
+
+		if( distance < shortest_distance ) {
+
+			closest_pad = temp_pad;
+			shortest_distance = distance;
+		}
+	}
+
+	return closest_pad;
     }
 
     /** Extent of the sensitive plane - [xmin,xmax,ymin,ymax] CARTESIAN or 
