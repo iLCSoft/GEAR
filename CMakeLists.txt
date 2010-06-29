@@ -75,15 +75,25 @@ FIND_PACKAGE( LATEX )
 IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
 
     ADD_CUSTOM_COMMAND(
-        OUTPUT "${PROJECT_SOURCE_DIR}/doc/html"
+        OUTPUT  "${PROJECT_BINARY_DIR}/doc/gear_banner.png"
+        # first we copy directory from source tree to binary tree to
+        # keep the source tree unchanged
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory
+            "${PROJECT_SOURCE_DIR}/doc"
+            "${PROJECT_BINARY_DIR}/doc"
+        VERBATIM
+    )
+
+    ADD_CUSTOM_COMMAND(
+        OUTPUT "${PROJECT_BINARY_DIR}/doc/html"
         COMMAND "${DOXYGEN_EXECUTABLE}"
-        WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
+        WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/doc"
         COMMENT "Building API Documentation..."
-        DEPENDS "${PROJECT_SOURCE_DIR}/doc/overview.html"
+        DEPENDS "${PROJECT_BINARY_DIR}/doc/gear_banner.png" "${PROJECT_BINARY_DIR}/doc/overview.html" "${PROJECT_BINARY_DIR}/doc/Doxyfile"
     )
     
     ADD_CUSTOM_TARGET( doc DEPENDS
-        "${PROJECT_SOURCE_DIR}/doc/html" )
+        "${PROJECT_BINARY_DIR}/doc/html" )
 
 ELSE()
     IF( NOT DOXYGEN_FOUND )
@@ -100,9 +110,13 @@ ENDIF()
 
 IF( INSTALL_DOC )
 
+    # create documentation Doxyfile
+    CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/Doxyfile.in"
+                    "${PROJECT_BINARY_DIR}/doc/Doxyfile" IMMEDIATE @ONLY )
+
     # create documentation overview.html
     CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/overview.html.in"
-                    "${PROJECT_SOURCE_DIR}/doc/overview.html" IMMEDIATE @ONLY )
+                    "${PROJECT_BINARY_DIR}/doc/overview.html" IMMEDIATE @ONLY )
 
     # make sure doxygen is executed before make install
     #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doc)" )
@@ -110,7 +124,7 @@ IF( INSTALL_DOC )
     INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
     
     # install documentation
-    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/doc/" DESTINATION "doc/gear"
+    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc/gear"
         PATTERN "Doxyfile" EXCLUDE
         PATTERN "latex" EXCLUDE
         PATTERN "overview.html*" EXCLUDE
@@ -118,7 +132,7 @@ IF( INSTALL_DOC )
         )
 
     # install examples
-    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc/gear" PATTERN ".svn" EXCLUDE )
+    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc/gear" PATTERN "*/.svn" EXCLUDE )
 
 ENDIF()
 #------------------------------------------------------------------------------
@@ -172,7 +186,7 @@ INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
 INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
         DESTINATION .
         PATTERN "*~" EXCLUDE
-        PATTERN ".svn" EXCLUDE )
+        PATTERN "*/.svn" EXCLUDE )
 
 
 ADD_SUBDIRECTORY( ./src )
