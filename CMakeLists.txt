@@ -188,8 +188,8 @@ INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
         PATTERN "*~" EXCLUDE
         PATTERN "*/.svn" EXCLUDE )
 
-INSTALL( CODE "EXEC_PROGRAM( ${CMAKE_COMMAND} ${PROJECT_SOURCE_DIR}/include ARGS -E create_symlink gear/gearimpl gearimpl)" )
-INSTALL( CODE "EXEC_PROGRAM( ${CMAKE_COMMAND} ${PROJECT_SOURCE_DIR}/include ARGS -E create_symlink gear/gearxml gearxml)" )
+INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
+INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
 
 ADD_SUBDIRECTORY( ./src )
 
