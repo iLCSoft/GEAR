@@ -1,0 +1,86 @@
+/**
+ 
+\mainpage <a href="http://ilcsoft.desy.de/gear">GEAR</a> (@GEAR_VERSION@)
+
+\image html "../gear_banner.png"
+
+
+<h3>Overview</h3>
+
+Gear is a geometry description toolkit for ILC reconstruction software. It is easy to use and 
+lightweight. Gear defines an abstract interface for the description of an ILC detector as needed for
+the development of particle flow algorithms. This description is somewhat different from the geometry
+description needed for the detailed simulation of the detector response, though of course related.
+For the simualtion one needs very detailed knowledge of the material distribution in space whereas for the
+reconstruction mostly a higher level description of the subdetector's charcteristics is needed.
+Depending on the particular reconstruction algorithm a hand full of parameters might suffice to describe
+a full subdetector, e.g. the main calorimeters - certainly a lot less than waht is needed for the
+computation of the detailed detector response with geant4. The aim of Gear is now to provide the interface
+this recosntruction view of the detector geometry.
+
+A first implementation uses XML files 
+for the definition of the subdetector's geometry parameters. Currently under development is an
+implementation for the abstract interface to generic material properties in space, like the 
+material's  density at a given point or the integrated B-field along a (straight) path 
+between two points. 
+ 
+<h3>Code Structure</h3>
+At the core of the geometry description in gear is the class gear::GearMgr. An instance of that class 
+provides the user with available implementations of the various sub-interfaces, e.g. an instance of 
+gear::TPCParameters. All subdetector interfaces inherit from gear::GearParameters - this allows to store 
+arbitrary named parameters of simple types and vectors of such types within any subdetector parameter 
+interface. Also generic named parameter sections can be used through this interface, e.g in case a 
+particular subdetector type has not yet been implemented in gear.
+<p>
+In the current implementation XML-files are used to provide the subdetector parameters to Gear.
+The user code however only applies the abstract interface and is thus independent from the XML-file
+implementation.
+<p>
+
+<h3>Installation</h3>
+
+<p>
+Download instructions for gear can be found <a href="http://ilcsoft.desy.de/portal/software_packages/gear/">here</a>
+
+<p>
+To build gear from source you need to have <a href="http://www.cmake.org">CMake</a> installed on your system
+
+<p>
+build instructions (with cmake):
+
+<p>
+ $ mkdir build <br>
+ $ cd build <br>
+ $ cmake .. <br>
+ $ make install <br>
+
+<p>
+ To build the gear tests type:<br>
+ $ make tests
+
+
+<h3>Example code</h3>
+The file  <b>./src/test/testgear.cc</b> serves as a simple test and example program.
+Also the <em>print</em>-methods in <b>./src/gearimpl/Util.cc</b> are a good starting point  
+for learning  how to access the information in Gear.
+<p>
+Here is an <a href="../example/gear_ldc.xml">example XML-file</a> with a detector description in gear.
+
+<h3>Merging XML files</h3>
+Existing XML files with detector geometry definitions can be extended by a new tool that merges two
+XML files:<br>
+<b>./bin/mergeXML</b><br>
+This is particullarly useful if the detector description has been automatically created, e.g. by
+MokkaGear but is lacking some (user) specific information. 
+
+<h3>Release Notes</h3>
+Gear is under development and there are frequent releases. Please check the
+<a href="../release.notes">./release.notes</a>
+ 
+<hr>
+<p>
+If you have any questions or proposals for new features please contact the author:
+ 
+<a href="mailto:Frank Gaede &lt;frank.gaede@desy.de&gt;">frank.gaede@desy.de</a>
+ 
+*/

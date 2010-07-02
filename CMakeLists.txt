@@ -23,8 +23,8 @@ INCLUDE(CTest)
 
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
-SET( ${PROJECT_NAME}_MINOR_VERSION 13 )
-SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
+SET( ${PROJECT_NAME}_MINOR_VERSION 14 )
+SET( ${PROJECT_NAME}_PATCH_LEVEL 0 )
 
 # project options
 OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
@@ -69,165 +69,77 @@ ENDIF()
 SET( GEAR_SOVERSION "${GEAR_MAJOR_VERSION}.${GEAR_MINOR_VERSION}" )
 SET( GEAR_VERSION "${GEAR_SOVERSION}.${GEAR_PATCH_LEVEL}" )
 
-# create symbolic link for include files
-IF( NOT EXISTS "${PROJECT_SOURCE_DIR}/src/cpp/include/gearxml" )
-    MESSAGE( STATUS "Creating symlink: ${PROJECT_SOURCE_DIR}/src/cpp/include/gearxml..." )
-    EXEC_PROGRAM( "${CMAKE_COMMAND}"
-        "${PROJECT_SOURCE_DIR}/src/cpp/include"
-        ARGS -E create_symlink "${PROJECT_SOURCE_DIR}/src/cpp/gearxml/include" "gearxml"
-        OUTPUT_VARIABLE out_tmp )
-ENDIF()
-IF( NOT EXISTS "${PROJECT_SOURCE_DIR}/src/cpp/include/gearimpl" )
-    MESSAGE( STATUS "Creating symlink: ${PROJECT_SOURCE_DIR}/src/cpp/include/gearimpl..." )
-    EXEC_PROGRAM( "${CMAKE_COMMAND}"
-        "${PROJECT_SOURCE_DIR}/src/cpp/include"
-        ARGS -E create_symlink "${PROJECT_SOURCE_DIR}/src/cpp/gearimpl/include" "gearimpl"
-        OUTPUT_VARIABLE out_tmp )
-ENDIF()
+#---------- DOCUMENTATION -----------------------------------------------------
+FIND_PACKAGE( Doxygen )
+FIND_PACKAGE( LATEX )
+IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
 
-# generate header files with ant aid.generate
-IF( NOT EXISTS "${PROJECT_SOURCE_DIR}/src/cpp/include/gear/GEAR.h" )
-    MESSAGE( STATUS "Generating GEAR header files with ant aid.generate..." )
-    MESSAGE( STATUS "Autodetecting java..." )
-    FIND_PACKAGE( Java )
-    IF( NOT JAVA_RUNTIME OR NOT JAVA_COMPILE )
-        MESSAGE( FATAL_ERROR "Java not found!! Please make sure that java is in your PATH." )
-    ENDIF()
-    # extract java bin path out of full path to java runtime
-    STRING( REGEX REPLACE "(.*)\\/java$" "\\1" JAVA_RUNTIME_PATH ${JAVA_RUNTIME} )
-    # parse the output of java -version
-    EXEC_PROGRAM( "${JAVA_RUNTIME}" ARGS "-version"
-            OUTPUT_VARIABLE out_tmp
-            RETURN_VALUE out_ret )
-    IF( out_ret )
-        MESSAGE( STATUS "Error executing java -version!!" )
-    ENDIF()
-    STRING( REGEX REPLACE ".* version \"([0-9]+\\.[0-9]+\\.[0-9]+).*"
-            "\\1" JAVA_VERSION "${out_tmp}" )
-
-    # display info
-    MESSAGE( STATUS "Detected Java version ${JAVA_VERSION}..." )
-
-    # set environment variables for
-    # generating header files with ant aid.generate
-    SET( ENV{GEAR} "${PROJECT_SOURCE_DIR}" )
-    SET( ENV{PATH} "${PROJECT_SOURCE_DIR}/tools:${JAVA_RUNTIME_PATH}:$ENV{PATH}" )
-
-    # generate header files with ant aid.generate
-    EXEC_PROGRAM( ant "${PROJECT_SOURCE_DIR}"
-        ARGS aid.generate
-        OUTPUT_VARIABLE out_tmp
-        RETURN_VALUE out_ret )
-    # check if everything went ok
-    IF( NOT out_ret )
-        MESSAGE( STATUS "Header files generated in ${PROJECT_SOURCE_DIR}/src/cpp/include/gear..." )
-    ELSE()
-        MESSAGE( STATUS "Error generating header files!!" )
-        MESSAGE( FATAL_ERROR "${out_tmp}" )
-    ENDIF()
-ENDIF()
-
-
-# code for *nix only!
-IF( UNIX )
-    # find shell
-    FIND_PROGRAM( SH
-      sh
-      ${CYGWIN_INSTALL_PATH}/bin
-      /bin
-      /usr/bin
-      /usr/local/bin
-      /sbin
-      # FIXME add path to MacOS here
+    ADD_CUSTOM_COMMAND(
+        OUTPUT  "${PROJECT_BINARY_DIR}/doc/gear_banner.png"
+        # first we copy directory from source tree to binary tree to
+        # keep the source tree unchanged
+        COMMAND "${CMAKE_COMMAND}" -E copy_directory
+            "${PROJECT_SOURCE_DIR}/doc"
+            "${PROJECT_BINARY_DIR}/doc"
+        VERBATIM
     )
-    MARK_AS_ADVANCED( SH )
 
-    IF( SH )
-        # generate shell script for setting environment before running a command
-        MESSAGE( STATUS "Generating shell environment script..." )
-        FILE( WRITE "${PROJECT_BINARY_DIR}/script.sh"
-                    "export GEAR=${PROJECT_SOURCE_DIR}\n"
-                    "export GEARVERSION=${GEAR_VERSION}\n"
-                    "export PATH=${JAVA_RUNTIME_PATH}/bin:${PROJECT_SOURCE_DIR}/tools:$PATH\n"
-                    "$1 $2" )
+    ADD_CUSTOM_COMMAND(
+        OUTPUT "${PROJECT_BINARY_DIR}/doc/html"
+        COMMAND "${DOXYGEN_EXECUTABLE}"
+        WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/doc"
+        COMMENT "Building API Documentation..."
+        DEPENDS "${PROJECT_BINARY_DIR}/doc/gear_banner.png" "${PROJECT_BINARY_DIR}/doc/overview.html" "${PROJECT_BINARY_DIR}/doc/Doxyfile"
+    )
+    
+    ADD_CUSTOM_TARGET( doc DEPENDS
+        "${PROJECT_BINARY_DIR}/doc/html" )
 
-        # create "always out-of-date" headers target
-        ADD_CUSTOM_TARGET( headers
-            COMMAND ${SH} "${PROJECT_BINARY_DIR}/script.sh" ant aid.generate
-            WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}"
-            COMMENT "Generating header files with ant aid.generate..."
-            VERBATIM )
-
-        # DOCUMENTATION
-        # FIXME Documentation needs GEARVERSION env var, so we can only
-        # build it with script.sh
-        FIND_PACKAGE( Doxygen )
-        FIND_PACKAGE( LATEX )
-        IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
-
-            # this code is not ok because cmake cannot check if the documentation
-            # has already been built. we better define a custom command + target
-            #ADD_CUSTOM_TARGET( doc
-            #    "${CMAKE_COMMAND}" -E chdir
-            #    "${PROJECT_SOURCE_DIR}/doc"
-            #    "${DOXYGEN_EXECUTABLE}" VERBATIM )
-
-            ADD_CUSTOM_COMMAND(
-                OUTPUT "${PROJECT_SOURCE_DIR}/doc/html"
-                COMMAND ${SH} "${PROJECT_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
-                WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
-                COMMENT "Building API Documentation..."
-                VERBATIM )
-            
-            #ADD_CUSTOM_COMMAND(
-            #    OUTPUT "${PROJECT_SOURCE_DIR}/doc/latex"
-            #    COMMAND ${SH} "${PROJECT_BINARY_DIR}/script.sh" "${DOXYGEN_EXECUTABLE}"
-            #    WORKING_DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
-            #    COMMENT "Building API Documentation..."
-            #    VERBATIM )
-
-            ADD_CUSTOM_TARGET( doc DEPENDS
-                "${PROJECT_SOURCE_DIR}/doc/html" )
-                #"${PROJECT_SOURCE_DIR}/doc/latex" )
-
-        ELSE()
-            IF( NOT DOXYGEN_FOUND )
-                MESSAGE( STATUS "Doxygen not found in your system!!" )
-            ENDIF()
-            IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
-                MESSAGE( STATUS "Latex not found in your system!!" )
-            ENDIF()
-            IF( INSTALL_DOC )
-                MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
-                SET( INSTALL_DOC OFF )
-            ENDIF()
-        ENDIF()
-    ELSE()
-        MESSAGE( STATUS "Unix Shell not found - cannot enable headers target!!" )
-        IF( INSTALL_DOC )
-            MESSAGE( STATUS "Unix Shell not found - INSTALL_DOC forced to OFF" )
-            SET( INSTALL_DOC OFF )
-        ENDIF()
+ELSE()
+    IF( NOT DOXYGEN_FOUND )
+        MESSAGE( STATUS "Doxygen not found in your system!!" )
+    ENDIF()
+    IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
+        MESSAGE( STATUS "Latex not found in your system!!" )
+    ENDIF()
+    IF( INSTALL_DOC )
+        MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
+        SET( INSTALL_DOC OFF )
     ENDIF()
 ENDIF()
 
 IF( INSTALL_DOC )
+
+    # create documentation Doxyfile
+    CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/Doxyfile.in"
+                    "${PROJECT_BINARY_DIR}/doc/Doxyfile" IMMEDIATE @ONLY )
+
+    # create documentation overview.html
+    CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/overview.html.in"
+                    "${PROJECT_BINARY_DIR}/doc/overview.html" IMMEDIATE @ONLY )
+
     # make sure doxygen is executed before make install
     #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doc)" )
     # by just calling "make doc" doxygen won't run if the documentation has already been built
     INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
     
     # install documentation
-    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/doc"
-            DESTINATION .
-            PATTERN "*CVS*" EXCLUDE
-            PATTERN "*/.svn*" EXCLUDE
-            )
+    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc/gear"
+        PATTERN "Doxyfile" EXCLUDE
+        PATTERN "latex" EXCLUDE
+        PATTERN "overview.html*" EXCLUDE
+        PATTERN "*/.svn" EXCLUDE
+        )
+
+    # install examples
+    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc/gear" PATTERN "*/.svn" EXCLUDE )
+
 ENDIF()
+#------------------------------------------------------------------------------
 
 
-##########################################################################################
 
+#---------- rpath -----------------------------------------------------
 # add install path to the rpath list
 SET( CMAKE_INSTALL_RPATH "${CMAKE_INSTALL_PREFIX}/lib" )
 MARK_AS_ADVANCED( CMAKE_INSTALL_RPATH )
@@ -241,6 +153,7 @@ ENDIF()
 # append link pathes to rpath list
 SET( CMAKE_INSTALL_RPATH_USE_LINK_PATH 1 )
 MARK_AS_ADVANCED( CMAKE_INSTALL_RPATH_USE_LINK_PATH )
+#----------------------------------------------------------------------
 
 # output directories
 SET( EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin" CACHE PATH
@@ -256,35 +169,52 @@ ADD_CUSTOM_TARGET( lib )
 ADD_DEFINITIONS( "-Wno-long-long" )
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
-INCLUDE_DIRECTORIES( "src/cpp/include" )
 
-# input directories
-ADD_SUBDIRECTORY( src/cpp/gearxml )
-ADD_SUBDIRECTORY( src/cpp/gearimpl )
-ADD_SUBDIRECTORY( src/cpp/test )
+# -------- generate GearVersion.h ---------------------------------------------
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GearVersion.h.in"
+    "${PROJECT_BINARY_DIR}/GearVersion.h" @ONLY )
+
+INSTALL( FILES "${PROJECT_BINARY_DIR}/GearVersion.h" DESTINATION "include/gear/" )
+
+INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" )
+# -----------------------------------------------------------------------------
+
+INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
+INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
+
+# install include files
+INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
+        DESTINATION .
+        PATTERN "*~" EXCLUDE
+        PATTERN "*/.svn" EXCLUDE )
+
+INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
+INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
+
+ADD_SUBDIRECTORY( ./src )
 
 # create uninstall configuration file 
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake_uninstall.cmake.in"
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
                 "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
                 IMMEDIATE @ONLY )
 
 # create uninstall target
-ADD_CUSTOM_TARGET( uninstall "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake" )
+ADD_CUSTOM_TARGET( uninstall
+    "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
+    # cmake 2.4 does not know remove_directory
+    #COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/gear"
+    COMMAND rm -rf "${CMAKE_INSTALL_PREFIX}/doc/gear"
+    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
+    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearxml"
+)
 
 # create configuration file from .in file
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/GEARConfig.cmake.in"
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GEARConfig.cmake.in"
                 "${PROJECT_BINARY_DIR}/GEARConfig.cmake" @ONLY )
 
 # install configuration file
 INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARConfig.cmake" DESTINATION . )
 
-# install include files
-INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/src/cpp/include"
-        DESTINATION .
-        PATTERN "*~" EXCLUDE
-        PATTERN "*CVS*" EXCLUDE
-        PATTERN "*/.svn*" EXCLUDE
-        )
 
 # display status message for important variables
 MESSAGE( STATUS )
