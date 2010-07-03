@@ -24,7 +24,7 @@ INCLUDE(CTest)
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 14 )
-SET( ${PROJECT_NAME}_PATCH_LEVEL 0 )
+SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
 
 # project options
 OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
@@ -124,7 +124,7 @@ IF( INSTALL_DOC )
     INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
     
     # install documentation
-    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc/gear"
+    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc"
         PATTERN "Doxyfile" EXCLUDE
         PATTERN "latex" EXCLUDE
         PATTERN "overview.html*" EXCLUDE
@@ -132,7 +132,7 @@ IF( INSTALL_DOC )
         )
 
     # install examples
-    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc/gear" PATTERN "*/.svn" EXCLUDE )
+    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc" PATTERN "*/.svn" EXCLUDE )
 
 ENDIF()
 #------------------------------------------------------------------------------
@@ -203,7 +203,7 @@ ADD_CUSTOM_TARGET( uninstall
     "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
     # cmake 2.4 does not know remove_directory
     #COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/gear"
-    COMMAND rm -rf "${CMAKE_INSTALL_PREFIX}/doc/gear"
+    COMMAND rm -rf "${CMAKE_INSTALL_PREFIX}/doc/html"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearxml"
 )

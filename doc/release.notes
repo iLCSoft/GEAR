@@ -2,7 +2,17 @@
   Gear release notes
  ======================
 
-   ----------
+  -----------
+ | v00-14-01 |  
+  -----------
+
+    * removed aid files and generation of header files
+      - now pure C++
+
+    * improved performance of TPCParametersImpl::getNearestPad() (beJason Abernathy)
+
+ 
+  ----------
  | v00-13-01 |  
   -----------
 
