@@ -124,7 +124,14 @@ IF( INSTALL_DOC )
     INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
     
     # install documentation
-    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc"
+#    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc"
+#        PATTERN "Doxyfile" EXCLUDE
+#        PATTERN "latex" EXCLUDE
+#        PATTERN "overview.html*" EXCLUDE
+#        PATTERN "*/.svn" EXCLUDE
+#        )
+#fg: only install html directory
+    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/html" DESTINATION "doc"
         PATTERN "Doxyfile" EXCLUDE
         PATTERN "latex" EXCLUDE
         PATTERN "overview.html*" EXCLUDE

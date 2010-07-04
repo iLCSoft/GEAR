@@ -6,12 +6,21 @@
  | v00-14-01 |  
   -----------
 
+    * added release notes (missing in v00-14)  
+
+    * fixed generation of html documentation (was in ./doc/gear/html -> ./doc/html)
+
+  --------
+ | v00-14 |  
+  --------
     * removed aid files and generation of header files
       - now pure C++
 
     * improved performance of TPCParametersImpl::getNearestPad() (beJason Abernathy)
 
- 
+    * generate html documentation in build directory 
+      -> will be removed with 'make uninstall' 
+
   ----------
  | v00-13-01 |  
   -----------
