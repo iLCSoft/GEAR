@@ -54,10 +54,11 @@ ELSE()
     ADD_CUSTOM_TARGET( lib DEPENDS lib_GEARXML )
 ENDIF()
 
-# link gearxml library with gear
-#TARGET_LINK_LIBRARIES( lib_GEARXML lib_GEAR )
-# and with geartgeo
-TARGET_LINK_LIBRARIES( lib_GEARXML lib_GEAR lib_GEARTGEO )
+IF( BUILD_TGEO )
+    TARGET_LINK_LIBRARIES( lib_GEARXML lib_GEAR lib_GEARTGEO )
+ELSE()
+    TARGET_LINK_LIBRARIES( lib_GEARXML lib_GEAR )
+ENDIF()
 
 # change lib_target properties
 SET_TARGET_PROPERTIES( lib_GEARXML PROPERTIES
@@ -78,38 +79,40 @@ INSTALL( TARGETS lib_GEARXML DESTINATION lib PERMISSIONS
 
 ###### LIBGEARTGEO #########################################################
 
-# get list of all source files
-AUX_SOURCE_DIRECTORY( geartgeo libtgeo_srcs )
+IF( BUILD_TGEO )
+    # get list of all source files
+    AUX_SOURCE_DIRECTORY( geartgeo libtgeo_srcs )
 
-# create library with the list of library sources
-ADD_LIBRARY( lib_GEARTGEO ${libtgeo_srcs} )
+    # create library with the list of library sources
+    ADD_LIBRARY( lib_GEARTGEO ${libtgeo_srcs} )
 
-# cmake 2.4.6 cannot find the lib target
-IF( "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" GREATER 2.4.6 )
-    # tell lib target to call libGEARXML
-    ADD_DEPENDENCIES( lib lib_GEARTGEO )
-ELSE()
-    ADD_CUSTOM_TARGET( lib DEPENDS lib_GEARTGEO )
+    # cmake 2.4.6 cannot find the lib target
+    IF( "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" GREATER 2.4.6 )
+        # tell lib target to call libGEARXML
+        ADD_DEPENDENCIES( lib lib_GEARTGEO )
+    ELSE()
+        ADD_CUSTOM_TARGET( lib DEPENDS lib_GEARTGEO )
+    ENDIF()
+
+    # link geartgeo library with gear
+    TARGET_LINK_LIBRARIES( lib_GEARTGEO lib_GEAR )
+
+    # change lib_target properties
+    SET_TARGET_PROPERTIES( lib_GEARTGEO PROPERTIES
+        # create *nix style library versions + symbolic links
+        VERSION ${GEAR_VERSION}
+        SOVERSION ${GEAR_SOVERSION}
+        # allow building static and shared libraries on the same build tree
+        CLEAN_DIRECT_OUTPUT 1
+        # avoid conflicts between library and binary target names
+        OUTPUT_NAME geartgeo )
+
+    # install library
+    INSTALL( TARGETS lib_GEARTGEO DESTINATION lib PERMISSIONS
+            OWNER_READ OWNER_WRITE OWNER_EXECUTE
+            GROUP_READ GROUP_EXECUTE
+            WORLD_READ WORLD_EXECUTE )
 ENDIF()
-
-# link geartgeo library with gear
-TARGET_LINK_LIBRARIES( lib_GEARTGEO lib_GEAR )
-
-# change lib_target properties
-SET_TARGET_PROPERTIES( lib_GEARTGEO PROPERTIES
-    # create *nix style library versions + symbolic links
-    VERSION ${GEAR_VERSION}
-    SOVERSION ${GEAR_SOVERSION}
-    # allow building static and shared libraries on the same build tree
-    CLEAN_DIRECT_OUTPUT 1
-    # avoid conflicts between library and binary target names
-    OUTPUT_NAME geartgeo )
-
-# install library
-INSTALL( TARGETS lib_GEARTGEO DESTINATION lib PERMISSIONS
-        OWNER_READ OWNER_WRITE OWNER_EXECUTE
-        GROUP_READ GROUP_EXECUTE
-        WORLD_READ WORLD_EXECUTE )
 
 
 
