@@ -138,8 +138,6 @@ SET( test_bins
     testVTXgear
     testSiPlanesgear
     
-    testGearTGeo
-
     testAngularLayout
     testDistanceToModule
     testGearMgr
@@ -149,6 +147,10 @@ SET( test_bins
     testVersatileLayout
     testXMLOut
 )
+
+IF( BUILD_TGEO )
+    SET( test_bins ${test_bins} testGearTGeo )
+ENDIF()
 
 ADD_CUSTOM_TARGET( tests )
 
