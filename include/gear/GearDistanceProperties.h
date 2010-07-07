@@ -26,12 +26,12 @@ public:
 
     /** List of matrial names along the distance between [p0,p1] .
      */
-    virtual const std::vector<std::string>  & getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual const std::vector<std::string>  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
 
     /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
      *  returned by  getMaterialNames().
      */
-    virtual const std::vector<double>  & getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual const std::vector<double>  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
 
     /** The number of radiation lengths along the distance between [p0,p1] .
      */

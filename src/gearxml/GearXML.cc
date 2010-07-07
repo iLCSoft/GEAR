@@ -16,6 +16,10 @@
 #include "gear/VXDParameters.h"
 #include "gear/SiPlanesParameters.h"
 
+#include "geartgeo/TGeoGeometryInitializer.h"
+#include "geartgeo/TGeoGearPointProperties.h"
+#include "geartgeo/TGeoGearDistanceProperties.h"
+
 //#include <algorithm>
 #include <sstream>
 #include <iostream>
@@ -424,6 +428,16 @@ namespace gear{
       handler.fromXML( field->ToElement() , _gearMgr ) ; 
     }
 
+//-----GDML File ---------------
+    TiXmlNode* gdmlfile = root->FirstChild("GDMLFile")  ;
+    if( gdmlfile != 0 ){
+      std::string gdmlname  =  getXMLAttribute( gdmlfile, "name" )  ;
+      TGeoGeometryInitializer *tgeoini=TGeoGeometryInitializer::getTGeoGeometryInitializer(gdmlname);
+      TGeoGearPointProperties *tgeopoint=new TGeoGearPointProperties(tgeoini->getGeoManager());
+      TGeoGearDistanceProperties *tgeodist=new TGeoGearDistanceProperties(tgeoini->getGeoManager());
+      _gearMgr->setPointProperties(tgeopoint);
+      _gearMgr->setDistanceProperties(tgeodist);
+    }
 
     TiXmlNode* det = 0 ;
     while( ( det = detectors->IterateChildren( "detector", det ) )  != 0  ){

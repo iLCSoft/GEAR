@@ -28,7 +28,7 @@ SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
 
 # project options
 OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
-OPTION( BUILD_32BIT_COMPATIBLE "Set to ON to build in 32 bit compatibility mode" OFF )
+OPTION( BUILD_32BIT_COMPATIBLE "Set to ON to build in 32 bit compatibility mode" ON )
 OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" ON )
 
 # set default cmake build type to RelWithDebInfo
@@ -197,8 +197,29 @@ INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
 
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
+INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
+
+SET( ${PROJECT_NAME}_DEPENDS "ROOT" )
+SET( ROOT_USE_COMPONENTS Gdml Geom )
+
+# DEPENDENCIES: this code has to be placed before adding any library or
+# executable so that these are linked properly against the dependencies
+IF( DEFINED ${PROJECT_NAME}_DEPENDS OR DEFINED BUILD_WITH OR DEFINED LINK_WITH )
+    IF( NOT DEFINED CMAKE_MODULE_PATH )
+        MESSAGE( FATAL_ERROR "CMAKE_MODULE_PATH not set! Set it with: "
+            "-DCMAKE_MODULE_PATH=\"/path_to_ilcsoft/CMakeModules\"" )
+    ENDIF()
+    # load macro
+    INCLUDE( "MacroCheckDeps" )
+    CHECK_DEPS()
+ENDIF()
+
+
 
 ADD_SUBDIRECTORY( ./src )
+
+# FIXME
+#ADD_SUBDIRECTORY( ./src/geartgeo )
 
 # create uninstall configuration file 
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"

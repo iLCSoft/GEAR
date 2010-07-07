@@ -1,0 +1,9 @@
+<gear>
+    <global detectorName="D09" />
+    <!--Gear XML file automatically created with GearXML::createXMLFile ....-->
+    <GDMLFile name="GDMLOutput-TPC.xml"/>
+    <BField type="ConstantBField" x="0.000000000e+00" y="0.000000000e+00" z="4.000000000e+00" />
+    <detectors>
+        
+</detectors>
+</gear>

@@ -204,6 +204,14 @@ inline Vector3D operator-(  const Vector3D& a, const Vector3D& b ) {
   
   return Vector3D( a.x() - b.x()  , a.y() - b.y(), a.z() - b.z()  ) ;
 }
+/** Comparison of two vectors */
+inline bool operator==(  const Vector3D& a, const Vector3D& b ) { 
+  
+  if( a.x() == b.x()  &&  a.y() == b.y() && a.z() == b.z()  ) 
+    return true;
+  else
+    return false;
+}
 
 /** Multiplication with scalar */
 inline Vector3D operator*( double s , const Vector3D& v ) { 
