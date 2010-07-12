@@ -66,7 +66,7 @@ int main(int argc, char**argv){
   // --- testing geartgeo ---
   try{
     TGeoGearDistanceProperties &distProp = (TGeoGearDistanceProperties&)gearMgr->getDistanceProperties();
-    TGeoGearPointProperties &pointProp = (TGeoGearPointProperties&)gearMgr->getPointProperties();
+    //TGeoGearPointProperties &pointProp = (TGeoGearPointProperties&)gearMgr->getPointProperties();
 
     Vector3D initial, final;
     std::vector<std::string> matNames,volNames;
@@ -79,13 +79,13 @@ int main(int argc, char**argv){
 	final[0] = 0.0;
 	final[1] = R*sin(theta*3.14/180);
 	final[2] = R*cos(theta*3.14/180);
-	//	std::cout<<"# "<<final[1]<<" "<<final[2]<<" "<<pointProp.getListOfLogicalVolumes(final)[0]<<std::endl;
+	//std::cout<<"# "<<final[1]<<" "<<final[2]<<" "<<pointProp.getListOfLogicalVolumes(initial)[0]<<std::endl;
 	double radLen=distProp.getNRadlen(initial, final);
 	matNames = distProp.getMaterialNames(initial, final);
 	volNames = distProp.getVolumeNames(initial, final);
 	std::cout << theta<<" "<<radLen<< std::endl;
 	//for(unsigned int i=0; i<matNames.size();i++)
-	//std::cout <<"#"<< volNames[i].c_str()<<" "<<matNames[i].c_str() << std::endl;
+	//  std::cout <<"#"<< volNames[i].c_str()<<" "<<matNames[i].c_str() << std::endl;
       }
   }
   catch(NotImplementedException e){}

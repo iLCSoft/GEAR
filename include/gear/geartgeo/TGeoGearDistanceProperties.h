@@ -62,7 +62,7 @@ public:
     virtual double getEdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
 protected:
-    void beamOn(const Vector3D & p0, const Vector3D & p1)const;
+    void beamOn(const Vector3D & p0, const Vector3D & p1)const throw (OutsideGeometryException, std::exception );
     TGeoManager *_tgeomanager;
     //two points to keep track of what has already been called and in memory at the moment
     mutable Vector3D _p0;

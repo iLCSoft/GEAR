@@ -38,6 +38,8 @@ namespace gear {
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
     if(node)
       matName=node->GetMedium()->GetMaterial()->GetName();
+    else
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     return matName;
     
   }
@@ -54,8 +56,10 @@ namespace gear {
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
     if(node)
       density=node->GetMedium()->GetMaterial()->GetDensity();
+    else
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     return density;
-   
+    
   }
   double TGeoGearPointProperties::getTemperature(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
     
@@ -68,6 +72,8 @@ namespace gear {
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
     if(node)
       temperature=node->GetMedium()->GetMaterial()->GetTemperature();
+    else
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     return temperature;
   }
   
@@ -84,6 +90,8 @@ namespace gear {
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
     if(node)
       pressure=node->GetMedium()->GetMaterial()->GetPressure();
+    else
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     return pressure;
     
   }
@@ -101,6 +109,8 @@ namespace gear {
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
     if(node)
       radLen=node->GetMedium()->GetMaterial()->GetRadLen();
+    else
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     return radLen;
   }
   
@@ -117,6 +127,8 @@ namespace gear {
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
     if(node)
       intLen=node->GetMedium()->GetMaterial()->GetIntLen();
+    else
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     return intLen;
   }
   
@@ -157,7 +169,10 @@ namespace gear {
     position[1] = pos[1];
     position[2] = pos[2];
     std::vector<std::string> names;
-    _tgeomanager->FindNode(position[0],position[1],position[2]);
+    TGeoNode *node= _tgeomanager->FindNode(position[0],position[1],position[2]);
+    if(!node)
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
+    
     TGeoVolume *cvol=_tgeomanager->GetCurrentVolume();
     int count=0;
     while(cvol)
@@ -183,6 +198,8 @@ namespace gear {
     
     std::vector<std::string> names;
     TGeoNode *node=_tgeomanager->FindNode(position[0],position[1],position[2]);
+    if(!node)
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
     
     int count=0;
     while(node)

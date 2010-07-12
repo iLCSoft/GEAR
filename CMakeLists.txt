@@ -201,7 +201,7 @@ INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/incl
 
 IF( BUILD_TGEO )
     SET( ${PROJECT_NAME}_DEPENDS "ROOT" )
-    SET( ROOT_USE_COMPONENTS Gdml Geom )
+    SET( ROOT_USE_COMPONENTS Gdml Geom XMLIO)
 
     # DEPENDENCIES: this code has to be placed before adding any library or
     # executable so that these are linked properly against the dependencies

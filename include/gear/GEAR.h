@@ -110,6 +110,25 @@ typedef std::vector<std::string> StringVec ;
     virtual ~UnknownParameterException() throw() { /*no_op*/; } 
 
   }; 
+
+  /** OutsideGeometryException used if user asks for info from geometry tree
+   * where no node is defined.
+   *  call Processor::end().
+   * @author muennich
+   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   */
+   class OutsideGeometryException : public Exception{
+
+  protected:
+    OutsideGeometryException() {  /*no_op*/ ; } 
+
+  public: 
+    OutsideGeometryException( std::string text ){
+      message = "gear::OutsideGeometryException: " + text ;
+    }
+    virtual ~OutsideGeometryException() throw() { /*no_op*/; } 
+
+  }; 
 }
 
 namespace gear {

@@ -13,7 +13,7 @@ namespace gear {
   }
   
   
-  void TGeoGearDistanceProperties::beamOn(const Vector3D &p0, const Vector3D &p1) const
+  void TGeoGearDistanceProperties::beamOn(const Vector3D &p0, const Vector3D &p1) const throw (OutsideGeometryException, std::exception )
   {
     //check if this point was just computetd and the values are still in memory
     if(p0==_p0 && p1==_p1)
@@ -36,13 +36,17 @@ namespace gear {
       direction[i] = endpoint[i] - startpoint[i];
       L+=direction[i]*direction[i];
     }
+    
     //normalize direction
     for(unsigned int i=0; i<3; i++)
       direction[i]=direction[i]/sqrt(L);
 
     _tgeomanager->AddTrack(0,11);
-     TGeoNode *node1 = _tgeomanager->InitTrack(startpoint, direction);
-       
+    TGeoNode *node1 = _tgeomanager->InitTrack(startpoint, direction);
+    //check if there is a node at startpoint
+    if(!node1)
+      throw OutsideGeometryException("No geometry node found at given location. Either there is no node placed here or position is outside of top volume.");
+    
     while (!_tgeomanager->IsOutside()) 
       {
 	TGeoNode *node2;

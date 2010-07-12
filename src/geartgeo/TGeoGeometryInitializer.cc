@@ -25,10 +25,8 @@ namespace gear {
   TGeoGeometryInitializer::TGeoGeometryInitializer(std::string gdmlFile)
   {
     TGDMLParse gdmlparser;
-    //    _geoMgr = new TGeoManager("","");
-    //FIXME unused variable must stay here for now
-    TGeoManager *temp = new TGeoManager("","");
-    TGeoVolume *top=gdmlparser.GDMLReadFile(gdmlFile.c_str());
+     _geoMgr = new TGeoManager("","");
+     TGeoVolume *top=gdmlparser.GDMLReadFile(gdmlFile.c_str());
     _geoMgr=top->GetGeoManager();
     _geoMgr->SetTopVolume(top);
     _geoMgr->CloseGeometry();
