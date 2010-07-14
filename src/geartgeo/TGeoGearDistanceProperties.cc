@@ -94,7 +94,7 @@ namespace gear {
 
   /** List of matrial names along the distance between [p0,p1] .
    */
-  const std::vector<std::string>  TGeoGearDistanceProperties::getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  const std::vector<std::string>&  TGeoGearDistanceProperties::getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
     
     beamOn(p0, p1);
     
@@ -113,7 +113,7 @@ namespace gear {
   /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
    *  returned by  getMaterialNames().
    */
-  const std::vector<double>  TGeoGearDistanceProperties::getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  const std::vector<double>&  TGeoGearDistanceProperties::getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
         
     beamOn(p0, p1);
     

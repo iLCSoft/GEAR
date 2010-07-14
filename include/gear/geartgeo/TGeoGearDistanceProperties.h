@@ -24,22 +24,18 @@ public:
     /// Destructor.
     virtual ~TGeoGearDistanceProperties() { /* nop */; }
 
-    /** List of matrial names along the distance between [p0,p1] .
-     * This function does not return a reference but will copy the vector 
-     * because the contents of the vector can change do to its mutable state.
-     * Example: user calls getMaterialNames(p1,p2) and _matNames gets filled by beamOn,
-     * then the user calls getMaterialThickness(p3,p4) and all private variables including 
-     * _matNames will be filled again with the values for the two new points, therefore
-     * the reference from the function call of getMaterialNames(p1,p2) would now point to the 
-     * result from getMaterialNames(p3,p4).
+    /** List of matrial names along the distance between [p0,p1]- WARNING: this method returns a reference to a vector that will
+     *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
+     *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<std::string>  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual const std::vector<std::string>&  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
  /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
-     *  returned by  getMaterialNames().
-     * With the same argument as for getMaterialNames() this function has to be returned by value not by reference.
+     *  returned by  getMaterialNames() - WARNING: this method returns a reference to a vector that will
+     *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
+     *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<double>  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual const std::vector<double>&  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
 
     /** List of traversed volumes by name.
      */

@@ -8,30 +8,37 @@
 #include "GEAR.h"
 
 namespace gear {
-
-/** Abstract interface for a class that returns the (material) properties along a given distance 
- *  between two points in in world coordinates. 
- *  No assumption is made on the tool used to implement the functionality.
- * 
- *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
- *
- * @author F. Gaede, DESY
- * @version $Id: GearDistanceProperties.aid,v 1.3 2007-03-07 15:37:45 gaede Exp $
- */
-class GearDistanceProperties {
-
-public: 
+  
+  /** Abstract interface for a class that returns the (material) properties along a given distance 
+   *  between two points in in world coordinates. 
+   *  No assumption is made on the tool used to implement the functionality.
+   * 
+   *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
+   *
+   * @author F. Gaede, DESY
+   * @version $Id: GearDistanceProperties.aid,v 1.3 2007-03-07 15:37:45 gaede Exp $
+   */
+  class GearDistanceProperties {
+    
+  public: 
     /// Destructor.
     virtual ~GearDistanceProperties() { /* nop */; }
-
-    /** List of matrial names along the distance between [p0,p1] .
+    
+    /** List of material names along the distance between [p0,p1] - WARNING: this method returns a reference to a vector that will
+     *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
+     *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<std::string>  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual const std::vector<std::string>&  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    
 
     /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
-     *  returned by  getMaterialNames().
+     *  returned by  getMaterialNames() - WARNING: this method returns a reference to a vector that will
+     *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
+     *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<double>  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual const std::vector<double>&  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+
+
 
     /** The number of radiation lengths along the distance between [p0,p1] .
      */
