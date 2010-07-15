@@ -66,27 +66,27 @@ int main(int argc, char**argv){
   // --- testing geartgeo ---
   try{
     TGeoGearDistanceProperties &distProp = (TGeoGearDistanceProperties&)gearMgr->getDistanceProperties();
-    //TGeoGearPointProperties &pointProp = (TGeoGearPointProperties&)gearMgr->getPointProperties();
-
+    TGeoGearPointProperties &pointProp = (TGeoGearPointProperties&)gearMgr->getPointProperties();
+    
     Vector3D initial, final;
     std::vector<std::string> matNames,volNames;
     initial[0] = 0.0;
     initial[1] = 0.0;
     initial[2] = 0.0;
-    double R=1000;
-    for(int theta=0;theta<90;theta++)
-      {
-	final[0] = 0.0;
-	final[1] = R*sin(theta*3.14/180);
-	final[2] = R*cos(theta*3.14/180);
-	//std::cout<<"# "<<final[1]<<" "<<final[2]<<" "<<pointProp.getListOfLogicalVolumes(initial)[0]<<std::endl;
-	double radLen=distProp.getNRadlen(initial, final);
-	matNames = distProp.getMaterialNames(initial, final);
-	volNames = distProp.getVolumeNames(initial, final);
-	std::cout << theta<<" "<<radLen<< std::endl;
-	//for(unsigned int i=0; i<matNames.size();i++)
-	//  std::cout <<"#"<< volNames[i].c_str()<<" "<<matNames[i].c_str() << std::endl;
-      }
+    
+    final[0] = 50.0;
+    final[1] = 50.0;
+    final[2] = 50.0;
+    
+    std::cout<<"Top logical volume containing point (0,0,0): "<<pointProp.getListOfLogicalVolumes(initial)[0]<<std::endl;
+    double radLen=distProp.getNRadlen(initial, final);
+    matNames = distProp.getMaterialNames(initial, final);
+    volNames = distProp.getVolumeNames(initial, final);
+    std::cout<<"Radiation length between (0,0,0) and (50,50,50): "<<radLen<<std::endl;
+    std::cout<<"Volumes and their material between (0,0,0) and (50,50,50): "<<std::endl;
+    for(unsigned int i=0; i<volNames.size();i++)
+      std::cout <<i<<" "<< volNames[i]<<" "<<matNames[i] << std::endl;
+      
   }
   catch(NotImplementedException e){}
   

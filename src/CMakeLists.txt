@@ -136,8 +136,7 @@ SET( test_bins
     testgear
     testtpcproto
     testVTXgear
-    testSiPlanesgear
-    
+    testSiPlanesgear    
     testAngularLayout
     testDistanceToModule
     testGearMgr
@@ -149,7 +148,7 @@ SET( test_bins
 )
 
 IF( BUILD_TGEO )
-    SET( test_bins ${test_bins} testGearTGeo )
+    SET( test_bins ${test_bins} testGearTGeo testMaterialBudget)
 ENDIF()
 
 ADD_CUSTOM_TARGET( tests )

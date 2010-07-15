@@ -441,6 +441,9 @@ namespace gear{
       _gearMgr->setPointProperties(tgeopoint);
       _gearMgr->setDistanceProperties(tgeodist);
     }
+    else
+      throw ParseException( std::string( "GearXML::createGearMgr : no GDMLFile tag found in  ") 
+			    + _fileName  ) ;
 #endif
 
     TiXmlNode* det = 0 ;

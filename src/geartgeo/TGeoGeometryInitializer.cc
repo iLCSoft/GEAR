@@ -27,6 +27,9 @@ namespace gear {
     TGDMLParse gdmlparser;
      _geoMgr = new TGeoManager("","");
      TGeoVolume *top=gdmlparser.GDMLReadFile(gdmlFile.c_str());
+     if(!top)
+       throw ParseException( std::string( "TGeoGeometryInitializer: Could not find GDML file ") 
+			    + gdmlFile  ) ;
     _geoMgr=top->GetGeoManager();
     _geoMgr->SetTopVolume(top);
     _geoMgr->CloseGeometry();
