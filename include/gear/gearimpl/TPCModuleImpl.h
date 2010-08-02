@@ -11,7 +11,6 @@ namespace gear {
  * appropriate functionality.
  *
  * @author M. Killenberg, (Bonn)  S. Turnbull, (Saclay/Carleton)
- * @version $Id: TPCModuleImpl.h,v 1.2 2009-02-27 09:00:50 gaede Exp $
  */
 
 class TPCModuleImpl : public GearParametersImpl, public TPCModule 
@@ -24,6 +23,7 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
     double _readoutFrequency;
     gear::Vector2D _offset; ///< The offset in cordinates described by _momsCoordinateType
     gear::Vector2D _offset_cartesian; ///< The offset in cartesian cordinates
+    double _zPosition; ///< The z positon of the module
     double _angle;
     int _momsCoordinateType; ///< AKA coordinate type of the TPC which contains this module
     int _moduleID;
@@ -221,6 +221,14 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     virtual const gear::Vector2D & getOffset() const { return _offset; }
 
+    /** Returns the z position of the module. This is the position of the 
+     *  anode surface terminating the drift volume. For prototypes this will
+     *  typically be 0 so z is propotional to the drift distance.
+     *  For a full detector positive and negative values correspond to modules
+     *  on the first and second end cap, resepctively.
+     */
+    virtual const double getZPosition() const {return _zPosition; }
+
     /** Returns the rotation of the module, in Rads, with respect 
      *  to the modules internal origin.
      */
@@ -246,6 +254,18 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     virtual bool isOverlapping(TPCModule * testThisModule) const;
 
+    /** Returns the amount by which the pad plane has been
+     *  extended to produce the module plane.
+     *
+     *  In cartesian coordinates the plane is extended in x and y 
+     *  by this ammount on all sides. 
+     *
+     *  In polar coordinates the 
+     *  r-coordinate is extended by the borderwidth, in \f$\varphi\f$  it is 
+     *  extended by an angle corresponding to \c borderWidth/rMin,
+     *  so that the border is at least boderWidth at the inner radius
+     *  and somewhat wider for larger  r.
+     */
     virtual double getBorderWidth() const { return _border;}
 
     /** Returns the TPCs coordinate type. Note that this is NOT the 
@@ -254,7 +274,11 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     int getTPCCoordinateType() const {return _momsCoordinateType;}
 
+    /// Set the offset of the local pad plane wrt. the local coordinate system
     void setOffset(double x_r, double y_phi);
+
+    /// Set the z position of the module
+    void setZPosition(double z);
     
     void setAngle(double angle);
 

@@ -33,6 +33,7 @@
            Combinded with the values of phiMin and phiMax 
            the Module is 1/8 of a full circle. -->
        <enlargeActiveAreaBy value="1."/>
+       <zPosition value="115.3"/>
      </default>
 
      <module>
@@ -78,6 +79,7 @@
                          padWidth="9.0" rowHeight="10.0" />
        </PadRowLayout2D>
        <enlargeActiveAreaBy value="1."/>
+       <zPosition value="-75."/>
      </module>
 
      <module>
@@ -94,6 +96,7 @@
 	                padWidth="9.0" rowHeight="10.0" />
        </PadRowLayout2D>
        <enlargeActiveAreaBy value="1."/>
+       <zPosition value="-75."/>
      </module>
   </modules>
 

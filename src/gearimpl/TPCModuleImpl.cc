@@ -945,6 +945,7 @@ namespace gear {
 	  _offset[1]=0;
 	  _offset_cartesian[0]=0;
 	  _offset_cartesian[1]=0;
+	  _zPosition=0;
 	  _angle =0 ;
     }
 
@@ -1230,6 +1231,11 @@ namespace gear {
 	}
 	// recalculate the plane extents
 	convertLocalPlaneToGlobalPlaneExtend();
+    }
+
+    void TPCModuleImpl::setZPosition(double z)
+    {
+      _zPosition = z;
     }
 
     void TPCModuleImpl::setAngle(double angle)

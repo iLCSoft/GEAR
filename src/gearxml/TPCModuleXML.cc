@@ -43,6 +43,10 @@ TiXmlElement TPCModuleXML::toXML( const TPCModule* module ) const
     offsetElement.SetDoubleAttribute( "y_phi", module->getOffset()[1] );
     tpcModuleXML.InsertEndChild(offsetElement);
 
+    TiXmlElement zPositionElement("zPosition");
+    zPositionElement.SetDoubleAttribute( "value", module->getZPosition() );
+    tpcModuleXML.InsertEndChild(zPositionElement);
+
     TiXmlElement angleElement("angle");
     angleElement.SetDoubleAttribute( "value", module->getAngle() );
     tpcModuleXML.InsertEndChild(angleElement);
@@ -132,6 +136,17 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
 			       atof( getXMLAttribute( offsetElement , "y_phi" ).c_str() ) );
     }
     
+    // the z position
+    const TiXmlElement* zPositionElement = moduleElement->FirstChildElement( "zPosition" );
+    if ( ( zPositionElement == 0 ) && defaultModuleElement) // tag has not been found
+    {
+	//try to find it in the defaultModuleElement
+	zPositionElement = defaultModuleElement->FirstChildElement( "zPosition" );
+    }
+    if ( readoutFrequencyElement != 0 ) // tag has been found
+    {
+        tpcModule->setZPosition( atof( getXMLAttribute( zPositionElement , "value" ).c_str() ) );
+    }
 	// angle 
     const TiXmlElement* angleElement = moduleElement->FirstChildElement( "angle" );
     if ( ( angleElement == 0 ) && defaultModuleElement )// tag has not been found

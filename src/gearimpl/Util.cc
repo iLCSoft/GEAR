@@ -301,6 +301,7 @@ namespace gear{
     s << std::endl  << "  Number of Rows :      "  <<  m.getNRows() ;
     s << std::endl  << "  Offset :              "  <<  m.getOffset()[0] << "  ;  "
                                                    <<  m.getOffset()[1] ;
+    s << std::endl  << "  zPosition :           "  <<  m.getZPosition();
     s << std::endl  << "  Angle :               "  <<  m.getAngle();
     s << std::endl;
 
