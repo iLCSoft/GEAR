@@ -7,7 +7,12 @@
 
 namespace gear {
     /* Transforms a point from the global coordinates to Layout2D coordinates.*/
-    gear::Vector2D TPCModuleImpl::globalToLocal(double c0,double c1)const {
+    gear::Vector2D TPCModuleImpl::globalToLocal(double c0,double c1)const 
+    {
+        if ( _localIsGlobal )
+        {
+	  return Vector2D( c0, c1 );
+	}
 
 	// the global coordinates in cartesian coordinates
 	double x, y;
@@ -15,6 +20,21 @@ namespace gear {
 	{
 	    case PadRowLayout2D::POLAR :
 	    {
+	        // to speed this up: if the local coordinate system is polar and there is no offset 
+	        // the calculation is much reasyer
+	        if ( (_padRowLayout->getCoordinateType() == PadRowLayout2D::POLAR ) && 
+		     (_offset_cartesian[0] == 0 ) &&
+		     (_offset_cartesian[0] == 0 ) )
+		{
+		    double localAngle = c1 - _angle ;
+		    // wrap to 0..2pi
+		    if (localAngle < 0) localAngle+= 2*M_PI;
+		    if (localAngle > 2*M_PI) localAngle+= 2*M_PI;
+
+		    return Vector2D(c0, localAngle);
+		}
+	      
+		// there is an offset or pad plane is cartesian, we have to do the full stuff
 		x = c0 * std::cos( c1 );
 		y = c0 * std::sin( c1 );
 	    }
@@ -34,20 +54,21 @@ namespace gear {
 	double y_prime = y - _offset_cartesian[1];
 
 	// now rotate arround local origin
-	double  x_prime_rot = x_prime * std::cos( _angle ) + y_prime * std::sin( _angle );
-	double  y_prime_rot = y_prime * std::cos( _angle ) - x_prime * std::sin( _angle );
+	double  x_prime_rot = x_prime * _cos_angle + y_prime * _sin_angle;
+	double  y_prime_rot = y_prime * _cos_angle - x_prime * _sin_angle;
 
 	Vector2D toReturn;
 	switch (_padRowLayout->getCoordinateType())
 	{
 	    case PadRowLayout2D::POLAR :
 	    {
-		// trick: use the complex functionality to avoid fiddeling around
-		// with the asin / acos and their range limitations
-		std::complex<double> tmp(x_prime_rot , y_prime_rot);
-		toReturn[0] = std::abs( tmp );
-		// arg is the complex phase in (pi..pi], change range to [0..2*pi)
-		toReturn[1] = std::fmod( std::arg( tmp ) ,  2*M_PI) ;
+		toReturn[0] = std::sqrt(x_prime_rot*x_prime_rot + y_prime_rot*y_prime_rot);
+		toReturn[1] = atan2( y_prime_rot, x_prime_rot);
+		// atan gives +-pi as range, convert to 0..2pi
+		if ( toReturn[1] < 0) 
+		{
+		  toReturn[1]+=2*M_PI;
+		}
 	    }
 	    break;
 	    case  PadRowLayout2D::CARTESIAN :
@@ -64,7 +85,12 @@ namespace gear {
     } 
 
     /* Transforms a point from the Layout2D coordinates to global coordinates. */
-    gear::Vector2D TPCModuleImpl::localToGlobal(double c0,double c1)const {
+    gear::Vector2D TPCModuleImpl::localToGlobal(double c0,double c1)const 
+    {
+        if ( _localIsGlobal )
+        {
+	  return Vector2D( c0, c1 );
+	}
 
 	// x and y prime are c0 and c1 on local cartesian coordinates
 	double x_prime, y_prime;
@@ -73,15 +99,28 @@ namespace gear {
 	    case PadRowLayout2D::POLAR :
 	    {
 		double r = c0;
-		double phi = std::fmod (c1 + _angle, 2*M_PI);
+		double phi = c1 + _angle;
+
+		// if the TPC coordinate system is also polar and there is no offset we are
+		// already done
+		if ( (_momsCoordinateType == PadRowLayout2D::POLAR ) && 
+		     (_offset_cartesian[0] == 0 ) &&
+		     (_offset_cartesian[0] == 0 ) )
+		{
+		  // wrap phi to 0..2pi
+		  if (phi < 0)      phi += 2*M_PI;
+		  if (phi > 2*M_PI) phi -= 2*M_PI;
+		  return Vector2D( r, phi );
+		}
+
 		x_prime = r * std::cos( phi );
 		y_prime = r * std::sin( phi );
 	    }
 	    break;
 	    case  PadRowLayout2D::CARTESIAN :
 	    {
-		x_prime = c0 * std::cos(_angle) - c1 * std::sin(_angle);
-		y_prime = c1 * std::cos(_angle) + c0 * std::sin(_angle);
+		x_prime = c0 * _cos_angle - c1 * _sin_angle;
+		y_prime = c1 * _cos_angle + c0 * _sin_angle;
 	    }
 	    break;
 	    default:
@@ -99,12 +138,13 @@ namespace gear {
 	{
 	    case PadRowLayout2D::POLAR :
 	    {
-		// trick: use the complex functionality to avoid fiddeling around
-		// with the asin / acos and their range limitations
-		std::complex<double> tmp(x , y);
-		toReturn[0] = std::abs( tmp );
-		// arg is the complex phase in (pi..pi], change range to [0..2*pi)
-		toReturn[1] = std::fmod( std::arg( tmp ) ,  2*M_PI) ;
+	        toReturn[0] = std::sqrt(x*x+y*y);
+		toReturn[1] = atan2(y,x) ;
+		// atan gives +-pi as range, convert to 0..2pi
+		if ( toReturn[1] < 0 )
+		{
+		    toReturn[1] += 2*M_PI;
+		}
 	    }
 	    break;
 	    case  PadRowLayout2D::CARTESIAN :
@@ -947,6 +987,10 @@ namespace gear {
 	  _offset_cartesian[1]=0;
 	  _zPosition=0;
 	  _angle =0 ;
+	  _cos_angle = 1;
+	  _sin_angle = 0;
+	  
+	  checkLocalIsGlobal();
     }
 
     TPCModuleImpl::TPCModuleImpl(const TPCModuleImpl &right)
@@ -970,9 +1014,12 @@ namespace gear {
 	_offset = right._offset;
 	_offset_cartesian = right._offset_cartesian;
 	_angle = right._angle;
+	_cos_angle = right._cos_angle;
+	_sin_angle = right._sin_angle;
 	_momsCoordinateType = right._momsCoordinateType;
 	_moduleID = right._moduleID;
 	_border = right._border;
+	_localIsGlobal = right._localIsGlobal;
 
 	// test all knows possible instances of padRowLayout
 	_padRowLayout = right._padRowLayout->clone();
@@ -1231,6 +1278,7 @@ namespace gear {
 	}
 	// recalculate the plane extents
 	convertLocalPlaneToGlobalPlaneExtend();
+	checkLocalIsGlobal();
     }
 
     void TPCModuleImpl::setZPosition(double z)
@@ -1241,8 +1289,11 @@ namespace gear {
     void TPCModuleImpl::setAngle(double angle)
     {
 	_angle= angle;
+	_cos_angle =  std::cos( angle );
+	_sin_angle =  std::sin( angle );
 	// recalculate the plane extents
 	convertLocalPlaneToGlobalPlaneExtend();
+	checkLocalIsGlobal();
     }
     
     void TPCModuleImpl::setReadoutFrequency(double frequency) 
@@ -1253,5 +1304,20 @@ namespace gear {
 //		  << std::endl;
 	
 	_readoutFrequency = frequency;
+    }
+
+    void TPCModuleImpl::checkLocalIsGlobal()
+    {
+      if ( (_momsCoordinateType == _padRowLayout->getCoordinateType())
+	   && (_angle == 0. ) 
+	   && ( _offset[0] == 0. )
+	   && ( _offset[1] == 0. ) )
+      {
+	_localIsGlobal = true;
+      }
+      else
+      {
+	_localIsGlobal = false;
+      }
     }
 }// namespace gear

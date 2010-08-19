@@ -24,11 +24,15 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
     gear::Vector2D _offset; ///< The offset in cordinates described by _momsCoordinateType
     gear::Vector2D _offset_cartesian; ///< The offset in cartesian cordinates
     double _zPosition; ///< The z positon of the module
-    double _angle;
+    double _angle; ///< The angle wrt. the local coordinate system
+    double _cos_angle; ///< For performance: cache the cosine of the angle
+    double _sin_angle; ///< For performance: cache the sine of the angle
     int _momsCoordinateType; ///< AKA coordinate type of the TPC which contains this module
     int _moduleID;
     double _border; ///< Area around a pad Plane to extend the amplification reagion so that the outmost pads don't loose elecetrons  
     
+    bool _localIsGlobal; // flag to improve performance if local and global coordinates are the same
+
     /** Transforms the local planeExtend to a global planeExtend, global moduleExtend 
      *  and localModuleExtend.
      */
@@ -61,6 +65,10 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
    */
   void cleanup();
     
+
+  /** Function to set the _localIsGlobal flag in case both coordinate systems are identical
+   */
+  void checkLocalIsGlobal();
 
  public: 
     
