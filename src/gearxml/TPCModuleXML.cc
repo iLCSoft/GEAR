@@ -143,7 +143,7 @@ TPCModule* TPCModuleXML::fromXML( const TiXmlElement* moduleElement ,
 	//try to find it in the defaultModuleElement
 	zPositionElement = defaultModuleElement->FirstChildElement( "zPosition" );
     }
-    if ( readoutFrequencyElement != 0 ) // tag has been found
+    if ( zPositionElement != 0 ) // tag has been found
     {
         tpcModule->setZPosition( atof( getXMLAttribute( zPositionElement , "value" ).c_str() ) );
     }
