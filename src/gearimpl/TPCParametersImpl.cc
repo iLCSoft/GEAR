@@ -239,20 +239,25 @@ namespace gear {
 	_TPCModules.push_back(TPCModule);
 
 
- 	//init active area to NULL
- 	    
-	if(TPCModule->getModuleExtent().at(0) < _planeExtent.at(0)) {
-	    _planeExtent.at(0)=TPCModule->getModuleExtent().at(0);
+	if (_TPCModules.size() == 1 ) // there is only one module, copy the plane extent
+	{
+	  _planeExtent = TPCModule->getModuleExtent();
 	}
-	if(TPCModule->getModuleExtent().at(1) > _planeExtent.at(1)) {
-	    _planeExtent.at(1)=TPCModule->getModuleExtent().at(1);
-	}
-	if(TPCModule->getModuleExtent().at(2) < _planeExtent.at(2)) {
-	    _planeExtent.at(2)=TPCModule->getModuleExtent().at(2);
-	}
-	if(TPCModule->getModuleExtent().at(3) > _planeExtent.at(3)) {
-	    _planeExtent.at(3)=TPCModule->getModuleExtent().at(3);
-	}
+	else // check for each boundary
+	{
+	  if(TPCModule->getModuleExtent().at(0) < _planeExtent.at(0)) {
+	      _planeExtent.at(0)=TPCModule->getModuleExtent().at(0);
+	  }
+	  if(TPCModule->getModuleExtent().at(1) > _planeExtent.at(1)) {
+	      _planeExtent.at(1)=TPCModule->getModuleExtent().at(1);
+	  }
+	  if(TPCModule->getModuleExtent().at(2) < _planeExtent.at(2)) {
+	      _planeExtent.at(2)=TPCModule->getModuleExtent().at(2);
+	  }
+	  if(TPCModule->getModuleExtent().at(3) > _planeExtent.at(3)) {
+	      _planeExtent.at(3)=TPCModule->getModuleExtent().at(3);
+	  }
+	}// else (_TPCModules.size() == 1 ) 
     }
 
     /** returns refeance to vector of Modules 
