@@ -3,6 +3,12 @@
  ======================
 
   -----------
+ | v00-14-02 |  
+  -----------
+
+    * fixed bug in calculation of overall TPC plane extent (M.Killenberg)
+
+  -----------
  | v00-14-01 |  
   -----------
 

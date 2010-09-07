@@ -24,7 +24,7 @@ INCLUDE(CTest)
 # project version
 SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
 SET( ${PROJECT_NAME}_MINOR_VERSION 14 )
-SET( ${PROJECT_NAME}_PATCH_LEVEL 1 )
+SET( ${PROJECT_NAME}_PATCH_LEVEL 2 )
 
 # project options
 OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
