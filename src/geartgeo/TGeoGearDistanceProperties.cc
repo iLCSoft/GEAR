@@ -6,6 +6,8 @@
 #include "TVirtualGeoTrack.h"
 #include "TGeoNode.h"
 
+#define MINSTEP 1.e-5
+
 namespace gear {
 
   TGeoGearDistanceProperties::TGeoGearDistanceProperties(TGeoManager *geoMgr){
@@ -52,16 +54,27 @@ namespace gear {
 	TGeoNode *node2;
 	TVirtualGeoTrack *track; 
 	node2 = _tgeomanager->FindNextBoundaryAndStep(500, 1) ;
-	if(!node2)
-	  break;
+
+	if(!node2 || _tgeomanager->IsOutside())
+	  {
+	    //std::cout<<"Requested end point outside of Geometry! Stopping at boundary."<<std::endl;
+	    break;
+	  }
 	
 	double *position =(double*) _tgeomanager->GetCurrentPoint();
 	double *previouspos =(double*) _tgeomanager->GetLastPoint();
 	double length=_tgeomanager->GetStep();
 	track = _tgeomanager->GetLastTrack();
-	
+	//protection against infinitive loop in root which should not happen, but well it does...
+	if(length<MINSTEP)
+	  {
+	    _tgeomanager->SetCurrentPoint(position[0]+MINSTEP*direction[0], position[1]+MINSTEP*direction[1], position[2]+MINSTEP*direction[2]);
+	    length=_tgeomanager->GetStep();
+	    node2 = _tgeomanager->FindNextBoundaryAndStep(500, 1) ;
+	  }
 	//if the next boundary is further than end point
-	if(position[0]-endpoint[0]>0 || position[1]-endpoint[1]>0 || position[2]-endpoint[2]>0)
+	 if(fabs(position[0])>fabs(endpoint[0]) || fabs(position[1])>fabs(endpoint[1]) 
+	 || fabs(position[2])>fabs(endpoint[2]))
 	  {
 	    length=sqrt(pow(endpoint[0]-previouspos[0],2)
 			+pow(endpoint[1]-previouspos[1],2)

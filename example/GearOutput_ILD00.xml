@@ -1,8 +1,8 @@
 <gear>
     <global detectorName="ILD_00" />
     <!--Gear XML file automatically created with GearXML::createXMLFile ....-->
-    <BField type="ConstantBField" x="0.000000000e+00" y="0.000000000e+00" z="3.500000000e+00" />
     <GDMLFile name="World_ILD00.gdml"/>
+    <BField type="ConstantBField" x="0.000000000e+00" y="0.000000000e+00" z="3.500000000e+00" />
     <detectors>
         <detector geartype="TPCParameters" name="TPC">
             <maxDriftLength value="2.247500000e+03" />
