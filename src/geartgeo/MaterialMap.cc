@@ -58,7 +58,7 @@ namespace gear {
     _zmax   =zmax    ;
     _nzsteps=nzsteps ;  
     
-    //seeting the sizes of the matrix
+    //setting the sizes of the matrix
     _myMap.resize(nxsteps+1);
     for(int s=0;s<=nxsteps;++s)
       {
@@ -81,7 +81,7 @@ namespace gear {
       _zstep=(zmax-zmin)/nzsteps;
     
     Vector3D initial,final;
-    //alwasy vertex as reference point
+    //always vertex as reference point
     initial[0]=0;
     initial[1]=0;
     initial[2]=0;
@@ -119,7 +119,7 @@ namespace gear {
 		  default:
 		    throw gear::Exception("MaterialMap constructor: unkown coordinate type");   
 		  }
-		if(final==initial)
+		if(final==initial)//no need to go to geometry 
 		  {
 		    _values.first=0;
 		    _values.second=0;
@@ -131,7 +131,6 @@ namespace gear {
 		  }
 		std::vector<int> pos;
 		calculateGridIndex(pos,x,y,z);
-		//std::cout<<x<<" "<<y<<" "<<z<<" | "<<pos[0]<<" "<<pos[1]<<" "<<pos[2]<<" | "<<_values.first<<" "<<_values.second<<std::endl;
 		_myMap[pos[0]][pos[1]][pos[2]]=_values;
 	      }//z
 	  }//y
@@ -140,7 +139,7 @@ namespace gear {
 
   double MaterialMap::getInteractionLength(double x, double y, double z)const throw (Exception, std::exception )
   {
-    //check whether point is in grid
+    //check whether point is in grid using calculateGridIndex
     std::vector<int> pos;
     calculateGridIndex(pos,x,y,z);
     std::pair<double,double> result;
@@ -150,7 +149,7 @@ namespace gear {
 
   double MaterialMap::getRadiationLength(double x, double y, double z)const throw (Exception, std::exception )
   {
-    //check whether point is in grid
+    //check whether point is in grid using calculateGridIndex
     std::vector<int> pos;
     calculateGridIndex(pos,x,y,z);
     std::pair<double,double> result;
@@ -158,7 +157,7 @@ namespace gear {
     return result.first;
   }
 
-  void MaterialMap::calculateGridIndex(std::vector<int>  & gpos,double x, double y, double z) const
+  void MaterialMap::calculateGridIndex(std::vector<int>  & gpos,double x, double y, double z) const throw (Exception, std::exception )
   {
     //check if in map
     if(x+1e-5<_xmin || x-1e-5>_xmax || y+1e-5<_ymin || y-1e-5>_ymax || z+1e-5<_zmin || z-1e-5>_zmax)
@@ -233,4 +232,5 @@ namespace gear {
     result.first=sumRadL/sumWeight;
     result.second=sumIntL/sumWeight;
   }
+
 } // namespace gear

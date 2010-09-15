@@ -56,7 +56,7 @@ namespace gear {
     double _xstep,_ystep,_zstep;
     std::pair<double,double> _values;
     std::vector< std::vector< std::vector< std::pair<double,double> > > > _myMap;
-    void calculateGridIndex(std::vector<int> & gpos,double x, double y, double z) const;
+    void calculateGridIndex(std::vector<int> & gpos,double x, double y, double z) const throw (Exception, std::exception );
     void interpolateOnGrid(std::pair<double,double> &result, double x, double y, double z) const;
   }; // class
 } // namespace gear

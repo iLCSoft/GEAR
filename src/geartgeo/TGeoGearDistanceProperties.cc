@@ -56,16 +56,15 @@ namespace gear {
 	node2 = _tgeomanager->FindNextBoundaryAndStep(500, 1) ;
 
 	if(!node2 || _tgeomanager->IsOutside())
-	  {
-	    //std::cout<<"Requested end point outside of Geometry! Stopping at boundary."<<std::endl;
-	    break;
-	  }
+	  break;
 	
 	double *position =(double*) _tgeomanager->GetCurrentPoint();
 	double *previouspos =(double*) _tgeomanager->GetLastPoint();
 	double length=_tgeomanager->GetStep();
 	track = _tgeomanager->GetLastTrack();
 	//protection against infinitive loop in root which should not happen, but well it does...
+	//work around until solution within root can be found when the step gets very small e.g. 1e-10
+	//and the next boundary is never reached
 	if(length<MINSTEP)
 	  {
 	    _tgeomanager->SetCurrentPoint(position[0]+MINSTEP*direction[0], position[1]+MINSTEP*direction[1], position[2]+MINSTEP*direction[2]);
@@ -102,14 +101,19 @@ namespace gear {
 	
 	node1=node2;
       }
-    
+    _tgeomanager->ClearTracks();
+    _tgeomanager->CleanGarbage();
   }
 
   /** List of matrial names along the distance between [p0,p1] .
    */
   const std::vector<std::string>&  TGeoGearDistanceProperties::getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
     
-    beamOn(p0, p1);
+    //check if itp0 and p1 are the same point, if so don't do anything, no material in between
+    if(p0==p1)
+      _matNames.clear();
+    else
+      beamOn(p0, p1);
     
     return _matNames;
   }
@@ -118,7 +122,11 @@ namespace gear {
    */
   const std::vector<std::string>  TGeoGearDistanceProperties::getVolumeNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
     
-    beamOn(p0, p1);
+    //check if itp0 and p1 are the same point, if so don't do anything, no material in between
+    if(p0==p1)
+      _volNames.clear();
+    else
+      beamOn(p0, p1);
     
     return _volNames;
   }
@@ -128,7 +136,11 @@ namespace gear {
    */
   const std::vector<double>&  TGeoGearDistanceProperties::getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
         
-    beamOn(p0, p1);
+    //check if itp0 and p1 are the same point, if so don't do anything, no material in between
+    if(p0==p1)
+      _distance.clear();
+    else
+      beamOn(p0, p1);
     
     return _distance;
   }
@@ -137,6 +149,10 @@ namespace gear {
    */
   double TGeoGearDistanceProperties::getNRadlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
     
+     //check if itp0 and p1 are the same point, if so don't do anything, no material in between
+    if(p0==p1)
+      return 0;
+
     beamOn(p0, p1);
     
     double nRadLen=0;
@@ -152,7 +168,10 @@ namespace gear {
    */
   double TGeoGearDistanceProperties::getNIntlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
     
-    beamOn(p0, p1);
+   if(p0==p1)
+      return 0;
+
+     beamOn(p0, p1);
     
     double nInterLen = 0;
     for(unsigned int i=0; i<_intLen.size(); i++)
@@ -170,14 +189,9 @@ namespace gear {
     
     throw NotImplementedException("getBdl not implemented yet in TGeoGearPointProperties");
     return 0;
-    double start[3], end[3];
-    for(int i=0; i<3; i++) {
-      start[i] = p0[i];
-      end[i]   = p1[i];
-    }
-    
-    
   }
+    
+    
   
   /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
    */
@@ -185,12 +199,7 @@ namespace gear {
     
     throw NotImplementedException("getEdl not implemented yet in TGeoGearPointProperties");
     return 0;
-    double start[3], end[3];
-    for(int i=0; i<3; i++) {
-      start[i] = p0[i];
-      end[i]   = p1[i];
-    }
+  }
     
-    
- }
+
 } // namespace gear
