@@ -384,15 +384,16 @@ VersatileDiskRowLayout::Row::Row(int rowNumber, int nPads, double rCentre, doubl
 
 int VersatileDiskRowLayout::Row::getNearestPad(double r, double phi) const
 {
-    // wrap angle to phiMin .. phiMin + 2 pi
-    if (phi < _offset)
-	phi += 2. * M_PI;
-
-    if (phi >= _offset + 2*M_PI)
-	phi -= 2. * M_PI;
+    // wrap phi to 0 < phi < 2*M_PI
+    
+	while( phi < 0       ) {  phi += 2. * M_PI  ; }
+    while( phi > 2.*M_PI ) {  phi -= 2. * M_PI  ; }
+	
+	//
 
     // if the angle is in the active angle one can easily calculate the pad number
-    if (phi < _offset + _nPads * _padPitch )
+    //if (phi < _offset + _nPads * _padPitch )
+    if (phi < _offset + _nPads * _padPitch)
     {
 	int padNumber = static_cast<int>(floor( (phi - _offset)/ _padPitch ));
 	
@@ -412,6 +413,11 @@ int VersatileDiskRowLayout::Row::getNearestPad(double r, double phi) const
 
 double VersatileDiskRowLayout::Row::getDistanceToRow(double r, double phi) const
 {
+    // wrap phi to 0 < phi < 2*M_PI
+    
+	while( phi < 0       ) {  phi += 2. * M_PI  ; }
+    while( phi > 2.*M_PI ) {  phi -= 2. * M_PI  ; }
+	
     // copy the code from getDistanceToPad....
 
     double r_min = _rCentre - _rowHeight*0.5;
@@ -439,7 +445,7 @@ double VersatileDiskRowLayout::Row::getDistanceToRow(double r, double phi) const
 	{    
 	    double distance_phiMin = distanceToPhiMin(r, phi);
 	    double distance_phiMax = distanceToPhiMax(r, phi);
-
+	    
 	    return (distance_phiMin < distance_phiMax ? distance_phiMin : distance_phiMax);
 
 	} //else within phi range
@@ -448,49 +454,50 @@ double VersatileDiskRowLayout::Row::getDistanceToRow(double r, double phi) const
     
 double VersatileDiskRowLayout::Row::distanceToPhiMin(double r, double phi) const
 {
-    // calculate pca to straight line along radius with phi_min;
-	    
-    // determine r_intersect for x = r_intersect * cos(_phiMin) = r* cos(phi) - m * sin(_phiMin)
-    //                           y = r_intersect * sin(_phiMin) = r*sin(phi) + m * cos(_phiMin)
-    // solve this to r_intersect and m
-    // n. B. _offset ia _phiMin
-    double r_intersect_phiMin = r * (cos(phi)*cos(_offset) + sin(phi)*sin(_offset));
-    double m_phiMin =  r * (cos(phi)*sin(_offset) - sin(phi)*cos(_offset));
+    // wrap phi to 0 < phi < 2*M_PI
     
-    if ( r_intersect_phiMin < _rMin )
-    {
-	// you can check this formula by calculaing sqrt( (x-x_min)^2 - (y-y_min)^2 )
-	// where x_min = _rMin cos(phi_min) etc.
-	return sqrt( r*r + _rMin*_rMin -2 * _rMin * r_intersect_phiMin );
-    }
-    else
-    if ( r_intersect_phiMin > _rMax ) 
-    {
-	return sqrt( r*r + _rMax*_rMax -2 * _rMax * r_intersect_phiMin );
-    }
-    else
-	return fabs( m_phiMin );
+	while( phi < 0       ) {  phi += 2. * M_PI  ; }
+    while( phi > 2.*M_PI ) {  phi -= 2. * M_PI  ; }
+	
+	//
+
+	double r_min   = _rCentre - _rowHeight*0.5;
+	double r_max   = _rCentre + _rowHeight*0.5;	
+	double phi_min = _offset;
+	
+	double distanceToCorner[2];
+	
+	distanceToCorner[0] = r_min*r_min + r*r - 2*r_min*r*cos(phi_min - phi);
+	distanceToCorner[1] = r_max*r_max + r*r - 2*r_max*r*cos(phi_min - phi);
+	
+	return sqrt(
+		distanceToCorner[0] > distanceToCorner[1] ?
+		distanceToCorner[1] : distanceToCorner[0]
+	);
 }
 
 double VersatileDiskRowLayout::Row::distanceToPhiMax(double r, double phi) const
 {
-    // now the same for _phiMax
-    double r_intersect_phiMax = r * (cos(phi)*cos(_phiMax) + sin(phi)*sin(_phiMax));
-    double m_phiMax =  r * (cos(phi)*sin(_phiMax) - sin(phi)*cos(_phiMax));
+    // wrap phi to 0 < phi < 2*M_PI
     
-    if ( r_intersect_phiMax < _rMin )
-    {
-	// you can check this formula by calculaing sqrt( (x-x_max)^2 - (y-y_max)^2 )
-	// where x_max = _rMin cos(phiMax) etc.
-	return sqrt( r*r + _rMin*_rMin -2 * _rMin * r_intersect_phiMax );
-    }
-    else
-    if ( r_intersect_phiMax > _rMax ) 
-    {
-	return sqrt( r*r + _rMax*_rMax -2 * _rMax * r_intersect_phiMax );
-    }
-    else
-	return fabs( m_phiMax );
+	while( phi < 0       ) {  phi += 2. * M_PI  ; }
+    while( phi > 2.*M_PI ) {  phi -= 2. * M_PI  ; }
+	
+	//
+	
+	double r_min   = _rCentre - _rowHeight*0.5;
+	double r_max   = _rCentre + _rowHeight*0.5;	
+	double phi_max = _offset + _nPads * _padPitch;
+	
+	double distanceToCorner[2];
+	
+	distanceToCorner[0] = r_min*r_min + r*r - 2*r_min*r*cos(phi_max - phi);
+	distanceToCorner[1] = r_max*r_max + r*r - 2*r_max*r*cos(phi_max - phi);
+
+	return sqrt(
+		distanceToCorner[0] > distanceToCorner[1] ?
+		distanceToCorner[1] : distanceToCorner[0]
+	);
 }    
 
 
