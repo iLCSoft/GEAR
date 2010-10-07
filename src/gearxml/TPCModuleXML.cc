@@ -44,8 +44,16 @@ TiXmlElement TPCModuleXML::toXML( const TPCModule* module ) const
     tpcModuleXML.InsertEndChild(offsetElement);
 
     TiXmlElement zPositionElement("zPosition");
-    zPositionElement.SetDoubleAttribute( "value", module->getZPosition() );
-    tpcModuleXML.InsertEndChild(zPositionElement);
+    try 
+    {
+      zPositionElement.SetDoubleAttribute( "value", module->getZPosition() );
+      tpcModuleXML.InsertEndChild(zPositionElement);
+    }
+    catch ( TPCModule::NoZPositionException &  )
+    {
+      // debug output
+      //      std::cout << "TPCModuleXML::toXML: Not writing z position because it was not set." << std::endl;
+    }
 
     TiXmlElement angleElement("angle");
     angleElement.SetDoubleAttribute( "value", module->getAngle() );

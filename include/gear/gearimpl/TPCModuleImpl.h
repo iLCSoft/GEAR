@@ -10,6 +10,13 @@ namespace gear {
  * between local and global coordinate systems, and adds module 
  * appropriate functionality.
  *
+ * New in v00-15: The z position of the module can be set to distinguish the two end plates.
+ * \attention For the "negative" half TPC (the half with drift direction in negative z direction)
+ * the x coodinate of global system is mirrored. The reason is that in case of two identical end plates,
+ * the one mounted on the negative side is rotated by 180 degrees around the y axis, which changes the
+ * z coordinate (drift direction) and the x coordinate.
+ * The prototype case, which is described by zPosition = 0, also has the drift direction in negative z direction.
+ *
  * @author M. Killenberg, (Bonn)  S. Turnbull, (Saclay/Carleton)
  */
 
@@ -32,6 +39,11 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
     double _border; ///< Area around a pad Plane to extend the amplification reagion so that the outmost pads don't loose elecetrons  
     
     bool _localIsGlobal; // flag to improve performance if local and global coordinates are the same
+
+    bool _zPositionIsSet; ///< Flag to show whether the setZPosition() function had been called.
+    ///< A default value of 0 would cause a minus sign on the returned x coordinate, which
+    ///< is not backward compatible. So we need a flag and only invert x if the coordinate has 
+    ///< really been set.
 
     /** Transforms the local planeExtend to a global planeExtend, global moduleExtend 
      *  and localModuleExtend.
@@ -152,14 +164,10 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     virtual const std::vector<int>& getPadsInRow(int rowNumber) const { return _padRowLayout->getPadsInRow(rowNumber); } 
 
-    /** Inherited from PadRowLayout2D, but generally not a useful measure
-     *  in global coordinates, use getModuleExtent() instead.
-     *  It is kept for backward compatibility, but only works if there is
-     *  only one module in the end cap. The module must not have an angle
-     *  or an offset, so its coordinate system is identical to the global
-     *  one. 
-     *  In case there is more than one module or there is an offset or angle
-     *  it will throw a gear::Exception.
+    /** Inherited from PadRowLayout2D. It gives the minimal set of global coodinates that
+     *  contains the pad plane. In general this does not mean that the global plane extent
+     *  if fully covered with avtive area, but only that there is no active area outside
+     *  the plane extent.
      */
     virtual const std::vector<double>& getPlaneExtent()  const throw (gear::Exception, std::exception);
 
@@ -234,8 +242,10 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      *  typically be 0 so z is propotional to the drift distance.
      *  For a full detector positive and negative values correspond to modules
      *  on the first and second end cap, resepctively.
+     *  It throws a gear::TPCModule::NoZPositionException in case setZPosition has not 
+     *  been called before.
      */
-    virtual const double getZPosition() const {return _zPosition; }
+    virtual double getZPosition() const throw (TPCModule::NoZPositionException);
 
     /** Returns the rotation of the module, in Rads, with respect 
      *  to the modules internal origin.
@@ -303,7 +313,8 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
     gear::Vector2D globalToLocal(double c0,double c1) const; ///< Transforms a point from the global coordinates to Layout2D coordinates.
     gear::Vector2D localToGlobal(double c0,double c1) const; ///< Transforms a point from the Layout2D coordinates to global coordinates. 
     
-  }; // class
+
+ }; // class
 
 } // namespace gear
 #endif // ifndef TPCModuleImpl_h

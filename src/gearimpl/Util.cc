@@ -301,7 +301,15 @@ namespace gear{
     s << std::endl  << "  Number of Rows :      "  <<  m.getNRows() ;
     s << std::endl  << "  Offset :              "  <<  m.getOffset()[0] << "  ;  "
                                                    <<  m.getOffset()[1] ;
-    s << std::endl  << "  zPosition :           "  <<  m.getZPosition();
+    try
+    {
+      s << std::endl  << "  zPosition :           "  <<  m.getZPosition();
+    }
+    catch ( TPCModule::NoZPositionException & e )
+    {
+      s << " no z Position set ";
+    }
+
     s << std::endl  << "  Angle :               "  <<  m.getAngle();
     s << std::endl;
 

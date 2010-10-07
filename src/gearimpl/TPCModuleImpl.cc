@@ -14,6 +14,26 @@ namespace gear {
 	  return Vector2D( c0, c1 );
 	}
 
+	// invert the x coordinate for negative half TPC
+	if ( _zPosition <= 0 ) // 0 is also part of the negative half TPC
+	{
+	  switch (_momsCoordinateType)
+	  {
+	    case PadRowLayout2D::POLAR :
+	      // this is the angle corresponding a mirroring at the y axis
+	      c1 = M_PI - c1; 
+	      break;
+	    case  PadRowLayout2D::CARTESIAN :
+	      c0 = -c0; // just invert the x coordinate
+	      break;
+	    default:
+		throw gear::Exception("TPCModuleImpl::globalToLocal: unkown coorinate type");	
+	  }
+	}
+
+	// now that the incomming global coordinates have the right position relative to the 
+	// end plate we can start the conversion to local
+	
 	// the global coordinates in cartesian coordinates
 	double x, y;
 	switch (_momsCoordinateType)
@@ -21,7 +41,7 @@ namespace gear {
 	    case PadRowLayout2D::POLAR :
 	    {
 	        // to speed this up: if the local coordinate system is polar and there is no offset 
-	        // the calculation is much reasyer
+	        // the calculation is much easyer
 	        if ( (_padRowLayout->getCoordinateType() == PadRowLayout2D::POLAR ) && 
 		     (_offset_cartesian[0] == 0 ) &&
 		     (_offset_cartesian[0] == 0 ) )
@@ -92,7 +112,7 @@ namespace gear {
 	  return Vector2D( c0, c1 );
 	}
 
-	// x and y prime are c0 and c1 on local cartesian coordinates
+	// x and y prime are c0 and c1 in local cartesian coordinates
 	double x_prime, y_prime;
 	switch (_padRowLayout->getCoordinateType())
 	{
@@ -107,6 +127,12 @@ namespace gear {
 		     (_offset_cartesian[0] == 0 ) &&
 		     (_offset_cartesian[0] == 0 ) )
 		{
+		  // flip angle in case of negative half TPC
+		  if ( _zPosition <=0 )
+		  {
+		    phi = M_PI - phi;
+		  }
+
 		  // wrap phi to 0..2pi
 		  if (phi < 0)      phi += 2*M_PI;
 		  if (phi > 2*M_PI) phi -= 2*M_PI;
@@ -131,6 +157,11 @@ namespace gear {
 	double x = x_prime + _offset_cartesian[0];
 	double y = y_prime + _offset_cartesian[1];
 
+	// flip x in case of negative half TPC
+	if ( _zPosition <= 0 )
+	{
+	  x = -x;
+	}
 
 	// calculate the return value
 	gear::Vector2D toReturn;
@@ -184,7 +215,8 @@ namespace gear {
 		    if (_padRowLayout->getPlaneExtent()[1] > 0) // inner radius of pad plane > 0
 			                                        // to avoid divide by 0
 		    {
-			phiBorder = _border/_padRowLayout->getPlaneExtent()[1] * 2. *M_PI;
+			//phiBorder = _border/_padRowLayout->getPlaneExtent()[1] * 2. *M_PI;
+			phiBorder = _border / _padRowLayout->getPlaneExtent()[0];
 		    }
 		    else // the plane extent is a full circle 
 		    {
@@ -245,9 +277,10 @@ namespace gear {
 //		    }
 		    break;
 		    default:
-			throw gear::Exception("TPCModuleImpl::localToGlobal: unkown coorinate type");	
+			throw gear::Exception("TPCModuleImpl::convertLocalPlaneToGlobalPlaneExtend():: unkown coorinate type");	
 		}
-	    }
+
+	    }// case _momsCoordinateSystem = POLAR
 	    break;
 	    case  PadRowLayout2D::CARTESIAN :
 	    {
@@ -266,12 +299,12 @@ namespace gear {
 		    }
 		    break;
 		    default:
-			throw gear::Exception("TPCModuleImpl::localToGlobal: unkown coorinate type");	
+			throw gear::Exception("TPCModuleImpl::convertLocalPlaneToGlobalPlaneExtend():: unkown coorinate type");	
 		}
 	    }
 	    break;
 	    default:
-		throw gear::Exception("TPCModuleImpl::localToGlobal: unkown coorinate type");	
+		throw gear::Exception("TPCModuleImpl::convertLocalPlaneToGlobalPlaneExtend(): unkown coorinate type");	
 	}// switch _momsCoordinateType
 	
 
@@ -342,8 +375,11 @@ namespace gear {
 	}
 
 	// test the possible new yMax
-	double testYMax = _offset[1] + localExtent[1]; // module centre + rMax
-	double localPhi1 = globalToLocal( _offset[0], testYMax )[1];
+	// Note: one cannot use _offset directly because the x coordinate might be 
+	// inverted for negative half TPC. Just let loicalToGlobal take care of it.
+	Vector2D localOriginInGlobalCoordinates = localToGlobal( 0 , 0 );
+	double testYMax = localOriginInGlobalCoordinates[1] + localExtent[1]; // module centre + rMax
+	double localPhi1 = globalToLocal( localOriginInGlobalCoordinates[0], testYMax )[1];
 	// test for [0:2pi] and [-2pi:0]
 	double localPhi2 ;
 	if ( localPhi1 < 0 )
@@ -361,8 +397,8 @@ namespace gear {
 	// now test the other max extents of the circle
 
 	// test the possible new yMin
-	double testYMin = _offset[1] - localExtent[1]; // module centre - rMax
-	localPhi1 = globalToLocal( _offset[0], testYMin )[1];
+	double testYMin = localOriginInGlobalCoordinates[1] - localExtent[1]; // module centre - rMax
+	localPhi1 = globalToLocal( localOriginInGlobalCoordinates[0], testYMin )[1];
 	// std::cout <<"#DEBUG localPhi1 for ymin "<< localPhi1<<std::endl;
 	// test for [0:2pi] and [-2pi:0]
 	if ( localPhi1 < 0 )
@@ -380,8 +416,8 @@ namespace gear {
 	}
 
 	// test tho possible new xMax
-	double testXMax = _offset[0] + localExtent[1]; // module centre + rMax
-	localPhi1 = globalToLocal( testXMax, _offset[1] )[1];
+	double testXMax = localOriginInGlobalCoordinates[0] + localExtent[1]; // module centre + rMax
+	localPhi1 = globalToLocal( testXMax, localOriginInGlobalCoordinates[1] )[1];
 	// test for [0:2pi] and [-2pi:0]
 	if ( localPhi1 < 0 )
 	    localPhi2 = localPhi1 + 2*M_PI;
@@ -395,9 +431,9 @@ namespace gear {
 	    xMax = testXMax;
 	}
 
-	// test tho possible new yMax
-	double testXMin = _offset[0] - localExtent[1]; // module centre - rMax
-	localPhi1 = globalToLocal( testXMin, _offset[1] )[1];
+	// test the possible new xMin
+	double testXMin = localOriginInGlobalCoordinates[0] - localExtent[1]; // module centre - rMax
+	localPhi1 = globalToLocal( testXMin, localOriginInGlobalCoordinates[1] )[1];
 	// test for [0:2pi] and [-2pi:0]
 	if ( localPhi1 < 0 )
 	    localPhi2 = localPhi1 + 2*M_PI;
@@ -428,20 +464,26 @@ namespace gear {
 	// first check if the two origins are identical (to avoid divide by zero)
 	if (_offset[0]==0) // r is 0, no offset
 	{
-	    double phiMin = localExtent[2] + _angle;
-	    double phiMax = localExtent[3] + _angle;
+	    double phiMin, phiMax;
 
-	    // force range -2pi .. 2pi
-	    while (phiMax > 2*M_PI)
+	    if ( _zPosition > 0 )
 	    {
-		phiMin -= 2*M_PI;
-		phiMax -= 2*M_PI;
+	      phiMin = localExtent[2] + _angle;
+	      phiMax = localExtent[3] + _angle;
 	    }
-	    while (phiMin < -2*M_PI)
-	    {
-		phiMin += 2*M_PI;
-		phiMax += 2*M_PI;
+	    else // Negative half TPC, the angles are flipped at the y axis.
+	    {    // This means the phi_minus is pi -  phi_minus and max and min are exchanged
+	      phiMin = M_PI - localExtent[3] - _angle;
+	      phiMax = M_PI - localExtent[2] - _angle;
 	    }
+
+	    // force phiMax to 0 .. 2*M_PI
+	    while (phiMax > 2*M_PI)  phiMax -= 2*M_PI;
+	    while (phiMax <  0     )  phiMax += 2*M_PI;
+	    
+	    // force phiMin to be smaller than phiMax, but max 
+	    while ( phiMin > phiMax          )  phiMin -= 2*M_PI;
+	    while ( phiMin < phiMax - 2*M_PI )  phiMin += 2*M_PI;
 
 	    std::vector<double> globalExtent;
 	    globalExtent.push_back(localExtent[0]);
@@ -622,11 +664,15 @@ namespace gear {
 	    
 	    if ( globalOriginInLocal[0] >= localExtent[1] )
 	    {
-		// calclulate the two tangents to the circle: (see TPCModule_tangent_rMax.pdf )
-		double phi_tangent_min = _offset[1]  - asin( localExtent[1] / globalOriginInLocal[0] );
-		double phi_tangent_max = _offset[1]  + asin( localExtent[1] / globalOriginInLocal[0] );
+	        // Note: one cannot use _offset directly because the x coordinate might be 
+	        // inverted for negative half TPC. Just let loicalToGlobal take care of it.
+	        Vector2D localOriginInGlobalCoordinates = localToGlobal( 0 , 0 );
 
-		//std::cout << "#_offset " << globalOriginInLocal[0] << "\t"<<  _offset[1]<< std:: endl;
+		// calclulate the two tangents to the circle: (see TPCModule_tangent_rMax.pdf )
+		double phi_tangent_min = localOriginInGlobalCoordinates[1]  - asin( localExtent[1] / globalOriginInLocal[0] );
+		double phi_tangent_max = localOriginInGlobalCoordinates[1]  + asin( localExtent[1] / globalOriginInLocal[0] );
+
+		//std::cout << "#localOriginInGlobalCoordinates " << globalOriginInLocal[0] << "\t"<<  localOriginInGlobalCoordinates[1]<< std:: endl;
 		double angles[4];
 
 		// force the angles of the edges into the range phi_tangent_min -- phi_tangent_min + 2*pi
@@ -640,10 +686,16 @@ namespace gear {
 		}
 
 		// check whether phi_tangent_min and phi_tangent_max are in the active area
+		
+		// Force local angle where the tangent touches the circle to phiMin -- phiMin+2pi.
+		// In case of negative half TPC min and max are exchanged since globalToLocal
+		// flips the x axis (= angle)
+		double phiTestMin = globalToLocal( sqrt(localOriginInGlobalCoordinates[0]*
+							localOriginInGlobalCoordinates[0] 
+							- localExtent[1] * localExtent[1]),
+						   ( _zPosition > 0 ? phi_tangent_min 
+						                    : phi_tangent_max    )  )[1];
 
-		// force local angle where the tangent touches the circle to phiMin -- phiMin+2pi
-		double phiTestMin = globalToLocal( sqrt(_offset[0]*_offset[0] - localExtent[1] * localExtent[1]),
-						   phi_tangent_min)[1];
 		//std::cout << "#phiTestMin "<< phiTestMin << std::endl;
 		//std::cout << "#phi_tangen_min "<< phi_tangent_min << std::endl;
 		while ( phiTestMin < localExtent[2] )
@@ -652,25 +704,54 @@ namespace gear {
 		    phiTestMin  -= 2*M_PI;
 		//std::cout << "#phiTestMin "<< phiTestMin << std::endl;
 
-		// thest whether in active area
+		// test whether in active area
 		if ( phiTestMin < localExtent[3] )
 		{
+		  // The phiTestMin is the minimum in local coordinates.
+		  // For the negative half TPC it is the global maximum because the
+		  // x coordinate is swapped
+		  if ( _zPosition > 0 )
+		  {
 		    phiMin = phi_tangent_min;
+		  }
+		  else
+		  {
+		    phiMax = phi_tangent_max ;
+		  }
 		}
 		else // not in active area, test edges
 		{
+		  if ( _zPosition > 0 )
+		  {
 		    phiMin = angles[0];
 		    
 		    for (int i=1; i <4 ; i++)
 		    {
 			if ( angles[i] < phiMin ) phiMin = angles[i];
 		    }
-		}
+		  }
+		  else // _zPosition <= 0
+		  {
+		    phiMax = angles[0];
+		    
+		    for (int i=1; i <4 ; i++)
+		    {
+			if ( angles[i] > phiMax ) phiMax = angles[i];
+		    } // for i (angles)
+		  }// else _zPositizion > 0
+		    
+		}// else not in active area
+
 		//std::cout << "#phi_tangen_max "<< phi_tangent_max << std::endl;
 
-		// force local angle where the tangent touches the circle to phiMin -- phiMin+2pi
-		double phiTestMax = globalToLocal( sqrt(_offset[0]*_offset[0] - localExtent[1] * localExtent[1]),
-						   phi_tangent_max)[1];
+		// Force local angle where the tangent touches the circle to phiMin -- phiMin+2pi
+		// In case of negative half TPC min and max are exchanged since globalToLocal
+		// flips the x axis (= angle)
+		double phiTestMax = globalToLocal( sqrt(localOriginInGlobalCoordinates[0]*
+							localOriginInGlobalCoordinates[0] 
+							- localExtent[1] * localExtent[1]),
+						   ( _zPosition > 0 ? phi_tangent_max 
+						                    : phi_tangent_min    )  )[1];
 		//std::cout << "#phiTestMax "<< phiTestMax << std::endl;
 		// thest whether in active area
 		while ( phiTestMax < localExtent[2] )
@@ -682,17 +763,40 @@ namespace gear {
 		// thest whether in active area
 		if ( phiTestMax < localExtent[3] )
 		{
+		  // The phiTestMax is the maximum in local coordinates.
+		  // For the negative half TPC it is the global minimum because the
+		  // x coordinate is swapped
+		  if ( _zPosition > 0 )
+		  {
 		    phiMax = phi_tangent_max;
+		  }
+		  else
+		  {
+		    phiMin = phi_tangent_min;
+		  }
 		}
 		else // not in active area, test edges
 		{
+		  if ( _zPosition > 0 )
+		  {
 		    phiMax = angles[0];
 		    
 		    for (int i=1; i <4 ; i++)
 		    {
 			if ( angles[i] > phiMax ) phiMax = angles[i];
 		    }
-		}
+		  }
+		  else
+		  {
+		    phiMin = angles[0];
+		    
+		    for (int i=1; i <4 ; i++)
+		    {
+			if ( angles[i] < phiMin ) phiMin = angles[i];
+		    } // for i (angles)
+		  }// else zPosition > 0 
+
+		} // else not in active area
 
 
 	    }
@@ -738,8 +842,17 @@ namespace gear {
 		    {
 			if ( globalOriginInLocal[0] <= localExtent[0] ) // A1a
 			{
-			    phiMin =  edges_global[0][1];
-			    phiMax =  edges_global[1][1];
+			    if ( _zPosition > 0 )
+			    {
+			      phiMin =  edges_global[0][1];
+			      phiMax =  edges_global[1][1];
+			    }
+			    else //negative half TPC. Due to the flip in x min and max are exchanged
+			    {
+			      phiMin =  edges_global[1][1];
+			      phiMax =  edges_global[0][1];
+			    }
+
 			    // due to the %2pi problem phiMax might be smaller than phiMin
 			    // force phiMin to be smaller
 			    while ( phiMin > phiMax)
@@ -765,6 +878,10 @@ namespace gear {
 		    else if ( phiGlobalOrigin < localExtent[2] + M_PI) // A2
 		    {
 			
+		      // due to the many comparisons, which all change sign when 
+		      // inverting x, the code unfortunately has to be duplicated :-(
+		      if ( _zPosition > 0 )
+		      {
 			phiMax = edges_global[3][1];
 
 			double phiMin1 = edges_global[0][1];
@@ -780,11 +897,39 @@ namespace gear {
 			    phiMin2 -= 2*M_PI;
 			
 			phiMin = (phiMin1 < phiMin2 ? phiMin1 : phiMin2);
+		      }
+		      else // negative half TPC
+		      {
+			phiMin = edges_global[3][1];
+
+			double phiMax1 = edges_global[0][1];
+			while ( phiMax1 > phiMin + 2*M_PI )
+			    phiMax1 -= 2*M_PI;
+			while ( phiMax1 < phiMin )
+			    phiMax1 += 2*M_PI;
+
+			double phiMax2 = edges_global[1][1];
+			while ( phiMax2 > phiMin + 2*M_PI )
+			    phiMax2 -= 2*M_PI;
+			while ( phiMax2 < phiMin )
+			    phiMax2 += 2*M_PI;
+			
+			phiMax = (phiMax1 > phiMax2 ? phiMax1 : phiMax2);
+		      }
 		    }
 		    else if ( phiGlobalOrigin < localExtent[3] + M_PI) // A3
 		    {
-			phiMin =  edges_global[2][1];
-			phiMax =  edges_global[3][1];			
+			if ( _zPosition > 0 )
+			{
+			    phiMin =  edges_global[2][1];
+			    phiMax =  edges_global[3][1];			
+			}
+			else // negative half TPC
+			{
+			    phiMin =  edges_global[3][1];
+			    phiMax =  edges_global[2][1];			
+			}
+
 			// due to the %2pi problem phiMax might be smaller than phiMin
 			// force phiMin to be smaller
 			while ( phiMin > phiMax)
@@ -804,6 +949,8 @@ namespace gear {
 		    }
 		    else // A4
 		    {
+		      if ( _zPosition > 0 )
+		      {
 			phiMin = edges_global[2][1];
 
 			double phiMax1 = edges_global[0][1];
@@ -819,14 +966,41 @@ namespace gear {
 			    phiMax2 -= 2*M_PI;
 			
 			phiMax = (phiMax1 > phiMax2 ? phiMax1 : phiMax2);
+		      }
+		      else
+		      {
+			phiMax = edges_global[2][1];
+
+			double phiMin1 = edges_global[0][1];
+			while ( phiMin1 < phiMax - 2*M_PI )
+			    phiMin1 += 2*M_PI;
+			while ( phiMin1 > phiMax )
+			    phiMin1 -= 2*M_PI;
+			
+			double phiMin2 = edges_global[1][1];
+			while ( phiMin2 < phiMax - 2*M_PI )
+			    phiMin2 += 2*M_PI;
+			while ( phiMin2 > phiMax )
+			    phiMin2 -= 2*M_PI;
+			
+			phiMin = (phiMin1 < phiMin2 ? phiMin1 : phiMin2);
+		      }
 		    }// scan sectors
 		}
 		else //active area > pi
 		{// B
 		    if ( phiGlobalOrigin > localExtent[3] ) // B4
 		    {
-			    phiMin =  edges_global[2][1];
-			    phiMax =  edges_global[3][1];
+		      if ( _zPosition > 0 )
+		      {
+			phiMin =  edges_global[2][1];
+			phiMax =  edges_global[3][1];
+		      }
+		      else
+		      {
+			phiMin =  edges_global[3][1];
+			phiMax =  edges_global[2][1];
+		      }
 			    // due to the %2pi problem phiMax might be smaller than phiMin
 			    // force phiMin to be smaller
 			    while ( phiMin > phiMax)
@@ -851,8 +1025,16 @@ namespace gear {
 			{
 			    if ( phiGlobalOrigin < localExtent[3] - M_PI ) // B1
 			    {
+			      if ( _zPosition > 0 )
+			      {
 				phiMin =  edges_global[0][1]; 
 				phiMax =  edges_global[3][1];
+			      }
+			      else
+			      {
+				phiMin =  edges_global[3][1]; 
+				phiMax =  edges_global[0][1];
+			      }
 
 				// due to the %2pi problem phiMax might be smaller than phiMin
 				// force phiMin to be smaller
@@ -886,8 +1068,16 @@ namespace gear {
 			    }
 			    else if ( phiGlobalOrigin < localExtent[2] + M_PI) // B2
 			    {
+			      if (_zPosition > 0 )
+			      {
 				phiMin =  edges_global[0][1]; 
 				phiMax =  edges_global[1][1];
+			      }
+			      else
+			      {
+				phiMin =  edges_global[1][1]; 
+				phiMax =  edges_global[0][1];
+			      }
 				while ( phiMin > phiMax)
 				    phiMin -= 2*M_PI;
 
@@ -905,8 +1095,16 @@ namespace gear {
 			    }
 			    else if ( phiGlobalOrigin < localExtent[3] + M_PI) // B3
 			    {
+			      if ( _zPosition > 0 )
+			      {
 				phiMin =  edges_global[2][1];
 				phiMax =  edges_global[1][1];			
+			      }
+			      else
+			      {
+				phiMin =  edges_global[1][1];
+				phiMax =  edges_global[2][1];			
+			      }
 				// due to the %2pi problem phiMax might be smaller than phiMin
 				// force phiMin to be smaller
 				while ( phiMin > phiMax)
@@ -985,11 +1183,16 @@ namespace gear {
 	  _offset[1]=0;
 	  _offset_cartesian[0]=0;
 	  _offset_cartesian[1]=0;
-	  _zPosition=0;
+	  _zPosition=1.; // Set the z position to a positive value so no x-swapping
+	                 // is done in the default case.
+	                 // This value is not accessible from outside the class sice 
+	                 // an exceptions is thrown if it has not been overwritten.
 	  _angle =0 ;
 	  _cos_angle = 1;
 	  _sin_angle = 0;
-	  
+
+	  _zPositionIsSet = false;
+
 	  checkLocalIsGlobal();
     }
 
@@ -1020,6 +1223,9 @@ namespace gear {
 	_moduleID = right._moduleID;
 	_border = right._border;
 	_localIsGlobal = right._localIsGlobal;
+
+	_zPosition = right._zPosition;
+	_zPositionIsSet = right._zPositionIsSet;
 
 	// test all knows possible instances of padRowLayout
 	_padRowLayout = right._padRowLayout->clone();
@@ -1284,6 +1490,7 @@ namespace gear {
     void TPCModuleImpl::setZPosition(double z)
     {
       _zPosition = z;
+      _zPositionIsSet = true;
     }
 
     void TPCModuleImpl::setAngle(double angle)
@@ -1311,7 +1518,8 @@ namespace gear {
       if ( (_momsCoordinateType == _padRowLayout->getCoordinateType())
 	   && (_angle == 0. ) 
 	   && ( _offset[0] == 0. )
-	   && ( _offset[1] == 0. ) )
+	   && ( _offset[1] == 0. ) 
+	   && ( _zPosition > 0 ) ) // not >= 0, 0 (prototype) is negative half TPC
       {
 	_localIsGlobal = true;
       }
@@ -1320,4 +1528,12 @@ namespace gear {
 	_localIsGlobal = false;
       }
     }
+
+  double TPCModuleImpl::getZPosition() const throw (TPCModule::NoZPositionException)
+  {
+    if (!_zPositionIsSet) throw TPCModule::NoZPositionException();
+    
+    return _zPosition;
+  }
+       
 }// namespace gear

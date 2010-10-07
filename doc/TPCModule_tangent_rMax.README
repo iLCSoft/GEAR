@@ -1,0 +1,4 @@
+This plot is refered to by the code documentation of TPCModuleImpl. It
+performs some (unfortunately rather nasty) geometrical calculations, and this
+plot helps to visualise what is going on. Please keep in the repository for
+reference.
