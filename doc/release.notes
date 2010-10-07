@@ -2,6 +2,31 @@
   Gear release notes
  ======================
 
+  --------
+ | v00-15 |  
+  --------
+
+        - A. Muennich:
+          implementation of GearDistanceProperties and GearPointProperties
+          based on ROOT TGeo
+
+
+        - Imrovements and fixes for TPC -   M. Killenberg
+           - implemented z-Position of TPCModule
+           - improved performance of local<->global coordinate transformations in TPCModule
+           - fixed bug in TPCModuleXML
+          
+           - FixedPadSizeDiskLayout now can be segment of a circle 
+             changes 100% backward compatible  (Ching Bon Lam)
+           - improved getNearestPad() in VersatileDiskRowLayout
+
+
+  -----------
+ | v00-14-02 |
+  -----------
+
+    * fixed bug in calculation of overall TPC plane extent (M.Killenberg)
+
   -----------
  | v00-14-01 |  
   -----------
