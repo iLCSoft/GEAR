@@ -69,9 +69,9 @@ int main(int argc, char**argv){
     initial[0] = 0.0;
     initial[1] = 0.0;
     initial[2] = 0.0;
-    for(int r=200;r<400;r+=1)
+    for(int r=0;r<400;r+=40)
       {
-	for(int theta=1;theta<90;theta++)
+	for(int theta=1;theta<90;theta+=2)
 	  {
 	    final[0] = 0.0;
 	    final[2] = r*cos(theta*M_PI/180);

@@ -74,15 +74,16 @@ int main(int argc, char**argv){
     initial[1] = 0.0;
     initial[2] = 0.0;
     
-    final[0] = 50.0;
-    final[1] = 50.0;
-    final[2] = 50.0;
+    final[0] = 0.0;
+    final[1] = 0.0;
+    final[2] = 5000.0;
     
     std::cout<<"Top logical volume containing point (0,0,0): "<<pointProp.getListOfLogicalVolumes(initial)[0]<<std::endl;
     double radLen=distProp.getNRadlen(initial, final);
+    std::cout<<"Radiation length between (0,0,0) and (50,50,50): "<<radLen<<std::endl;
     matNames = distProp.getMaterialNames(initial, final);
     volNames = distProp.getVolumeNames(initial, final);
-    std::cout<<"Radiation length between (0,0,0) and (50,50,50): "<<radLen<<std::endl;
+   
     std::cout<<"Volumes and their material between (0,0,0) and (50,50,50): "<<std::endl;
     for(unsigned int i=0; i<volNames.size();i++)
       std::cout <<i<<" "<< volNames[i]<<" "<<matNames[i] << std::endl;
