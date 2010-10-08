@@ -38,9 +38,19 @@ public:
      */
     virtual int getNModules() const = 0;
 
-    /** Returns nearest module to given coordinates
+    /** Returns nearest module to given coordinates (2D).
+     *  In case of a full TPC with two end caps the first matching module is returned,
+     *  although a module from the other end plate might be closer in 3D.
+     *  Use the 3D version of getNearestModule in this case 
+     *  to get the module from the correct half TPC.
      */
     virtual const TPCModule & getNearestModule(double c0, double c1) const = 0;
+
+    /** Returns nearest module to given coordinates (3D).
+     *  The z coordinate is only used to determine whether the positive or negative 
+     *  half TPC is to be used.
+     */
+    virtual const TPCModule & getNearestModule(double c0, double c1, double z) const = 0;
 
     /** The maximum drift length in the TPC in mm.
      */
@@ -50,16 +60,42 @@ public:
      *  This may or may not be
      *  on a pad, since with resitive films being on the film is enough
      *  to generate signal on pads (see TPCModule::getBorderWidth() ).
+     *  This is the 2D version. Use isInsideModule(double c0, double c1, double z)
+     *  to limit to correct end plate in case there are two.
      */
     virtual bool isInsideModule(double c0, double c1) const = 0;
 
+    /** First determines the correct end plate from the z coordinate and then
+     *  calls the same function as the 2D version on the modules from the correct 
+     *  end cap.
+     */
+    virtual bool isInsideModule(double c0, double c1, double z) const = 0;
+
     /** True if coordinate (c0,c1) is within any pad, on any module.
+     *  This is the 2D version. Use isInsideModule(double c0, double c1, double z)
+     *  to limit to correct end plate in case there are two.
      */
     virtual bool isInsidePad(double c0, double c1) const = 0;
 
-    /** Returns globalPadindex Object for nearest pad to given coordinates.
+    /** First determines the correct end plate from the z coordinate and then
+     *  calls the same function as the 2D version on the modules from the correct 
+     *  end cap.
+     */
+    virtual bool isInsidePad(double c0, double c1, double z) const = 0;
+
+   /** Returns globalPadindex Object for nearest pad to given coordinates (2D).
+     *  In case of a full TPC with two end caps the first matching module ID is returned,
+     *  although a module from the other end plate might be closer in 3D.
+     *  Use the 3D version of getNearestPad in this case 
+     *  to get the pad from a module from the correct half TPC.
      */
     virtual GlobalPadIndex getNearestPad(double c0, double c1) const = 0;
+
+    /** Returns globalPadindex Object for nearest pad to given coordinates (3D).
+     *  The z coordinate is only used to determine whether the positive or negative 
+     *  half TPC is to be used.
+     */	
+    virtual GlobalPadIndex getNearestPad(double c0, double c1, double z) const = 0;
 
     /** Extent of the sensitive plane - [xmin,xmax,ymin,ymax] CARTESIAN or 
      *	[rmin,rmax,phimin,phimax] POLAR. These are the outermost coordinates

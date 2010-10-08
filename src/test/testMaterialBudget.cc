@@ -76,6 +76,7 @@ int main(int argc, char**argv){
   }
   catch( gear::UnknownParameterException& e ){
     std::cout << "  oops - no TPC available :( " << std::endl ;
+    return 0;
   }
   try{
     const CalorimeterParameters &hcalparams= gearMgr->getHcalBarrelParameters() ;
@@ -84,6 +85,7 @@ int main(int argc, char**argv){
   }
   catch( gear::UnknownParameterException& e ){
     std::cout << "  oops - no TPC_Ecal_Hcal_barrel_halfZ available :( " << std::endl ;
+    return 0;
   }
   try{
     const CalorimeterParameters &ecalparamsB= gearMgr->getEcalBarrelParameters() ;
@@ -92,7 +94,8 @@ int main(int argc, char**argv){
   }
   catch( gear::UnknownParameterException& e ){
     std::cout << "  oops - no Ecal barrel available :( " << std::endl ;
-  }
+    return 0;
+   }
   try{
     const CalorimeterParameters &ecalparamsEC= gearMgr->getEcalEndcapParameters() ;
     //convert to cm for TGeo
@@ -100,7 +103,8 @@ int main(int argc, char**argv){
   }
   catch( gear::UnknownParameterException& e ){
     std::cout << "  oops - no Ecal endcap available :( " << std::endl ;
-  }
+    return 0;
+   }
   try{
     const CalorimeterParameters &ecalparamsPl= gearMgr->getEcalPlugParameters() ;
     //convert to cm for TGeo
@@ -108,6 +112,7 @@ int main(int argc, char**argv){
   }
   catch( gear::UnknownParameterException& e ){
     std::cout << "  oops - no Ecal endcap available :( " << std::endl ;
+    return 0;
   }
   
   try{

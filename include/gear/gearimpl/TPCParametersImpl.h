@@ -47,11 +47,21 @@ class TPCParametersImpl :  public TPCParameters,    public GearParametersImpl {
      */
     virtual int getNModules() const;
 
-    /** Returns nearest module to given coordinates
+    /** Returns nearest module to given coordinates (2D).
+     *  In case of a full TPC with two end caps the first matching module is returned,
+     *  although a module from the other end plate might be closer in 3D.
+     *  Use the 3D version of getNearestModule in this case 
+     *  to get the module from the correct half TPC.
      */
     virtual const TPCModule & getNearestModule(double c0, double c1) const;
 
-    /** The maximum drift length in the TPC in mm.
+     /** Returns nearest module to given coordinates (3D).
+     *  The z coordinate is only used to determine whether the positive or negative 
+     *  half TPC is to be used.
+     */
+    virtual const TPCModule & getNearestModule(double c0, double c1, double z) const;
+
+   /** The maximum drift length in the TPC in mm.
      */
     virtual double getMaxDriftLength() const;
 
@@ -59,16 +69,42 @@ class TPCParametersImpl :  public TPCParameters,    public GearParametersImpl {
      *  This may or may not be
      *  on a pad, since with resitive films being on the film is enough
      *  to generate signal on pads (see TPCModule::getBorderWidth() ).
+     *  This is the 2D version. Use isInsideModule(double c0, double c1, double z)
+     *  to limit to correct end plate in case there are two.
      */
     virtual bool isInsideModule(double c0, double c1) const;
 
+    /** First determines the correct end plate from the z coordinate and then
+     *  calls the same function as the 2D version on the modules from the correct 
+     *  end cap.
+     */
+    virtual bool isInsideModule(double c0, double c1, double z) const;
+
     /** True if coordinate (c0,c1) is within any pad, on any module.
+     *  This is the 2D version. Use isInsideModule(double c0, double c1, double z)
+     *  to limit to correct end plate in case there are two.
      */
     virtual bool isInsidePad(double c0, double c1) const;
 
-    /** Returns globalPadindex Object for nearest Pad to given coordinates.
+    /** First determines the correct end plate from the z coordinate and then
+     *  calls the same function as the 2D version on the modules from the correct 
+     *  end cap.
+     */
+    virtual bool isInsidePad(double c0, double c1, double z) const;
+
+   /** Returns globalPadindex Object for nearest pad to given coordinates (2D).
+     *  In case of a full TPC with two end caps the first matching module ID is returned,
+     *  although a module from the other end plate might be closer in 3D.
+     *  Use the 3D version of getNearestPad in this case 
+     *  to get the pad from a module from the correct half TPC.
      */
     virtual GlobalPadIndex getNearestPad(double c0, double c1) const;
+
+    /** Returns globalPadindex Object for nearest pad to given coordinates (3D).
+     *  The z coordinate is only used to determine whether the positive or negative 
+     *  half TPC is to be used.
+     */	
+    virtual GlobalPadIndex getNearestPad(double c0, double c1, double z) const;
 
     /** Extent of the sensitive plane - [xmin,xmax,ymin,ymax] CARTESIAN or 
      *	[rmin,rmax,phimin,phimax] POLAR. These are the outermost coordinates
@@ -135,17 +171,40 @@ class TPCParametersImpl :  public TPCParameters,    public GearParametersImpl {
 
 protected:
 
-  std::vector<TPCModule *>  _TPCModules ;
+  // one vector with all the modules, and one for each half tpc
+  std::vector<TPCModule *>  _TPCModules, _modulesPositiveHalfTPC, _modulesNegativeHalfTPC;
+
+  /// Version for internal usage, for both all modules or only one half TPC
+  const TPCModule & getNearestModule(double c0, double c1, 
+				     std::vector<TPCModule *> const & modulesVector) const;
+  
+  /// Versions for internal usage, for both all modules or only one half TPC
+  bool isInsideModule(double c0, double c1, std::vector<TPCModule *> const & modulesVector) const;
+
+  /// Versions for internal usage, for both all modules or only one half TPC
+  bool isInsidePad(double c0, double c1, std::vector<TPCModule *> const & modulesVector ) const;
+
+  /// Versions for internal usage, for both all modules or only one half TPC
+  GlobalPadIndex getNearestPad(double c0, double c1,
+			       std::vector<TPCModule *> const & modulesVector ) const;
+ 
 
   double _maxDriftLength ;
 
   int _coordinateType;
 
+  /** The cathode position is needed internally to distinguish the half TPCs.
+   *  If only one half TPC is used the cathode positon is _zAnode - _maxDriftLength for positive,
+   *  _zAnode + _maxDriftLength for negative half TPC ( the latter including _zAnode = 0, prototype case).
+   *  In case both half TPCs are populated with modules it is ( _zAnode_positive + _zAnode_negative ) / 2;
+   */
+  double _cathodePosition;
+    
   /** A map with the moduleID as key and the index in the _TPCModules vector as value.
    *  For internal use in this class only.
    */
   std::map<int,int> _moduleIDMap ;
-  
+
   std::vector<double> _planeExtent ;
 
   /// Drift velocity is deprecated, should come from conditions data
@@ -162,6 +221,11 @@ protected:
    *  Used by desctructor and assigment operator to avoid code duplication
    */
   void cleanup();
+
+  // Internal function to avoid code duplication
+  // Recalculation of the z postion is necessary when a module is added and when the 
+  // maximal drift distance is changed.
+  void setCathodePosition();
 
 }; // class
 

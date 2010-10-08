@@ -2,16 +2,41 @@
   Gear release notes
  ======================
 
+
   --------
  | v00-15 |  
   --------
 
-        - A. Muennich:
-          implementation of GearDistanceProperties and GearPointProperties
-          based on ROOT TGeo
+        * A. Muennich:
+          New implementation of GearDistanceProperties and GearPointProperties using TGeo from ROOT:
+      	    - reads in the geometry from a gdml file to instantiate the volume hierarchy
+	    - requires newest ROOT version 5.27.06 or the svn trunk
+            - MaterialMapFactory: A tool to create a material map in memory that can then be used to look up the
+	      values during the run of the application. Saves computing time if many many querries are needed, 
+	      e.g. Pandora where each calorimeter cell wants to know the material before.
+        BUILD:
+	To switch on the new functionality use -DBUILD_TGEO=1 and provide the CMAKE_MODULE_PATH and ROOT info
+	cmake -DBUILD_TGEO=1 -DCMAKE_MODULE_PATH="xx" -DROOT_HOME=$ROOTSYS ..	
+        USAGE:
+        - in gear/example there are two gdml files: World_ILD00.gdml ( full detetcor geometry of mokka model ILD00)
+          and TPC_ILD00.gdml (just the TPC from mokka model ILD00). The corresponding gear steering files are
+          gearTGeo_ILD00.xml which is a full gear file and gear_TGeo.xml which just has the part to use the new 
+          features.	
+	  
+          Test programs are available to run in the example directory:
+	  ../build/bin/testMaterialBudget gear_TGeo.xml
+	  Several test exist:
+	  testGearTGeo: basic test for usage of  DistanceProperties and PointProperties with TGeo	
+	  testMaterialMap: uses DistanceProperties to create a material scan in r, theta
+	  testMaterialBudget: uses information from gear file to compute the envelopes of subdetectors and the
+		              calculates the material budget before the TPC, of the TPC and up to th ECAL in 
+                              dependence on theta. (needs full gear file with detectors = gearTGeo_ILD00.xml)
+	  testMaterialMapFactory: example of how to use the MaterialMapFactory tool to create a MaterialMap in memory.
+                                  This is usefull if an application (e.g. Pandora) has to querry the material budget 
+ 		                  for certain point many many times.
 
 
-        - Imrovements and fixes for TPC -   M. Killenberg
+        * Imrovements and fixes for TPC -   M. Killenberg
            - implemented z-Position of TPCModule
            - improved performance of local<->global coordinate transformations in TPCModule
            - fixed bug in TPCModuleXML

@@ -148,7 +148,7 @@ SET( test_bins
 )
 
 IF( BUILD_TGEO )
-    SET( test_bins ${test_bins} testGearTGeo testMaterialBudget testMaterialMapFactory)
+    SET( test_bins ${test_bins} testGearTGeo testMaterialBudget testMaterialMap testMaterialMapFactory)
 ENDIF()
 
 ADD_CUSTOM_TARGET( tests )

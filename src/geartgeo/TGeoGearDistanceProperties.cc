@@ -54,7 +54,7 @@ namespace gear {
 	TGeoNode *node2;
 	TVirtualGeoTrack *track; 
 	node2 = _tgeomanager->FindNextBoundaryAndStep(500, 1) ;
-
+	
 	if(!node2 || _tgeomanager->IsOutside())
 	  break;
 	
@@ -65,12 +65,14 @@ namespace gear {
 	//protection against infinitive loop in root which should not happen, but well it does...
 	//work around until solution within root can be found when the step gets very small e.g. 1e-10
 	//and the next boundary is never reached
+	
 	if(length<MINSTEP)
 	  {
 	    _tgeomanager->SetCurrentPoint(position[0]+MINSTEP*direction[0], position[1]+MINSTEP*direction[1], position[2]+MINSTEP*direction[2]);
 	    length=_tgeomanager->GetStep();
 	    node2 = _tgeomanager->FindNextBoundaryAndStep(500, 1) ;
 	  }
+
 	//if the next boundary is further than end point
 	 if(fabs(position[0])>fabs(endpoint[0]) || fabs(position[1])>fabs(endpoint[1]) 
 	 || fabs(position[2])>fabs(endpoint[2]))
