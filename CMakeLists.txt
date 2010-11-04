@@ -6,7 +6,7 @@
 
 ########################################################
 # CMake compatibility issues: don't modify this, please!
-CMAKE_MINIMUM_REQUIRED( VERSION 2.4.6 )
+CMAKE_MINIMUM_REQUIRED( VERSION 2.6.2 )
 #SET( CMAKE_BACKWARDS_COMPATIBILITY 2.4.6 )
 MARK_AS_ADVANCED(CMAKE_BACKWARDS_COMPATIBILITY)
 # allow more human readable "if then else" constructs
@@ -42,6 +42,15 @@ IF( CMAKE_INSTALL_PREFIX STREQUAL "/usr/local" )
     SET( CMAKE_INSTALL_PREFIX "${PROJECT_SOURCE_DIR}" )
 ENDIF()
 
+
+# -----------------------------------------------------------------------
+
+# library *nix style versioning
+SET( GEAR_SOVERSION "${GEAR_MAJOR_VERSION}.${GEAR_MINOR_VERSION}" )
+SET( GEAR_VERSION "${GEAR_SOVERSION}.${GEAR_PATCH_LEVEL}" )
+
+
+
 #---------------- 32/64 bit issues ---------------------------------------
 IF( CMAKE_SIZEOF_VOID_P EQUAL 4 )
     MESSAGE( STATUS "32 bit architecture detected" )
@@ -66,82 +75,26 @@ ENDIF()
 
 
 
-# library *nix style versioning
-SET( GEAR_SOVERSION "${GEAR_MAJOR_VERSION}.${GEAR_MINOR_VERSION}" )
-SET( GEAR_VERSION "${GEAR_SOVERSION}.${GEAR_PATCH_LEVEL}" )
-
 #---------- DOCUMENTATION -----------------------------------------------------
-FIND_PACKAGE( Doxygen )
-FIND_PACKAGE( LATEX )
-IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
-
-    ADD_CUSTOM_COMMAND(
-        OUTPUT  "${PROJECT_BINARY_DIR}/doc/gear_banner.png"
-        # first we copy directory from source tree to binary tree to
-        # keep the source tree unchanged
-        COMMAND "${CMAKE_COMMAND}" -E copy_directory
-            "${PROJECT_SOURCE_DIR}/doc"
-            "${PROJECT_BINARY_DIR}/doc"
-        VERBATIM
-    )
-
-    ADD_CUSTOM_COMMAND(
-        OUTPUT "${PROJECT_BINARY_DIR}/doc/html"
-        COMMAND "${DOXYGEN_EXECUTABLE}"
-        WORKING_DIRECTORY "${PROJECT_BINARY_DIR}/doc"
-        COMMENT "Building API Documentation..."
-        DEPENDS "${PROJECT_BINARY_DIR}/doc/gear_banner.png" "${PROJECT_BINARY_DIR}/doc/overview.html" "${PROJECT_BINARY_DIR}/doc/Doxyfile"
-    )
-    
-    ADD_CUSTOM_TARGET( doc DEPENDS
-        "${PROJECT_BINARY_DIR}/doc/html" )
-
-ELSE()
-    IF( NOT DOXYGEN_FOUND )
-        MESSAGE( STATUS "Doxygen not found in your system!!" )
-    ENDIF()
-    IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
-        MESSAGE( STATUS "Latex not found in your system!!" )
-    ENDIF()
-    IF( INSTALL_DOC )
-        MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
-        SET( INSTALL_DOC OFF )
-    ENDIF()
-ENDIF()
-
 IF( INSTALL_DOC )
 
-    # create documentation Doxyfile
-    CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/Doxyfile.in"
-                    "${PROJECT_BINARY_DIR}/doc/Doxyfile" IMMEDIATE @ONLY )
+    FIND_PACKAGE( Doxygen )
+    FIND_PACKAGE( LATEX )
 
-    # create documentation overview.html
-    CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/overview.html.in"
-                    "${PROJECT_BINARY_DIR}/doc/overview.html" IMMEDIATE @ONLY )
-
-    # make sure doxygen is executed before make install
-    #INSTALL( CODE "EXEC_PROGRAM(${DOXYGEN_EXECUTABLE} ${PROJECT_SOURCE_DIR}/doc)" )
-    # by just calling "make doc" doxygen won't run if the documentation has already been built
-    INSTALL( CODE "EXEC_PROGRAM(${CMAKE_BUILD_TOOL} ${PROJECT_BINARY_DIR} ARGS doc)" )
-    
-    # install documentation
-#    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/" DESTINATION "doc"
-#        PATTERN "Doxyfile" EXCLUDE
-#        PATTERN "latex" EXCLUDE
-#        PATTERN "overview.html*" EXCLUDE
-#        PATTERN "*/.svn" EXCLUDE
-#        )
-#fg: only install html directory
-    INSTALL( DIRECTORY "${PROJECT_BINARY_DIR}/doc/html" DESTINATION "doc"
-        PATTERN "Doxyfile" EXCLUDE
-        PATTERN "latex" EXCLUDE
-        PATTERN "overview.html*" EXCLUDE
-        PATTERN "*/.svn" EXCLUDE
-        )
-
-    # install examples
-    INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/example" DESTINATION "doc" PATTERN "*/.svn" EXCLUDE )
-
+    IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
+        ADD_SUBDIRECTORY( ./doc )
+    ELSE()
+        IF( NOT DOXYGEN_FOUND )
+            MESSAGE( STATUS "Doxygen not found in your system!!" )
+        ENDIF()
+        IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
+            MESSAGE( STATUS "Latex not found in your system!!" )
+        ENDIF()
+        IF( INSTALL_DOC )
+            MESSAGE( STATUS "INSTALL_DOC forced to OFF" )
+            SET( INSTALL_DOC OFF )
+        ENDIF()
+    ENDIF()
 ENDIF()
 #------------------------------------------------------------------------------
 
@@ -163,6 +116,7 @@ SET( CMAKE_INSTALL_RPATH_USE_LINK_PATH 1 )
 MARK_AS_ADVANCED( CMAKE_INSTALL_RPATH_USE_LINK_PATH )
 #----------------------------------------------------------------------
 
+
 # output directories
 SET( EXECUTABLE_OUTPUT_PATH "${PROJECT_BINARY_DIR}/bin" CACHE PATH
     "EXECUTABLE_OUTPUT_PATH" FORCE )
@@ -170,58 +124,30 @@ SET( LIBRARY_OUTPUT_PATH "${PROJECT_BINARY_DIR}/lib" CACHE PATH
     "LIBRARY_OUTPUT_PATH" FORCE )
 MARK_AS_ADVANCED( EXECUTABLE_OUTPUT_PATH LIBRARY_OUTPUT_PATH )
 
-# create symbolic lib target for calling target lib_XXX
-ADD_CUSTOM_TARGET( lib )
-
-# FIXME: check for 32/64 bit
-ADD_DEFINITIONS( "-Wno-long-long" )
-ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
-
 
 # -------- generate GearVersion.h ---------------------------------------------
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GearVersion.h.in"
     "${PROJECT_BINARY_DIR}/GearVersion.h" @ONLY )
 
 INSTALL( FILES "${PROJECT_BINARY_DIR}/GearVersion.h" DESTINATION "include/gear/" )
-
-INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" )
 # -----------------------------------------------------------------------------
 
-INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
-INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
-
 # install include files
-INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include"
-        DESTINATION .
+INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION .
         PATTERN "*~" EXCLUDE
-        PATTERN "*/.svn" EXCLUDE )
+        PATTERN "*/.svn" EXCLUDE
+)
 
+# create symlinks in include directory
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
-
 IF( BUILD_TGEO )
-    SET( ${PROJECT_NAME}_DEPENDS "ROOT" )
-    SET( ROOT_USE_COMPONENTS Gdml Geom XMLIO)
-
-    # DEPENDENCIES: this code has to be placed before adding any library or
-    # executable so that these are linked properly against the dependencies
-    IF( DEFINED ${PROJECT_NAME}_DEPENDS OR DEFINED BUILD_WITH OR DEFINED LINK_WITH )
-        IF( NOT DEFINED CMAKE_MODULE_PATH )
-            MESSAGE( FATAL_ERROR "CMAKE_MODULE_PATH not set! Set it with: "
-                "-DCMAKE_MODULE_PATH=\"/path_to_ilcsoft/CMakeModules\"" )
-        ENDIF()
-        # load macro
-        INCLUDE( "MacroCheckDeps" )
-        CHECK_DEPS()
-    ENDIF()
-
     INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
-
-    ADD_DEFINITIONS( "-DGEAR_TGEO" )
-
 ENDIF()
 
+
 ADD_SUBDIRECTORY( ./src )
+
 
 # create uninstall configuration file 
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
@@ -231,11 +157,11 @@ CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/cmake_uninstall.cmake.in"
 # create uninstall target
 ADD_CUSTOM_TARGET( uninstall
     "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
-    # cmake 2.4 does not know remove_directory
-    #COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/gear"
-    COMMAND rm -rf "${CMAKE_INSTALL_PREFIX}/doc/html"
+    COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/html"
+    COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/example"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearxml"
+    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/geartgeo"
 )
 
 # create configuration file from .in file
@@ -252,9 +178,9 @@ MESSAGE( STATUS "---------------------------------------------------------------
 MESSAGE( STATUS "BUILD_SHARED_LIBS = ${BUILD_SHARED_LIBS}" )
 MESSAGE( STATUS "CMAKE_INSTALL_PREFIX = ${CMAKE_INSTALL_PREFIX}" )
 MESSAGE( STATUS "CMAKE_BUILD_TYPE = ${CMAKE_BUILD_TYPE}" )
-IF( CMAKE_SIZEOF_VOID_P EQUAL 8 )
-    MESSAGE( STATUS "BUILD_32BIT_COMPATIBLE = ${BUILD_32BIT_COMPATIBLE}" )
-ENDIF()
+#IF( CMAKE_SIZEOF_VOID_P EQUAL 8 )
+#    MESSAGE( STATUS "BUILD_32BIT_COMPATIBLE = ${BUILD_32BIT_COMPATIBLE}" )
+#ENDIF()
 MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
 MESSAGE( STATUS "BUILD_TGEO = ${BUILD_TGEO}" )
 MESSAGE( STATUS "To change a value type: cmake -D<Variable>=<Value>" )
@@ -273,11 +199,6 @@ SET( INSTALL_DOC "${INSTALL_DOC}" CACHE BOOL
     "Set to OFF to skip build/install Documentation" FORCE )
 SET( BUILD_TGEO "${BUILD_TGEO}" CACHE BOOL
     "Set to ON to build tgeo" FORCE )
-
-# export build settings
-INCLUDE( CMakeExportBuildSettings )
-CMAKE_EXPORT_BUILD_SETTINGS( "GEARBuildSettings.cmake" )
-INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARBuildSettings.cmake" DESTINATION lib/cmake )
 
 # export library dependencies (keep this as the last line in the file)
 EXPORT_LIBRARY_DEPENDENCIES( "GEARLibDeps.cmake" )
