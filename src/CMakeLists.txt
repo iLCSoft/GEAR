@@ -60,6 +60,10 @@ IF( BUILD_TGEO )
     #SET( ROOT_USE_COMPONENTS Gdml Geom XMLIO)
     FIND_PACKAGE( ROOT REQUIRED COMPONENTS Gdml Geom XMLIO )
 
+    IF( NOT ROOT_GDML_FOUND OR NOT ROOT_GEOM_FOUND OR NOT ROOT_XMLIO_FOUND )
+        MESSAGE( FATAL_ERROR "failed to find required ROOT components (Gdml Geom XMLIO)" )
+    ENDIF()
+
     # FIXME should only include ROOT_INCLUDE_DIRS for tgeo sources
     INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIRS} )
 
