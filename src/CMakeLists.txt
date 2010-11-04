@@ -84,7 +84,7 @@ TARGET_LINK_LIBRARIES( gearxml gear )
 IF( BUILD_TGEO )
 
     # enable tgeo source code in gearxml
-    SET_SOURCE_FILES_PROPERTIES( ${libgearxml_srcs}
+    SET_SOURCE_FILES_PROPERTIES( ./gearxml/GearXML.cc
         PROPERTIES COMPILE_FLAGS "-DGEAR_TGEO" )
 
     # link gearxml to geartgeo
