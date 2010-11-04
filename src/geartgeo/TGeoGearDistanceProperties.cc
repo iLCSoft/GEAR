@@ -5,6 +5,7 @@
 #include "geartgeo/TGeoGearDistanceProperties.h"
 #include "TVirtualGeoTrack.h"
 #include "TGeoNode.h"
+#include "TGeoManager.h"
 
 #define MINSTEP 1.e-5
 

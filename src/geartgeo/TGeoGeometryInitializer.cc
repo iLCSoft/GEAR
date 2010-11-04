@@ -5,6 +5,7 @@
 #include "geartgeo/TGeoGeometryInitializer.h"
 #include "TGDMLParse.h"
 #include "TGeoVolume.h"
+#include "TGeoManager.h"
 
 
 namespace gear {

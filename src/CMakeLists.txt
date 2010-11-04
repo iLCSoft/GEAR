@@ -64,15 +64,7 @@ IF( BUILD_TGEO )
         MESSAGE( FATAL_ERROR "failed to find required ROOT components (Gdml Geom XMLIO)" )
     ENDIF()
 
-    # FIXME should only include ROOT_INCLUDE_DIRS for tgeo sources
-    INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIRS} )
-
-    # -------- libgeartgeo -------------------------------
-    AUX_SOURCE_DIRECTORY( ./geartgeo libgeartgeo_srcs )
-    ADD_GEAR_LIBRARY( geartgeo ${libgeartgeo_srcs} )
-    TARGET_LINK_LIBRARIES( geartgeo gear )
-    TARGET_LINK_LIBRARIES( geartgeo ${ROOT_LIBRARIES} )
-    # ----------------------------------------------------
+    ADD_SUBDIRECTORY( ./geartgeo )
 
 ENDIF()
 
@@ -89,6 +81,7 @@ IF( BUILD_TGEO )
 
     # link gearxml to geartgeo
     TARGET_LINK_LIBRARIES( gearxml geartgeo )
+
 ENDIF()
 # ----------------------------------------------------
 
