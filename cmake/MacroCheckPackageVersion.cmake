@@ -62,11 +62,6 @@ MACRO( CHECK_PACKAGE_VERSION )
     SET( _searching_minor ${${_pkgname}_FIND_VERSION_MINOR} )
     SET( _searching_version ${${_pkgname}_FIND_VERSION} )
 
-    IF( NOT ${_pkgname}_FIND_QUIETLY )
-        GET_FILENAME_COMPONENT( _aux ${CMAKE_CURRENT_LIST_FILE} PATH )
-        MESSAGE( STATUS "Check for ${_pkgname}: ${_aux}" )
-    ENDIF()
-
     # only do work if FIND_PACKAGE called with a version argument
     IF( DEFINED ${_pkgname}_FIND_VERSION )
 
