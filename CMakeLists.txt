@@ -22,9 +22,10 @@ ENABLE_TESTING()
 INCLUDE(CTest)
 
 # project version
-SET( ${PROJECT_NAME}_MAJOR_VERSION 0 )
-SET( ${PROJECT_NAME}_MINOR_VERSION 15 )
-SET( ${PROJECT_NAME}_PATCH_LEVEL 0 )
+SET( ${PROJECT_NAME}_VERSION_MAJOR 0 )
+SET( ${PROJECT_NAME}_VERSION_MINOR 15 )
+SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
+SET( ${PROJECT_NAME}_VERSION_TWEAK 0 )
 
 # project options
 OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
@@ -46,8 +47,8 @@ ENDIF()
 # -----------------------------------------------------------------------
 
 # library *nix style versioning
-SET( GEAR_SOVERSION "${GEAR_MAJOR_VERSION}.${GEAR_MINOR_VERSION}" )
-SET( GEAR_VERSION "${GEAR_SOVERSION}.${GEAR_PATCH_LEVEL}" )
+SET( GEAR_SOVERSION "${GEAR_VERSION_MAJOR}.${GEAR_VERSION_MINOR}" )
+SET( GEAR_VERSION "${GEAR_SOVERSION}.${GEAR_VERSION_PATCH}" )
 
 
 
@@ -141,10 +142,23 @@ INSTALL( DIRECTORY "${PROJECT_SOURCE_DIR}/include" DESTINATION .
 # create symlinks in include directory
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
-IF( BUILD_TGEO )
-    INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
-ENDIF()
 
+IF( BUILD_TGEO )
+
+    INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
+
+    #IF( NOT DEFINED CMAKE_MODULE_PATH )
+    #    MESSAGE( STATUS "CMAKE_MODULE_PATH not set! Set it with: "
+    #        "-DCMAKE_MODULE_PATH=\"/path_to_ilcsoft/CMakeModules\"" )
+    #ENDIF()
+
+    FIND_PACKAGE( ROOT REQUIRED COMPONENTS Gdml Geom XMLIO )
+
+    #IF( NOT ROOT_GDML_FOUND OR NOT ROOT_GEOM_FOUND OR NOT ROOT_XMLIO_FOUND )
+    #    MESSAGE( FATAL_ERROR "failed to find required ROOT components (Gdml Geom XMLIO)" )
+    #ENDIF()
+
+ENDIF( BUILD_TGEO )
 
 ADD_SUBDIRECTORY( ./src )
 
@@ -164,12 +178,18 @@ ADD_CUSTOM_TARGET( uninstall
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/geartgeo"
 )
 
-# create configuration file from .in file
+# create configuration file from .in files
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GEARConfig.cmake.in"
                 "${PROJECT_BINARY_DIR}/GEARConfig.cmake" @ONLY )
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GEARConfigVersion.cmake.in"
+                "${PROJECT_BINARY_DIR}/GEARConfigVersion.cmake" @ONLY )
 
-# install configuration file
+INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageLibs.cmake" DESTINATION cmake )
+INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageVersion.cmake" DESTINATION cmake )
+
+# install configuration files
 INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARConfig.cmake" DESTINATION . )
+INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARConfigVersion.cmake" DESTINATION . )
 
 
 # display status message for important variables

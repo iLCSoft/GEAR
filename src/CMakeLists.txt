@@ -50,23 +50,11 @@ AUX_SOURCE_DIRECTORY( ./gearimpl libgear_srcs )
 ADD_GEAR_LIBRARY( gear ${libgear_srcs} )
 # ----------------------------------------------------
 
+# -------- libgeartgeo -------------------------------
 IF( BUILD_TGEO )
-
-    #IF( NOT DEFINED CMAKE_MODULE_PATH )
-    #    MESSAGE( STATUS "CMAKE_MODULE_PATH not set! Set it with: "
-    #        "-DCMAKE_MODULE_PATH=\"/path_to_ilcsoft/CMakeModules\"" )
-    #ENDIF()
-
-    #SET( ROOT_USE_COMPONENTS Gdml Geom XMLIO)
-    FIND_PACKAGE( ROOT REQUIRED COMPONENTS Gdml Geom XMLIO )
-
-    IF( NOT ROOT_GDML_FOUND OR NOT ROOT_GEOM_FOUND OR NOT ROOT_XMLIO_FOUND )
-        MESSAGE( FATAL_ERROR "failed to find required ROOT components (Gdml Geom XMLIO)" )
-    ENDIF()
-
     ADD_SUBDIRECTORY( ./geartgeo )
-
 ENDIF()
+# ----------------------------------------------------
 
 
 # -------- libgearxml --------------------------------
