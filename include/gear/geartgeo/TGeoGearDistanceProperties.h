@@ -6,7 +6,9 @@
 
 #include "gear/GEAR.h"
 #include "gear/GearDistanceProperties.h"
-#include "TGeoManager.h"
+
+//#include "TGeoManager.h"
+class TGeoManager;
 
 namespace gear {
 

@@ -6,7 +6,9 @@
 
 #include "gear/GEAR.h"
 #include "gear/GearPointProperties.h"
-#include "TGeoManager.h"
+
+//#include "TGeoManager.h"
+class TGeoManager;
 
 namespace gear {
 
