@@ -10,6 +10,6 @@ INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIRS} )
 AUX_SOURCE_DIRECTORY( . libgeartgeo_srcs )
 ADD_GEAR_LIBRARY( geartgeo ${libgeartgeo_srcs} )
 TARGET_LINK_LIBRARIES( geartgeo gear )
-TARGET_LINK_LIBRARIES( geartgeo ${ROOT_LIBRARIES} )
+TARGET_LINK_LIBRARIES( geartgeo ${ROOT_LIBRARIES} ${ROOT_COMPONENT_LIBRARIES} )
 # ----------------------------------------------------
 
