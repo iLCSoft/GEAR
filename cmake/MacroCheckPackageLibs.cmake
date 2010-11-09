@@ -38,7 +38,7 @@ MACRO( CHECK_PACKAGE_LIBS _pkgname )
     SET( _ext_lib_missing FALSE )
 
     IF( _ext_libnames AND NOT ${_pkgname}_FIND_QUIETLY )
-        MESSAGE( STATUS "Check for ${_pkgname}_FIND_COMPONENTS: ${_ext_libnames}" )
+        MESSAGE( STATUS "Check for ${_pkgname}_COMPONENT_LIBRARIES: ${_ext_libnames}" )
     ENDIF()
 
     SET( ${_pkgname}_LIBRARY_DIRS )
@@ -49,6 +49,9 @@ MACRO( CHECK_PACKAGE_LIBS _pkgname )
     
     SET( ${_pkgname}_COMPONENT_LIBRARIES )
     MARK_AS_ADVANCED( ${_pkgname}_COMPONENT_LIBRARIES )
+
+    SET( ${_pkgname}_COMPONENT_VARIABLES )
+    MARK_AS_ADVANCED( ${_pkgname}_COMPONENT_VARIABLES )
 
     FOREACH( _libname ${_std_libnames} ${_ext_libnames} )
 
@@ -68,9 +71,15 @@ MACRO( CHECK_PACKAGE_LIBS _pkgname )
 
         FIND_LIBRARY( ${_pkgname}_${_ulibname}_LIBRARY
             NAMES ${_libname}
-            PATHS ${${_pkgname}_ROOT}/lib
+            PATHS ${${_pkgname}_ROOT}/lib ${${_pkgname}_DIR}/lib ${${_pkgname}_LIB_SEARCH_PATH}
             NO_DEFAULT_PATH
         )
+
+        #FIND_LIBRARY( ${_pkgname}_${_ulibname}_LIBRARY NAMES ${_libname} )
+        
+        IF( ${_pkgname}_FIND_REQUIRED )
+            LIST( APPEND ${_pkgname}_COMPONENT_VARIABLES ${_pkgname}_${_ulibname}_LIBRARY )
+        ENDIF()
 
         IF( ${_pkgname}_${_ulibname}_LIBRARY ) # if library found
 
