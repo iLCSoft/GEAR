@@ -7,32 +7,31 @@
 #---------- DOCUMENTATION ---------------------------------------------------
 
 # build documentation out-of-source
-SET( GEN_DOC_DIR "${PROJECT_BINARY_DIR}/docbuild" )
+SET( DOC_SRC_DIR "${PROJECT_SOURCE_DIR}/doc" )
+SET( DOC_BIN_DIR "${PROJECT_BINARY_DIR}/docbuild" )
+
 
 ADD_CUSTOM_COMMAND(
-    OUTPUT "${GEN_DOC_DIR}/html/index.html" "${GEN_DOC_DIR}/latex/index.tex"
+    OUTPUT "${DOC_BIN_DIR}/html/index.html" "${DOC_BIN_DIR}/latex/index.tex"
     # copy over doc from source tree to keep source tree clean
-    COMMAND "${CMAKE_COMMAND}" -E copy_directory
-        "${PROJECT_SOURCE_DIR}/doc" "${GEN_DOC_DIR}"
-    COMMAND "${CMAKE_COMMAND}" -E copy_directory
-        "${PROJECT_SOURCE_DIR}/example" "${GEN_DOC_DIR}/example"
+    COMMAND "${CMAKE_COMMAND}" -E copy_directory "${DOC_SRC_DIR}" "${DOC_BIN_DIR}"
+    COMMAND "${CMAKE_COMMAND}" -E copy_directory "${PROJECT_SOURCE_DIR}/example" "${DOC_BIN_DIR}/example"
     COMMAND "${DOXYGEN_EXECUTABLE}"
-    WORKING_DIRECTORY "${GEN_DOC_DIR}"
+    WORKING_DIRECTORY "${DOC_BIN_DIR}"
     COMMENT "Building API Documentation..."
-    DEPENDS "${PROJECT_SOURCE_DIR}/doc/overview.html.in"
-            "${PROJECT_SOURCE_DIR}/doc/Doxyfile.in"
+    DEPENDS "${DOC_SRC_DIR}/overview.html.in" "${DOC_SRC_DIR}/Doxyfile.cmake.in"
 )
 
 ADD_CUSTOM_TARGET( doc DEPENDS
-    "${GEN_DOC_DIR}/html/index.html"
-    "${GEN_DOC_DIR}/latex/index.tex"
+    "${DOC_BIN_DIR}/html/index.html"
+    "${DOC_BIN_DIR}/latex/index.tex"
 )
 
 # replace INPUT = @GEAR_SOURCE_DIR@/{src,include}
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/Doxyfile.in" "${GEN_DOC_DIR}/Doxyfile" @ONLY )
+CONFIGURE_FILE( "${DOC_SRC_DIR}/Doxyfile.cmake.in" "${DOC_BIN_DIR}/Doxyfile" @ONLY )
 
 # replace @GEAR_VERSION@
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/doc/overview.html.in" "${GEN_DOC_DIR}/overview.html" @ONLY )
+CONFIGURE_FILE( "${DOC_SRC_DIR}/overview.html.in" "${DOC_BIN_DIR}/overview.html" @ONLY )
 
 # build documentation before 'make install'
 INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BUILD_TOOL} doc)" )
@@ -42,13 +41,13 @@ INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BUILD_TOOL} doc)" )
 IF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
 
     # --- in-source installations ---
-    INSTALL( DIRECTORY "${GEN_DOC_DIR}/html" DESTINATION "doc" )
-    INSTALL( DIRECTORY "${GEN_DOC_DIR}/example" DESTINATION "doc" PATTERN "*/.svn" EXCLUDE )
+    INSTALL( DIRECTORY "${DOC_BIN_DIR}/html" DESTINATION "doc" )
+    INSTALL( DIRECTORY "${DOC_BIN_DIR}/example" DESTINATION "doc" PATTERN "*/.svn" EXCLUDE )
 
 ELSE()
 
     # --- out-of-source installations ---
-    INSTALL( DIRECTORY "${GEN_DOC_DIR}/" DESTINATION "doc/gear"
+    INSTALL( DIRECTORY "${DOC_BIN_DIR}/" DESTINATION "doc/gear"
         PATTERN "*Make*" EXCLUDE
         PATTERN "*Doxyfile*" EXCLUDE
         PATTERN "*overview.html*" EXCLUDE
