@@ -16,7 +16,7 @@
 	      e.g. Pandora where each calorimeter cell wants to know the material before.
         BUILD:
 	To switch on the new functionality use -DBUILD_TGEO=1 and provide the CMAKE_MODULE_PATH and ROOT info
-	cmake -DBUILD_TGEO=1 -DCMAKE_MODULE_PATH="xx" -DROOT_HOME=$ROOTSYS ..	
+	cmake -DBUILD_TGEO=1 -DCMAKE_MODULE_PATH="xx" -DROOT_DIR=$ROOTSYS ..	
         USAGE:
         - in gear/example there are two gdml files: World_ILD00.gdml ( full detetcor geometry of mokka model ILD00)
           and TPC_ILD00.gdml (just the TPC from mokka model ILD00). The corresponding gear steering files are

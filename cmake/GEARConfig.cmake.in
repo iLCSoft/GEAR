@@ -75,10 +75,12 @@ ENDIF( GEAR_FOUND )
 
 
 
-# ---------- cmake bug ?! -----------------------------------------------------
+# ---------- bug fix for cmake versions < 2.8 ---------------------------------
 # GEAR_FIND_REQUIRED is not reset between FIND_PACKAGE calls, i.e. the following
-# code fails when geartgeo component not available: (not tested in cmake 2.8)
+# code fails when geartgeo component not available: (fixed in cmake 2.8)
 # FIND_PACKAGE( GEAR REQUIRED )
 # FIND_PACKAGE( GEAR COMPONENTS geartgeo QUIET )
-SET( GEAR_FIND_REQUIRED )
+IF( "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.8 )
+    SET( GEAR_FIND_REQUIRED )
+ENDIF()
 
