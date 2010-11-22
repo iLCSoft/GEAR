@@ -147,6 +147,10 @@ IF( BUILD_TGEO )
 
     INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
 
+    IF( NOT ROOT_DIR AND DEFINED ROOT_HOME )
+        SET( ROOT_DIR "${ROOT_HOME}" )
+    ENDIF()
+
     FIND_PACKAGE( ROOT REQUIRED COMPONENTS Gdml Geom XMLIO )
 
 ENDIF( BUILD_TGEO )
