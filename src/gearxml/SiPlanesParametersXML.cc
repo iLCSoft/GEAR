@@ -175,19 +175,33 @@ namespace gear {
 
     const TiXmlElement* siplanesType = xmlElement->FirstChildElement( "siplanesType" ) ;
     int intType = 0 ;
-    const char* strType = getXMLAttribute( siplanesType , "type" ) .c_str() ;
+    std::string strType = getXMLAttribute( siplanesType , "type" ) ;
+    
 
+    if( strType == "TelescopeWithDUT"  ) {
 
-    if( !std::strcmp( strType , "TelescopeWithDUT" ) ) {
       intType = SiPlanesParameters::TelescopeWithDUT ;
-     }
-    if( !std::strcmp( strType ,"TelescopeWithoutDUT" ) ) {
+
+    } else if( strType == "TelescopeWithoutDUT" ) {
+
       intType = SiPlanesParameters::TelescopeWithoutDUT ;
-    }
-    if( std::strcmp( strType , "TelescopeWithDUT" ) && std::strcmp( strType ,"TelescopeWithoutDUT" ) ) {
+
+    } else {
       throw Exception( "SiPlanesParametersXML::fromXML type of SiPlanes not known."
 		       "Needs to be 'TelescopeWithDUT' or 'TelescopeWithoutDUT'." ) ;
     }
+
+    // const char* strType = getXMLAttribute( siplanesType , "type" ) .c_str() ;
+    // if( !std::strcmp( strType , "TelescopeWithDUT" ) ) {
+    //   intType = SiPlanesParameters::TelescopeWithDUT ;
+    //  }
+    // if( !std::strcmp( strType ,"TelescopeWithoutDUT" ) ) {
+    //   intType = SiPlanesParameters::TelescopeWithoutDUT ;
+    // }
+    // if( std::strcmp( strType , "TelescopeWithDUT" ) && std::strcmp( strType ,"TelescopeWithoutDUT" ) ) {
+    //   throw Exception( "SiPlanesParametersXML::fromXML type of SiPlanes not known."
+    // 		       "Needs to be 'TelescopeWithDUT' or 'TelescopeWithoutDUT'." ) ;
+    // }
 
     // number of telescope planes
 
