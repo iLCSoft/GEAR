@@ -2,7 +2,14 @@
   Gear release notes
  ======================
 
+  --------
+ | v00-16 |  
+  --------
 
+   - updated SiPlanesParameters (I.Rubinsky) :
+       Three new Layer related parameters  added.
+       Three rotation angles: rotationXY = alfa, rotationZX = beta, rotationZY = gamma -> rotations around the local sensor frame axes
+ 
   --------
  | v00-15 |  
   --------
