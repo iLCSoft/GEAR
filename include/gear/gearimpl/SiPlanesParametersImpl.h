@@ -14,6 +14,7 @@ class SiPlanesLayerLayout;
   /** Abstract description of layers in pixel beam telescope with or without DUT.
    *  This assumes a number of silicon layers, arranged perpendicular to the beam.
    *  @author T Klimkovich, DESY
+   *  @author I. Rubinskiy, DESY
    *  @version $Id: 
    */
 class SiPlanesParametersImpl : public GearParametersImpl, public SiPlanesParameters {
@@ -63,7 +64,8 @@ public:
    * @param sensitiveRadLenght the radiation lenght of sensitive area of telescope plane (mm)
    */
   virtual void addLayer(int layerID,
-                        double layerPositionX, double layerPositionY, double layerPositionZ,
+                       double layerPositionX, double layerPositionY, double layerPositionZ,
+                       double layerRotationXY, double layerRotationZX, double layerRotationZY,
 			double layerSizeX, double layerSizeY, double layerThickness,
 			double layerRadLength,
 			// sensitive
@@ -81,6 +83,7 @@ public:
   {
     _layer.addLayer( layerID,
                      layerPositionX, layerPositionY, layerPositionZ,
+                     layerRotationXY, layerRotationZX, layerRotationZY,
                      layerSizeX, layerSizeY, layerThickness,
 		     layerRadLength,
 		     sensitiveID,

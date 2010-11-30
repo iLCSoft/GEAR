@@ -1,12 +1,20 @@
 #include "gearimpl/SiPlanesLayerLayoutImpl.h"
 #include <math.h>
 
+/** Abstract description of layers in pixel beam telescope with or without DUT.
+   *  This assumes a number of silicon layers, arranged perpendicular to the beam.
+   *  @author T Klimkovich, DESY
+   *  @author I. Rubinskiy, DESY
+   *  @version $Id: 
+   */
+
 namespace gear{
 
   void SiPlanesLayerLayoutImpl::addLayer(
 			      // layer
 			      int layerID,	 
 			      double layerPositionX, double layerPositionY, double layerPositionZ,
+			      double layerRotationXY, double layerRotationZX, double layerRotationZY,
 			      double layerSizeX, double layerSizeY, double layerThickness,
 			      double layerRadLength,
 			      // sensitive
@@ -29,6 +37,9 @@ namespace gear{
     lL.PositionX  = layerPositionX ;
     lL.PositionY  = layerPositionY ;
     lL.PositionZ  = layerPositionZ ;
+    lL.RotationXY = layerRotationXY;
+    lL.RotationZX = layerRotationZX;
+    lL.RotationZY = layerRotationZY;
     lL.SizeX      = layerSizeX ;
     lL.SizeY      = layerSizeY ;
     lL.Thickness  = layerThickness ;

@@ -6,9 +6,10 @@ namespace gear {
 
 /**Abstract description of layers in a pixel beam telescope.
  * @author T. Klimkovich, DESY
+ * @author I. Rubinskiy,  DESY
  * @version $Id: 
  */
-class SiPlanesLayerLayout {
+class SiPlanesLayerLayout  {
 
 public: 
     /// Destructor.
@@ -46,6 +47,22 @@ public:
      *  for the layer closest to the beam source. 
      */
     virtual double getLayerPositionZ(int layerIndex) const = 0;
+
+    /** rotation angles according to Euler implementation scheme
+     * (in XY plane -> around axis Z: gamma )
+     */
+    virtual double getLayerRotationXY(int layerIndex) const = 0;
+    
+    /** rotation angles according to Euler implmentation scheme
+     * (in ZX plane -> around axis Y: beta  )
+     */
+    virtual double getLayerRotationZX(int layerIndex) const = 0;
+  
+    /** rotation angles according to Euler implmentation scheme
+     *  (in ZY plane -> around axis X: alfa  )
+     */
+    virtual double getLayerRotationZY(int layerIndex) const = 0;
+
 
     /** Size in x direction of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source. 

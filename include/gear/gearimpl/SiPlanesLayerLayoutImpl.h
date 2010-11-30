@@ -11,6 +11,7 @@ namespace gear {
  *  This assumes a number of silicon layers arranged perpendicular to the beam.
  * 
  * @author T. Klimkovich, DESY
+ * @author I. Rubinskiy,  DESY
  * @version $Id: 
  */
 
@@ -24,6 +25,9 @@ public:
     double PositionX ;
     double PositionY ;
     double PositionZ ;
+    double RotationXY;
+    double RotationZX;
+    double RotationZY;
     double SizeX ;
     double SizeY ;
     double Thickness ;
@@ -63,10 +67,14 @@ public:
   virtual int getID(int layerIndex) const { return _lVec.at( layerIndex ).ID  ; }
 
   virtual double getLayerRadLength(int layerIndex) const { return _lVec.at( layerIndex ).RadLength  ; }
-  
+   
   virtual double getLayerPositionX(int layerIndex) const { return _lVec.at( layerIndex ).PositionX  ; }
   virtual double getLayerPositionY(int layerIndex) const { return _lVec.at( layerIndex ).PositionY  ; }
   virtual double getLayerPositionZ(int layerIndex) const { return _lVec.at( layerIndex ).PositionZ  ; }
+
+  virtual double getLayerRotationXY(int layerIndex) const { return _lVec.at( layerIndex ).RotationXY  ; }
+  virtual double getLayerRotationZX(int layerIndex) const { return _lVec.at( layerIndex ).RotationZX  ; }
+  virtual double getLayerRotationZY(int layerIndex) const { return _lVec.at( layerIndex ).RotationZY  ; }
 
   virtual double getLayerSizeX(int layerIndex) const { return _lVec.at( layerIndex ).SizeX  ; }
   virtual double getLayerSizeY(int layerIndex) const { return _lVec.at( layerIndex ).SizeY  ; }
@@ -101,6 +109,7 @@ public:
    */
   virtual void addLayer(int layerID,
                         double layerPositionX, double layerPositionY, double layerPositionZ,
+                        double layerRotationXY, double layerRotationZX, double layerRotationZY,
 			double layerSizeX, double layerSizeY, double layerThickness,
 			double layerRadLength,
 			// sensitive

@@ -14,12 +14,17 @@
  
 #include <cstring>
 
+  /** Abstract description of layers in pixel beam telescope with or without DUT.
+   *  This assumes a number of silicon layers, arranged perpendicular to the beam.
+   *  @author T Klimkovich, DESY
+   *  @author I. Rubinskiy, DESY
+   *  @version $Id: 
+   */
 
 namespace gear {
 
   TiXmlElement SiPlanesParametersXML::toXML( const GearParameters & parameters ) const {
 
-    //   std::cout << "SiPlanesParameters::toXML called" << std::endl ; //debug
 
     // check whether parameter is valid SiPlanesParameter
     const SiPlanesParameters* param = dynamic_cast<const SiPlanesParameters*> ( &parameters ) ;
@@ -54,11 +59,6 @@ namespace gear {
     type.SetAttribute( "type", strType ) ;
     det.InsertEndChild( type ) ;
 
-    //    std::cout << " setup ID = " << param->getSiPlanesID() << std::endl ; //debug
-
-    //    std::cout << "SiPlanesParameters::toXML strType == '" << strType << "'"<< std::endl ; // debug
-
-    //    std::cout << " N of planes = " << param->getSiPlanesNumber() << std::endl ; //debug
 
 
     TiXmlElement nplanes( "siplanesNumber" ) ;
@@ -112,7 +112,6 @@ namespace gear {
 
     for( int i=0 ; i < siplanesLayers.getNLayers() ; i++ ) {
 
-       //      std::cout << " layer " <<  i  << std::endl ; //debug
       
       TiXmlElement layer("layer" ) ;
 
@@ -121,6 +120,9 @@ namespace gear {
       ladder.SetDoubleAttribute( "positionX" , siplanesLayers.getLayerPositionX( i ) ) ;
       ladder.SetDoubleAttribute( "positionY" , siplanesLayers.getLayerPositionY( i ) ) ;
       ladder.SetDoubleAttribute( "positionZ" , siplanesLayers.getLayerPositionZ( i ) ) ;
+      ladder.SetDoubleAttribute( "rotationXY" , siplanesLayers.getLayerRotationXY( i ) ) ;
+      ladder.SetDoubleAttribute( "rotationZX" , siplanesLayers.getLayerRotationZX( i ) ) ;
+      ladder.SetDoubleAttribute( "rotationZY" , siplanesLayers.getLayerRotationZY( i ) ) ;
       ladder.SetDoubleAttribute( "sizeX" , siplanesLayers.getLayerSizeX( i ) ) ;
       ladder.SetDoubleAttribute( "sizeY" , siplanesLayers.getLayerSizeY( i ) ) ;
       ladder.SetDoubleAttribute( "thickness" , siplanesLayers.getLayerThickness( i ) ) ;
@@ -168,7 +170,6 @@ namespace gear {
     const TiXmlElement* siplanesID = xmlElement->FirstChildElement( "siplanesID" ) ;
     int setupID = atoi( getXMLAttribute( siplanesID , "ID" ).c_str() ) ;
 
-    //    std::cout << "SiPlanesParameters::fromXML siplanesID == " << setupID << std::endl ; // debug
 
     // type
 
@@ -176,7 +177,6 @@ namespace gear {
     int intType = 0 ;
     const char* strType = getXMLAttribute( siplanesType , "type" ) .c_str() ;
 
-    std::cout << "SiPlanesParameters::fromXML siplanesType == '" << strType << "'" << std::endl ; // debug
 
     if( !std::strcmp( strType , "TelescopeWithDUT" ) ) {
       intType = SiPlanesParameters::TelescopeWithDUT ;
@@ -194,7 +194,6 @@ namespace gear {
     const TiXmlElement* siplanesNumber = xmlElement->FirstChildElement( "siplanesNumber" ) ;
     int nplanes = atoi( getXMLAttribute( siplanesNumber , "number" ).c_str() ) ;
 
-    //    std::cout << "SiPlanesParameters::fromXML siplanesNumber == " << nplanes << std::endl ; // debug
 
     // create SiPlanesParameters
     SiPlanesParametersImpl* siplanesParam = new SiPlanesParametersImpl( setupID, intType , nplanes) ;
@@ -247,6 +246,9 @@ namespace gear {
     double lPosX   = atof( getXMLAttribute( xmlLad , "positionX" ).c_str() ) ;
     double lPosY   = atof( getXMLAttribute( xmlLad , "positionY" ).c_str() ) ;
     double lPosZ   = atof( getXMLAttribute( xmlLad , "positionZ" ).c_str() ) ;
+    double lRotXY  = atof( getXMLAttribute( xmlSen , "rotationXY" ).c_str() ) ;
+    double lRotZX  = atof( getXMLAttribute( xmlSen , "rotationZX" ).c_str() ) ;
+    double lRotZY  = atof( getXMLAttribute( xmlSen , "rotationZY" ).c_str() ) ;
     double lSizX   = atof( getXMLAttribute( xmlLad , "sizeX" ).c_str() ) ;
     double lSizY   = atof( getXMLAttribute( xmlLad , "sizeY" ).c_str() ) ;
     double lThick   = atof( getXMLAttribute( xmlLad , "thickness" ).c_str() ) ;
@@ -270,7 +272,7 @@ namespace gear {
     double sRotat4 = atof(getXMLAttribute( xmlSen , "rotation4" ).c_str() ) ;
     double sRadLen = atof( getXMLAttribute( xmlSen , "radLength" ).c_str() ) ;
     
-    siplanesParam->addLayer(lID, lPosX, lPosY, lPosZ, lSizX, lSizY, lThick, lRadLen, sID, sPosX, sPosY, sPosZ, sSizX, sSizY, sThick, sNPixX, sNPixY, sPitX, sPitY, sResol, sRotat1, sRotat2,sRotat3,sRotat4,sRadLen) ;
+    siplanesParam->addLayer(lID, lPosX, lPosY, lPosZ, lRotXY, lRotZX, lRotZY, lSizX, lSizY, lThick, lRadLen, sID, sPosX, sPosY, sPosZ, sSizX, sSizY, sThick, sNPixX, sNPixY, sPitX, sPitY, sResol, sRotat1, sRotat2,sRotat3,sRotat4,sRadLen) ;
 
     } // end loop
 
