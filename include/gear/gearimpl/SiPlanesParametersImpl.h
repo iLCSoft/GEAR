@@ -99,6 +99,34 @@ public:
 		     sensitiveRadLength ) ;
     return ;
   }
+
+  /** Adding a Layer to the SiPlanes detector (without parameters for layer rotation)
+   **/
+  virtual void addLayer(int layerID,
+            double layerPositionX, double layerPositionY, double layerPositionZ,
+			double layerSizeX, double layerSizeY, double layerThickness,
+			double layerRadLength,
+			// sensitive
+			int sensitiveID,
+			double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
+			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
+			int sensitiveNpixelX, int sensitiveNpixelY,
+			double sensitivePitchX, double sensitivePitchY,
+			double sensitiveResolution,
+			double sensitiveRotation1,
+			double sensitiveRotation2,
+			double sensitiveRotation3,
+			double sensitiveRotation4,
+			double sensitiveRadLength ){
+
+    // call addLayer with layerRotation parameters set to 0
+    addLayer( layerID, layerPositionX, layerPositionY, layerPositionZ, 0, 0, 0,
+    layerSizeX, layerSizeY, layerThickness, layerRadLength,
+    sensitiveID, sensitivePositionX, sensitivePositionY, sensitivePositionZ, sensitiveSizeX, sensitiveSizeY,
+    sensitiveThickness, sensitiveNpixelX, sensitiveNpixelY, sensitivePitchX, sensitivePitchY, sensitiveResolution,
+    sensitiveRotation1, sensitiveRotation2, sensitiveRotation3, sensitiveRotation4, sensitiveRadLength ) ;
+  }
+
   
   /** Adding DUT to the SiPlanes detector
    *
