@@ -44,6 +44,14 @@ IF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
     INSTALL( DIRECTORY "${DOC_BIN_DIR}/html" DESTINATION "doc" )
     INSTALL( DIRECTORY "${DOC_BIN_DIR}/example" DESTINATION "doc" PATTERN "*/.svn" EXCLUDE )
 
+    # keep source tree clean
+    ADD_CUSTOM_TARGET( uninstall_doc
+        COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/html"
+        COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/example"
+    )
+    ADD_DEPENDENCIES( uninstall uninstall_doc )
+
+
 ELSE()
 
     # --- out-of-source installations ---
