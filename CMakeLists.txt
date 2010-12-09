@@ -26,8 +26,8 @@ INCLUDE( ilcsoft_default_settings )
 
 ### DEPENDENCIES ############################################################
 
-# --------- TGEO ------------------------------------------------------------
-OPTION( BUILD_TGEO "Set to ON to build tgeo" OFF )
+# root is needed to build tgeo
+OPTION( BUILD_TGEO "Set to ON to build tgeo (ROOT >= 5.27.06 required)" OFF )
 IF( BUILD_TGEO )
     
     # fix for backwards compatibility
@@ -40,8 +40,6 @@ IF( BUILD_TGEO )
     FIND_PACKAGE( ROOT 5.27.06 REQUIRED COMPONENTS Gdml Geom XMLIO )
 
 ENDIF( BUILD_TGEO )
-# ---------------------------------------------------------------------------
-
 
 
 
@@ -72,14 +70,16 @@ ENDIF()
 
 
 
-#------------------------------------------------------------------------------
+#############################################################################
 
-# -------- generated GearVersion.h --------------------------------------------
+
+# -------- generate GearVersion.h ---------------------------------------------
 CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GearVersion.h.in"
     "${PROJECT_BINARY_DIR}/GearVersion.h" @ONLY )
 
 INSTALL( FILES "${PROJECT_BINARY_DIR}/GearVersion.h" DESTINATION "include/gear/" )
 # -----------------------------------------------------------------------------
+
 
 ADD_SUBDIRECTORY( ./src )
 
@@ -91,7 +91,8 @@ INSTALL( DIRECTORY include DESTINATION . FILES_MATCHING PATTERN "*.h" )
 INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageLibs.cmake" DESTINATION cmake )
 INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageVersion.cmake" DESTINATION cmake )
 
-# symlinks in include directory
+
+# ------- symlinks in include directory for backwards compatibility ---------
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
 IF( BUILD_TGEO )
@@ -114,7 +115,9 @@ MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
 MESSAGE( STATUS "BUILD_TGEO = ${BUILD_TGEO}" )
 MESSAGE( STATUS )
 
+
+
 # export library dependencies (keep this as the last line in the file)
-EXPORT_LIBRARY_DEPENDENCIES( "GEARLibDeps.cmake" )
-INSTALL( FILES "${PROJECT_BINARY_DIR}/GEARLibDeps.cmake" DESTINATION lib/cmake )
+EXPORT_LIBRARY_DEPENDENCIES( "${PROJECT_NAME}LibDeps.cmake" )
+INSTALL( FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibDeps.cmake" DESTINATION lib/cmake )
 
