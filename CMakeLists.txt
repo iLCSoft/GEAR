@@ -86,7 +86,6 @@ ADD_SUBDIRECTORY( ./src )
 
 # ------ additional stuff to uninstall --------------------------------------
 ADD_CUSTOM_TARGET( uninstall_clean
-    "${CMAKE_COMMAND}" -P "${PROJECT_BINARY_DIR}/cmake_uninstall.cmake"
     COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/html"
     COMMAND "${CMAKE_COMMAND}" -E remove_directory "${CMAKE_INSTALL_PREFIX}/doc/example"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
