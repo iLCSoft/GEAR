@@ -37,7 +37,7 @@ ADD_DEFINITIONS( "-Wno-long-long" )
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
 # common includes (to ALL sources)
-INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" ) # generated GearVersion.h
+INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" ) # generated GearConfig.h
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
 
@@ -51,7 +51,7 @@ ADD_GEAR_LIBRARY( gear ${libgear_srcs} )
 # ----------------------------------------------------
 
 # -------- libgeartgeo -------------------------------
-IF( BUILD_TGEO )
+IF( GEAR_TGEO )
     ADD_SUBDIRECTORY( ./geartgeo )
 ENDIF()
 # ----------------------------------------------------
@@ -61,11 +61,7 @@ ENDIF()
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_GEAR_LIBRARY( gearxml ${libgearxml_srcs} )
 TARGET_LINK_LIBRARIES( gearxml gear )
-IF( BUILD_TGEO )
-
-    # enable tgeo source code in gearxml
-    SET_SOURCE_FILES_PROPERTIES( ./gearxml/GearXML.cc
-        PROPERTIES COMPILE_FLAGS "-DGEAR_TGEO" )
+IF( GEAR_TGEO )
 
     # link gearxml to geartgeo
     TARGET_LINK_LIBRARIES( gearxml geartgeo )
@@ -103,7 +99,7 @@ SET( test_bins
     testXMLOut
 )
 
-IF( BUILD_TGEO )
+IF( GEAR_TGEO )
     SET( test_bins ${test_bins} testGearTGeo testMaterialBudget testMaterialMap testMaterialMapFactory )
 ENDIF()
 

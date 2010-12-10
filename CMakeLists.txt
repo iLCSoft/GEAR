@@ -27,9 +27,14 @@ INCLUDE( ilcsoft_default_settings )
 ### DEPENDENCIES ############################################################
 
 # root is needed to build tgeo
-OPTION( BUILD_TGEO "Set to ON to build tgeo (ROOT >= 5.27.06 required)" OFF )
+OPTION( GEAR_TGEO "Set to ON to build tgeo (ROOT >= 5.27.06 required)" OFF )
 
-IF( BUILD_TGEO )
+# for backwards compatibility
+IF( DEFINED BUILD_TGEO )
+    SET( GEAR_TGEO ${BUILD_TGEO} )
+ENDIF()
+
+IF( GEAR_TGEO )
     
     # fix for backwards compatibility
     IF( NOT ROOT_DIR AND DEFINED ROOT_HOME )
@@ -40,7 +45,7 @@ IF( BUILD_TGEO )
     SET( ROOT_VERSION_CHECK_MINIMUM_REQUIRED TRUE )
     FIND_PACKAGE( ROOT 5.27.06 REQUIRED COMPONENTS Gdml Geom XMLIO )
 
-ENDIF( BUILD_TGEO )
+ENDIF( GEAR_TGEO )
 
 
 
@@ -74,11 +79,11 @@ ENDIF()
 #############################################################################
 
 
-# -------- generate GearVersion.h ---------------------------------------------
-CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GearVersion.h.in"
-    "${PROJECT_BINARY_DIR}/GearVersion.h" @ONLY )
+# -------- generate GearConfig.h ----------------------------------------------
+CONFIGURE_FILE( "${PROJECT_SOURCE_DIR}/cmake/GearConfig.h.cmake.in"
+    "${PROJECT_BINARY_DIR}/gear/GearConfig.h" @ONLY )
 
-INSTALL( FILES "${PROJECT_BINARY_DIR}/GearVersion.h" DESTINATION "include/gear/" )
+INSTALL( FILES "${PROJECT_BINARY_DIR}/gear/GearConfig.h" DESTINATION "include/gear/" )
 # -----------------------------------------------------------------------------
 
 
@@ -97,7 +102,7 @@ INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageVersion.cmake" DEST
 DISPLAY_STD_VARIABLES()
 
 MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
-MESSAGE( STATUS "BUILD_TGEO = ${BUILD_TGEO}" )
+MESSAGE( STATUS "GEAR_TGEO = ${GEAR_TGEO}" )
 MESSAGE( STATUS )
 
 

@@ -1,5 +1,5 @@
-#ifndef GearVersion_h
-#define GearVersion_h 1
+#ifndef GearConfig_h
+#define GearConfig_h 1
 
 // version macros
 #define GEAR_MAJOR_VERSION @GEAR_VERSION_MAJOR@
@@ -8,4 +8,6 @@
 //#define GEAR_VERSION_GE( MAJV , MINV , PLEV)  ( (  GEAR_MAJOR_VERSION > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION > MINV ) ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION == MINV ) && ( GEAR_PATCH_LEVEL >= PLEV ) ))
 #define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
 
-#endif
+#cmakedefine GEAR_TGEO
+
+#endif // GearConfig_h

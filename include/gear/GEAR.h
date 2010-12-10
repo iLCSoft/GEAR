@@ -7,9 +7,9 @@
 #include <string>
 #include <exception> 
 
-#include "GearVersion.h"
+#include "gear/GearConfig.h"
 
-// version macros are now generated with cmake
+// version macros are now defined with cmake
 //#define GEAR_MAJOR_VERSION 0
 //#define GEAR_MINOR_VERSION 14
 //#define GEAR_VERSION_GE( MAJV , MINV )  ( (  GEAR_MAJOR_VERSION  > MAJV ) || ( (GEAR_MAJOR_VERSION==MAJV) && ( GEAR_MINOR_VERSION >= MINV ) ) )
