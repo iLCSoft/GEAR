@@ -37,6 +37,10 @@ FIND_PATH( GEAR_INCLUDE_DIRS
 	NO_DEFAULT_PATH
 )
 
+# for backwards compatibility
+IF( GEAR_INCLUDE_DIRS )
+    LIST( APPEND GEAR_INCLUDE_DIRS ${GEAR_INCLUDE_DIR}/gear )
+ENDIF( GEAR_INCLUDE_DIRS )
 
 
 # ---------- libraries --------------------------------------------------------

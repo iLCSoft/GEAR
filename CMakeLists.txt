@@ -93,25 +93,6 @@ INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageLibs.cmake" DESTINA
 INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageVersion.cmake" DESTINATION cmake )
 
 
-# ------- symlinks in include directory for backwards compatibility ---------
-INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
-INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
-
-IF( BUILD_TGEO )
-    INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
-ENDIF()
-
-ADD_CUSTOM_TARGET( uninstall_links
-    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
-    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearxml"
-    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/geartgeo"
-)
-
-ADD_DEPENDENCIES( uninstall uninstall_links )
-# ---------------------------------------------------------------------------
-
-
-
 # display some variables and write them to cache
 DISPLAY_STD_VARIABLES()
 
