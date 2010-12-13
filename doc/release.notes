@@ -6,7 +6,6 @@
  |  HEAD  |  
   --------
 
-   - symbolic links (gearimpl, gearxml, geartgeo) removed in include directory (not needed when "include/gear" is added to GEAR_INCLUDE_DIRS)
    - renamed GearVersion.h to GearConfig.h (to include other general purpose configuration definitions)
 
 
