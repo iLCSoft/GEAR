@@ -54,6 +54,7 @@ IF( EXISTS "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in" )
                     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" @ONLY
     )
     INSTALL( FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}Config.cmake" DESTINATION . )
+    INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageLibs.cmake" DESTINATION cmake )
 ENDIF( EXISTS "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}Config.cmake.in" )
 
 
@@ -63,6 +64,7 @@ IF( EXISTS "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake.in" )
                     "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake" @ONLY
     )
     INSTALL( FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}ConfigVersion.cmake" DESTINATION . )
+    INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageVersion.cmake" DESTINATION cmake )
 ENDIF( EXISTS "${PROJECT_SOURCE_DIR}/cmake/${PROJECT_NAME}ConfigVersion.cmake.in" )
 
 

@@ -93,9 +93,7 @@ ADD_SUBDIRECTORY( ./src )
 # install include files
 INSTALL( DIRECTORY include DESTINATION . FILES_MATCHING PATTERN "*.h" )
 
-# install cmake macros
-INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageLibs.cmake" DESTINATION cmake )
-INSTALL( FILES "${PROJECT_SOURCE_DIR}/cmake/MacroCheckPackageVersion.cmake" DESTINATION cmake )
+
 
 # ------- symlinks in include directory for backwards compatibility ---------
 # this symlinks are needed for Mokka 
