@@ -6,6 +6,7 @@ OPTION( BUILD_SHARED_LIBS "Set to OFF to build static libraries" ON )
 # enable ctest
 ENABLE_TESTING()
 INCLUDE(CTest)
+MARK_AS_ADVANCED( DART_TESTING_TIMEOUT )
 
 # set default install prefix to project root directory
 # instead of the cmake default /usr/local
