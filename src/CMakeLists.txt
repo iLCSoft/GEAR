@@ -63,7 +63,8 @@ ENDIF()
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_GEAR_LIBRARY( gearxml ${libgearxml_srcs} )
-TARGET_LINK_LIBRARIES( gearxml gear )
+TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
+
 
 #IF( GEAR_TGEO )
 #    # link gearxml to geartgeo
