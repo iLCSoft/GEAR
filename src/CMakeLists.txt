@@ -36,6 +36,9 @@ ENDMACRO()
 ADD_DEFINITIONS( "-Wno-long-long" )
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
+IF(APPLE)
+ ADD_DEFINITIONS( "-DAPPLE" )
+ENDIF(APPLE)
 # common includes (to ALL sources)
 INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" ) # generated GearConfig.h
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )
@@ -61,12 +64,11 @@ ENDIF()
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_GEAR_LIBRARY( gearxml ${libgearxml_srcs} )
 TARGET_LINK_LIBRARIES( gearxml gear )
-IF( GEAR_TGEO )
 
-    # link gearxml to geartgeo
-    TARGET_LINK_LIBRARIES( gearxml geartgeo )
-
-ENDIF()
+#IF( GEAR_TGEO )
+#    # link gearxml to geartgeo
+#    TARGET_LINK_LIBRARIES( gearxml geartgeo )
+#ENDIF()
 # ----------------------------------------------------
 
 
@@ -100,7 +102,7 @@ SET( test_bins
 )
 
 IF( GEAR_TGEO )
-    SET( test_bins ${test_bins} testGearTGeo testMaterialBudget testMaterialMap testMaterialMapFactory )
+    SET( test_bins ${test_bins} testGearTGeo ) #testMaterialBudget testMaterialMap testMaterialMapFactory )
 ENDIF()
 
 ADD_CUSTOM_TARGET( tests )

@@ -16,15 +16,17 @@
 #include "gear/VXDParameters.h"
 #include "gear/SiPlanesParameters.h"
 
-#ifdef GEAR_TGEO
-#include "geartgeo/TGeoGeometryInitializer.h"
-#include "geartgeo/TGeoGearPointProperties.h"
-#include "geartgeo/TGeoGearDistanceProperties.h"
-#endif
+// #ifdef GEAR_TGEO
+// #include "geartgeo/TGeoGeometryInitializer.h"
+// #include "geartgeo/TGeoGearPointProperties.h"
+// #include "geartgeo/TGeoGearDistanceProperties.h"
+// #endif
+#include "gear/GearMaterialProperties.h"
 
 //#include <algorithm>
 #include <sstream>
 #include <iostream>
+#include <dlfcn.h>
 
 namespace gear{
 
@@ -431,19 +433,49 @@ namespace gear{
     }
 
 //-----GDML File ---------------
-#ifdef GEAR_TGEO
     TiXmlNode* gdmlfile = root->FirstChild("GDMLFile")  ;
+    
     if( gdmlfile != 0 ){
+      
       std::string gdmlname  =  getXMLAttribute( gdmlfile, "name" )  ;
-      TGeoGeometryInitializer *tgeoini=TGeoGeometryInitializer::getTGeoGeometryInitializer(gdmlname);
-      TGeoGearPointProperties *tgeopoint=new TGeoGearPointProperties(tgeoini->getGeoManager());
-      TGeoGearDistanceProperties *tgeodist=new TGeoGearDistanceProperties(tgeoini->getGeoManager());
-      _gearMgr->setPointProperties(tgeopoint);
-      _gearMgr->setDistanceProperties(tgeodist);
-    }
-    else
-      std::cout<<"WARNING: GearXML::createGearMgr : no GDMLFile tag found in  "<< _fileName<<std::endl ;
+      
+      
+      // TGeoGeometryInitializer *tgeoini=TGeoGeometryInitializer::getTGeoGeometryInitializer(gdmlname);
+      // TGeoGearPointProperties *tgeopoint=new TGeoGearPointProperties(tgeoini->getGeoManager());
+      // TGeoGearDistanceProperties *tgeodist=new TGeoGearDistanceProperties(tgeoini->getGeoManager());
+      
+#ifdef APPLE
+      std::string libName =  "libgeartgeo.dylib" ;
+#else
+      std::string libName =  "libgeartgeo.so" ;
 #endif
+      
+      
+      // now we need to dynamically load the libgearTGeo ....
+      void* libPointer  = dlopen( libName.c_str() , RTLD_LAZY | RTLD_GLOBAL) ;
+      
+      if(  libPointer != 0 && GearMaterialPropertiesFactory::instance() != 0 ) {
+	
+	GearMaterialProperties* mProp     = GearMaterialPropertiesFactory::instance()->create() ;
+	mProp->config()["GDMLFileName"] = gdmlname ;
+	mProp->initialize() ;
+	
+	GearPointProperties*    tgeopoint = mProp->getGearPointProperties() ;
+	GearDistanceProperties* tgeodist  = mProp->getGearDistanceProperties() ;
+	
+	_gearMgr->setPointProperties( tgeopoint );
+	_gearMgr->setDistanceProperties( tgeodist );
+	
+      } else {
+	
+	std::cout << " WARNING: GearXML::createGearMgr: GDML file specified "  << std::endl  
+		  << "   but failed to load library  "  <<  libName  << " ! "  << std::endl  
+		  << "   Check your dynamic library search path ($(DY)LD_LIBRARY_PATH )... "  << std::endl  
+		  <<   std::endl ;
+	
+      }
+    }
+
 
     TiXmlNode* det = 0 ;
     while( ( det = detectors->IterateChildren( "detector", det ) )  != 0  ){

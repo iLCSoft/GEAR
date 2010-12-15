@@ -12,16 +12,16 @@ namespace gear {
 
 /** TGeo Geometry Initializer class
  * @author @author A. Muennich, CERN
- * @version $Id: TGeoGeometryInitializer.cc,v 1.1 2006-05-29 13:03:18 musat Exp $
+ * @version $Id:$
  */
-  TGeoGeometryInitializer * TGeoGeometryInitializer::theInitializer = NULL;
+//  TGeoGeometryInitializer * TGeoGeometryInitializer::theInitializer = NULL;
   
-  TGeoGeometryInitializer * TGeoGeometryInitializer::getTGeoGeometryInitializer(std::string gdmlFile)
-  {
-    if(theInitializer == NULL)
-      theInitializer = new TGeoGeometryInitializer(gdmlFile);
-    return theInitializer;
-  }
+  // TGeoGeometryInitializer * TGeoGeometryInitializer::getTGeoGeometryInitializer(std::string gdmlFile)
+  // {
+  //   if(theInitializer == NULL)
+  //     theInitializer = new TGeoGeometryInitializer(gdmlFile);
+  //   return theInitializer;
+  // }
   
   TGeoGeometryInitializer::TGeoGeometryInitializer(std::string gdmlFile)
   {

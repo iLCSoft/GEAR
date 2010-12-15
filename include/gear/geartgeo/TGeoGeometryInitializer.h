@@ -1,5 +1,5 @@
-#ifndef GEAR_TGeoGEOMETRYINITIALIZER_H
-#define GEAR_TGeoGEOMETRYINITIALIZER_H 1
+#ifndef GEAR_TGeoGeometryInitializer_H
+#define GEAR_TGeoGeometryInitializer_H 1
 
 #include <string>
 #include <vector>
@@ -13,7 +13,7 @@ namespace gear {
 
 /** TGeo Geometry Initializer class
  * @author A. Muennich, CERN
- * @version $Id: TGeoGeometryInitializer.h,v 1.1 2006-05-29 13:03:18 musat Exp $
+ * @version $Id:$
  */
 class TGeoGeometryInitializer {
 
@@ -22,15 +22,16 @@ public:
     virtual ~TGeoGeometryInitializer() { 
       ;}
 
-    static TGeoGeometryInitializer * getTGeoGeometryInitializer(std::string gdmlFile);
+  //    static TGeoGeometryInitializer * getTGeoGeometryInitializer(std::string gdmlFile);
     
     TGeoManager* getGeoManager(){return _geoMgr;}
     
-private:
-
     TGeoGeometryInitializer(std::string gdmlFile);
 
-    static TGeoGeometryInitializer *theInitializer;
+private:
+
+
+  //static TGeoGeometryInitializer *theInitializer;
     TGeoManager *_geoMgr;
 }; // class
 } // namespace gear

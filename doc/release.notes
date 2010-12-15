@@ -5,9 +5,11 @@
   --------
  |  HEAD  |  
   --------
+     - made TGeo implementation of the detailed material properties a plugin,
+       i.e. no dependence on ROOT, unless it is requested in the Gear file that TGeo should be used (tag <GDML>)
 
-   - renamed GearVersion.h to GearConfig.h (to include other general purpose configuration definitions)
-
+     - renamed GearVersion.h to GearConfig.h (to include other general purpose configuration definitions)
+  
 
   --------
  | v00-16 |  
