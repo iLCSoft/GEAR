@@ -20,7 +20,6 @@ SET( ${PROJECT_NAME}_VERSION_TWEAK 0 )
 
 # additionally search for cmake macros/moules defined by this project
 INCLUDE( ilcsoft_default_settings )
-#INCLUDE( build_32bit_compatible )
 
 
 
@@ -35,11 +34,6 @@ IF( DEFINED BUILD_TGEO )
 ENDIF()
 
 IF( GEAR_TGEO )
-    
-    # fix for backwards compatibility
-    IF( NOT ROOT_DIR AND DEFINED ROOT_HOME )
-        SET( ROOT_DIR "${ROOT_HOME}" )
-    ENDIF()
 
     # at least version 5.27.06 of ROOT is required for using GEAR_TGEO
     SET( ROOT_VERSION_CHECK_MINIMUM_REQUIRED TRUE )
