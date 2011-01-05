@@ -4,34 +4,6 @@
 # @author Jan Engels, DESY
 ##################################
 
-# =========== macro for adding gear library ===============================
-ADD_CUSTOM_TARGET( lib )
-MACRO( ADD_GEAR_LIBRARY LIBNAME )
-
-    # ARGN contains all arguments after LIBNAME
-    ADD_LIBRARY( ${LIBNAME} ${ARGN} )
-
-    # 'make lib' also builds this library
-    ADD_DEPENDENCIES( lib ${LIBNAME} )
-
-    # create *nix style library versions + symbolic links
-    SET_TARGET_PROPERTIES( ${LIBNAME} PROPERTIES
-        VERSION ${GEAR_VERSION}
-        SOVERSION ${GEAR_SOVERSION}
-        # allow building static and shared libraries on the same build tree
-        CLEAN_DIRECT_OUTPUT 1
-    )
-
-    # install library
-    INSTALL( TARGETS ${LIBNAME} DESTINATION lib PERMISSIONS
-            OWNER_READ OWNER_WRITE OWNER_EXECUTE
-            GROUP_READ GROUP_EXECUTE
-            WORLD_READ WORLD_EXECUTE )
-
-ENDMACRO()
-# =========================================================================
-
-
 # common definitions to ALL sources
 ADD_DEFINITIONS( "-Wno-long-long" )
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
@@ -50,7 +22,8 @@ INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
 
 # -------- libgear (impl) ----------------------------
 AUX_SOURCE_DIRECTORY( ./gearimpl libgear_srcs )
-ADD_GEAR_LIBRARY( gear ${libgear_srcs} )
+ADD_SHARED_LIBRARY( gear ${libgear_srcs} )
+INSTALL_SHARED_LIBRARY( gear DESTINATION lib )
 # ----------------------------------------------------
 
 # -------- libgeartgeo -------------------------------
@@ -62,7 +35,8 @@ ENDIF()
 
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
-ADD_GEAR_LIBRARY( gearxml ${libgearxml_srcs} )
+ADD_SHARED_LIBRARY( gearxml ${libgearxml_srcs} )
+INSTALL_SHARED_LIBRARY( gearxml DESTINATION lib )
 TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
 
 
