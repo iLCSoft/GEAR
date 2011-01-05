@@ -41,8 +41,8 @@ INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BUILD_TOOL} doc)" )
 IF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
 
     # --- in-source installations ---
-    INSTALL( DIRECTORY "${DOC_BIN_DIR}/html" DESTINATION "doc" )
-    INSTALL( DIRECTORY "${DOC_BIN_DIR}/example" DESTINATION "doc" PATTERN "*/.svn" EXCLUDE )
+    INSTALL_DIRECTORY( "${DOC_BIN_DIR}/html" DESTINATION "doc" )
+    INSTALL_DIRECTORY( "${DOC_BIN_DIR}/example" DESTINATION "doc" )
 
     # keep source tree clean
     ADD_CUSTOM_TARGET( uninstall_doc
@@ -55,11 +55,10 @@ IF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
 ELSE()
 
     # --- out-of-source installations ---
-    INSTALL( DIRECTORY "${DOC_BIN_DIR}/" DESTINATION "doc/gear"
+    INSTALL_DIRECTORY( "${DOC_BIN_DIR}/" DESTINATION "doc/gear"
         PATTERN "*Make*" EXCLUDE
         PATTERN "*Doxyfile*" EXCLUDE
         PATTERN "*overview.html*" EXCLUDE
-        PATTERN "*/.svn" EXCLUDE
         PATTERN "*latex" EXCLUDE
     )
 
