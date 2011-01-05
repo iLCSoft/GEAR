@@ -18,7 +18,7 @@ SET( ${PROJECT_NAME}_VERSION_TWEAK 0 )
 
 ### SETTINGS ################################################################
 
-# additionally search for cmake macros/moules defined by this project
+# ilcsoft_default_settings.cmake needs to be in CMAKE_MODULE_PATH
 INCLUDE( ilcsoft_default_settings )
 
 
