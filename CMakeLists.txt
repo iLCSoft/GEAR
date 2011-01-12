@@ -8,6 +8,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
 # project name
 PROJECT( GEAR )
 
+
 # project version
 SET( ${PROJECT_NAME}_VERSION_MAJOR 0 )
 SET( ${PROJECT_NAME}_VERSION_MINOR 16 )
@@ -16,14 +17,14 @@ SET( ${PROJECT_NAME}_VERSION_TWEAK 0 )
 
 
 
-### SETTINGS ################################################################
+### DEPENDENCIES ############################################################
 
-# ilcsoft_default_settings.cmake needs to be in CMAKE_MODULE_PATH
+# FindILCSOFT_CMAKE_MODULES.cmake needs to be in CMAKE_MODULE_PATH
+FIND_PACKAGE( ILCSOFT_CMAKE_MODULES 0.11 REQUIRED )
+
+# load default settings from ILCSOFT_CMAKE_MODULES
 INCLUDE( ilcsoft_default_settings )
 
-
-
-### DEPENDENCIES ############################################################
 
 # root is needed to build tgeo
 OPTION( GEAR_TGEO "Set to ON to build tgeo (ROOT >= 5.27.06 required)" OFF )
@@ -36,7 +37,6 @@ ENDIF()
 IF( GEAR_TGEO )
 
     # at least version 5.27.06 of ROOT is required for using GEAR_TGEO
-    SET( ROOT_VERSION_CHECK_MINIMUM_REQUIRED TRUE )
     FIND_PACKAGE( ROOT 5.27.06 REQUIRED COMPONENTS Gdml Geom XMLIO )
 
 ENDIF( GEAR_TGEO )
@@ -50,22 +50,15 @@ OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" ON )
 IF( INSTALL_DOC )
 
     FIND_PACKAGE( Doxygen )
-    FIND_PACKAGE( LATEX )
 
-    IF( DOXYGEN_FOUND AND LATEX_COMPILER AND MAKEINDEX_COMPILER )
+    IF( DOXYGEN_FOUND )
         ADD_SUBDIRECTORY( ./doc )
     ELSE()
-        IF( NOT DOXYGEN_FOUND )
-            MESSAGE( STATUS "Doxygen not found in your system!!" )
-        ENDIF()
-        IF( NOT LATEX_COMPILER OR NOT MAKEINDEX_COMPILER )
-            MESSAGE( STATUS "Latex not found in your system!!" )
-        ENDIF()
-        IF( INSTALL_DOC )
-            MESSAGE( STATUS "INSTALL_DOC set to OFF" )
-            SET( INSTALL_DOC OFF )
-        ENDIF()
+        MESSAGE( SEND_ERROR "Could not find doxygen required to build documentation" )
+        MESSAGE( "Please install doxygen or set INSTALL_DOC to OFF" )
+        MESSAGE( "" )
     ENDIF()
+
 ENDIF()
 
 
@@ -117,8 +110,6 @@ MESSAGE( STATUS "GEAR_TGEO = ${GEAR_TGEO}" )
 MESSAGE( STATUS )
 
 
-
-# export library dependencies (keep this as the last line in the file)
-EXPORT_LIBRARY_DEPENDENCIES( "${PROJECT_NAME}LibDeps.cmake" )
-INSTALL( FILES "${PROJECT_BINARY_DIR}/${PROJECT_NAME}LibDeps.cmake" DESTINATION lib/cmake )
+# generate and install following configuration files
+GENERATE_PACKAGE_CONFIGURATION_FILES( GEARConfig.cmake GEARConfigVersion.cmake GEARLibDeps.cmake )
 
