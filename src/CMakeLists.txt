@@ -23,7 +23,6 @@ INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
 # -------- libgear (impl) ----------------------------
 AUX_SOURCE_DIRECTORY( ./gearimpl libgear_srcs )
 ADD_SHARED_LIBRARY( gear ${libgear_srcs} )
-INSTALL_SHARED_LIBRARY( gear DESTINATION lib )
 # ----------------------------------------------------
 
 # -------- libgeartgeo -------------------------------
@@ -36,8 +35,9 @@ ENDIF()
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_SHARED_LIBRARY( gearxml ${libgearxml_srcs} )
-INSTALL_SHARED_LIBRARY( gearxml DESTINATION lib )
 TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
+
+INSTALL( TARGETS gear gearxml DESTINATION lib )
 
 
 #IF( GEAR_TGEO )
