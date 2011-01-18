@@ -10,28 +10,24 @@
 SET( DOC_SRC_DIR "${PROJECT_SOURCE_DIR}/doc" )
 SET( DOC_BIN_DIR "${PROJECT_BINARY_DIR}/docbuild" )
 
+# directories to search for documentation
+SET( DOX_INPUT overview.html ../include/gear ../src )
 
+
+# custom command to build documentation
 ADD_CUSTOM_COMMAND(
-    OUTPUT "${DOC_BIN_DIR}/html/index.html" "${DOC_BIN_DIR}/latex/index.tex"
-    # copy over doc from source tree to keep source tree clean
-    COMMAND "${CMAKE_COMMAND}" -E copy_directory "${DOC_SRC_DIR}" "${DOC_BIN_DIR}"
-    COMMAND "${CMAKE_COMMAND}" -E copy_directory "${PROJECT_SOURCE_DIR}/example" "${DOC_BIN_DIR}/example"
-    COMMAND "${DOXYGEN_EXECUTABLE}"
-    WORKING_DIRECTORY "${DOC_BIN_DIR}"
+    OUTPUT  "${DOC_BIN_DIR}/html/index.html"
+    COMMAND DOX_PROJECT_NAME=${PROJECT_NAME}
+            DOX_PROJECT_NUMBER="${${PROJECT_NAME}_VERSION}"
+            DOX_OUTPUT_DIRECTORY="${DOC_BIN_DIR}"
+            DOX_INPUT="${DOX_INPUT}"
+            "${DOXYGEN_EXECUTABLE}"
+    WORKING_DIRECTORY "${DOC_SRC_DIR}"
     COMMENT "Building API Documentation..."
-    DEPENDS "${DOC_SRC_DIR}/overview.html.in" "${DOC_SRC_DIR}/Doxyfile.cmake.in"
+    DEPENDS overview.html Doxyfile CMakeLists.txt
 )
 
-ADD_CUSTOM_TARGET( doc DEPENDS
-    "${DOC_BIN_DIR}/html/index.html"
-    "${DOC_BIN_DIR}/latex/index.tex"
-)
-
-# replace INPUT = @GEAR_SOURCE_DIR@/{src,include}
-CONFIGURE_FILE( "${DOC_SRC_DIR}/Doxyfile.cmake.in" "${DOC_BIN_DIR}/Doxyfile" @ONLY )
-
-# replace @GEAR_VERSION@
-CONFIGURE_FILE( "${DOC_SRC_DIR}/overview.html.in" "${DOC_BIN_DIR}/overview.html" @ONLY )
+ADD_CUSTOM_TARGET( doc DEPENDS "${DOC_BIN_DIR}/html/index.html" )
 
 # build documentation before 'make install'
 INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BUILD_TOOL} doc)" )
@@ -40,9 +36,7 @@ INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_BUILD_TOOL} doc)" )
 # in-source vs out-of-source installations
 IF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
 
-    # --- in-source installations ---
-    INSTALL_DIRECTORY( "${DOC_BIN_DIR}/html" DESTINATION "doc" )
-    INSTALL_DIRECTORY( "${DOC_BIN_DIR}/example" DESTINATION "doc" )
+    SET( DOC_INSTALL_PREFIX doc )
 
     # keep source tree clean
     ADD_CUSTOM_TARGET( uninstall_doc
@@ -54,15 +48,24 @@ IF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
 
 ELSE()
 
-    # --- out-of-source installations ---
-    INSTALL_DIRECTORY( "${DOC_BIN_DIR}/" DESTINATION "doc/gear"
-        PATTERN "*Make*" EXCLUDE
-        PATTERN "*Doxyfile*" EXCLUDE
-        PATTERN "*overview.html*" EXCLUDE
-        PATTERN "*latex" EXCLUDE
+    SET( DOC_INSTALL_PREFIX doc/gear )
+    
+    INSTALL( FILES
+            release.notes
+            eudet_memo_GearModularTPC.pdf
+            TPCModule_tangent_rMax.pdf
+            gear_banner.png
+            TPCModule_tangent_rMax.README
+        DESTINATION ${DOC_INSTALL_PREFIX}
     )
 
 ENDIF( CMAKE_INSTALL_PREFIX STREQUAL "${PROJECT_SOURCE_DIR}" )
+
+
+INSTALL_DIRECTORY( "${DOC_BIN_DIR}/html" DESTINATION ${DOC_INSTALL_PREFIX} )
+INSTALL_DIRECTORY( "${PROJECT_SOURCE_DIR}/example" DESTINATION ${DOC_INSTALL_PREFIX} )
+
+
 
 #----------------------------------------------------------------------------
 
