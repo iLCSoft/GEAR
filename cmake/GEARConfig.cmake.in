@@ -44,7 +44,7 @@ ENDIF( GEAR_INCLUDE_DIRS )
 
 
 # ---------- libraries --------------------------------------------------------
-INCLUDE( ${GEAR_ROOT}/cmake/MacroCheckPackageLibs.cmake ) # FIXME full path ?!
+INCLUDE( "@ILCSOFT_CMAKE_MODULES_ROOT@/MacroCheckPackageLibs.cmake" )
 
 # only standard libraries should be passed as arguments to CHECK_PACKAGE_LIBS
 # additional components are set by cmake in variable PKG_FIND_COMPONENTS
@@ -76,15 +76,4 @@ IF( GEAR_FOUND )
     SET( GEAR_DEFINITIONS "-DUSE_GEAR" ) # FIXME : USE_GEAR should not be defined HERE !!!
     MARK_AS_ADVANCED( GEAR_DEFINITIONS )
 ENDIF( GEAR_FOUND )
-
-
-
-# ---------- bug fix for cmake versions < 2.8 ---------------------------------
-# GEAR_FIND_REQUIRED is not reset between FIND_PACKAGE calls, i.e. the following
-# code fails when geartgeo component not available: (fixed in cmake 2.8)
-# FIND_PACKAGE( GEAR REQUIRED )
-# FIND_PACKAGE( GEAR COMPONENTS geartgeo QUIET )
-IF( "${CMAKE_MAJOR_VERSION}.${CMAKE_MINOR_VERSION}" LESS 2.8 )
-    SET( GEAR_FIND_REQUIRED )
-ENDIF()
 
