@@ -25,6 +25,15 @@ ADD_CUSTOM_COMMAND(
     WORKING_DIRECTORY "${DOC_SRC_DIR}"
     COMMENT "Building API Documentation..."
     DEPENDS overview.html Doxyfile CMakeLists.txt
+            ../include/gear/*
+            ../include/gear/gearcga/*
+            ../include/gear/gearimpl/*
+            ../include/gear/geartgeo/*
+            ../include/gear/gearxml/*
+            ../src/gearcga/*
+            ../src/gearimpl/*
+            ../src/geartgeo/*
+            ../src/gearxml/*
 )
 
 ADD_CUSTOM_TARGET( doc DEPENDS "${DOC_BIN_DIR}/html/index.html" )
