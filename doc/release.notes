@@ -3,12 +3,18 @@
  ======================
 
   --------
- |  HEAD  |  
+ | v00-17 |  
   --------
+
      - made TGeo implementation of the detailed material properties a plugin,
        i.e. no dependence on ROOT, unless it is requested in the Gear file that TGeo should be used (tag <GDML>)
 
+     - added old signature of addLayer for backwards compatibility (without layerRotation parameters introduced in v00-16)
+
      - renamed GearVersion.h to GearConfig.h (to include other general purpose configuration definitions)
+
+     - src/gearxml/SiPlanesParametersXML.cc: xmlSen to xmlLad change (bug fix)
+
   
 
   --------
