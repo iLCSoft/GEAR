@@ -11,14 +11,14 @@ PROJECT( GEAR )
 
 # project version
 SET( ${PROJECT_NAME}_VERSION_MAJOR 0 )
-SET( ${PROJECT_NAME}_VERSION_MINOR 16 )
+SET( ${PROJECT_NAME}_VERSION_MINOR 17 )
 SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
 
 
 
 ### DEPENDENCIES ############################################################
 
-# FindILCSOFT_CMAKE_MODULES.cmake needs to be in CMAKE_MODULE_PATH
+# ILCSOFT_CMAKE_MODULES is a subpackage of the ILCUTIL package
 FIND_PACKAGE( ILCSOFT_CMAKE_MODULES 1.11 REQUIRED )
 
 # load default settings from ILCSOFT_CMAKE_MODULES
@@ -82,7 +82,7 @@ INSTALL_DIRECTORY( ./include DESTINATION . FILES_MATCHING PATTERN "*.h" )
 
 
 # ------- symlinks in include directory for backwards compatibility ---------
-# this symlinks are needed for Mokka 
+# FIXME: this symlinks are needed to build Mokka. Should fix this code in Mokka
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearimpl gearimpl )" )
 INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearxml gearxml )" )
 
