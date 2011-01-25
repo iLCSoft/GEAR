@@ -67,13 +67,3 @@ INCLUDE( FindPackageHandleStandardArgs )
 # GEAR_COMPONENT_VARIABLES will be set if FIND_PACKAGE is called with REQUIRED argument
 FIND_PACKAGE_HANDLE_STANDARD_ARGS( GEAR DEFAULT_MSG GEAR_ROOT GEAR_INCLUDE_DIRS GEAR_LIBRARIES ${GEAR_COMPONENT_VARIABLES} )
 
-
-
-# ---------- definitions ------------------------------------------------------
-# GEAR_DEFINITIONS should only include definitions absolutely necessary to compile
-# against GEAR (e.g. -Wno-long-long )
-IF( GEAR_FOUND )
-    SET( GEAR_DEFINITIONS "-DUSE_GEAR" ) # FIXME : USE_GEAR should not be defined HERE !!!
-    MARK_AS_ADVANCED( GEAR_DEFINITIONS )
-ENDIF( GEAR_FOUND )
-
