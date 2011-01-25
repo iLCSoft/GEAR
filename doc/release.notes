@@ -15,7 +15,8 @@
 
      - src/gearxml/SiPlanesParametersXML.cc: xmlSen to xmlLad change (bug fix)
 
-  
+     - removed deprecated GEAR_DEFINITIONS (-DUSE_GEAR) from GEARConfig.cmake
+
 
   --------
  | v00-16 |  
