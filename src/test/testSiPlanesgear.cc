@@ -5,11 +5,6 @@
 #include "gear/GEAR.h"
 #include "gear/SiPlanesParameters.h"
 
-#ifdef CGA
-#include "gearcga/CGAGearDistanceProperties.h"
-#include "gearcga/CGAGearPointProperties.h"
-#endif
-
 #include <iostream>
 #include <assert.h>
 
@@ -20,12 +15,6 @@
 #include <fstream>
 
 #include <math.h>
-
-#ifdef GEAR_USE_AIDA  
-#include "AIDA/AIDA.h"
-using namespace AIDA ;
-#endif
-
 
 
 using namespace gear ;
