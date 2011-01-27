@@ -18,8 +18,7 @@ SET( ${PROJECT_NAME}_VERSION_PATCH 0 )
 
 ### DEPENDENCIES ############################################################
 
-# ILCSOFT_CMAKE_MODULES is a subpackage of the ILCUTIL package
-FIND_PACKAGE( ILCSOFT_CMAKE_MODULES 1.11 REQUIRED )
+FIND_PACKAGE( ILCUTIL COMPONENTS ILCSOFT_CMAKE_MODULES REQUIRED )
 
 # load default settings from ILCSOFT_CMAKE_MODULES
 INCLUDE( ilcsoft_default_settings )
@@ -44,7 +43,7 @@ ENDIF( GEAR_TGEO )
 
 ### DOCUMENTATION ###########################################################
 
-OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" ON )
+OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" OFF )
 
 IF( INSTALL_DOC )
 
@@ -104,7 +103,6 @@ ADD_DEPENDENCIES( uninstall uninstall_links )
 # display some variables and write them to cache
 DISPLAY_STD_VARIABLES()
 
-MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
 MESSAGE( STATUS "GEAR_TGEO = ${GEAR_TGEO}" )
 MESSAGE( STATUS )
 
