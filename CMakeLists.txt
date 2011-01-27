@@ -103,7 +103,6 @@ ADD_DEPENDENCIES( uninstall uninstall_links )
 # display some variables and write them to cache
 DISPLAY_STD_VARIABLES()
 
-MESSAGE( STATUS "INSTALL_DOC = ${INSTALL_DOC}" )
 MESSAGE( STATUS "GEAR_TGEO = ${GEAR_TGEO}" )
 MESSAGE( STATUS )
 

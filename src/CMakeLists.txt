@@ -82,9 +82,16 @@ ENDIF()
 
 ADD_CUSTOM_TARGET( tests )
 
-FOREACH( bin ${test_bins} )
-    ADD_EXECUTABLE( ${bin} EXCLUDE_FROM_ALL ./test/${bin}.cc )
-    ADD_DEPENDENCIES( tests ${bin} )
-    TARGET_LINK_LIBRARIES( ${bin} gear gearxml )
+FOREACH( _testname ${test_bins} )
+    
+    IF( BUILD_TESTING )
+        ADD_EXECUTABLE( ${_testname} ./test/${_testname}.cc )
+    ELSE()
+        ADD_EXECUTABLE( ${_testname} EXCLUDE_FROM_ALL ./test/${_testname}.cc )
+    ENDIF()
+
+    ADD_DEPENDENCIES( tests ${_testname} )
+    TARGET_LINK_LIBRARIES( ${_testname} gear gearxml )
+
 ENDFOREACH()
 
