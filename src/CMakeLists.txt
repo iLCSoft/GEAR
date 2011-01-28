@@ -23,6 +23,7 @@ INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include/gear" )
 # -------- libgear (impl) ----------------------------
 AUX_SOURCE_DIRECTORY( ./gearimpl libgear_srcs )
 ADD_SHARED_LIBRARY( gear ${libgear_srcs} )
+INSTALL_SHARED_LIBRARY( gear DESTINATION lib )
 # ----------------------------------------------------
 
 # -------- libgeartgeo -------------------------------
@@ -35,9 +36,8 @@ ENDIF()
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_SHARED_LIBRARY( gearxml ${libgearxml_srcs} )
+INSTALL_SHARED_LIBRARY( gearxml DESTINATION lib )
 TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
-
-INSTALL( TARGETS gear gearxml DESTINATION lib )
 
 
 #IF( GEAR_TGEO )
@@ -53,12 +53,12 @@ INSTALL( TARGETS gear gearxml DESTINATION lib )
 # mergeXML
 ADD_EXECUTABLE( mergeXML ./test/mergeXML.cc )
 TARGET_LINK_LIBRARIES( mergeXML gear gearxml )
-INSTALL( TARGETS mergeXML DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 
 # printParameters
 ADD_EXECUTABLE( printParameters ./test/printParameters.cc )
 TARGET_LINK_LIBRARIES( printParameters gear gearxml )
-INSTALL( TARGETS printParameters DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+
+INSTALL( TARGETS mergeXML printParameters DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
 
 # test binaries
 SET( test_bins
