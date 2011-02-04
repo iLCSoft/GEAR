@@ -13,7 +13,7 @@
  
  mkdir build
  cd build
- cmake ..
+ cmake -DILCUTIL_DIR=/path/to/ilcutil ..
  make install
 
  
