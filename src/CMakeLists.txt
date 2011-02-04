@@ -9,8 +9,9 @@ ADD_DEFINITIONS( "-Wno-long-long" )
 ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
 IF(APPLE)
- ADD_DEFINITIONS( "-DAPPLE" )
+    ADD_DEFINITIONS( "-D__APPLE__" )
 ENDIF(APPLE)
+
 # common includes (to ALL sources)
 INCLUDE_DIRECTORIES( "${PROJECT_BINARY_DIR}" ) # generated GearConfig.h
 INCLUDE_DIRECTORIES( "${PROJECT_SOURCE_DIR}/include" )

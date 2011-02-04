@@ -444,7 +444,7 @@ namespace gear{
       // TGeoGearPointProperties *tgeopoint=new TGeoGearPointProperties(tgeoini->getGeoManager());
       // TGeoGearDistanceProperties *tgeodist=new TGeoGearDistanceProperties(tgeoini->getGeoManager());
       
-#ifdef APPLE
+#ifdef __APPLE__
       std::string libName =  "libgeartgeo.dylib" ;
 #else
       std::string libName =  "libgeartgeo.so" ;
