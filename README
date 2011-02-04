@@ -11,14 +11,23 @@
  build instructions (with cmake):
  -------------------------------- 
  
- $ mkdir build
- $ cd build
- $ cmake ..
- $ make install
+ mkdir build
+ cd build
+ cmake ..
+ make install
+
+ 
+ To build GEAR_TGEO you need ROOT >= 5.27.06 installed on your
+ system compiled with Gdml Geom and XMLIO components.
+ 
+ To configure gear with GEAR_TGEO call:
+ cmake -DGEAR_TGEO=ON -DROOT_DIR=/path/to/root/ ..
+
 
  To build the gear tests type:
- $ make tests
+ make tests
  
+
  For more information on CMake for the ILCSoftware check:
  http://ilcsoft.desy.de/portal/general_documentation/index_eng.html
 
