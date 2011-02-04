@@ -12,6 +12,7 @@
 #       if REQUIRED is NOT set components may or may not be available
 #
 #   GEAR_ROOT       : path to this GEAR installation
+#   GEAR_VERSION    : package version
 #   GEAR_LIBRARIES  : list of GEAR libraries (NOT including COMPONENTS)
 #   GEAR_INCLUDE_DIRS  : list of paths to be used with INCLUDE_DIRECTORIES
 #   GEAR_LIBRARY_DIRS  : list of paths to be used with LINK_DIRECTORIES
@@ -24,6 +25,7 @@
 ##############################################################################
 
 SET( GEAR_ROOT "@CMAKE_INSTALL_PREFIX@" )
+SET( GEAR_VERSION "@GEAR_VERSION@" )
 
 
 # ---------- include dirs -----------------------------------------------------
