@@ -59,7 +59,7 @@ TARGET_LINK_LIBRARIES( mergeXML gear gearxml )
 ADD_EXECUTABLE( printParameters ./test/printParameters.cc )
 TARGET_LINK_LIBRARIES( printParameters gear gearxml )
 
-INSTALL( TARGETS mergeXML printParameters DESTINATION ${CMAKE_INSTALL_PREFIX}/bin )
+INSTALL( TARGETS mergeXML printParameters DESTINATION bin )
 
 # test binaries
 SET( test_bins
