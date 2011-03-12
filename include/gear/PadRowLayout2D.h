@@ -5,7 +5,6 @@
 #include <vector>
 
 #include "GEAR.h"
-#include "gear/PadRowLayout2D.h"
 
 namespace gear {
 
