@@ -3,6 +3,7 @@
 
 #include <math.h>
 #include <iostream> 
+#include "assert.h"
 
 
 namespace gear {
