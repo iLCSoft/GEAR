@@ -3,7 +3,7 @@
 #include "gearxml/GearParametersXML.h"
 #include "gearxml/TPCParametersXML.h"
 #include "gearxml/CalorimeterParametersXML.h"
-#include "gearxml/VXDParametersXML.h"
+#include "gearxml/ZPlanarParametersXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
 #include "gearxml/tinyxml.h"
 
@@ -46,7 +46,7 @@ namespace gear{
     _map[ GEAR::GEARPARAMETERS ] = new GearParametersXML ;
     _map[ GEAR::TPCPARAMETERS ]  = new TPCParametersXML ;
     _map[ GEAR::CALORIMETERPARAMETERS ]  = new CalorimeterParametersXML ;
-    _map[ GEAR::VXDPARAMETERS ] = new VXDParametersXML ;
+    _map[ GEAR::ZPLANARPARAMETERS ] = new ZPlanarParametersXML ;
     _map[ GEAR::SIPLANESPARAMETERS ] = new SiPlanesParametersXML ;
 
   }

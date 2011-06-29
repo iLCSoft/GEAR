@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#ifndef GEAR_VXDLayerLayoutImpl_H
-#define GEAR_VXDLayerLayoutImpl_H 1
+#ifndef GEAR_ZPlanarLayerLayoutImpl_H
+#define GEAR_ZPlanarLayerLayoutImpl_H 1
 
-#include "gear/VXDLayerLayout.h"
+#include "gear/ZPlanarLayerLayout.h"
 #include <vector>
 #include <math.h>
 
@@ -17,10 +17,10 @@ namespace gear {
  * @version $Id: 
  */
 
-class VXDLayerLayoutImpl : public VXDLayerLayout {
+class ZPlanarLayerLayoutImpl : public ZPlanarLayerLayout {
 
 
-  friend class VXDParametersImpl ;
+  friend class ZPlanarParametersImpl ;
 
 public: 
   
@@ -39,7 +39,7 @@ public:
   typedef std::vector<Layer> LayerVec ;
 
   // Destructor.
-  virtual ~VXDLayerLayoutImpl() { /* nop */; }
+  virtual ~ZPlanarLayerLayoutImpl() { /* nop */; }
   
   /** The total number of layers.
    */
@@ -168,4 +168,4 @@ private:
 
 }; // class
 } // namespace gear
-#endif /* ifndef GEAR_VXDLAYERLAYOUT_H */
+#endif /* ifndef GEAR_ZPlanarLAYERLAYOUT_H */

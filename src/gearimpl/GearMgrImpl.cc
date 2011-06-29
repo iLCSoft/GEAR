@@ -2,7 +2,7 @@
 #include "gearimpl/GearMgrImpl.h"
 #include "gearimpl/GearParametersImpl.h"
 #include "gear/CalorimeterParameters.h"
-#include "gear/VXDParameters.h"
+#include "gear/ZPlanarParameters.h"
 #include "gear/SiPlanesParameters.h"
 #include "gear/GearPointProperties.h"
 #include "gear/GearDistanceProperties.h"
@@ -10,7 +10,7 @@
 #include "gear/TPCParameters.h"
 #include "gearimpl/TPCParametersImpl.h"
 #include "gearimpl/CalorimeterParametersImpl.h"
-#include "gearimpl/VXDParametersImpl.h"
+#include "gearimpl/ZPlanarParametersImpl.h"
 #include "gearimpl/SiPlanesParametersImpl.h"
 #include "gearimpl/ConstantBField.h"
 //#include "gear/GearPointProperties.h"
@@ -34,6 +34,8 @@ namespace gear{
     _lhcalParameters(0) ,
     _beamcalParameters(0) ,
     _vxdParameters(0) ,
+    _sitParameters(0) ,
+    _setParameters(0) ,
     _siplanesParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) ,
@@ -67,7 +69,9 @@ namespace gear{
     _hcalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalEndcapParameters));
     _hcalRingParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalRingParameters));
     _lcalParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lcalParameters));
-    _vxdParameters = new VXDParametersImpl( *dynamic_cast<VXDParametersImpl *>(right._vxdParameters));
+    _vxdParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._vxdParameters));
+    _sitParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._sitParameters));
+    _setParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._setParameters));
     _siplanesParameters = new SiPlanesParametersImpl( *dynamic_cast<SiPlanesParametersImpl *>(right._siplanesParameters));
 
     // 
@@ -109,6 +113,8 @@ namespace gear{
     if( _lhcalParameters ) delete  _lhcalParameters;
     if( _beamcalParameters ) delete  _beamcalParameters;
     if( _vxdParameters ) delete _vxdParameters ;
+    if( _sitParameters ) delete _sitParameters ;
+    if( _setParameters ) delete _setParameters ;
     if( _siplanesParameters ) delete _siplanesParameters ;
     if( _pointProperties ) delete _pointProperties ;
     if( _distanceProperties ) delete _distanceProperties ;
@@ -292,13 +298,32 @@ namespace gear{
 
   }
 
-  const VXDParameters & GearMgrImpl::getVXDParameters() const
+  const ZPlanarParameters & GearMgrImpl::getVXDParameters() const
     throw (UnknownParameterException, std::exception ) {
 
     if( _vxdParameters == 0 )
       throw UnknownParameterException( "No VXDParameters set ") ;
 
     return *_vxdParameters ;
+
+  }
+
+  const ZPlanarParameters & GearMgrImpl::getSITParameters() const
+    throw (UnknownParameterException, std::exception ) {
+
+    if( _sitParameters == 0 )
+      throw UnknownParameterException( "No SITParameters set ") ;
+
+    return *_sitParameters ;
+
+  }
+  const ZPlanarParameters & GearMgrImpl::getSETParameters() const
+    throw (UnknownParameterException, std::exception ) {
+
+    if( _setParameters == 0 )
+      throw UnknownParameterException( "No SETParameters set ") ;
+
+    return *_setParameters ;
 
   }
 
@@ -474,9 +499,19 @@ namespace gear{
     _beamcalParameters = beamcalParameters ;
   }
 
-  void GearMgrImpl::setVXDParameters( VXDParameters* vxdParameters ) {
+  void GearMgrImpl::setVXDParameters( ZPlanarParameters* vxdParameters ) {
 
     _vxdParameters = vxdParameters ;
+  }
+
+  void GearMgrImpl::setSITParameters( ZPlanarParameters* sitParameters ) {
+
+    _sitParameters = sitParameters ;
+  }
+
+  void GearMgrImpl::setSETParameters( ZPlanarParameters* setParameters ) {
+
+    _setParameters = setParameters ;
   }
 
   void GearMgrImpl::setSiPlanesParameters( SiPlanesParameters* siplanesParameters ) {

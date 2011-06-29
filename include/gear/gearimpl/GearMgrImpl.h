@@ -150,8 +150,23 @@ namespace gear {
      *
      *  @throws UnknownParameterException
      */
-    virtual const VXDParameters & getVXDParameters() const
+    virtual const ZPlanarParameters & getVXDParameters() const
       throw (UnknownParameterException, std::exception )  ;
+
+    /** Get the SIT parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const ZPlanarParameters & getSITParameters() const
+      throw (UnknownParameterException, std::exception )  ;
+
+    /** Get the SET parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const ZPlanarParameters & getSETParameters() const
+      throw (UnknownParameterException, std::exception )  ;
+
 
     /** Get the SiPlanes parameters.
      *
@@ -243,8 +258,16 @@ namespace gear {
     virtual void setBeamCalParameters(CalorimeterParameters * beamcalParameters) ;
 
      /** Set the VXDParameters.
+      */
+     virtual void setVXDParameters( ZPlanarParameters * vxdParameters ) ;
+
+     /** Set the SITParameters.
+      */
+     virtual void setSITParameters( ZPlanarParameters * sitParameters ) ;
+
+     /** Set the SETParameters.
      */
-    virtual void setVXDParameters( VXDParameters * vxdParameters ) ;
+    virtual void setSETParameters( ZPlanarParameters * setParameters ) ;
 
 
      /** Set the SiPlanesParameters.
@@ -279,10 +302,12 @@ namespace gear {
     CalorimeterParameters* _lcalParameters ;
     CalorimeterParameters* _lhcalParameters ;
     CalorimeterParameters* _beamcalParameters ;
-    VXDParameters* _vxdParameters ;
-    SiPlanesParameters* _siplanesParameters ;
-    GearPointProperties*  _pointProperties ;
-    GearDistanceProperties*  _distanceProperties ;
+    ZPlanarParameters*     _vxdParameters ;
+    ZPlanarParameters*     _sitParameters ;
+    ZPlanarParameters*     _setParameters ;
+    SiPlanesParameters*    _siplanesParameters ;
+    GearPointProperties*   _pointProperties ;
+    GearDistanceProperties* _distanceProperties ;
     BField* _bField ;
     std::string _detectorName ;
 

@@ -1,5 +1,5 @@
-#ifndef GEAR_VXDParametersXML_H
-#define GEAR_VXDParametersXML_H 1
+#ifndef GEAR_ZPlanarParametersXML_H
+#define GEAR_ZPlanarParametersXML_H 1
 
 #include "gearxml/XMLHandler.h"
 
@@ -9,12 +9,12 @@ namespace gear {
 
   class TiXmlNode ;
 
-  /** XML handler for VXDParameters.
+  /** XML handler for ZPlanarParameters.
    *
    * @author R. Lippe, DESY
    * @version $Id $
    */
-  class VXDParametersXML : public XMLHandler {
+  class ZPlanarParametersXML : public XMLHandler {
 
   public:
     

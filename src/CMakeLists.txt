@@ -75,6 +75,7 @@ SET( test_bins
     testTPCModule
     testVersatileLayout
     testXMLOut
+    testXMLCopy
 )
 
 IF( GEAR_TGEO )

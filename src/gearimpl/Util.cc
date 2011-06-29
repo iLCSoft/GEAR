@@ -2,7 +2,7 @@
 #include "gearimpl/Util.h"
 
 #include "gear/PadRowLayout2D.h"
-#include "gear/VXDLayerLayout.h"
+#include "gear/ZPlanarLayerLayout.h"
 #include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 
@@ -59,10 +59,34 @@ namespace gear{
 
     try{ 
       // VXD parameters
-      s <<  m.getVXDParameters() <<  std::endl  ;
+      s << "   ----  VXD    ---- "  <<  std::endl
+	<<  m.getVXDParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
-    
 
+    try{ 
+      // SIT parameters
+      s << "   ----  SIT    ---- "  <<  std::endl
+	<<  m.getSITParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+
+
+    try{ 
+      // SET parameters
+      s << "   ----  SET    ---- "  <<  std::endl
+	<<  m.getSETParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+
+
+    try{ 
+      // SIT parameters
+      s <<  m.getSITParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+
+
+    try{ 
+      // SET parameters
+      s <<  m.getSETParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
 
     try{ 
       // TPC parameters
@@ -118,23 +142,17 @@ namespace gear{
     try{ 
       s  << "   ----  Lcal   ---- "  << std::endl 
 	 <<  m.getLcalParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
+    } catch(UnknownParameterException &e){ }
 
-      s << "   ----  Lcal   ----  NOT FOUND :( " << std::endl ;
-
-    }
     try{ 
         s  << "   ----  LHcal   ---- "  << std::endl 
             <<  m.getLHcalParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
-        s << "   ----  LHcal   ----  NOT FOUND :( " << std::endl ;
-    }
+    } catch(UnknownParameterException &e){}
+
     try{ 
         s  << "   ----  BeamCal   ---- "  << std::endl 
             <<  m.getBeamCalParameters() <<  std::endl  ;
-    } catch(UnknownParameterException &e){
-        s << "   ----  BeamCal   ----  NOT FOUND :( " << std::endl ;
-    }
+    } catch(UnknownParameterException &e){}
        
     try{ 
       // SiPlanes parameters
@@ -391,28 +409,27 @@ namespace gear{
   }
 
 
-  std::ostream& operator<< (  std::ostream& s,  const VXDParameters& p ) {
+  std::ostream& operator<< (  std::ostream& s,  const ZPlanarParameters& p ) {
     
-    s << std::endl 
-      << "   -----------   VXDParameters  ------- "  << std::endl         ;
+    s << "     --- ZPlanarParameters: "  << std::endl         ;
     
     s << dynamic_cast<const GearParameters&>( p )  ;
     
-    const VXDLayerLayout & l = p.getVXDLayerLayout() ;
+    const ZPlanarLayerLayout & l = p.getZPlanarLayerLayout() ;
 
     int type = p.getVXDType() ;
     
-    s << std::endl  << " vxd type : " ;
+    s << std::endl  << "  type : " ;
     
     switch( type ) {
 
-    case VXDParameters::CCD : 
+    case ZPlanarParameters::CCD : 
 
       s << " CCD " << std::endl ;       break ;
-    case VXDParameters::CMOS : 
+    case ZPlanarParameters::CMOS : 
 
       s << " CMOS " << std::endl ;      break ;
-    case VXDParameters::HYBRID :
+    case ZPlanarParameters::HYBRID :
 
       s << " HYBRID " << std::endl ;    break ;
     default :  

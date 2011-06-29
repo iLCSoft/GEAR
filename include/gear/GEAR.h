@@ -19,17 +19,15 @@
 
 namespace gear {
 
-//  typedef std::pair<double,double> Vector2D ;
 
-
-typedef Vector2D Point2D ;
-typedef Vector3D Point3D ;
-
-typedef std::vector<int> IntVec ;
-typedef std::vector<double> DoubleVec ;
-typedef std::vector<std::string> StringVec ;
- 
-
+  typedef Vector2D Point2D ;
+  typedef Vector3D Point3D ;
+  
+  typedef std::vector<int> IntVec ;
+  typedef std::vector<double> DoubleVec ;
+  typedef std::vector<std::string> StringVec ;
+  
+  
   /** 64 bit integer,e.g.to be used for cellids **/
    typedef long long long64 ;
    // FIXME: needs to be only long on 64bit machines ->  flags??
@@ -148,7 +146,7 @@ public:
    static const char*  GEARPARAMETERS  ;
    static const char*  TPCPARAMETERS  ;
    static const char*  CALORIMETERPARAMETERS  ;
-   static const char*  VXDPARAMETERS  ;
+   static const char*  ZPLANARPARAMETERS  ;
    static const char*  SIPLANESPARAMETERS  ;
 
 

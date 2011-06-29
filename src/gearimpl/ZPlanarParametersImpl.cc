@@ -1,4 +1,4 @@
-#include "gearimpl/VXDParametersImpl.h"
+#include "gearimpl/ZPlanarParametersImpl.h"
 #include <math.h>
 #include <iostream>
 
@@ -14,9 +14,9 @@ namespace gear{
     // -> we keep the internal representation of phi0 in the variable internalPhi0 and use this here
 
 
-  VXDParametersImpl::VXDParametersImpl
-  ( int vxdType, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) :
-    _vxdType( vxdType ) ,
+  ZPlanarParametersImpl::ZPlanarParametersImpl
+  ( int type, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) :
+    _type( type ) ,
     _shellInnerRadius( shellInnerRadius ) ,
     _shellOuterRadius( shellOuterRadius ) ,
     _shellHalfLength( shellHalfLength ) ,
@@ -24,7 +24,7 @@ namespace gear{
     _shellRadLength( shellRadLength ) {}
 
 
- bool VXDParametersImpl::isPointInVXD( Vector3D p , bool sensitive ) const 
+ bool ZPlanarParametersImpl::isPointInLadder( Vector3D p , bool sensitive ) const 
   {
     
     // very first check for quick calculation
@@ -167,18 +167,18 @@ namespace gear{
 	  
     return false ;
 
-  }  // function isPointInVXD
+  }  // function isPointInLadder
 
 
 
 
-  Vector3D VXDParametersImpl::distanceToNearestVXD( Vector3D p , bool sensitive ) const
+  Vector3D ZPlanarParametersImpl::distanceToNearestLadder( Vector3D p , bool sensitive ) const
   {
 
     Vector3D origin( 0,0,0 ) ;
     
     // check if point is in already
-    if( isPointInVXD( p , sensitive ) ) {
+    if( isPointInLadder( p , sensitive ) ) {
       
       return origin ;
     }
@@ -314,7 +314,7 @@ namespace gear{
 
 	  // debug
 // 	  Vector3D iP ( p[0]+myVec[0] , p[1]+myVec[1] , p[2]+myVec[2] ) ;
-// 	  bool isCorrect = isPointInVXD( iP ) ;
+// 	  bool isCorrect = isPointInLadder( iP ) ;
 	  
 // 	  if ( !isCorrect ) {
 // 	    std::cout << "distanceToPlane returns sth wrong. j =" <<j << std::endl ;
@@ -409,18 +409,17 @@ namespace gear{
 
       } // for i -- all ladders in layer
 
-    } // for nearestLayer -- all layers in vxd
-
+    } // for nearestLayer -- all layers in detetor
 
     return vPointPlane ;
 
-  } // function distanceToVXD
+  } // function distanceToLadder
 
 
 
 
 
-  Vector3D VXDParametersImpl::intersectionVXD( Vector3D p , Vector3D v , bool sensitive ) const {
+  Vector3D ZPlanarParametersImpl::intersectionLadder( Vector3D p , Vector3D v , bool sensitive ) const {
     
     // return values
     double currentLength = 99999 ;
@@ -517,7 +516,7 @@ namespace gear{
 	    // correct in Plane
 	    Vector3D inBorder = correctToBorderPoint( vn, nSide, nZ, left, right, zStart, zEnd ) ;
 	    
-	    // check if point has not changed -> intersects with vxd
+	    // check if point has not changed -> intersects with detector
 	    if ( isEqual( inBorder , vn ) ) {
 	      
 	      // check if this is closest intersection
@@ -641,15 +640,15 @@ namespace gear{
 	
       } // for all zSides
 
-    } // for nearestLayer -- all layers in vxd
+    } // for nearestLayer -- all layers in detector
 
       return currentPoint ;
 
-  } // function isIntersectionVXD
+  } // function isIntersectionLadder
 
 
 
-  Vector3D VXDParametersImpl::distanceToPlane( Vector3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const {
+  Vector3D ZPlanarParametersImpl::distanceToPlane( Vector3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const {
 
     // check zeros
 
@@ -721,7 +720,7 @@ namespace gear{
 
 
 
-  Vector3D VXDParametersImpl::planeLineIntersection( Vector3D r, Vector3D n, Vector3D linePoint, Vector3D lineDir) const {
+  Vector3D ZPlanarParametersImpl::planeLineIntersection( Vector3D r, Vector3D n, Vector3D linePoint, Vector3D lineDir) const {
 
     // calculate distance of plane
     double distance = ( r[0]*n[0] + r[1]*n[1] + r[2]*n[2] ) / ( sqrt( n[0]*n[0] + n[1]*n[1] + n[2]*n[2] ) ) ;
@@ -756,7 +755,7 @@ namespace gear{
 
 
 
-  Vector3D VXDParametersImpl::correctToBorderPoint( Vector3D vPlane , Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const {
+  Vector3D ZPlanarParametersImpl::correctToBorderPoint( Vector3D vPlane , Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV ) const {
 
     // check if the given vector is within the boundaries
     double neededUs = vPlane[0] * u[0] + vPlane[1] * u[1] + vPlane[2] * u[2] ;
@@ -795,7 +794,7 @@ namespace gear{
   } // correctToBorderPoint
 
   
-  double VXDParametersImpl::correctPhiRange( double Phi ) const {
+  double ZPlanarParametersImpl::correctPhiRange( double Phi ) const {
     
     if( Phi > M_PI ) {
       return ( Phi - 2 * M_PI ) ;
@@ -809,7 +808,7 @@ namespace gear{
   } // function correctPhiRange
   
 
-  double VXDParametersImpl::getPhiPoint( Vector3D p ) const {
+  double ZPlanarParametersImpl::getPhiPoint( Vector3D p ) const {
 
     //FG: this is the the angle with the negative y-axis 
     // see comment at the top !
@@ -839,7 +838,7 @@ namespace gear{
 
 
 
-  bool VXDParametersImpl::isEqual( double valueOne, double valueTwo ) const
+  bool ZPlanarParametersImpl::isEqual( double valueOne, double valueTwo ) const
   {
 
     // save calculating time if equal
@@ -864,7 +863,7 @@ namespace gear{
   } 
 
 
-  bool VXDParametersImpl::isEqual( Vector3D p1 , Vector3D p2 ) const
+  bool ZPlanarParametersImpl::isEqual( Vector3D p1 , Vector3D p2 ) const
   {
     for( int i=0 ; i<3 ; i++ ) {
       if( !( p1[i] == p2[i] ) ) {
@@ -875,7 +874,7 @@ namespace gear{
   } // function isEqual
   
 
-  bool VXDParametersImpl::differsLess( double valueOne, double valueTwo ) const
+  bool ZPlanarParametersImpl::differsLess( double valueOne, double valueTwo ) const
   {
 
     return ( ( fabs( valueOne ) + fabs( valueTwo ) ) < _EPSILON ) ;

@@ -1,18 +1,18 @@
 // -*- C++ -*-
-#ifndef GEAR_VXDParametersImpl_H
-#define GEAR_VXDParametersImpl_H 1
+#ifndef GEAR_ZPlanarParametersImpl_H
+#define GEAR_ZPlanarParametersImpl_H 1
 
-#include "gear/VXDParameters.h"
+#include "gear/ZPlanarParameters.h"
 #include "gearimpl/GearParametersImpl.h"
-#include "gearimpl/VXDLayerLayoutImpl.h"
+#include "gearimpl/ZPlanarLayerLayoutImpl.h"
 
 
 namespace gear {
 
-class VXDLayerLayout;
+class ZPlanarLayerLayoutImpl;
 
-  /** Geometry properties of a vertex detector needed for reconstruction code. <br>
-   *  <p>The vertex is assumed to consist of a number of layers. Each layer consists of
+  /** Geometry properties of a planar detector (parallel to z-axis)  needed for reconstruction code. <br>
+   *  <p>The detector is assumed to consist of a number of layers. Each layer consists of
    *  a number of rectangular ladders that are uniformly distributed in a circle around the IP.<br>
    *  The sensitive volumes can be placed relative to the (insensitive) ladders.
    *  @see addLayer .</p>
@@ -23,21 +23,21 @@ class VXDLayerLayout;
    *  @author R. Lippe, DESY
    *  @version $Id: 
    */
-class VXDParametersImpl : public GearParametersImpl, public VXDParameters {
+class ZPlanarParametersImpl : public GearParametersImpl, public ZPlanarParameters {
 
 public: 
   /** C'tor  
-   *  @param vxdType           the type of the vertex detector: CCD, CMOS or HYBRID
+   *  @param Type              the type of the vertex detector: CCD, CMOS or HYBRID
    *  @param shellInnerRadius  the inner Radius of the vertex' shell (in mm)
    *  @param shellOuterRadius  the outer Radius of the vertex' shell (in mm)
    *  @param shellHalfLength   the half length in z (in mm)
    *  @param shellGap          the total width of the gap at z==0 - symetrical around z==0
    *  @param shellRadLength    the material property information about the shell's material radiation length
    */
-  VXDParametersImpl( int vxdType, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) ;
+  ZPlanarParametersImpl( int type, double shellInnerRadius, double shellOuterRadius, double shellHalfLength, double shellGap, double shellRadLength ) ;
 
   // Destructor.
-  virtual ~VXDParametersImpl() { /* nop */; }
+  virtual ~ZPlanarParametersImpl() { /* nop */; }
   
   // static constants enums( for the type of layout )
   
@@ -81,12 +81,12 @@ public:
     
       
   /** Returns the layer layout in the Vertex */
-  virtual const VXDLayerLayout & getVXDLayerLayout() const { return _layer ; }
+  virtual const ZPlanarLayerLayout & getZPlanarLayerLayout() const { return _layer ; }
   
-  /** The type of Vertex detector: VXDParametersImpl.CCD, VXDParametersImpl.CMOS or
-   *  VXDParametersImpl.HYBRID.
+  /** The type of Vertex detector: ZPlanarParametersImpl.CCD, ZPlanarParametersImpl.CMOS or
+   *  ZPlanarParametersImpl.HYBRID.
    */
-  virtual int getVXDType() const { return _vxdType ; }
+  virtual int getType() const { return _type ; }
   
   /** The half length (z) of the support shell in mm.
    */
@@ -111,46 +111,46 @@ public:
   /** returns whether a point is inside a ladder
    */
   virtual bool isPointInLadder(Vector3D p) const {
-    return isPointInVXD( p, false );
+    return isPointInLadder( p, false );
   }
   
   /** returns wheter a point is inside a sensitive volume
    */
   virtual bool isPointInSensitive(Vector3D p) const {
-    return isPointInVXD( p, true ) ;
+    return isPointInLadder( p, true ) ;
   }
   
   /** returns vector from given point p to nearest ladder
    */
   virtual Vector3D distanceToNearestLadder(Vector3D p) const {
-    return distanceToNearestVXD( p, false ) ;
+    return distanceToNearestLadder( p, false ) ;
   }
 
   /** returns vector from given point p to nearest sensitive volume
    */
   virtual Vector3D distanceToNearestSensitive(Vector3D p) const {
-    return distanceToNearestVXD( p, true ) ;
+    return distanceToNearestLadder( p, true ) ;
   }
 
   /** returns the first point where a given strainght line
    *  (parameters point p and direction v)  crosses a ladder
    */
   virtual Vector3D intersectionLadder( Vector3D p, Vector3D v ) const {
-    return intersectionVXD( p, v, false ) ;
+    return intersectionLadder( p, v, false ) ;
   }
 
   /** returns the first point where a given strainght line
    *  (parameters point p and direction v)  crosses a sensitive volume
    */
   virtual Vector3D intersectionSensitive( Vector3D p, Vector3D v ) const {
-    return intersectionVXD( p, v, true ) ;
+    return intersectionLadder( p, v, true ) ;
   }
 
 protected:
   
-  VXDLayerLayoutImpl _layer ;
+  ZPlanarLayerLayoutImpl _layer ;
   
-  int _vxdType ;
+  int _type ;
   
   double _shellInnerRadius ;
   
@@ -166,11 +166,11 @@ private:
 
   /** returns if a point is in ladder (sensitive == false) or in sensitive (sensitive == true)
    */
-  bool isPointInVXD(Vector3D p , bool sensitive = false) const ;
+  bool isPointInLadder(Vector3D p , bool sensitive = false) const ;
 
   /** returns distance to nearest ladder (sensitive == false) or nearest sensitiv (sensitive == true)
    */
-  Vector3D distanceToNearestVXD(Vector3D p, bool sensitive = false) const ;
+  Vector3D distanceToNearestLadder(Vector3D p, bool sensitive = false) const ;
 
   /** returns vector to from point to closest point in described plane
    *  r as spacepoint vector
@@ -181,9 +181,9 @@ private:
    */
   Vector3D distanceToPlane(Vector3D p, Vector3D r, Vector3D n, Vector3D u, Vector3D v, float minU, float maxU, float minV, float maxV) const ;
 
-  /** returns the first point on the vxd, where it intersects with a given straight line (parameters point p and direction v)
+  /** returns the first point on the detector, where it intersects with a given straight line (parameters point p and direction v)
    */     
-  Vector3D intersectionVXD( Vector3D p, Vector3D v, bool sensitive = false) const ;
+  Vector3D intersectionLadder( Vector3D p, Vector3D v, bool sensitive = false) const ;
 
   /** returns the intersection point of a plane and a straight line
    */
@@ -219,4 +219,4 @@ private:
 
 } // namespace gear
 
-#endif /* ifndef GEAR_VXDPARAMETERS_H */
+#endif /* ifndef GEAR_ZPlanarPARAMETERS_H */

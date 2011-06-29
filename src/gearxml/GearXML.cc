@@ -5,7 +5,7 @@
 #include "gearxml/GearParametersXML.h"
 #include "gearxml/TPCParametersXML.h"
 #include "gearxml/CalorimeterParametersXML.h"
-#include "gearxml/VXDParametersXML.h"
+#include "gearxml/ZPlanarParametersXML.h"
 #include "gearxml/ConstantBFieldXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
 
@@ -13,7 +13,7 @@
 
 #include "gear/GEAR.h"
 #include "gear/CalorimeterParameters.h"
-#include "gear/VXDParameters.h"
+#include "gear/ZPlanarParameters.h"
 #include "gear/SiPlanesParameters.h"
 
 // #ifdef GEAR_TGEO
@@ -304,7 +304,7 @@ namespace gear{
     // ------- add VXD parameters ----------------------------
     try{
 
-      VXDParametersXML handler ;
+      ZPlanarParametersXML handler ;
 
       TiXmlElement detector = handler.toXML( mgr->getVXDParameters() ) ;
 
@@ -312,7 +312,43 @@ namespace gear{
       //std::cout << "VXD called." << std::endl ;
 
       detector.SetAttribute( "name" , "VXD" ) ;
-      detector.SetAttribute( "geartype" , GEAR::VXDPARAMETERS ) ;
+      detector.SetAttribute( "geartype" , GEAR::ZPLANARPARAMETERS ) ;
+      
+      detectors.InsertEndChild( detector ) ;
+    }
+    catch( UnknownParameterException& e) {
+    }
+    
+    // ------- add SIT parameters ----------------------------
+    try{
+
+      ZPlanarParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getSITParameters() ) ;
+
+      // debugging
+      //std::cout << "SIT called." << std::endl ;
+
+      detector.SetAttribute( "name" , "SIT" ) ;
+      detector.SetAttribute( "geartype" , GEAR::ZPLANARPARAMETERS ) ;
+      
+      detectors.InsertEndChild( detector ) ;
+    }
+    catch( UnknownParameterException& e) {
+    }
+    
+    // ------- add SET parameters ----------------------------
+    try{
+
+      ZPlanarParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getSETParameters() ) ;
+
+      // debugging
+      //std::cout << "SET called." << std::endl ;
+
+      detector.SetAttribute( "name" , "SET" ) ;
+      detector.SetAttribute( "geartype" , GEAR::ZPLANARPARAMETERS ) ;
       
       detectors.InsertEndChild( detector ) ;
     }
@@ -335,7 +371,6 @@ namespace gear{
     }
     catch( UnknownParameterException& e) {
     }
-    
 
 
     // ------- generic/user detector parameters -----------
@@ -490,6 +525,11 @@ namespace gear{
 
 // 	std::cout << "GearXML::createGearMgr: reading detector " << name 
 // 		  << " with \"geartype\" " << type << std::endl ;
+	
+	// backward compatibility
+	if( type==std::string("VXDParameters") ){
+	  type = "ZPlanarParameters"  ;
+	}
 
 
       } catch( ParseException& e){

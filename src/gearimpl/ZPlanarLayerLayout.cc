@@ -1,9 +1,9 @@
-#include "gearimpl/VXDLayerLayoutImpl.h"
+#include "gearimpl/ZPlanarLayerLayoutImpl.h"
 #include <math.h>
 
 namespace gear{
 
-  void VXDLayerLayoutImpl::addLayer(int nLadders, double phi0, 
+  void ZPlanarLayerLayoutImpl::addLayer(int nLadders, double phi0, 
 				    // ladder
 				    double ladderDistance, double ladderOffset, double ladderThickness,
 				    double ladderLength, double ladderWidth, double ladderRadLength,
@@ -46,7 +46,7 @@ namespace gear{
   }
 
       
-  double VXDLayerLayoutImpl::getMaxRadius( int layerIndex, bool sensitive ) const 
+  double ZPlanarLayerLayoutImpl::getMaxRadius( int layerIndex, bool sensitive ) const 
   {
     Layer l ;
     if (!sensitive) {
@@ -65,7 +65,7 @@ namespace gear{
   }
 
   // returns starting phi for first ladder in layer (on side to IP)
-  double VXDLayerLayoutImpl::getStartInnerPhi( int layerIndex , bool sensitive ) const 
+  double ZPlanarLayerLayoutImpl::getStartInnerPhi( int layerIndex , bool sensitive ) const 
   {
     Layer l ;
     if ( !sensitive ) {
@@ -78,7 +78,7 @@ namespace gear{
   }
 
   // returns ending phi for first ladder in layer (on side to IP)
-  double VXDLayerLayoutImpl::getEndInnerPhi( int layerIndex , bool sensitive ) const 
+  double ZPlanarLayerLayoutImpl::getEndInnerPhi( int layerIndex , bool sensitive ) const 
   {
     Layer l ;
     if ( !sensitive ) {
@@ -92,7 +92,7 @@ namespace gear{
 
 
   // returns starting phi for first ladder in layer (on side away from IP)
-  double VXDLayerLayoutImpl::getStartOuterPhi( int layerIndex , bool sensitive ) const 
+  double ZPlanarLayerLayoutImpl::getStartOuterPhi( int layerIndex , bool sensitive ) const 
   {
     Layer l ;
     if (sensitive) {
@@ -105,7 +105,7 @@ namespace gear{
   }
 
   // returns ending phi for first ladder in layer (on side away from IP)
-  double VXDLayerLayoutImpl::getEndOuterPhi( int layerIndex , bool sensitive ) const 
+  double ZPlanarLayerLayoutImpl::getEndOuterPhi( int layerIndex , bool sensitive ) const 
   {
     Layer l ;
     if (sensitive) {
@@ -118,7 +118,7 @@ namespace gear{
   }
 
   // returns thickness under a certain angle
-  double VXDLayerLayoutImpl::getThicknessForPhi( int layerIndex , double phi, bool sensitive ) const
+  double ZPlanarLayerLayoutImpl::getThicknessForPhi( int layerIndex , double phi, bool sensitive ) const
   {
     Layer l ;
     if (!sensitive) {
