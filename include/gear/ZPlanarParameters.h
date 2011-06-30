@@ -38,7 +38,7 @@ public:
    virtual const ZPlanarLayerLayout & getZPlanarLayerLayout() const = 0;
 
    /** fix for backward compatibility */  
-    inline const ZPlanarLayerLayout& getVXDLayerLayout() { return getZPlanarLayerLayout() ; } 
+    inline const ZPlanarLayerLayout& getVXDLayerLayout() const { return getZPlanarLayerLayout() ; } 
   
     /** The type of detector - to be defined by users...
     */
