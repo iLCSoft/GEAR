@@ -17,6 +17,7 @@ class GearPointProperties;
 class SiPlanesParameters;
 class TPCParameters;
 class ZPlanarParameters ;
+class FTDParameters ;
 
 /** Abstract interface for a manager class that returns the Gear classes for the 
  *  relevant subdetectors.
@@ -132,6 +133,12 @@ public:
      */
     virtual const ZPlanarParameters & getVXDParameters() const throw (UnknownParameterException, std::exception )  = 0;
 
+    /** Get the FTD parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const FTDParameters & getFTDParameters() const throw (UnknownParameterException, std::exception )  = 0;
+
     /** Get the SIT parameters.
      *
      *  @throws UnknownParameterException
@@ -222,6 +229,10 @@ public:
     /** Set the VXDParameters.
      */
     virtual void setVXDParameters(ZPlanarParameters * vxdParameters) = 0;
+
+    /** Set the FTDParameters.
+     */
+    virtual void setFTDParameters(FTDParameters * ftdParameters) = 0;
 
     /** Set the SITParameters.
      */

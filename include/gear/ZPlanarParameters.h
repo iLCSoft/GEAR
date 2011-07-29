@@ -1,3 +1,4 @@
+
 // -*- C++ -*-
 #ifndef GEAR_ZPlanarParameters_H
 #define GEAR_ZPlanarParameters_H 1
@@ -85,7 +86,7 @@ public:
      */
     virtual Vector3D distanceToNearestSensitive(Vector3D p) const = 0;
 
-    /** returns the first point where a given strainght line
+    /** returns the first point where a given straight line
      *  (parameters point p and direction v)  crosses a ladder
      *  (0,0,0) is returned if no intersection can be found.
      *  @param p  a point on the line. This will be the starting point.

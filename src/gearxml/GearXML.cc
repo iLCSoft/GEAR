@@ -6,6 +6,7 @@
 #include "gearxml/TPCParametersXML.h"
 #include "gearxml/CalorimeterParametersXML.h"
 #include "gearxml/ZPlanarParametersXML.h"
+#include "gearxml/FTDParametersXML.h"
 #include "gearxml/ConstantBFieldXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
 
@@ -14,6 +15,7 @@
 #include "gear/GEAR.h"
 #include "gear/CalorimeterParameters.h"
 #include "gear/ZPlanarParameters.h"
+#include "gear/FTDParameters.h"
 #include "gear/SiPlanesParameters.h"
 
 // #ifdef GEAR_TGEO
@@ -319,6 +321,24 @@ namespace gear{
     catch( UnknownParameterException& e) {
     }
     
+    // ------- add FTD parameters ----------------------------
+    try{
+
+      FTDParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getFTDParameters() ) ;
+
+      // debugging
+      //std::cout << "FTD called." << std::endl ;
+
+      detector.SetAttribute( "name" , "FTD" ) ;
+      detector.SetAttribute( "geartype" , GEAR::FTDPARAMETERS ) ;
+      
+      detectors.InsertEndChild( detector ) ;
+    }
+    catch( UnknownParameterException& e) {
+    }
+
     // ------- add SIT parameters ----------------------------
     try{
 

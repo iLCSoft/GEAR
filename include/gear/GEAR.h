@@ -147,6 +147,7 @@ public:
    static const char*  TPCPARAMETERS  ;
    static const char*  CALORIMETERPARAMETERS  ;
    static const char*  ZPLANARPARAMETERS  ;
+   static const char*  FTDPARAMETERS  ;
    static const char*  SIPLANESPARAMETERS  ;
 
 

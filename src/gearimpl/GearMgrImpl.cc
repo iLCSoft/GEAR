@@ -11,6 +11,7 @@
 #include "gearimpl/TPCParametersImpl.h"
 #include "gearimpl/CalorimeterParametersImpl.h"
 #include "gearimpl/ZPlanarParametersImpl.h"
+#include "gearimpl/FTDParametersImpl.h"
 #include "gearimpl/SiPlanesParametersImpl.h"
 #include "gearimpl/ConstantBField.h"
 //#include "gear/GearPointProperties.h"
@@ -36,6 +37,7 @@ namespace gear{
     _vxdParameters(0) ,
     _sitParameters(0) ,
     _setParameters(0) ,
+    _ftdParameters(0) ,
     _siplanesParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) ,
@@ -72,6 +74,7 @@ namespace gear{
     _vxdParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._vxdParameters));
     _sitParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._sitParameters));
     _setParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._setParameters));
+    _ftdParameters = new FTDParametersImpl( *dynamic_cast<FTDParametersImpl *>(right._ftdParameters));
     _siplanesParameters = new SiPlanesParametersImpl( *dynamic_cast<SiPlanesParametersImpl *>(right._siplanesParameters));
 
     // 
@@ -115,6 +118,7 @@ namespace gear{
     if( _vxdParameters ) delete _vxdParameters ;
     if( _sitParameters ) delete _sitParameters ;
     if( _setParameters ) delete _setParameters ;
+    if( _ftdParameters ) delete _ftdParameters ;
     if( _siplanesParameters ) delete _siplanesParameters ;
     if( _pointProperties ) delete _pointProperties ;
     if( _distanceProperties ) delete _distanceProperties ;
@@ -306,6 +310,16 @@ namespace gear{
 
     return *_vxdParameters ;
 
+  }
+  
+  const FTDParameters & GearMgrImpl::getFTDParameters() const
+    throw (UnknownParameterException, std::exception ) {
+    
+    if( _ftdParameters == 0 )
+      throw UnknownParameterException( "No FTDParameters set ") ;
+    
+    return *_ftdParameters ;
+    
   }
 
   const ZPlanarParameters & GearMgrImpl::getSITParameters() const
@@ -504,8 +518,13 @@ namespace gear{
     _vxdParameters = vxdParameters ;
   }
 
+  void GearMgrImpl::setFTDParameters( FTDParameters* ftdParameters ) {
+    
+    _ftdParameters = ftdParameters ;
+  }
+  
   void GearMgrImpl::setSITParameters( ZPlanarParameters* sitParameters ) {
-
+    
     _sitParameters = sitParameters ;
   }
 

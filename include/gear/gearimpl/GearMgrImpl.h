@@ -153,6 +153,13 @@ namespace gear {
     virtual const ZPlanarParameters & getVXDParameters() const
       throw (UnknownParameterException, std::exception )  ;
 
+    /** Get the FTD parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const FTDParameters & getFTDParameters() const
+      throw (UnknownParameterException, std::exception )  ;
+
     /** Get the SIT parameters.
      *
      *  @throws UnknownParameterException
@@ -261,14 +268,18 @@ namespace gear {
       */
      virtual void setVXDParameters( ZPlanarParameters * vxdParameters ) ;
 
-     /** Set the SITParameters.
-      */
-     virtual void setSITParameters( ZPlanarParameters * sitParameters ) ;
-
-     /** Set the SETParameters.
+    /** Set the FTDParameters.
+     */
+    virtual void setFTDParameters( FTDParameters * ftdParameters ) ;
+    
+    /** Set the SITParameters.
+     */
+    virtual void setSITParameters( ZPlanarParameters * sitParameters ) ;
+    
+    /** Set the SETParameters.
      */
     virtual void setSETParameters( ZPlanarParameters * setParameters ) ;
-
+    
 
      /** Set the SiPlanesParameters.
      */
@@ -305,6 +316,7 @@ namespace gear {
     ZPlanarParameters*     _vxdParameters ;
     ZPlanarParameters*     _sitParameters ;
     ZPlanarParameters*     _setParameters ;
+    FTDParameters*         _ftdParameters;
     SiPlanesParameters*    _siplanesParameters ;
     GearPointProperties*   _pointProperties ;
     GearDistanceProperties* _distanceProperties ;

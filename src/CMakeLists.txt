@@ -97,3 +97,23 @@ FOREACH( _testname ${test_bins} )
 
 ENDFOREACH()
 
+
+### FTD test needs ROOT/TGeo ######
+
+FIND_PACKAGE( ROOT COMPONENTS Geom )
+
+IF( ROOT_FOUND )
+  INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIRS} )
+
+  IF( BUILD_TESTING )
+     ADD_EXECUTABLE( testFTD ./test/testFTD.cc )
+  ELSE()
+     ADD_EXECUTABLE( testFTD EXCLUDE_FROM_ALL ./test/testFTD.cc )
+  ENDIF()
+
+  ADD_DEPENDENCIES( tests testFTD )
+  TARGET_LINK_LIBRARIES( testFTD   gear gearxml  ${ROOT_LIBRARIES} ${ROOT_COMPONENT_LIBRARIES} )
+ENDIF()
+
+
+

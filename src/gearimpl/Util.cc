@@ -3,6 +3,7 @@
 
 #include "gear/PadRowLayout2D.h"
 #include "gear/ZPlanarLayerLayout.h"
+#include "gear/FTDLayerLayout.h"
 #include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 
@@ -63,6 +64,11 @@ namespace gear{
 	<<  m.getVXDParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}
 
+    try{ 
+      // FTD parameters
+      s <<  m.getFTDParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}
+    
     try{ 
       // SIT parameters
       s << "   ----  SIT    ---- "  <<  std::endl
@@ -490,6 +496,67 @@ namespace gear{
     
   }
   
+  std::ostream& operator<< (  std::ostream& s,  const FTDParameters& p ) 
+  {
+	  s << std::endl 
+		  << "   -----------   FTDParameters  ------- "  << std::endl         ;
+	  
+    
+	  s << dynamic_cast<const GearParameters&>( p )  ;
+	  
+	  const FTDLayerLayout & l = p.getFTDLayerLayout() ;
+	  
+	  s << " Shell innerRMin : " << p.getShellInnerRadiusMin() << " innerRMax: " << p.getShellInnerRadiusMax()
+		  << " outerR : " << p.getShellOuterRadius() << std::endl 
+		  << "       length : " << p.getShellHalfLength()  ;
+	  
+	  
+	  // layers
+	  
+	  s << " Layers : " << l.getNLayers()  
+		  << std::endl << std::endl ;
+	  
+	  
+	  s <<  " layer parameters (note: ladder length (l) are half lengths ! )" 
+		  << std::endl ;
+	  
+	  std::string buffer;
+	  buffer = "  |------------------------------------------------------------------------------------|\n" ;
+	  s << buffer ;
+	  
+	  buffer = "  |      |         ladder:                      |       sensitive part:                |\n" ;
+	  s << buffer ;
+	  
+	  buffer = "  |  #   |    x    |    X    |    y    |   t    |    x    |    X    |    y    |    t   | \n" ;
+	  s << buffer ;
+	  
+	  buffer = "  |------------------------------------------------------------------------------------|\n" ;
+	  s << buffer ;
+	  
+	  for( int i = 0 ; i < l.getNLayers() ; i++ ) 
+	  {
+		  char buffer1[1024] ;
+		  sprintf(buffer1,"  | %3d  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |\n"
+				  , l.getNLadders(i) 
+				  , l.getLadderLengthMin(i) 
+				  , l.getLadderLengthMax(i)
+				  , l.getLadderWidth(i)
+				  , l.getLadderThickness(i)
+				  , l.getSensitiveLengthMin(i)
+				  , l.getSensitiveLengthMax(i) 
+				  , l.getSensitiveWidth(i) 
+				  , l.getSensitiveThickness(i) ) ;
+		  
+		  s << buffer1 ;
+		  
+	  }
+	  
+	  buffer = "  |------------------------------------------------------------------------------------|\n" ;
+	  s << buffer ;    
+    return s ;
+    
+  }
+
   std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) {
     
     s << std::endl 
