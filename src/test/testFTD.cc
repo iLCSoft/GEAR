@@ -4,12 +4,12 @@
 //              from GEAR
 //
 // Compilation:  
-//              g++ `root-config --cflags` -L`root-config --libdir` \
-//                       `root-config --libs` -lGeom 
-//                       -I/usr/local/ilcsoft/v01-08/gear/v00-13/src/cpp/include \
-//	                 -L/usr/local/ilcsoft/v01-08/gear/v00-13/lib \
-//			 -lgear -lgearxml -o testFTD testFTD.cc
-//
+//  g++ `root-config --cflags` -L`root-config --libdir`
+//      `root-config --libs` -lGeom 
+//      -I/usr/local/ilcsoft/v01-08/gear/v00-13/src/cpp/include
+//      -L/usr/local/ilcsoft/v01-08/gear/v00-13/lib
+//      -lgear -lgearxml -o testFTD testFTD.cc
+//  
 // @author: J. Duarte Campderros, IFCA
 // 27, July 2011
 
@@ -49,11 +49,11 @@ int main(int argc, char *argv[])
 	TGeoMaterial * vacuum = new TGeoMaterial("vacuum",0.0,0.0,0.0);
 	TGeoMaterial * vacuumTrans = new TGeoMaterial("vacuum_trans",0.0,0.0,0.0);
 	vacuumTrans->SetTransparency(50);
-	TGeoMaterial *si = new TGeoMaterial("si",28.09,14,2.33);
+	//TGeoMaterial *si = new TGeoMaterial("si",28.09,14,2.33);
 
 	TGeoMedium * Air = new TGeoMedium("Vacuum",0,vacuum);
 	TGeoMedium * AirTrans = new TGeoMedium("Vacuum_Trans",0,vacuumTrans);
-	TGeoMedium * Si  = new TGeoMedium("Silicon",1,si);
+	//TGeoMedium * Si  = new TGeoMedium("Silicon",1,si);
 
 	// Create volumes
 	TGeoVolume *top = ftdgeom->MakeBox("top",Air,12000,12000,12000);
@@ -67,7 +67,7 @@ int main(int argc, char *argv[])
 	// Disks
 	const FTDLayerLayout & ftdLayer = ftdParams.getFTDLayerLayout();
 	
-	const int nLayers = ftdLayer.getNLayers();
+	//const int nLayers = ftdLayer.getNLayers();
 
 	
 	double ZstartOuterShell = -1;
