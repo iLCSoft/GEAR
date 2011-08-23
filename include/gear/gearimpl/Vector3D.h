@@ -23,6 +23,13 @@ public:
   Vector3D() : _x(0.0),_y(0.0),_z(0.0) {}
   
   
+  /** Constructor for float array.*/
+  Vector3D(const float* v) : _x(v[0]),_y(v[1]),_z(v[2]) {}
+
+  /** Constructor for double array.*/
+  Vector3D(const double* v) : _x(v[0]),_y(v[1]),_z(v[2]) {}
+  
+  
   /** Templated c'tor - allows to have overloaded c'tors for different coordinates */
   template <class T>
   Vector3D( double x,double y, double z , T(&)() ) ;
