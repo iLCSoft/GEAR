@@ -14,7 +14,7 @@ namespace gear {
    *  and arrays/vectors of these types and set these. 
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearParametersImpl.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   * @version $Id$
    */
   class GearParametersImpl : virtual public GearParameters {
 	

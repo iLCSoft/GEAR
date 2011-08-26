@@ -7,7 +7,7 @@ namespace gear {
   /** Global pad index implimentation .
    *
    * @author M, Killenberg, (Bonn)  S, Turnbull, (Saclay/Carleton)
-   * @version $Id: GlobalPadIndex.h,v 1.2 2009-05-04 11:38:07 engels Exp $ 
+   * @version $Id$ 
    */
 	
 class GlobalPadIndex  {

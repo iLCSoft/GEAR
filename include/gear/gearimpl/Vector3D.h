@@ -12,7 +12,7 @@ namespace gear {
  *  cylindrical and spherical coordinate  systems - internal reperesentation is
  *  cartesian.
  *  @author F. Gaede, DESY
- *  @version $Id: Vector3D.h,v 1.1 2007-03-07 15:37:45 gaede Exp $
+ *  @version $Id$
  */
 
 class Vector3D{

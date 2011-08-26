@@ -14,7 +14,7 @@ namespace gear {
   /** Concrete implemetation for TGeo.
    *
    * @author F. Gaede, DESY
-   * @version $Id:$
+   * @version $Id$
    */
   
   class TGeoMaterialProperties : public GearMaterialProperties {

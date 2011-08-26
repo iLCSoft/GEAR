@@ -21,7 +21,7 @@ namespace gear {
  *  by M. Weber RWTH Aachen and J. McGeachie UVic, Ca..
  * 
  * @author F. Gaede, DESY
- * @version $Id: RectangularPadRowLayout.h,v 1.6 2009-02-27 09:00:50 gaede Exp $
+ * @version $Id$
  */
   class RectangularPadRowLayout : public PadRowLayout2D {
     

@@ -15,7 +15,7 @@ namespace gear {
 /** TGeo implementation of the abstract interface that returns the (material) 
  *  properties of a given point in world coordinates.  
  * @author A. Muennich, CERN
- * @version $Id: TGeoGearPointProperties.h,v 1.2 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id$
  */
 class TGeoGearPointProperties: public GearPointProperties {
 

@@ -14,7 +14,7 @@ class LayerLayout;
  * a typical sampling calorimeter as needed for reconstruction. <br>
  * 
  * @author F. Gaede, DESY
- * @version $Id: CalorimeterParameters.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id$
  */
 
 class CalorimeterParameters : virtual public GearParameters {

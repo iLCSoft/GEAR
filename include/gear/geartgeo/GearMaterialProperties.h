@@ -13,7 +13,7 @@ namespace gear {
    *  Will allow to have concrete implementations as plugin libraries.
    *
    * @author F. Gaede, DESY
-   * @version $Id:$
+   * @version $Id$
    */
   
   class GearMaterialProperties {

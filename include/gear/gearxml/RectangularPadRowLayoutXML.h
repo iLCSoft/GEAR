@@ -13,7 +13,7 @@ namespace gear {
   /** Abstract XML handler for RectangularPadRowLayoutXML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: RectangularPadRowLayoutXML.h,v 1.2 2008-12-19 13:52:34 gaede Exp $
+   * @version $Id$
    */
   class RectangularPadRowLayoutXML : public PadRowLayout2DXML {
     

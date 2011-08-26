@@ -13,7 +13,7 @@ namespace gear {
   /** Abstract XML handler for VersatileDiskRowLayoutXML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: VersatileDiskRowLayoutXML.h,v 1.1 2009-02-27 09:00:50 gaede Exp $
+   * @version $Id$
    */
   class VersatileDiskRowLayoutXML : public PadRowLayout2DXML {
     

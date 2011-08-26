@@ -15,7 +15,7 @@ namespace gear {
  *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
  *
  * @author F. Gaede, DESY
- * @version $Id: GearPointProperties.aid,v 1.3 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id$
  */
 class GearPointProperties {
 

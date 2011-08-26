@@ -13,7 +13,7 @@ namespace gear {
  *  properties along a given distance between two points in in world 
  *  coordinates. 
  * @author G. Musat, Ecole Polytechnique
- * @version $Id: CGAGearDistanceProperties.h,v 1.2 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id$
  */
 class CGAGearDistanceProperties: public GearDistanceProperties {
 

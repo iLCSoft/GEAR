@@ -20,7 +20,7 @@ namespace gear {
   /** Abstract XML handler for PadRowLayout2DXML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: PadRowLayout2DXML.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
+   * @version $Id$
    */
   class PadRowLayout2DXML {
     

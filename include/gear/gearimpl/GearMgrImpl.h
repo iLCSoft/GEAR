@@ -16,7 +16,7 @@ namespace gear {
    *  Based on ideas discussed at the 2004 Argonne Simulation Workshop as summarized by T.Behnke.
    *
    * @author F. Gaede, DESY
-   * @version $Id: GearMgrImpl.h,v 1.12 2008-12-19 13:52:34 gaede Exp $
+   * @version $Id$
    */
   class GearMgrImpl : public GearMgr {
 	

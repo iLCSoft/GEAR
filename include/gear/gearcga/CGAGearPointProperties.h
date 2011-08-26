@@ -12,7 +12,7 @@ namespace gear {
 /** CGA implementation of the abstract interface that returns the (material) 
  *  properties of a given point in world coordinates.  
  * @author G. Musat, Ecole Polytechnique
- * @version $Id: CGAGearPointProperties.h,v 1.2 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id$
  */
 class CGAGearPointProperties: public GearPointProperties {
 

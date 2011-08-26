@@ -16,7 +16,7 @@ namespace gear {
   /** XML handler for CalorimeterParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: CalorimeterParametersXML.h,v 1.4 2006-04-13 10:16:20 lippe Exp $
+   * @version $Id$
    */
   class CalorimeterParametersXML : public XMLHandler {
     

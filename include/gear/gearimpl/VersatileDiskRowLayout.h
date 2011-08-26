@@ -17,7 +17,7 @@ namespace gear {
  *  getNearestPad() function does not work reliably.
  * 
  *  @author M. Killenberg, University of Bonn
- *  @version $Id: VersatileDiskRowLayout.h,v 1.1 2009-02-27 09:00:50 gaede Exp $
+ *  @version $Id$
  */
 class VersatileDiskRowLayout : public FixedDiskLayoutBase {
     

@@ -18,7 +18,7 @@ namespace gear {
   /** XML handler for GearParameters.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: GearParametersXML.h,v 1.2 2005-11-25 16:08:15 gaede Exp $
+   * @version $Id$
    */
   class GearParametersXML : public XMLHandler {
     

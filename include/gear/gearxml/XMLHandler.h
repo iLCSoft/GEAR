@@ -12,7 +12,7 @@ namespace gear {
   /** Interface for XML handlers of GEAR classes.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: XMLHandler.h,v 1.5 2008-12-19 13:52:34 gaede Exp $
+   * @version $Id$
    */
   class XMLHandler {
     

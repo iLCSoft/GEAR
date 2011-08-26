@@ -19,7 +19,7 @@ namespace gear {
  *  (the only thing that matters is the effective pitch).
  * 
  * @author M. Killenberg, University of Bonn
- * @version $Id: FixedPadAngleDiskLayout.h,v 1.4 2009-02-27 09:00:50 gaede Exp $
+ * @version $Id$
  */
   class FixedPadAngleDiskLayout : public FixedDiskLayoutBase {
     

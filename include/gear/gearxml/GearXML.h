@@ -13,7 +13,7 @@ namespace gear {
   /** Implementation of GEAR using XML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: GearXML.h,v 1.3 2007-11-06 09:06:00 gaede Exp $
+   * @version $Id$
    */
   class GearXML {
     

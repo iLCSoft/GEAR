@@ -19,7 +19,7 @@ class TPCModule;
  * The original TPCParameters class was based on ideas by Dean Karlen.
  * 
  * @author F. Gaede (DESY), M. Killenberg (Bonn)  S. Turnbull (Saclay/Carleton)
- * @version $Id: TPCParameters.aid,v 1.2 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id$
  */
 class TPCParameters : virtual public GearParameters {
 

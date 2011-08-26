@@ -24,7 +24,7 @@ class FTDParameters ;
  * 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearMgr.aid,v 1.9 2008-10-22 15:10:46 engels Exp $
+ * @version $Id$
  */
 class GearMgr {
 

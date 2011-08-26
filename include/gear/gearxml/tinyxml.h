@@ -24,7 +24,7 @@ distribution.
  F.Gaede, DESY : added #define TIXML_USE_STL  for use with gear
                : put everything in namespace gear
 
-   $Id: tinyxml.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+   $Id$
 */
 
 #ifndef TIXML_USE_STL

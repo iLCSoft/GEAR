@@ -25,7 +25,7 @@ namespace gear {
    * myMapFactory->createMaterialMap(-200,200, 10,-200,200,10 ,-200, 200, 10, 0) takes 7.2 s for 1331 
    * entries (10x10x10 steps), 5 s of that is needed to load in the geometry from gdml into ROOT.
    * Creating a map with 100x10x10 takes 22s and 100x100x100 already 28 min.
-   * @version $Id: MaterialMapFactory.h,v 1.1 2006-05-29 13:03:18 musat Exp $
+   * @version $Id$
    */
   class MaterialMapFactory {
     

@@ -13,7 +13,7 @@ namespace gear {
  *  classes to avoid code duplication (non-trivial distance calculations etc).
   * 
  * @author M. Killenberg, University of Bonn
- * @version $Id: FixedDiskLayoutBase.h,v 1.2 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id$
  */
   class FixedDiskLayoutBase : public PadRowLayout2D {
     

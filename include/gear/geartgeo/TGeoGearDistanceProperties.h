@@ -16,7 +16,7 @@ namespace gear {
  *  properties along a given distance between two points in in world 
  *  coordinates. 
  * @author A. Muennich, CERN
- * @version $Id: TGeoGearDistanceProperties.h,v 1.2 2007-03-07 15:37:45 gaede Exp $
+ * @version $Id$
  */
 class TGeoGearDistanceProperties: public GearDistanceProperties {
 

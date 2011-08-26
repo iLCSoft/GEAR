@@ -13,7 +13,7 @@ namespace gear {
 
 /** TGeo Geometry Initializer class
  * @author A. Muennich, CERN
- * @version $Id:$
+ * @version $Id$
  */
 class TGeoGeometryInitializer {
 

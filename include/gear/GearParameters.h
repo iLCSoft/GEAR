@@ -15,7 +15,7 @@ namespace gear {
  *  and arrays/vectors of these types. 
  *
  * @author F. Gaede, DESY
- * @version $Id: GearParameters.aid,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id$
  */
 class GearParameters {
 

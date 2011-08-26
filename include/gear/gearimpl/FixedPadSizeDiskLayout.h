@@ -18,7 +18,7 @@ namespace gear {
  *  (through the pad center).
  *
  * @author F. Gaede, DESY
- * @version $Id: FixedPadSizeDiskLayout.h,v 1.6 2009-02-27 09:00:50 gaede Exp $
+ * @version $Id$
  */
   class FixedPadSizeDiskLayout : public FixedDiskLayoutBase {
 

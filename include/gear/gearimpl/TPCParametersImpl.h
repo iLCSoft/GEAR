@@ -19,7 +19,7 @@ class TPCModule;
  * 
  * 
  * @author M, Killenberg, (Bonn)  S, Turnbull, (Saclay/Carleton) 
- * @version $Id: TPCParametersImpl.h,v 1.2 2008-12-19 13:52:34 gaede Exp $
+ * @version $Id$
  */
 
 class TPCParametersImpl :  public TPCParameters,    public GearParametersImpl {

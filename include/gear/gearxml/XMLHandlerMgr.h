@@ -15,7 +15,7 @@ namespace gear {
   /** Manager for  XML handlers of GEAR classes.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: XMLHandlerMgr.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
+   * @version $Id$
    */
   
   class XMLHandlerMgr {

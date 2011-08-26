@@ -14,7 +14,7 @@ class LayerLayoutImpl ;
 /** Implementation of 
  * 
  * @author F. Gaede, DESY
- * @version $Id: CalorimeterParametersImpl.h,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
+ * @version $Id$
  */
 
   class CalorimeterParametersImpl :  public GearParametersImpl,  public CalorimeterParameters {

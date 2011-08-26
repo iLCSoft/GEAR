@@ -35,7 +35,7 @@ namespace gear {
 
   /**Base exception class for GEAR - all other exceptions extend this.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id$
    */
 
   class Exception : public std::exception {
@@ -60,7 +60,7 @@ namespace gear {
 
   /**ParseException used for parse errors, e.g. when reading the xml file.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id$
    */
   class ParseException : public Exception{
     
@@ -76,7 +76,7 @@ namespace gear {
 
   /**NotImplementedException used for features that are not implemented.
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id$
    */
   class NotImplementedException : public Exception{
 
@@ -94,7 +94,7 @@ namespace gear {
   /** UnknownParameterException 
    *  call Processor::end().
    * @author gaede
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id$
    */
    class UnknownParameterException : public Exception{
 
@@ -113,7 +113,7 @@ namespace gear {
    * where no node is defined.
    *  call Processor::end().
    * @author muennich
-   * @version $Id: GEAR.aid,v 1.11 2008-10-23 16:41:02 engels Exp $
+   * @version $Id$
    */
    class OutsideGeometryException : public Exception{
 

@@ -11,7 +11,7 @@ namespace gear {
   
   /** Material map using GearDistanceProperties
    * @author A. Muennich, CERN
-   * @version $Id: MaterialMap.h,v 1.1 2006-05-29 13:03:18 musat Exp $
+   * @version $Id$
    */
   class MaterialMap {
     

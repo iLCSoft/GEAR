@@ -17,7 +17,7 @@ namespace gear {
   /** XML handler for ConstantBField
    * 
    * @author F. Gaede, DESY
-   * @version $Id: ConstantBFieldXML.h,v 1.1 2007-04-28 21:45:45 gaede Exp $
+   * @version $Id$
    */
   class ConstantBFieldXML : public XMLHandler {
     

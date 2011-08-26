@@ -14,7 +14,7 @@ namespace gear {
   /** Abstract XML handler for TPCModuleXML.
    * 
    * @author Martin Killenberg, University of Bonn
-   * @version $Id: TPCModuleXML.h,v 1.1 2008-12-17 09:39:46 engels Exp $
+   * @version $Id$
    */
   class TPCModuleXML {
     

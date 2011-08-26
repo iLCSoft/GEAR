@@ -13,7 +13,7 @@ namespace gear {
    *  e.g. from CLHEP or root::MathCore in the future.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: Vectors.h,v 1.5 2007-03-16 15:43:17 gaede Exp $
+   * @version $Id$
    */
   
   template <int N, typename Float_T=double>

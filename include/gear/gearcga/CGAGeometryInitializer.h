@@ -10,7 +10,7 @@ namespace gear {
 
 /** CGA Geometry Initializer class
  * @author G. Musat, Ecole Polytechnique
- * @version $Id: CGAGeometryInitializer.h,v 1.1 2006-05-29 13:03:18 musat Exp $
+ * @version $Id$
  */
 class CGAGeometryInitializer {
 

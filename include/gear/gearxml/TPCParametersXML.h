@@ -16,7 +16,7 @@ namespace gear {
    *  This is the modular version.
    * 
    * @author Martin Killenberg, University of Bonn
-   * @version $Id: TPCParametersXML.h,v 1.3 2008-12-19 13:52:34 gaede Exp $
+   * @version $Id$
    */
     class TPCParametersXML : public XMLHandler {
     

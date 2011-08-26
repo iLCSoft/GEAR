@@ -15,7 +15,7 @@ namespace gear {
  *  in one 32-bit word.
  * 
  * @author F. Gaede, DESY
- * @version $Id: PadRowLayout2D.aid,v 1.5 2009-02-27 09:00:50 gaede Exp $
+ * @version $Id$
  */
 class PadRowLayout2D {
 

@@ -13,7 +13,7 @@ namespace gear {
   /** Abstract XML handler for FixedPadAngleDiskLayoutXML.
    * 
    * @author F. Gaede, DESY
-   * @version $Id: FixedPadAngleDiskLayoutXML.h,v 1.1 2008-10-30 14:27:06 gaede Exp $
+   * @version $Id$
    */
   class FixedPadAngleDiskLayoutXML : public PadRowLayout2DXML {
     
