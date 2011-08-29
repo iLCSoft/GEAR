@@ -43,6 +43,9 @@ namespace gear {
   std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) ;
 
 
+  std::ostream& operator<< (  std::ostream& s, const  SimpleMaterial& m ) ;
+
+
 } // namespace gear
 
 #endif /* ifndef GEAR_Util_H */

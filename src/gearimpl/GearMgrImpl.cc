@@ -14,8 +14,10 @@
 #include "gearimpl/FTDParametersImpl.h"
 #include "gearimpl/SiPlanesParametersImpl.h"
 #include "gearimpl/ConstantBField.h"
-//#include "gear/GearPointProperties.h"
-//#include "gear/GearDistanceProperties.h"
+#include "gearimpl/SimpleMaterialImpl.h"
+
+
+#include <sstream>
 
 namespace gear{
 
@@ -89,6 +91,14 @@ namespace gear{
 
     _detectorName = right._detectorName;
     _keys = right._keys;      
+
+
+    for( MatMap::const_iterator it = right._matMap.begin(), end = right._matMap.end() ; it != end ; ++it ){
+
+      this->registerSimpleMaterial( new SimpleMaterialImpl( *dynamic_cast<const SimpleMaterialImpl*>( it->second ) ) ) ; 
+    }
+
+
   }
 
   GearMgrImpl::~GearMgrImpl() 
@@ -125,6 +135,10 @@ namespace gear{
     if( _bField  ) delete  _bField ;
     
     for( ParameterMap::iterator it = _map.begin() ; it != _map.end() ; ++ it ) {
+      delete it->second ;
+    }
+ 
+    for(MatMap::iterator it = _matMap.begin(), end = _matMap.end() ; it != end ; ++it ){
       delete it->second ;
     }
     
@@ -558,5 +572,54 @@ namespace gear{
     }
     return _keys ;
   }
+
+  const std::vector<std::string>& GearMgrImpl::getMaterialNames() const {
+    
+    _matNames.clear() ;
+    _matNames.reserve( _matMap.size() ) ;
+    
+    for( MatMap::const_iterator it = _matMap.begin() ; it != _matMap.end() ; ++it ){
+      _matNames.push_back( it->first ) ;
+    }
+    return _matNames ;
+  
+  }
+
+
+  const SimpleMaterial& GearMgrImpl::getSimpleMaterial( const std::string name ) const 
+    throw (UnknownParameterException, std::exception ) {
+    
+    MatMap::const_iterator it = _matMap.find( name ) ;
+    
+    if( it == _matMap.end() ){
+      
+      std::stringstream mess ;
+      mess << " GearMgrImpl::getSimpleMaterial - unknown material with name " << name << "  ! " ;
+      
+      throw UnknownParameterException( mess.str() ) ;
+    }
+
+    return *it->second ;
+ }
+  
+
+  void GearMgrImpl::registerSimpleMaterial( const SimpleMaterial* material) 
+    throw(Exception , std::exception ) {
+
+    MatMap::iterator it = _matMap.find( material->getName() ) ;
+    
+    if( it!= _matMap.end() ){
+      
+      std::stringstream mess ;
+      mess << " GearMgrImpl::registerSimpleMaterial - material with name " << material->getName() << " already registered ! " ;
+      
+      throw Exception( mess.str() ) ;
+    }
+    
+    _matMap[ material->getName() ] = material ;
+
+  }
+
+
 
 }

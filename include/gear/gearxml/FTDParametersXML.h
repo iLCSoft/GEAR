@@ -13,7 +13,7 @@ namespace gear
 	 *
 	 * @author J. Duarte Campderros, IFCA  
 	 *         (based on VXDParametersXML )
-	 * @version $Id $
+	 * @version $Id$
 	 */
 	class FTDParametersXML : public XMLHandler 
 	{

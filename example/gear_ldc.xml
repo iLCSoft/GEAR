@@ -158,8 +158,16 @@
 
   </detectors> 
 
-
-
+  <materials>
+    <material name="testMat0" A="74" Z="40" density="12.345" radLength="1.7" intLength="123456.999" />
+    <material name="testMat1" A="64" Z="32" density="1.2345" radLength="12.7" intLength="12345.999" />
+    <material name="testMat2" A="54" Z="26" density="1.2345" radLength="123.7" intLength="1234.999" />
+    <material name="testMat3" A="44" Z="22" density="1.2345" radLength="1234.7" intLength="123.999" />
+    <material name="testMat4" A="34" Z="17" density="1.2345" radLength="12345.7" intLength="12.999" />
+    <material name="testMat5" A="24" Z="12" density="1.2345" radLength="123456.7" intLength="1.999" />
+  </materials>
+  
+  
 </gear>
    
  

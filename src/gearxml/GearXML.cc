@@ -9,6 +9,7 @@
 #include "gearxml/FTDParametersXML.h"
 #include "gearxml/ConstantBFieldXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
+#include "gearxml/SimpleMaterialXML.h"
 
 #include "gearimpl/GearMgrImpl.h"
 
@@ -56,6 +57,8 @@ namespace gear{
     TiXmlElement root("gear") ;
 
     TiXmlElement detectors("detectors") ;
+
+    TiXmlElement materials("materials") ;
 
     TiXmlElement global("global") ;
     
@@ -412,11 +415,32 @@ namespace gear{
 
     }
 
+    // ------- add materials -----------
+    
+    const std::vector<std::string>& mNames = mgr->getMaterialNames() ;
+    
+    
+    for( unsigned int i=0; i< mNames.size(); i++ ){
+      
+      
+      SimpleMaterialXML handler ;
+      
+      TiXmlElement material = handler.toXML( mgr->getSimpleMaterial( mNames[i] ) )  ;
+      
+      // material.SetAttribute( "name" , mNames[i] ) ;
+      // material.SetAttribute( "geartype" , GEAR::GEARPARAMETERS ) ;
+      
+      materials.InsertEndChild( material ) ;
+      
+    }
+
 
 
     // ---- now put everything together -------------
 
     root.InsertEndChild ( detectors ) ;
+
+    root.InsertEndChild( materials ) ;
 
     doc.InsertEndChild ( root ) ;
 
@@ -532,6 +556,7 @@ namespace gear{
     }
 
 
+
     TiXmlNode* det = 0 ;
     while( ( det = detectors->IterateChildren( "detector", det ) )  != 0  ){
       
@@ -571,9 +596,31 @@ namespace gear{
       //       GearParameters* gp = 
 
       handler->fromXML( det->ToElement() , _gearMgr ) ; 
-
+      
     }
     
+    
+    //----------------------
+
+    TiXmlNode* materials = root->FirstChild("materials")  ;
+    
+    if( materials != 0 ){
+      
+      SimpleMaterialXML handler ;
+
+      TiXmlNode* mat = 0 ;
+      while( ( mat = materials->IterateChildren( "material", mat ) )  != 0  ){
+
+	handler.fromXML( mat->ToElement() , _gearMgr ) ; 
+      }
+
+    }
+   
+
+
+
+
+
     return _gearMgr ;
   }
   

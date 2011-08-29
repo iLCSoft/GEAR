@@ -15,10 +15,22 @@
   
      - added get/setSITParameters()  and get/setSETParameters() to GearMgr
 
-     - added constructors for double[3] and float[3] to Vector3D - could
-       be used with LCIO classes, e.g.:  gear::Vector3D x( hit->getPosition() ) ;
+
+     - added simple material description to Gear
+
+        - allowd to have materials of the form
+             SimpleMaterial( name , A , Z, density, radLength, intLength )
+          stored in the GearMgr 
+
+        - materials are referenced via their names (stored in user parameters)
+
+
+     - added constructors for double[3] and float[3] to Vector3D 
+       - could be used with LCIO classes, e.g.:  
+            gear::Vector3D pos( hit->getPosition() ) ;
 
      - added src/test/testXMLCopy.cc   (simple copy of xml files through GearXML)
+
 
 
   --------

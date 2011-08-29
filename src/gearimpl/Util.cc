@@ -6,9 +6,11 @@
 #include "gear/FTDLayerLayout.h"
 #include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
+#include "gear/SimpleMaterial.h"
 
 #include <cstdio>
-
+#include <iostream> 
+#include <iomanip>
 
 namespace gear{
 
@@ -166,6 +168,8 @@ namespace gear{
     } catch(UnknownParameterException &e){}  
     
  
+    //------------------------------------------------------------------
+
     s << std::endl 
       << "   parameter sections (detectors) :  "
       << std::endl ;
@@ -183,10 +187,45 @@ namespace gear{
 
     }
 
+    //------------------------------------------------------------------
+
+    s << " ------------------------------------------------------------------ " << std::endl 
+      << "   materials :  " << std::endl ;
+      
+
+    const StringVec& mNames = m.getMaterialNames() ;
+    
+    for(unsigned int i=0 ; i < mNames.size() ; ++i ) {
+      
+      const SimpleMaterial& sm = m.getSimpleMaterial( mNames[i] ) ;
+      
+      s <<  sm <<  std::endl ;
+
+    }
+
+    s  << " ------------------------------------------------------------------ " << std::endl ;
+
+    //------------------------------------------------------------------
+
     return s ;
   }
 
 
+
+  std::ostream& operator<< (  std::ostream& s, const  SimpleMaterial& m ) {
+
+    s << "    " << m.getName() 
+      <<  std::showpos << std::scientific << std::setprecision(8) 
+      << ", A= "    << m.getA() 
+      << ", Z= "    << m.getZ() 
+      << ", density [kg/m3]= "         << m.getDensity() 
+      << ", radiation length [mm]= "   << m.getRadLength() 
+      << ", interaction length [mm]= " << m.getIntLength() 
+      << std::dec
+      << std::endl ;
+
+    return s ;
+  }
 
   std::ostream& operator<< (  std::ostream& s, const   GearParameters& p ) {
 

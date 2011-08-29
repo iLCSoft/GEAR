@@ -2,11 +2,12 @@
 #define GEAR_GearMgrImpl_H 1
 
 #include <string>
+#include <map>
 
 #include "gear/GearMgr.h"
 #include "gear/GearParameters.h"
 #include "gear/TPCParameters.h"
-
+#include "gear/SimpleMaterial.h"
 
 namespace gear {
     
@@ -203,6 +204,21 @@ namespace gear {
     virtual const std::vector<std::string>  & getGearParameterKeys() const ;
 
 
+    /** Return the SimpleMaterial for the given name throws UnknownParameterException if no material is unknown.*/
+    virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const 
+      throw (UnknownParameterException, std::exception ) ;
+
+     /** Names of registered materials.
+     */ 
+    virtual const std::vector<std::string>  & getMaterialNames() const ;
+
+    
+    /** Register the SimpleMaterial with  SimpleMaterial::getName() - throws Exception if a material of the given name has allready been added.
+     *  This takes ownership of the SimpleMaterial object.
+     */
+    virtual void  registerSimpleMaterial( const SimpleMaterial* material) throw(Exception , std::exception ) ;
+ 
+
     virtual void setDetectorName(const std::string& name) { _detectorName = name ; }
 
     /** Set the GearParameters for the given key - overwrites any 
@@ -323,8 +339,14 @@ namespace gear {
     BField* _bField ;
     std::string _detectorName ;
 
+    typedef std::map< std::string,const SimpleMaterial* >  MatMap ;
+    MatMap _matMap ;
+
     mutable StringVec _keys ;
 
+    mutable StringVec _matNames ;
+    
+   
     /** function to copy all internal variables, incl. the objects
      *  pointed to and owned by the GearMgr.
      *  Used by constructor and assigment operator to avoid code duplication

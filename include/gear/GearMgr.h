@@ -18,6 +18,7 @@ class SiPlanesParameters;
 class TPCParameters;
 class ZPlanarParameters ;
 class FTDParameters ;
+class SimpleMaterial ;
 
 /** Abstract interface for a manager class that returns the Gear classes for the 
  *  relevant subdetectors.
@@ -26,14 +27,14 @@ class FTDParameters ;
  * @author F. Gaede, DESY
  * @version $Id$
  */
-class GearMgr {
-
-public: 
+  class GearMgr {
+    
+  public: 
     /// Destructor.
     virtual ~GearMgr() { /* nop */; }
-
-   /** The unique detector name - typically the model name used in the simulation program
-    */
+    
+    /** The unique detector name - typically the model name used in the simulation program
+     */
     virtual const std::string & getDetectorName() const = 0;
 
     /** Get named parameters for key. This can be used to describe a subdetector that is not 
@@ -173,6 +174,16 @@ public:
      */ 
     virtual const std::vector<std::string>  & getGearParameterKeys() const = 0;
 
+    
+    /** Return the SimpleMaterial for the given name throws UnknownParameterException if no material is unknown.*/
+    virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const throw (UnknownParameterException, std::exception )  =0 ;
+    
+
+    /** Names of registered materials.
+     */ 
+    virtual const std::vector<std::string>  & getMaterialNames() const = 0;
+
+
     /** Set detector name.
      */
     virtual void setDetectorName(const std::string & name) = 0;
@@ -265,6 +276,12 @@ public:
     /** Set the distance properties object.
      */
     virtual void setDistanceProperties(GearDistanceProperties * distanceProperties) = 0;
-}; // class
+
+    /** Register the SimpleMaterial with  SimpleMaterial::getName() - throws Exception if a material of the given name has allready been added.
+     *  This takes ownership of the SimpleMaterial object.
+     */
+    virtual void registerSimpleMaterial( const SimpleMaterial* material) throw( Exception , std::exception ) =0 ;
+    
+  }; // class
 } // namespace gear
 #endif /* ifndef GEAR_GEARMGR_H */

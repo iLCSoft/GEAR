@@ -12,7 +12,7 @@ namespace gear {
   /** XML handler for ZPlanarParameters.
    *
    * @author R. Lippe, DESY
-   * @version $Id $
+   * @version $Id$
    */
   class ZPlanarParametersXML : public XMLHandler {
 
