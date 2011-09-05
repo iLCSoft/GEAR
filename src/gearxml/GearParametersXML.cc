@@ -7,6 +7,7 @@
 #include <vector>
 #include <algorithm>
 #include <sstream>
+#include <iomanip>
 
 
 namespace gear {
@@ -160,6 +161,7 @@ namespace gear {
 	  str << " " ; 
 	str << vec[j] ;
       }      
+
       param.SetAttribute( "value", str.str() ) ;
       
       xmlElement->InsertEndChild( param ) ;
@@ -175,14 +177,18 @@ namespace gear {
       param.SetAttribute( "type", "DoubleVec" ) ;
 
       DoubleVec vec = gearParams->getDoubleVals( doubleVecKeys[i]  ) ;
+
       std::stringstream str ;
+      // maintain the same level of precision as for single double values
+      str << std::scientific << std::setprecision(9) ;
       for(unsigned int j=0 ; j < vec.size() ; ++j ){
 	if( j!=0 ) 
 	  str << " " ; 
 	str << vec[j] ;
       }      
+
       param.SetAttribute( "value", str.str() ) ;
-      
+
       xmlElement->InsertEndChild( param ) ;
       
     }
