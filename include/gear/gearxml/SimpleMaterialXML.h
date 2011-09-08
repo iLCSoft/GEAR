@@ -17,6 +17,8 @@ namespace gear {
   class SimpleMaterialXML {
     
   public:
+
+    virtual ~SimpleMaterialXML() { /*nop*/ ;} ;
     
     /** Creates an XML node for the given material
      */

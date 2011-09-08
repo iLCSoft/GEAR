@@ -48,7 +48,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 			int    sensorType ; // The sensor type of the disk: pixel or strips
 			//double pitch;
 			//double sensoroffset;
-			double phi ;        // Angle defining the half-width of a petal
+                        double petalOpenningAngle ; // openning angle of the petal
 			double phi0 ;       // azimuthal angle  of the first petal
 			double alpha;       // Angle of the rotation of the petal in 
 			                    // its own plane (turbine-blade like)
@@ -83,7 +83,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 
 		/** Angular half-width of the petals of a layer
 		  */
-		virtual double getPhiHalfDistance(int layerIndex) const { return _lVec.at( layerIndex ).phi  ; }
+		virtual double getPhiHalfDistance(int layerIndex) const { return _lVec.at( layerIndex ).petalOpenningAngle  ; }
 		
 		/** Angular distance of a petal 
 		 */
@@ -165,7 +165,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	
 		/** Add a new layer at the given position
 		 */
-		virtual void addLayer(int nPetals, int sensorType, double phi, double phi0, double alpha, 
+		virtual void addLayer(int nPetals, int sensorType, double phi0, double alpha, 
 				      // common for support and sensitive
 				      double zoffset,
 				      // support

@@ -53,7 +53,6 @@ namespace gear
 					strType = "Unknown" ;
 			}
 			layer.SetAttribute( "sensorType", strType );
-			layer.SetDoubleAttribute( "phi" , ftdLayers.getPhiHalfDistance(i) ) ;
 			layer.SetDoubleAttribute( "phi0" , ftdLayers.getPhi0(i) ) ;
 			layer.SetDoubleAttribute( "alpha" , ftdLayers.getAlpha(i) ) ;
 			layer.SetDoubleAttribute("zoffset", ftdLayers.getZoffset(i) );
@@ -120,7 +119,6 @@ namespace gear
 				throw Exception( "FTDParametersXML::fromXML technology of sensorType not known: " + type + 
 						" - Needs to be 'PIXEL' or 'STRIP'." ) ;
 			}
-			double phi      = atof( getXMLAttribute( xmlLayer , "phi"     ).c_str() ); 
 			double phi0      = atof( getXMLAttribute( xmlLayer , "phi0"     ).c_str() ); 
 			double alpha    = atof( getXMLAttribute( xmlLayer , "alpha"     ).c_str() ); 
 			double zoffset  = atof( getXMLAttribute( xmlLayer , "zoffset"     ).c_str() ); 
@@ -144,7 +142,7 @@ namespace gear
 			double sRinner    = atof( getXMLAttribute( xmlSen , "rInner"    ).c_str() ) ;
 			double sRadLen = atof( getXMLAttribute( xmlSen , "radLength" ).c_str() ) ;
 			
-			ftdParam->addLayer( nPetals, sensorType, phi, phi0 ,alpha,zoffset,
+			ftdParam->addLayer( nPetals, sensorType, phi0 ,alpha,zoffset,
 					lzposition,lRinner, lThick, lLengthMin, lLengthMax, lWidth, lRadLen,
 					szposition,sRinner, sThick, sLengthMin, sLengthMax, sWidth, sRadLen ) ;
 		} // end loop

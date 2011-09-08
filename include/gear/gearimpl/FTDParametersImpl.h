@@ -65,7 +65,7 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 		 *                   sensitive area (sensitiveRadLength) in mm                         
 		 *  		     
 		 */
-		virtual void addLayer(int nPetals, int sensorType, double phi, double phi0, double alpha, 
+		virtual void addLayer(int nPetals, int sensorType, double phi0, double alpha, 
 				double zoffset,
 				double supportZposition,
 				double supportRinner, double supportThickness,
@@ -76,7 +76,7 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 				double sensitiveLengthMin, double sensitiveLengthMax,
 				double sensitiveWidth, double sensitiveRadLength )
 		{
-			_layer.addLayer( nPetals, sensorType, phi, phi0, alpha, 
+			_layer.addLayer( nPetals, sensorType, phi0, alpha, 
 					zoffset,
 					supportZposition,
 					supportRinner,supportThickness, 

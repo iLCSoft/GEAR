@@ -3,7 +3,7 @@
 
 namespace gear
 {
-void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi, double phi0, double alpha, 
+void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi0, double alpha, 
 		// common for support and sensitive
 		double zoffset,
 		// support
@@ -22,8 +22,8 @@ void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi, doubl
 	Layer lL, sL ; 
 	
 	lL.nPetals  = nPetals ;
-	lL.sensorType= sensorType;
-	lL.phi       = phi ; 
+	lL.sensorType = sensorType;
+	lL.petalOpenningAngle = atan( ( supportLengthMax - supportLengthMin ) / ( 2.0 * supportWidth ) ) ;
 	lL.phi0      = phi0 ; 
 	lL.alpha     = alpha;
 	lL.zposition = supportZposlayer ;
@@ -37,7 +37,7 @@ void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi, doubl
 
 	sL.nPetals  = nPetals ;
 	sL.sensorType= sensorType;
-	sL.phi       = phi ; 
+	sL.petalOpenningAngle = atan( ( supportLengthMax - supportLengthMin ) / ( 2.0 * supportWidth ) ) ;
 	sL.phi0      = phi0 ; 
 	sL.alpha     = alpha;
 	sL.zposition = sensitiveZposlayer;
