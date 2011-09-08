@@ -7,113 +7,118 @@
 namespace gear
 {
 
-FTDParametersImpl::FTDParametersImpl
-	( double shellInnerRadiusMin, double shellInnerRadiusMax,
-	  double shellOuterRadius,  double shellHalfLength, 
-	  double shellRadLength ) :
-		_shellInnerRadiusMin( shellInnerRadiusMin ) ,
-		_shellInnerRadiusMax( shellInnerRadiusMax ) ,
-		_shellOuterRadius( shellOuterRadius ) ,
-		_shellHalfLength( shellHalfLength ) ,
-		_shellRadLength( shellRadLength ) 
-{
-}
+// FTDParametersImpl::FTDParametersImpl
+// 	( double shellInnerRadiusMin, double shellInnerRadiusMax,
+// 	  double shellOuterRadius,  double shellHalfLength, 
+// 	  double shellRadLength ) :
+// 		_shellInnerRadiusMin( shellInnerRadiusMin ) ,
+// 		_shellInnerRadiusMax( shellInnerRadiusMax ) ,
+// 		_shellOuterRadius( shellOuterRadius ) ,
+// 		_shellHalfLength( shellHalfLength ) ,
+// 		_shellRadLength( shellRadLength ) 
+// {
+// }
 
 int FTDParametersImpl::getLayerIndex( const Vector3D & p ) const
 {
-	// very first check for quick calculation
-	if( fabs( p[2] ) >  _shellHalfLength )
-	{
-		// Outside shell
-		return -1;
-	}
+	//fg: this needs revisiting - if needed at all (changed definition of z position)
 
-    	// get radius of point in XY-plane
-	double pRadius = sqrt( p[0]*p[0] + p[1]*p[1] ) ;
+	// // // very first check for quick calculation
+	// // if( fabs( p[2] ) >  _shellHalfLength )
+	// // {
+	// // 	// Outside shell
+	// // 	return -1;
+	// // }
 
-	//get absolute z
-	double zabs = fabs(p[2]);
+    	// // get radius of point in XY-plane
+	// double pRadius = sqrt( p[0]*p[0] + p[1]*p[1] ) ;
+
+	// //get absolute z
+	// double zabs = fabs(p[2]);
 	
-	for( int possibleLayer = 0 ; possibleLayer < _layer.getNLayers() ; possibleLayer++ ) 
-	{
-		// first some quick checks to reduce cpu time
-		// check if is ouside shell the radius
-		if( pRadius > getShellOuterRadius() )
-		{
-			continue;
-		}
-		else if( pRadius < getShellInnerRadiusMin() )
-		{
-			continue;
-		}
-		// check if is inside this disk (z), including sensitive parts
-		double zmax = fabs(_layer.getZposition(possibleLayer))+_layer.getLadderThickness(possibleLayer)/2.0
-			     +_layer.getSensitiveThickness(possibleLayer);
-		double zmin = fabs(_layer.getZposition(possibleLayer))-_layer.getLadderThickness(possibleLayer)/2.0
-			     -_layer.getSensitiveThickness(possibleLayer);
+	// for( int possibleLayer = 0 ; possibleLayer < _layer.getNLayers() ; possibleLayer++ ) 
+	// {
+	// 	// // first some quick checks to reduce cpu time
+	// 	// // check if is ouside shell the radius
+	// 	// if( pRadius > getShellOuterRadius() )
+	// 	// {
+	// 	// 	continue;
+	// 	// }
+	// 	// else if( pRadius < getShellInnerRadiusMin() )
+	// 	// {
+	// 	// 	continue;
+	// 	// }
+	// 	// check if is inside this disk (z), including sensitive parts
+	// 	double zmax = fabs(_layer.getZposition(possibleLayer))+_layer.getSupportThickness(possibleLayer)/2.0
+	// 		     +_layer.getSensitiveThickness(possibleLayer);
+	// 	double zmin = fabs(_layer.getZposition(possibleLayer))-_layer.getSupportThickness(possibleLayer)/2.0
+	// 		     -_layer.getSensitiveThickness(possibleLayer);
 
-		if( zabs > zmax || zabs < zmin )
-		{
-			continue;
-		}
-		// If we are here, the point correspond to this layer...
-		return possibleLayer;
-	}
+	// 	if( zabs > zmax || zabs < zmin )
+	// 	{
+	// 		continue;
+	// 	}
+	// 	// If we are here, the point correspond to this layer...
+	// 	return possibleLayer;
+	// }
 	return -1;
 }
 
 // returns the index of the sensitive layers 1 facing the IP, 2 back the IP
 int FTDParametersImpl::getSensitiveIndex( const Vector3D & p ) const
 {
-	int layer = getLayerIndex( p );
-	if( layer == -1)
-	{
-		return -1;
-	}
-	int petal = getPetalIndex(p,true);
-	if(petal == -1)
-	{
-		return -1;
-	}
-	// if are here, means that the point is inside the volume of the petal+sensor
-	// but still don't know if is inside the sensor			
-	double zmax = fabs(_layer.getZposition(layer))+_layer.getLadderThickness(layer)/2.0
-		           +_layer.getSensitiveThickness(layer);
-	double zmin = fabs(_layer.getZposition(layer))-_layer.getLadderThickness(layer)/2.0
-		           -_layer.getSensitiveThickness(layer); 
+	//fg: this needs revisiting - if needed at all (changed definition of z position)
+  return -1 ;
 
-	//double zmaxbackIP = zmax;
-	double zminbackIP = zmax-_layer.getSensitiveThickness(layer);
-	double zmaxfaceIP = zmin+_layer.getSensitiveThickness(layer);
-	//double zminfaceIP = zmin;
-	// Already known the point is between zmaxfaceIP and zminbackIP,
-	// checking the others
-	float zabs = fabs(p[2]);
+	// int layer = getLayerIndex( p );
+	// if( layer == -1)
+	// {
+	// 	return -1;
+	// }
+	// int petal = getPetalIndex(p,true);
+	// if(petal == -1)
+	// {
+	// 	return -1;
+	// }
+	// // if are here, means that the point is inside the volume of the petal+sensor
+	// // but still don't know if is inside the sensor			
+	// double zmax = fabs(_layer.getZposition(layer))+_layer.getSupportThickness(layer)/2.0
+	// 	           +_layer.getSensitiveThickness(layer);
+	// double zmin = fabs(_layer.getZposition(layer))-_layer.getSupportThickness(layer)/2.0
+	// 	           -_layer.getSensitiveThickness(layer); 
 
-	if( zabs < zminbackIP && zabs > zmaxfaceIP )
-	{
-		// Is between the sensitives (inside the petal)
-		return -1;
-	}
+	// //double zmaxbackIP = zmax;
+	// double zminbackIP = zmax-_layer.getSensitiveThickness(layer);
+	// double zmaxfaceIP = zmin+_layer.getSensitiveThickness(layer);
+	// //double zminfaceIP = zmin;
+	// // Already known the point is between zmaxfaceIP and zminbackIP,
+	// // checking the others
+	// float zabs = fabs(p[2]);
+
+	// if( zabs < zminbackIP && zabs > zmaxfaceIP )
+	// {
+	// 	// Is between the sensitives (inside the petal)
+	// 	return -1;
+	// }
 	
-	if( zabs <= zmaxfaceIP )
-	{
-		return FACE;
-	}
-	else if( zabs >= zminbackIP ) 
-	{
-		return BACK;
-	}
-	else
-	{
-		std::cout << "********************************************************" << std::endl;
-		std::cout << "***********     WARNING    WARNING   *******************" << std::endl;
-		std::cout << "********************************************************" << std::endl;
-		std::cout << "Unexpected ERROR! Contact with the maintainer of this code. " << std::endl;
-		std::cout <<" This would not have to be happened" << std::endl;
-		std::cout << "********************************************************" << std::endl;
-		return -1;
-	}
+	// if( zabs <= zmaxfaceIP )
+	// {
+	// 	return FACE;
+	// }
+	// else if( zabs >= zminbackIP ) 
+	// {
+	// 	return BACK;
+	// }
+	// else
+	// {
+	// 	std::cout << "********************************************************" << std::endl;
+	// 	std::cout << "***********     WARNING    WARNING   *******************" << std::endl;
+	// 	std::cout << "********************************************************" << std::endl;
+	// 	std::cout << "Unexpected ERROR! Contact with the maintainer of this code. " << std::endl;
+	// 	std::cout <<" This would not have to be happened" << std::endl;
+	// 	std::cout << "********************************************************" << std::endl;
+	// 	return -1;
+	// }
 
 } 
 
@@ -135,7 +140,7 @@ int FTDParametersImpl::getPetalIndex( const Vector3D & p, const bool & sensitive
 
 	// Localize the petal:
 	int foundpetal = -1;
-	for(int petal=0; petal < _layer.getNLadders(layer); petal++)
+	for(int petal=0; petal < _layer.getNPetals(layer); petal++)
 	{
 		const double lowpetalphi = _layer.getStartPhi(layer, petal, sensitive);
 		const double highpetalphi = _layer.getEndPhi(layer, petal, sensitive);
@@ -155,7 +160,7 @@ int FTDParametersImpl::getPetalIndex( const Vector3D & p, const bool & sensitive
 	double rMax = _layer.getMaxRadius(layer,sensitive);
 	if( ! sensitive )
 	{
-		rMin = _layer.getLadderRinner(layer);
+		rMin = _layer.getSupportRinner(layer);
 	}
 	else
 	{
@@ -172,7 +177,7 @@ int FTDParametersImpl::getPetalIndex( const Vector3D & p, const bool & sensitive
 
 
 
-// returns if a point is in a ladder (sensitive)
+// returns if a point is in a petal (support or sensitive)
 bool FTDParametersImpl::isPointInFTD(const Vector3D & p, const bool & sensitive) const 
 {
 	
@@ -183,7 +188,7 @@ bool FTDParametersImpl::isPointInFTD(const Vector3D & p, const bool & sensitive)
 	}
 	else
 	{
-		index = getLadderIndex(p);
+		index = getPetalIndex(p);
 	}
 	
 	bool isIn = false;

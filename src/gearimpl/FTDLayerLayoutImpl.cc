@@ -3,15 +3,17 @@
 
 namespace gear
 {
-void FTDLayerLayoutImpl::addLayer(int nLadders, int sensorType, double phi, double alpha, 
-		// common for ladder and sensitive
-		double zposlayer, double zoffset,
-		// ladder
-		double ladderRinner, double ladderThickness, 
-		double ladderLengthMin, double ladderLengthMax,
-		double ladderWidth, 
-		double ladderRadLength,
+void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi, double phi0, double alpha, 
+		// common for support and sensitive
+		double zoffset,
+		// support
+		double supportZposlayer, 
+		double supportRinner, double supportThickness, 
+		double supportLengthMin, double supportLengthMax,
+		double supportWidth, 
+		double supportRadLength,
 		// sensitive
+		double sensitiveZposlayer, 
 		double sensitiveRinner,	double sensitiveThickness,
 		double sensitiveLengthMin, double sensitiveLengthMax,
 		double sensitiveWidth, 
@@ -19,24 +21,26 @@ void FTDLayerLayoutImpl::addLayer(int nLadders, int sensorType, double phi, doub
 {
 	Layer lL, sL ; 
 	
-	lL.nLadders  = nLadders ;
+	lL.nPetals  = nPetals ;
 	lL.sensorType= sensorType;
 	lL.phi       = phi ; 
+	lL.phi0      = phi0 ; 
 	lL.alpha     = alpha;
-	lL.zposition = zposlayer;
+	lL.zposition = supportZposlayer ;
 	lL.zoffset   = zoffset;
-	lL.rInner    = ladderRinner;
-	lL.lengthMin = ladderLengthMin; 
-	lL.lengthMax = ladderLengthMax; 
-	lL.thickness = ladderThickness;
-	lL.width     = ladderWidth ;
-	lL.radLength = ladderRadLength ;
+	lL.rInner    = supportRinner;
+	lL.lengthMin = supportLengthMin; 
+	lL.lengthMax = supportLengthMax; 
+	lL.thickness = supportThickness;
+	lL.width     = supportWidth ;
+	lL.radLength = supportRadLength ;
 
-	sL.nLadders  = nLadders ;
+	sL.nPetals  = nPetals ;
 	sL.sensorType= sensorType;
 	sL.phi       = phi ; 
+	sL.phi0      = phi0 ; 
 	sL.alpha     = alpha;
-	sL.zposition = zposlayer;
+	sL.zposition = sensitiveZposlayer;
 	sL.zoffset   = zoffset;
 	sL.rInner    = sensitiveRinner;
 	sL.thickness = sensitiveThickness;
@@ -58,7 +62,7 @@ void FTDLayerLayoutImpl::addLayer(int nLadders, int sensorType, double phi, doub
 
 // Returns the phi correspondent to the point where is defined the 
 // reference frame
-double FTDLayerLayoutImpl::getPhiStructure(const int & layerIndex, const int & ladderIndex, const bool & sensitive) const
+double FTDLayerLayoutImpl::getPhiStructure(const int & layerIndex, const int & petalIndex, const bool & sensitive) const
 {
 	Layer l;
 	if( ! sensitive)
@@ -93,8 +97,8 @@ double FTDLayerLayoutImpl::getMaxRadius(const int & layerIndex, const bool & sen
 }
 
 
-// returns starting phi for first ladder in layer (on side to IP)  (No le veo utilidad)
-double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &ladderIndex,const bool &sensitive ) const 
+// returns starting phi for first petal in layer (on side to IP)  (No le veo utilidad)
+double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &petalIndex,const bool &sensitive ) const 
 {
 	Layer l ;
 	if ( !sensitive ) 
@@ -105,16 +109,16 @@ double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &ladderIn
 		l = _sVec.at( layerIndex ) ;
 	}
 
-	const double endphi = getPhiStructure(layerIndex,ladderIndex,sensitive);
+	const double endphi = getPhiStructure(layerIndex,petalIndex,sensitive);
 		
-	return endphi-2.0*l.phi;
+	return endphi-2.0*l.phi0 ;
 }
 
-// returns ending phi for first ladder in layer (on side to IP). It corresponds with
+// returns ending phi for first petal in layer (on side to IP). It corresponds with
 // the phi where is defined the frame
-double FTDLayerLayoutImpl::getEndPhi( const int & layerIndex , const int & ladderIndex, const bool & sensitive ) const 
+double FTDLayerLayoutImpl::getEndPhi( const int & layerIndex , const int & petalIndex, const bool & sensitive ) const 
 {
-	return getPhiStructure(layerIndex,ladderIndex,sensitive);
+	return getPhiStructure(layerIndex,petalIndex,sensitive);
 }
 
 
@@ -145,7 +149,7 @@ double FTDLayerLayoutImpl::getThicknessForAngle(const int & layerIndex,const dou
 
 	return  angularThickness;
 	
-	// first check if layer is completely out of ladder
+	// first check if layer is completely out of petal
 /*    if( phi < getStartInnerPhi( layerIndex , sensitive ) || phi > getEndInnerPhi( layerIndex, sensitive ) ) {
       return -1 ;
     }
@@ -156,7 +160,7 @@ double FTDLayerLayoutImpl::getThicknessForAngle(const int & layerIndex,const dou
     }*/
 }    
       
-// Return the reference frame defining a ladder (sensitive)
+// Return the reference frame defining a petal  (sensitive)
 std::vector<vframe> FTDLayerLayoutImpl::getframe( const Layer & l )
 {
 	// The e1 corresponds directly with x-axis

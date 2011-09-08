@@ -19,10 +19,9 @@ class FTDLayerLayout;
  *  assume 1 sensitive layer per face; in the current implementation there are two).
  *  The sensitive volumes can be placed relative to the (insensitive) ladders.
  *  @see addLayer .</p>
- *  <p>The shell is described by a cone for the inner part; inner radius min and inner radius max;
- *     a cylinder defined by a its radius is describing the shell farest from the Z-axis;
- *     and it's half length in z.</p>
- *
+ *  NB: The FTDParameters describe the one half of the detector at the positive z-axis and the other half 
+ *  of the detector is just a rotation about pi around the y-axis.<br>
+
  *  @author J. Duarte; IFCA (based from VXDParametersImpl)
  *  @version $Id: 
  */
@@ -43,40 +42,8 @@ public:
     /** The layer layout in the Vertex */
     virtual const FTDLayerLayout& getFTDLayerLayout() const  = 0;
     
-    /** The half length (z) of the support shell in mm.
-     */
-    virtual double getShellHalfLength() const  = 0;
-   
-    /** The inner minimum radius of the cone support shell in mm.
-    */
-    virtual double getShellInnerRadiusMin() const = 0;
-	
-    /** The inner maximum radius of the cone support shell in mm.
-    */
-    virtual double getShellInnerRadiusMax() const = 0;
-    
-    /** The outer radius of the support shell in mm.
-    */
-    virtual double getShellOuterRadius() const = 0;
-    
-    /** The radiation length in the support shell
-    */
-    virtual double getShellRadLength() const = 0;
-         
-    /** returns the layerIndex which correspond to the layer where the point
-    * is. If the point is not inside any layer returns -1
-    */
-    virtual int getLayerIndex( const Vector3D & p ) const = 0;
-    
-    /** returns the ladder Index which correspond to the layer where the point
-    * is. If the point is not inside any layer returns -1
-    */
-    virtual int getLadderIndex( const Vector3D & p ) const = 0;
-    
-    /** returns the layerIndex which correspond to the layer where the point
-    * is. If the point is not inside any layer returns -1
-    */
-    virtual int getSensitiveIndex( const Vector3D & p ) const = 0;
+  // here we coiuld add some navigation functions if desirable ....
+
 };
 
 }   // namespace gear

@@ -9,9 +9,9 @@
 namespace gear 
 {
 	/** Abstract description of layers in a FTD detector. <br>
-	 *  This assumes a symmetric layout of ladders (petals), arranged in layers (disks) 
+	 *  This assumes a symmetric layout of supports (petals), arranged in layers (disks) 
 	 *  placed at z-position.  <br>
-	 *  The sensitive area is assumed to be inside the ladders but can be positioned independently.
+	 *  The sensitive area is assumed to be inside the petals but can be positioned independently.
 	 * 
 	 * @author J. Duarte Campderros, IFCA (Based at VXDLayerLayout)
 	 * @version $Id: 
@@ -44,11 +44,12 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	        //        
 		struct Layer 
 		{
-			int    nLadders ;   // Number of petals
+			int    nPetals ;   // Number of petals
 			int    sensorType ; // The sensor type of the disk: pixel or strips
 			//double pitch;
 			//double sensoroffset;
 			double phi ;        // Angle defining the half-width of a petal
+			double phi0 ;       // azimuthal angle  of the first petal
 			double alpha;       // Angle of the rotation of the petal in 
 			                    // its own plane (turbine-blade like)
 			double zposition;   // Z-position (centered) of the layer
@@ -72,9 +73,9 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		/** The total number of layers. */
 		virtual int getNLayers() const { return _lVec.size() ; }
 		
-		/** The number of ladders in the layer layerIndex - layer indexing starts at 0
+		/** The number of petals in the layer layerIndex - layer indexing starts at 0
 		 *  for the layer closest to IP.  */
-		virtual int getNLadders(int layerIndex) const { return _lVec.at( layerIndex ).nLadders  ; }
+		virtual int getNPetals(int layerIndex) const { return _lVec.at( layerIndex ).nPetals  ; }
 		
 		/** The sensor type of the disk: pixel of micro-strip
 		  */
@@ -86,50 +87,55 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		
 		/** Angular distance of a petal 
 		 */
-		virtual double getPhi(const int & layerIndex) const { return _lVec.at(layerIndex).phi ; }
+		virtual double getPhi0(const int & layerIndex) const { return _lVec.at(layerIndex).phi0 ; }
 		
 		/** Angle of rotation in the own plane of a petal
 		 */
 		virtual double getAlpha(int layerIndex) const { return _lVec.at( layerIndex ).alpha  ; }
 
-		/** The z-offset of the ladder structure
+		/** The z-offset of the support structure
 		  */
 		virtual double getZoffset(const int & layerIndex) const { return _lVec.at(layerIndex).zoffset ; }
 	
-		/** The position of the ladder in z direction in mm for ladders in layer layerIndex -
+		/** The position of the support in z direction in mm for petals in layer layerIndex -
 		 *  layer indexing starting at 0 from the layer closest to IP.
 		 */
-		virtual double getZposition(int layerIndex) const { return _lVec.at( layerIndex ).zposition  ; }
+		virtual double getSupportZposition(int layerIndex) const { return _lVec.at( layerIndex ).zposition  ; }
 		
-		/** The R-min of the ladder in the XY-plane in mm for ladders
+		/** The R-min of the petal in the XY-plane in mm for supports
 		 */
-		virtual double getLadderRinner(int layerIndex) const { return _lVec.at( layerIndex ).rInner  ; }
+		virtual double getSupportRinner(int layerIndex) const { return _lVec.at( layerIndex ).rInner  ; }
 		
-		/** The radiation length in the support structure ladders of layer layerIndex - layer indexing starts at 0
+		/** The radiation length in the support structure supports of layer layerIndex - layer indexing starts at 0
 		 *  for the layer closest to IP.
 		 */
-		virtual double getLadderRadLength(int layerIndex) const { return _lVec.at( layerIndex ).radLength  ; }
+		virtual double getSupportRadLength(int layerIndex) const { return _lVec.at( layerIndex ).radLength  ; }
 	  
-		/** The thickness in mm of the ladders in layerIndex - layer indexing starting at 0
+		/** The thickness in mm of the supports in layerIndex - layer indexing starting at 0
 		 *  for the layer closest to IP.
 		 */
-		virtual double getLadderThickness(int layerIndex) const { return _lVec.at( layerIndex ).thickness  ; }
+		virtual double getSupportThickness(int layerIndex) const { return _lVec.at( layerIndex ).thickness  ; }
 		
 		/** The length (x-direction) of the smallest edge of the trapezoid (petal) 
 		 */
-		virtual double getLadderLengthMin(int layerIndex) const { return  _lVec.at( layerIndex ).lengthMin  ; }
+		virtual double getSupportLengthMin(int layerIndex) const { return  _lVec.at( layerIndex ).lengthMin  ; }
 		
 		/** The length (x-direction) of the largest edge of the trapezoid (petal) 
 		 */
-		virtual double getLadderLengthMax(int layerIndex) const { return  _lVec.at( layerIndex ).lengthMax  ; }
+		virtual double getSupportLengthMax(int layerIndex) const { return  _lVec.at( layerIndex ).lengthMax  ; }
 	
-	 	/** The width of the ladder in layer in mm for ladders in layer layerIndex -
+	 	/** The width of the support in layer in mm for supports in layer layerIndex -
 		 *  layer indexing starting at 0 from the layer closest to IP.
 		 */
-		virtual double getLadderWidth(int layerIndex) const { return _lVec.at( layerIndex ).width  ; }
+		virtual double getSupportWidth(int layerIndex) const { return _lVec.at( layerIndex ).width  ; }
 	
 
-		/** The R-min of the ladder in the XY-plane in mm for ladders
+		/** The position of the sensitive in z direction in mm for petals in layer layerIndex -
+		 *  layer indexing starting at 0 from the layer closest to IP.
+		 */
+		virtual double getSensitiveZposition(int layerIndex) const { return _sVec.at( layerIndex ).zposition  ; }
+
+		/** The R-min of the support in the XY-plane in mm for supports
 		 */
 		virtual double getSensitiveRinner(int layerIndex) const { return _sVec.at( layerIndex ).rInner  ; }
 
@@ -138,57 +144,61 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		 */
 		virtual double getSensitiveRadLength(int layerIndex) const { return _sVec.at( layerIndex ).radLength  ; }
 		
-		/** The thickness in mm of the sensitive area in ladders in layer layerIndex.
+		/** The thickness in mm of the sensitive area in supports in layer layerIndex.
 		 */
 		virtual double getSensitiveThickness(int layerIndex) const { return _sVec.at( layerIndex ).thickness  ; }
 		
-		/** Same as getLadderLengthMin() except for the sensitive part of the ladder.
-		 * @see getLadderLengthMin
+		/** Same as getSupportLengthMin() except for the sensitive part of the support.
+		 * @see getSupportLengthMin
 		 */
 		virtual double getSensitiveLengthMin(int layerIndex) const { return _sVec.at( layerIndex ).lengthMin  ; }
 		
-		/** Same as getLadderLengthMax() except for the sensitive part of the ladder.
-		 * @see getLadderLengthMax
+		/** Same as getSupportLengthMax() except for the sensitive part of the support.
+		 * @see getSupportLengthMax
 		 */
 		virtual double getSensitiveLengthMax(int layerIndex) const { return _sVec.at( layerIndex ).lengthMax  ; }
 		
-		/** The width of the sensitive area in ladders in layer layerIndex in mm.
+		/** The width of the sensitive area in supports in layer layerIndex in mm.
 		 */
 		virtual double getSensitiveWidth(int layerIndex) const { return _sVec.at( layerIndex ).width  ; }
 		
 	
 		/** Add a new layer at the given position
 		 */
-		virtual void addLayer(int nLadders, int sensorType, double phi, double alpha, 
-				double zposition, double zoffset,
-				// ladder
-				double ladderRinner,double ladderThickness,
-				double ladderLengthMin, double ladderLengthMax,
-				double ladderWidth, 
-				double ladderRadLength,
-				// sensitive
-				double sensitiveRinner,double sensitiveThickness,
-				double sensitiveLengthMin, double sensitiveLengthMax,
-				double sensitiveWidth, 
-				double sensitiveRadLength);
+		virtual void addLayer(int nPetals, int sensorType, double phi, double phi0, double alpha, 
+				      // common for support and sensitive
+				      double zoffset,
+				      // support
+				      double supportZposlayer, 
+				      double supportRinner, double supportThickness, 
+				      double supportLengthMin, double supportLengthMax,
+				      double supportWidth, 
+				      double supportRadLength,
+				      // sensitive
+				      double sensitiveZposlayer, 
+				      double sensitiveRinner,	double sensitiveThickness,
+				      double sensitiveLengthMin, double sensitiveLengthMax,
+				      double sensitiveWidth, 
+				      double sensitiveRadLength ) ;
+
 	
 		/** Azimuthal angle of the vector defined by the Z-axis to the j-petal x-positive, y-positive
 		 *  (edge side).
-		 *  phi smallest corresponds to the first ladder's closests to the positive X-axis.
+		 *  phi smallest corresponds to the first petal's closests to the positive X-axis.
 		 *  The layerIndex starts at 0 for the layer closest to IP.
 		 */
-		virtual double getPhiStructure(const int & layerIndex, const int & ladderIndex, const bool & sensitive) const;
+		virtual double getPhiStructure(const int & layerIndex, const int & petalIndex, const bool & sensitive) const;
 
 		/** returns maximum radius for a given layer   */
 		virtual double getMaxRadius(const int & layerIndex,const bool & sensitive=false ) const ; 
 		
-		/** returns starting phi for first ladder in layer layerIndex (on side facing IP)
+		/** returns starting phi for first petal in layer layerIndex (on side facing IP)
 		 */
-		virtual double getStartPhi(const int & layerIndex, const int & ladderInd,const bool &sensitive=false ) const ;
+		virtual double getStartPhi(const int & layerIndex, const int & petalInd,const bool &sensitive=false ) const ;
 	
-		/** returns ending phi for first ladder in layer layerIndex (on side facing IP)
+		/** returns ending phi for first petal in layer layerIndex (on side facing IP)
 		 */
-		virtual double getEndPhi(const int & layerIndex,const int & ladderInd, const bool & sensitive=false ) const ;
+		virtual double getEndPhi(const int & layerIndex,const int & petalInd, const bool & sensitive=false ) const ;
 	
 		/** returns thickness as viewed under the incidence angles phi and theta in 
 		 *  layer layerIndex.
@@ -200,7 +210,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	
 	
 	protected:
-		// Ladder
+		// Support
 		LayerVec _lVec ;
 		// Sensitive
 		LayerVec _sVec ;

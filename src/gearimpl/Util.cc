@@ -545,10 +545,6 @@ namespace gear{
 	  
 	  const FTDLayerLayout & l = p.getFTDLayerLayout() ;
 	  
-	  s << " Shell innerRMin : " << p.getShellInnerRadiusMin() << " innerRMax: " << p.getShellInnerRadiusMax()
-		  << " outerR : " << p.getShellOuterRadius() << std::endl 
-		  << "       length : " << p.getShellHalfLength()  ;
-	  
 	  
 	  // layers
 	  
@@ -563,7 +559,7 @@ namespace gear{
 	  buffer = "  |------------------------------------------------------------------------------------|\n" ;
 	  s << buffer ;
 	  
-	  buffer = "  |      |         ladder:                      |       sensitive part:                |\n" ;
+	  buffer = "  |      |         support:                      |       sensitive part:                |\n" ;
 	  s << buffer ;
 	  
 	  buffer = "  |  #   |    x    |    X    |    y    |   t    |    x    |    X    |    y    |    t   | \n" ;
@@ -576,11 +572,11 @@ namespace gear{
 	  {
 		  char buffer1[1024] ;
 		  sprintf(buffer1,"  | %3d  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |  %4.2f  |\n"
-				  , l.getNLadders(i) 
-				  , l.getLadderLengthMin(i) 
-				  , l.getLadderLengthMax(i)
-				  , l.getLadderWidth(i)
-				  , l.getLadderThickness(i)
+				  , l.getNPetals(i) 
+				  , l.getSupportLengthMin(i) 
+				  , l.getSupportLengthMax(i)
+				  , l.getSupportWidth(i)
+				  , l.getSupportThickness(i)
 				  , l.getSensitiveLengthMin(i)
 				  , l.getSensitiveLengthMax(i) 
 				  , l.getSensitiveWidth(i) 

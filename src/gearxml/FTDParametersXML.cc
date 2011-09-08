@@ -30,32 +30,16 @@ namespace gear
 		TiXmlElement det("detector") ;
 		
 		//std::cout << "FTDParameters::toXML strType == '" << strType << "'"<< std::endl ; // debug
-		
-		// shell
-		// std::cout << "FTDParameters::toXML shell      " << std::endl ; // debug
-		//     std::cout << "                     halflength " << param->getShellHalfLength() << std::endl ; //debug
-		//     std::cout << "                            gap " << param ->getShellGap() << std::endl ; // debug
-		//     std::cout << "                         innerR " << param->getShellInnerRadius() << std::endl ; //debug
-		//     std::cout << "                         outerR " << param->getShellOuterRadius() << std::endl ; //debug
-		//     std::cout << "                         radLen " << param->getShellRadLength() << std::endl ; //debug
-		
-		TiXmlElement shell( "shell" ) ;
-		shell.SetDoubleAttribute( "halfLength" , param->getShellHalfLength() ) ;
-		shell.SetDoubleAttribute( "innerRadiusMin" , param->getShellInnerRadiusMin() ) ;
-		shell.SetDoubleAttribute( "innerRadiusMax" , param->getShellInnerRadiusMax() ) ;
-		shell.SetDoubleAttribute( "outerRadius" , param->getShellOuterRadius() ) ;
-		shell.SetDoubleAttribute( "radLength" , param->getShellRadLength() ) ;
-		det.InsertEndChild( shell ) ;
-    
+
 		// layerLayout
 		const FTDLayerLayout & ftdLayers = param->getFTDLayerLayout() ;
 		TiXmlElement layers("layers") ;
 		
 		for( int i=0 ; i < ftdLayers.getNLayers() ; i++ ) 
 		{
-			//std::cout << "                     layer #ladders " << ftdLayers.getNLadders( i ) << std::endl ; //debug			
+			//std::cout << "                     layer #petals " << ftdLayers.getNPetals( i ) << std::endl ; //debug			
 			TiXmlElement layer("layer" ) ;
-			layer.SetAttribute( "nLadders" , ftdLayers.getNLadders(i) ) ;
+			layer.SetAttribute( "nPetals" , ftdLayers.getNPetals(i) ) ;
 			std::string strType;
 			switch( (int)ftdLayers.getSensorType(i) ) 
 			{
@@ -69,20 +53,22 @@ namespace gear
 					strType = "Unknown" ;
 			}
 			layer.SetAttribute( "sensorType", strType );
-			layer.SetDoubleAttribute( "phi" , ftdLayers.getPhi(i) ) ;
+			layer.SetDoubleAttribute( "phi" , ftdLayers.getPhiHalfDistance(i) ) ;
+			layer.SetDoubleAttribute( "phi0" , ftdLayers.getPhi0(i) ) ;
 			layer.SetDoubleAttribute( "alpha" , ftdLayers.getAlpha(i) ) ;
-			layer.SetDoubleAttribute("zposition", ftdLayers.getZposition(i) );
 			layer.SetDoubleAttribute("zoffset", ftdLayers.getZoffset(i) );
 			
-			TiXmlElement ladder("ladder") ;
-			ladder.SetDoubleAttribute( "thickness" , ftdLayers.getLadderThickness(i) ) ;
-			ladder.SetDoubleAttribute( "width" , ftdLayers.getLadderWidth( i ) ) ; 
-			ladder.SetDoubleAttribute( "lengthMin" , ftdLayers.getLadderLengthMin(i) ) ;
-			ladder.SetDoubleAttribute( "lengthMax" , ftdLayers.getLadderLengthMax(i) ) ;
-			ladder.SetDoubleAttribute( "rInner" , ftdLayers.getLadderRinner( i ) ) ;
-			ladder.SetDoubleAttribute( "radLength" , ftdLayers.getLadderRadLength( i ) ) ;
+			TiXmlElement support("support") ;
+			support.SetDoubleAttribute( "zposition" , ftdLayers.getSupportZposition(i) ) ;
+			support.SetDoubleAttribute( "thickness" , ftdLayers.getSupportThickness(i) ) ;
+			support.SetDoubleAttribute( "width" , ftdLayers.getSupportWidth( i ) ) ; 
+			support.SetDoubleAttribute( "lengthMin" , ftdLayers.getSupportLengthMin(i) ) ;
+			support.SetDoubleAttribute( "lengthMax" , ftdLayers.getSupportLengthMax(i) ) ;
+			support.SetDoubleAttribute( "rInner" , ftdLayers.getSupportRinner( i ) ) ;
+			support.SetDoubleAttribute( "radLength" , ftdLayers.getSupportRadLength( i ) ) ;
 			
 			TiXmlElement sens("sensitive" ) ;
+			sens.SetDoubleAttribute( "zposition" , ftdLayers.getSensitiveZposition(i) ) ;
 			sens.SetDoubleAttribute( "thickness" , ftdLayers.getSensitiveThickness( i ) ) ;
 			sens.SetDoubleAttribute( "width" , ftdLayers.getSensitiveWidth( i ) ) ;
 			sens.SetDoubleAttribute( "lengthMin" , ftdLayers.getSensitiveLengthMin( i ) ) ;
@@ -91,7 +77,7 @@ namespace gear
 			sens.SetDoubleAttribute( "radLength" , ftdLayers.getSensitiveRadLength( i ) ) ;
 			
 			// assemble layer
-			layer.InsertEndChild(ladder);
+			layer.InsertEndChild(support);
 			layer.InsertEndChild(sens) ;
 			layers.InsertEndChild(layer) ;
 		}
@@ -108,17 +94,9 @@ namespace gear
 	{
 		
 		
-		const TiXmlElement* shell = xmlElement->FirstChildElement( "shell" ) ;
-		
-		double shellHalfLength = atof( getXMLAttribute( shell , "halfLength" ) .c_str() ) ;
-		double shellInnerRMin = atof( getXMLAttribute( shell , "innerRadiusMin" ) .c_str() ) ;
-		double shellInnerRMax = atof( getXMLAttribute( shell , "innerRadiusMax" ) .c_str() ) ;
-		double shellOuterR = atof( getXMLAttribute( shell , "outerRadius" ) .c_str() ) ;
-		double shellRadLen = atof( getXMLAttribute( shell , "radLength" ) .c_str() ) ;
 
 		// create FTDParameters
-		FTDParametersImpl* ftdParam = new FTDParametersImpl( shellInnerRMin ,
-				shellInnerRMax, shellOuterR , shellHalfLength, shellRadLen ) ;
+       	        FTDParametersImpl* ftdParam = new FTDParametersImpl() ;
 		
 		// layers
 		const TiXmlNode* xmlLayers = xmlElement->FirstChildElement( "layers" ) ;
@@ -126,7 +104,7 @@ namespace gear
 		
 		while( ( xmlLayer = xmlLayers->IterateChildren( "layer" , xmlLayer ) ) != 0 ) 
 		{
-			int nLadders    = atoi( getXMLAttribute( xmlLayer , "nLadders" ).c_str() );
+			int nPetals    = atoi( getXMLAttribute( xmlLayer , "nPetals" ).c_str() );
 			std::string type= getXMLAttribute( xmlLayer, "sensorType" );
 			int sensorType;
 			if(  type == "PIXEL"  ) 
@@ -143,13 +121,14 @@ namespace gear
 						" - Needs to be 'PIXEL' or 'STRIP'." ) ;
 			}
 			double phi      = atof( getXMLAttribute( xmlLayer , "phi"     ).c_str() ); 
+			double phi0      = atof( getXMLAttribute( xmlLayer , "phi0"     ).c_str() ); 
 			double alpha    = atof( getXMLAttribute( xmlLayer , "alpha"     ).c_str() ); 
-			double zposition= atof( getXMLAttribute( xmlLayer , "zposition"     ).c_str() ); 
 			double zoffset  = atof( getXMLAttribute( xmlLayer , "zoffset"     ).c_str() ); 
 			
-			const TiXmlNode* xmlLad = xmlLayer->FirstChildElement( "ladder" ) ;
+			const TiXmlNode* xmlLad = xmlLayer->FirstChildElement( "support" ) ;
 			const TiXmlNode* xmlSen = xmlLayer->FirstChildElement( "sensitive" ) ;
 			
+			double lzposition = atof( getXMLAttribute( xmlLad , "zposition"     ).c_str() ); 
 			double lThick     = atof( getXMLAttribute( xmlLad , "thickness" ).c_str() );
 			double lWidth     = atof( getXMLAttribute( xmlLad , "width"     ).c_str() ) ;
 			double lLengthMin = atof( getXMLAttribute( xmlLad , "lengthMin"    ).c_str() ) ;
@@ -157,6 +136,7 @@ namespace gear
 			double lRinner    = atof( getXMLAttribute( xmlLad , "rInner"    ).c_str() ) ;
 			double lRadLen    = atof( getXMLAttribute( xmlLad , "radLength" ).c_str() ) ;
 			
+			double szposition = atof( getXMLAttribute( xmlSen ,"zposition"     ).c_str() ); 
 			double sThick     = atof( getXMLAttribute( xmlSen , "thickness" ).c_str() ) ;
 			double sWidth     = atof( getXMLAttribute( xmlSen , "width"     ).c_str() ) ;
 			double sLengthMin = atof( getXMLAttribute( xmlSen , "lengthMin"    ).c_str() ) ;
@@ -164,9 +144,9 @@ namespace gear
 			double sRinner    = atof( getXMLAttribute( xmlSen , "rInner"    ).c_str() ) ;
 			double sRadLen = atof( getXMLAttribute( xmlSen , "radLength" ).c_str() ) ;
 			
-			ftdParam->addLayer( nLadders, sensorType, phi,alpha,zposition,zoffset,
-					lRinner, lThick, lLengthMin, lLengthMax, lWidth, lRadLen,
-					sRinner, sThick, sLengthMin, sLengthMax, sWidth, sRadLen ) ;
+			ftdParam->addLayer( nPetals, sensorType, phi, phi0 ,alpha,zoffset,
+					lzposition,lRinner, lThick, lLengthMin, lLengthMax, lWidth, lRadLen,
+					szposition,sRinner, sThick, sLengthMin, sLengthMax, sWidth, sRadLen ) ;
 		} // end loop
 		
 		// ------- add to GearMgr ----

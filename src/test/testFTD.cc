@@ -75,10 +75,10 @@ int main(int argc, char *argv[])
 	TGeoRotation petalRot;
 	for(int i = 0; i < ftdLayer.getNLayers(); i++)
 	{
-		const double zposition = ftdLayer.getZposition(i);
-		const double diskRinn = ftdLayer.getLadderRinner(i);
-		const double diskRout = diskRinn+ftdLayer.getLadderWidth(i);
-		const double halfthickness = (2.0*ftdLayer.getZoffset(i)+ftdLayer.getLadderThickness(i)+
+		const double zposition = ftdLayer.getSupportZposition(i);
+		const double diskRinn = ftdLayer.getSupportRinner(i);
+		const double diskRout = diskRinn+ftdLayer.getSupportWidth(i);
+		const double halfthickness = (2.0*ftdLayer.getZoffset(i)+ftdLayer.getSupportThickness(i)+
 			ftdLayer.getSensitiveThickness(i))/2.0;
 		TGeoVolume * disk = ftdgeom->MakeTube("Air disk",AirTrans,
 				diskRinn,
@@ -100,11 +100,11 @@ int main(int argc, char *argv[])
 			ZendOuterShell = zposition+halfthickness;
 		}
 		//Petals Support as placeholders of the sensitives
-		const double total_halfthickness = (ftdLayer.getLadderThickness(i)+
+		const double total_halfthickness = (ftdLayer.getSupportThickness(i)+
 			ftdLayer.getSensitiveThickness(i))/2.0;
-		const double dy_half = ftdLayer.getLadderWidth(i)/2.0;
-		const double dxMin_half = ftdLayer.getLadderLengthMin(i)/2.0;
-		const double dxMax_half = ftdLayer.getLadderLengthMax(i)/2.0;
+		const double dy_half = ftdLayer.getSupportWidth(i)/2.0;
+		const double dxMin_half = ftdLayer.getSupportLengthMin(i)/2.0;
+		const double dxMax_half = ftdLayer.getSupportLengthMax(i)/2.0;
 		TGeoVolume * petal = ftdgeom->MakeTrap("Petal Support",AirTrans,
 				total_halfthickness,
 				0.0,
@@ -140,17 +140,17 @@ int main(int argc, char *argv[])
 		sensor->SetLineColor(kOrange-5);
 		sensor->SetFillColor(kOrange-5);
 
-		petal->AddNode(sensor,1,new TGeoTranslation(0,0,ftdLayer.getZoffset(i)-ftdLayer.getLadderThickness(i)
+		petal->AddNode(sensor,1,new TGeoTranslation(0,0,ftdLayer.getZoffset(i)-ftdLayer.getSupportThickness(i)
 					-halfthicknessSi));
 		if( i > 2 )
 		{
-			petal->AddNode(sensor,2,new TGeoTranslation(0,0,ftdLayer.getZoffset(i)+ftdLayer.getLadderThickness(i)
+			petal->AddNode(sensor,2,new TGeoTranslation(0,0,ftdLayer.getZoffset(i)+ftdLayer.getSupportThickness(i)
 					+halfthicknessSi));
 		}
 
 		
-		double phi = ftdLayer.getPhi(i)*180.0/M_PI;
-		for(int j=0; j < ftdLayer.getNLadders(i); j++)
+		double phi = ftdLayer.getPhiHalfDistance(i)*180.0/M_PI;
+		for(int j=0; j < ftdLayer.getNPetals(i); j++)
 		{
 			// FIXME: Missing the turbine-blade rotation
 			int zsign = pow(-1,j);
@@ -166,8 +166,8 @@ int main(int argc, char *argv[])
 	//               metodos de GEAR
 	//const double outerR = ftdParams.getShellOuterRadius();
 	//const double half_z = ftdParams.getShellHalfLength();
-	const double outerR = ftdLayer.getLadderRinner(ftdLayer.getNLayers()-1)
-		+ftdLayer.getLadderWidth(ftdLayer.getNLayers()-1);
+	const double outerR = ftdLayer.getSupportRinner(ftdLayer.getNLayers()-1)
+		+ftdLayer.getSupportWidth(ftdLayer.getNLayers()-1);
 	const double half_z= (ZendOuterShell-ZstartOuterShell)/2.0;
 
 	TGeoVolume *outerShield = ftdgeom->MakeTube("outer_shell",AirTrans,
@@ -184,9 +184,9 @@ int main(int argc, char *argv[])
 	top->AddNodeOverlap(outerShield,2, new TGeoHMatrix(hmO) );
 	
 	// Inner SHield
-	const double innerRMin = ftdLayer.getLadderRinner(0);
-	const double innerRMax = ftdLayer.getLadderRinner(ftdLayer.getNLayers()-1);
-	const double ZstartInnerShell = ftdLayer.getZposition(0)-(ftdLayer.getLadderThickness(0)+
+	const double innerRMin = ftdLayer.getSupportRinner(0);
+	const double innerRMax = ftdLayer.getSupportRinner(ftdLayer.getNLayers()-1);
+	const double ZstartInnerShell = ftdLayer.getSupportZposition(0)-(ftdLayer.getSupportThickness(0)+
 			ftdLayer.getSensitiveThickness(0))/2.0;
 	const double half_zInner= (ZendOuterShell-ZstartInnerShell)/2.0;
 
