@@ -7,6 +7,17 @@
 namespace gear
 {
 
+// FTDParametersImpl::FTDParametersImpl
+// 	( double shellInnerRadiusMin, double shellInnerRadiusMax,
+// 	  double shellOuterRadius,  double shellHalfLength, 
+// 	  double shellRadLength ) :
+// 		_shellInnerRadiusMin( shellInnerRadiusMin ) ,
+// 		_shellInnerRadiusMax( shellInnerRadiusMax ) ,
+// 		_shellOuterRadius( shellOuterRadius ) ,
+// 		_shellHalfLength( shellHalfLength ) ,
+// 		_shellRadLength( shellRadLength ) 
+// {
+// }
 
 int FTDParametersImpl::getLayerIndex( const Vector3D & p ) const
 {

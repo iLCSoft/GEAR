@@ -13,6 +13,8 @@
 // @author: J. Duarte Campderros, IFCA
 // 27, July 2011
 
+// FIXME: TO BE REVISITED!
+
 #include "TGeoManager.h"
 #include "TGeoMatrix.h"
 
@@ -75,7 +77,7 @@ int main(int argc, char *argv[])
 	TGeoRotation petalRot;
 	for(int i = 0; i < ftdLayer.getNLayers(); i++)
 	{
-		const double zposition = ftdLayer.getSupportZposition(i);
+		const double zposition = ftdLayer.getZposition(i);
 		const double diskRinn = ftdLayer.getSupportRinner(i);
 		const double diskRout = diskRinn+ftdLayer.getSupportWidth(i);
 		const double halfthickness = (2.0*ftdLayer.getZoffset(i)+ftdLayer.getSupportThickness(i)+
@@ -186,7 +188,7 @@ int main(int argc, char *argv[])
 	// Inner SHield
 	const double innerRMin = ftdLayer.getSupportRinner(0);
 	const double innerRMax = ftdLayer.getSupportRinner(ftdLayer.getNLayers()-1);
-	const double ZstartInnerShell = ftdLayer.getSupportZposition(0)-(ftdLayer.getSupportThickness(0)+
+	const double ZstartInnerShell = ftdLayer.getZposition(0)-(ftdLayer.getSupportThickness(0)+
 			ftdLayer.getSensitiveThickness(0))/2.0;
 	const double half_zInner= (ZendOuterShell-ZstartInnerShell)/2.0;
 

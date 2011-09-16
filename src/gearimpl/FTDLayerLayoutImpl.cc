@@ -1,19 +1,21 @@
 #include "gearimpl/FTDLayerLayoutImpl.h"
 #include <math.h>
+#include <iostream>
+#include <stdlib.h>
 
 namespace gear
 {
-void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi0, double alpha, 
+void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double petalOpAngle, double phi0, double alpha, 
 		// common for support and sensitive
-		double zoffset,
+		double zposition, double zoffset, double zsignpetal0,
 		// support
-		double supportZposlayer, 
+		//double supportZposlayer, 
 		double supportRinner, double supportThickness, 
 		double supportLengthMin, double supportLengthMax,
 		double supportWidth, 
 		double supportRadLength,
 		// sensitive
-		double sensitiveZposlayer, 
+		//double sensitiveZposlayer, 
 		double sensitiveRinner,	double sensitiveThickness,
 		double sensitiveLengthMin, double sensitiveLengthMax,
 		double sensitiveWidth, 
@@ -21,63 +23,139 @@ void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double phi0, doub
 {
 	Layer lL, sL ; 
 	
-	lL.nPetals  = nPetals ;
-	lL.sensorType = sensorType;
-	lL.petalOpenningAngle = atan( ( supportLengthMax - supportLengthMin ) / ( 2.0 * supportWidth ) ) ;
-	lL.phi0      = phi0 ; 
-	lL.alpha     = alpha;
-	lL.zposition = supportZposlayer ;
-	lL.zoffset   = zoffset;
-	lL.rInner    = supportRinner;
-	lL.lengthMin = supportLengthMin; 
-	lL.lengthMax = supportLengthMax; 
-	lL.thickness = supportThickness;
-	lL.width     = supportWidth ;
-	lL.radLength = supportRadLength ;
+	lL.nPetals     = nPetals ;
+	lL.sensorType  = sensorType;
+	//lL.phi       = phi ; 
+	lL.petalOpenningAngle= petalOpAngle;
+	lL.phi0        = phi0; 
+	lL.alpha       = alpha;
+	lL.zposition   = zposition; //supportZposlayer ;
+	lL.zoffset     = zoffset;
+	lL.zsign0      = zsignpetal0;
+	lL.rInner      = supportRinner;
+	lL.lengthMin   = supportLengthMin; 
+	lL.lengthMax   = supportLengthMax; 
+	lL.thickness   = supportThickness;
+	lL.width       = supportWidth ;
+	lL.radLength   = supportRadLength ;
 
-	sL.nPetals  = nPetals ;
-	sL.sensorType= sensorType;
-	sL.petalOpenningAngle = atan( ( supportLengthMax - supportLengthMin ) / ( 2.0 * supportWidth ) ) ;
-	sL.phi0      = phi0 ; 
-	sL.alpha     = alpha;
-	sL.zposition = sensitiveZposlayer;
-	sL.zoffset   = zoffset;
-	sL.rInner    = sensitiveRinner;
-	sL.thickness = sensitiveThickness;
-	sL.lengthMin = sensitiveLengthMin;
-	sL.lengthMax = sensitiveLengthMax;
-	sL.width     = sensitiveWidth ;
-	sL.radLength = sensitiveRadLength ;
+	sL.nPetals     = nPetals ;
+	sL.sensorType  = sensorType;
+	//sL.phi       = phi ; 
+	sL.petalOpenningAngle= petalOpAngle;
+	sL.phi0        = phi0; 
+	sL.alpha       = alpha;
+	sL.zposition   = zposition; //sensitiveZposlayer;
+	sL.zoffset     = zoffset;
+	sL.zsign0      = zsignpetal0;
+	sL.rInner      = sensitiveRinner;
+	sL.thickness   = sensitiveThickness;
+	sL.lengthMin   = sensitiveLengthMin;
+	sL.lengthMax   = sensitiveLengthMax;
+	sL.width       = sensitiveWidth ;
+	sL.radLength   = sensitiveRadLength ;
 
 	_lVec.push_back( lL ) ;
 	_sVec.push_back( sL ) ;
 
 	// Get the references frames defining the trapezoid
+	//FIXME: TO BE DEPRECATED
 	_eL = getframe( lL );
 	_eS = getframe( sL );
+}
 
+
+// Correct the index of the layer in order to return a value < 7
+// (layers symmetric in z)
+int FTDLayerLayoutImpl::getEquivLayer(const int & layerIndex) const
+{
+//FIXME: TO DEBUG!!
+	int correctedId = -1;
+	// Using the index of the vectors 0->2N-1
+	if( layerIndex > 6)
+	{
+		correctedId = layerIndex-getNLayers();
+	}
+	else
+	{
+		correctedId = layerIndex;
+	}
+	
+	if( correctedId < 0 )
+	{
+		std::cout << "The disk layer introduced is not in the right format. Use the description:\n " <<
+			"Z-Positives disks: 0,1,...,N-1\n " <<
+			"Z-negatives disks: 7,8,...,2N-1\n" << std::endl;
+	}
+
+	return correctedId;
+
+}
+
+// Return the Z position defined in the centroid of the sensitive
+double FTDLayerLayoutImpl::getSupportZposition(const int & layerIndex, const int & petalIndex) const
+{
+	int layerId = getEquivLayer(layerIndex);
+
+	Layer petal = _lVec.at(layerId);
+	// Extract if the zoffset is positive or negative: id=0 -> zsign0, id=1--> -zsign0, and so on
+	int offsetsign = petal.zsign0*(int)pow((double)-1,(double)petalIndex);
+	
+	double zpos = petal.zposition+offsetsign*petal.zoffset;
+	// Taking into account the negative disks
+	// RECALL: all the z-position are positives (by definition we used for 
+	//         the z-negative disks (-1)*zposition
+	int finalsign = 1;
+	if( layerId != layerIndex )
+	{
+		finalsign = -1;
+	}
+std::cout << "FTDLayerLayoutImpl::getSupportZposition-> disk pos:" << petal.zposition << " offset: " << petal.zoffset <<
+	" petalIndex:" << petalIndex << " offsetsign:" << offsetsign << " init z-sign0: " << petal.zsign0 << 
+	" PETAL POSITION:"<< zpos << std::endl;
+	
+	return finalsign*zpos;
+}
+
+// Return the Z position defined in the centroid of the sensitive
+double FTDLayerLayoutImpl::getSensitiveZposition(const int & layerIndex, const int & petalIndex, 
+		const int & sensorIndex) const
+{
+	double zsupport = getSupportZposition(layerIndex,petalIndex);
+	int layerId = getEquivLayer(layerIndex);
+
+	// Extract if the sensor is back to IP or facing the IP
+	int zpossign = (int)(zsupport/fabs(zsupport));
+	int sign = -1*zpossign;
+	if( sensorIndex == 3 || sensorIndex == 4 )
+	{
+		sign = 1;
+	}
+	else if( sensorIndex > 4 || sensorIndex < 1 )
+	{
+		std::cout << "FTDLayerLayoutImpl::getSensitiveZposition Error!! The Sensor Index \'" << sensorIndex << 
+			"\' is not determined. This is error shows an incoherence!" << std::endl;
+		exit(-1);
+	}
+	double petalthickness = _lVec.at(layerId).thickness;
+	double sensorthickness = _sVec.at(layerId).thickness;
+	double zpos = zsupport+sign*(petalthickness+sensorthickness)/2.0;
+std::cout << "FTDLayerLayoutImpl::getSensorZposition-> petal position: " << zsupport 
+	<< " sensor index:" << sensorIndex << " SENSOR POSITION:"<< zpos << std::endl;
+
+	return zpos;
 }
 
 
 
-// Returns the phi correspondent to the point where is defined the 
-// reference frame
-double FTDLayerLayoutImpl::getPhiStructure(const int & layerIndex, const int & petalIndex, const bool & sensitive) const
+// Returns the phi of the petal centroid with respect to the x-axis
+double FTDLayerLayoutImpl::getPhiPetalCd(const int & layerIndex, const int & petalIndex) const
 {
-	Layer l;
-	if( ! sensitive)
-	{
-		l = _lVec.at( layerIndex );
-	}
-	else
-	{
-		l = _sVec.at( layerIndex );
-	}
-	
-	// Displacing to the edge and extract angle
-	double phiedge = tan( (l.lengthMin/2.0)/l.rInner );
-
-	return phiedge;
+	int layerId = getEquivLayer(layerIndex);
+	// the first petal is over the y-axis,
+	// Correcting the phi0 in order to describe
+	// the angle phi (x-axis --> y-axis)
+	return M_PI/2.0+_lVec.at(layerId).phi0+(double)petalIndex*2.0*_lVec.at(layerId).petalOpenningAngle;
 }
 
 // Returns the maximum radius for a given layer (No le veo utilidad aun)
@@ -109,7 +187,7 @@ double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &petalInd
 		l = _sVec.at( layerIndex ) ;
 	}
 
-	const double endphi = getPhiStructure(layerIndex,petalIndex,sensitive);
+	const double endphi = 0.0; // FIXME: PROV getPhiPetalCd(layerIndex,petalIndex,sensitive);
 		
 	return endphi-2.0*l.phi0 ;
 }
@@ -118,7 +196,8 @@ double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &petalInd
 // the phi where is defined the frame
 double FTDLayerLayoutImpl::getEndPhi( const int & layerIndex , const int & petalIndex, const bool & sensitive ) const 
 {
-	return getPhiStructure(layerIndex,petalIndex,sensitive);
+	//return getPhiPetalCd(layerIndex,petalIndex,sensitive);
+	return 0.0; //FIXME
 }
 
 

@@ -38,15 +38,28 @@ public:
       */
     virtual double getPhiHalfDistance(int layerIndex) const = 0;
     
+    /** The z-position of the centroid of the disk structure
+     */
+    //FIXME: TO BE DEPRECATED OR PRIVATE? All the positions having to 
+    //       return this class is relative to the petals or
+    //       sensors. to be checked
+    virtual double getZposition(const int & layerIndex) const = 0;
 
     /** Z-offset of the petals in a staggered setup - the z position of the 
-     *  even numbered petals is zposition + zoffset and zposition - zoffset for the 
-     *  odd numbered. 
+     *  even numbered petals is getZposition(i)+getZoffsetSign0(i)*getZoffset(i),
+     *  the odd numbered petals: getZposition(i)-getZoffsetSign0(i)*getZoffset(i),
      */
+    // FIXME: TO BE DEPRECATED OR PRIVATE? To be checked
     virtual double getZoffset(const int & layerIndex) const = 0;
     
+    /** Z-offset sign of the petal 0 in a staggered setup - the z position of the 
+     *  petals is zposition + zsign0^{petalIndex}*zoffset 
+     */
+    virtual double getZoffsetSign0(const int & layerIndex) const = 0;
+    
 
-    /** Azimuthal angle of the first petal (angle between petal centroid and x-axis).
+    /** Azimuthal angle of the first petal (angle between petal centroid and x-axis
+      * for the petal indexed as 0).
      */
     virtual double getPhi0(const int & layerIndex) const = 0;
     
@@ -59,16 +72,21 @@ public:
   // this is a trapezoidal frame really
   //  => we need a few additional parameters to desribe the 
   //     holes in petal ....
+  
 
   
-    /** The mean z position of the support  petal in layer layerIndex -
-     *  layer indexing starting at 0 from the layer closest to IP.
+    /** The position of the support in z direction in mm for the petalIndex petal
+      * in layer layerIndex - layer indexing starting at 0 from the layer closest to IP.
+      * Petal indexing starting at 0 for the petal placed in the y-axis and grows
+      * with positive rotation around Z-axis.
+      * The position is defined in the centroid point of the support.
      */
-    virtual double getSupportZposition(int layerIndex) const = 0;
+    virtual double getSupportZposition(const int & layerIndex,const int & petalIndex) const = 0;
    
 
-     /** The R-min of the support petals in the XY-plane in mm
-     */
+     /** The R-min of the support petals in the XY-plane in mm, for the layer layerIndex - layer
+       * indexing starts at 0 for the layer closest to IP
+       */
     virtual double getSupportRinner(int layerIndex) const = 0;
     
     /** The radiation length in the support structure petals of layer layerIndex - layer indexing starts at 0
@@ -81,12 +99,15 @@ public:
      */
     virtual double getSupportThickness(int layerIndex) const = 0;
     
-    /** The length (x-direction) of the smallest edge of the trapezoid (support) 
-     */
+    /** The length (x-direction) of the smallest edge of the trapezoid support  in
+      * layer layerIndex - layer indexing starting at 0 for the layer closest to IP
+     */ 
+    // FIXME: Change Length <--> Width (I think is the usual notation)
     virtual double getSupportLengthMin(int layerIndex) const = 0;
     
-    /** The length (x-direction) of the largest edge of the trapezoid (support) 
-     */
+    /** The length (x-direction) of the largest edge of the trapezoid support in
+      * layer layerIndex - layer indexing starting at 0 for the layer closest to IP
+      */
     virtual double getSupportLengthMax(int layerIndex) const = 0;
     
     /** The width of the support in layer in mm for petals in layer layerIndex -
@@ -100,12 +121,19 @@ public:
    // description of the sensitive petal  =========================================================================================
 
 
-    /** The mean z position of the sensitive  petal in layer layerIndex -
+    /** The position of the sensitive in z direction in mm for sensor sensorIndex of
+     *  the petal support petalIndex in layer layerIndex -
      *  layer indexing starting at 0 from the layer closest to IP.
+     *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+     *  with positive rotation around Z-axis.
+     *  Sensor indexing is defined from Y-axis higher values, 1 (UP) 2 (DOWN) for the 
+     *  sensor facing the IP;  and 3 (UP), 4 (DOWN) for the sensor backing the IP.
+     *  The z-position is defined in the centroid point of the sensor.
      */
-    virtual double getSensitiveZposition(int layerIndex) const = 0;
+    virtual double getSensitiveZposition(const int & layerIndex, const int & petalIndex, const int & sensorId) const = 0;
 
-   /** The R-min of the petal in the XY-plane in mm for petals
+   /** The R-min of the petal in the XY-plane in mm for sensors in layer layerIndex - layer
+     * indexing starts at 0 for the layer closest to IP.
      */
     virtual double getSensitiveRinner(int layerIndex) const = 0;
     
@@ -135,24 +163,26 @@ public:
 
 
 
-    /** Azimuthal angle of the vector defined by the Z-axis to the j-petal x-positive, y-positive
-     *  (edge side).
-     *  phi smallest corresponds to the first petal's closests to the positive X-axis.
-     *  The layerIndex starts at 0 for the layer closest to IP.
+    /** Azimuthal angle of the petal petalIndex Centroid at layer layerIndex.
+     *  Layer indexing starting at 0 from the layer closest to IP.
+     *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+     *  with positive rotation around Z-axis.
      */
-    virtual double getPhiStructure(const int & layerIndex, const int & petalIndex, 
-    		const bool & sensitive) const = 0;
+    virtual double getPhiPetalCd(const int & layerIndex, const int & petalIndex) const = 0;
     
     /** returns maximum radius for a given layer   */
+    //FIXME: To be checked if necessary
     virtual double getMaxRadius(const int & layerIndex,const bool & sensitive=false ) const = 0;
     
     /** returns starting phi for first petal in layer layerIndex (on side facing IP)
      */
+    //FIXME: To be checked if necessary
     virtual double getStartPhi(const int & layerIndex, const int & petalInd, 
     		const bool &sensitive=false ) const = 0;
     
     /** returns ending phi for first petal in layer layerIndex (on side facing IP)
      */
+    //FIXME: To be checked if necessary
     virtual double getEndPhi(const int & layerIndex,const int & petalInd, 
     		const bool & sensitive=false ) const = 0;
     
@@ -161,6 +191,7 @@ public:
      *  theta is the angle defined between the Z-axis (perpendicular to the petal plane)
      *  and the plane of the petal; phi is the incident angle defined in the ZX plane
      */
+    //FIXME: To be checked if necessary
     virtual double getThicknessForAngle(const int & layerIndex, const double & tetha,
     		const double & phi, const bool & sensitive=false ) const = 0;
 };

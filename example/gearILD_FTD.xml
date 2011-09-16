@@ -5,7 +5,9 @@
 	 F. Gaede: modified according to the new naming scheme (ladders -> petals/support )  and independent z positions for support and sensitive
               turned         
 	 NB:  this is just an example and the numbers  do not yet correspond to the 'true' geometry from Mokka ILD_01 
-              in particular the z positions need iteration (in value and definition)...
+	      in particular the z positions need iteration (in value and definition)...
+
+	 J. Duarte Campderros: WARNING. This file is obsolete!
     -->
 
     <detectors>

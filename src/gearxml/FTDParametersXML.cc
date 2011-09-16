@@ -53,12 +53,15 @@ namespace gear
 					strType = "Unknown" ;
 			}
 			layer.SetAttribute( "sensorType", strType );
+			layer.SetDoubleAttribute( "petalOpenningAngle" , ftdLayers.getPhiHalfDistance(i) ) ;
 			layer.SetDoubleAttribute( "phi0" , ftdLayers.getPhi0(i) ) ;
 			layer.SetDoubleAttribute( "alpha" , ftdLayers.getAlpha(i) ) ;
 			layer.SetDoubleAttribute("zoffset", ftdLayers.getZoffset(i) );
+			layer.SetDoubleAttribute("zsign0", ftdLayers.getZoffsetSign0(i) );
+			layer.SetDoubleAttribute( "zposition" , ftdLayers.getZposition(i) ) ;
 			
 			TiXmlElement support("support") ;
-			support.SetDoubleAttribute( "zposition" , ftdLayers.getSupportZposition(i) ) ;
+			//support.SetDoubleAttribute( "zposition" , ftdLayers.getSupportZposition(i) ) ;
 			support.SetDoubleAttribute( "thickness" , ftdLayers.getSupportThickness(i) ) ;
 			support.SetDoubleAttribute( "width" , ftdLayers.getSupportWidth( i ) ) ; 
 			support.SetDoubleAttribute( "lengthMin" , ftdLayers.getSupportLengthMin(i) ) ;
@@ -67,7 +70,7 @@ namespace gear
 			support.SetDoubleAttribute( "radLength" , ftdLayers.getSupportRadLength( i ) ) ;
 			
 			TiXmlElement sens("sensitive" ) ;
-			sens.SetDoubleAttribute( "zposition" , ftdLayers.getSensitiveZposition(i) ) ;
+			//sens.SetDoubleAttribute( "zposition" , ftdLayers.getSensitiveZposition(i) ) ;
 			sens.SetDoubleAttribute( "thickness" , ftdLayers.getSensitiveThickness( i ) ) ;
 			sens.SetDoubleAttribute( "width" , ftdLayers.getSensitiveWidth( i ) ) ;
 			sens.SetDoubleAttribute( "lengthMin" , ftdLayers.getSensitiveLengthMin( i ) ) ;
@@ -119,14 +122,17 @@ namespace gear
 				throw Exception( "FTDParametersXML::fromXML technology of sensorType not known: " + type + 
 						" - Needs to be 'PIXEL' or 'STRIP'." ) ;
 			}
+			double petalOpAngle = atof( getXMLAttribute( xmlLayer , "petalOpenningAngle"     ).c_str() ); 
 			double phi0      = atof( getXMLAttribute( xmlLayer , "phi0"     ).c_str() ); 
-			double alpha    = atof( getXMLAttribute( xmlLayer , "alpha"     ).c_str() ); 
-			double zoffset  = atof( getXMLAttribute( xmlLayer , "zoffset"     ).c_str() ); 
+			double alpha     = atof( getXMLAttribute( xmlLayer , "alpha"     ).c_str() ); 
+			double zposition = atof( getXMLAttribute( xmlLayer , "zposition"     ).c_str() ); 
+			double zoffset   = atof( getXMLAttribute( xmlLayer , "zoffset"     ).c_str() ); 
+			double zsign0   = atof( getXMLAttribute( xmlLayer , "zsign0"     ).c_str() ); 
 			
 			const TiXmlNode* xmlLad = xmlLayer->FirstChildElement( "support" ) ;
 			const TiXmlNode* xmlSen = xmlLayer->FirstChildElement( "sensitive" ) ;
 			
-			double lzposition = atof( getXMLAttribute( xmlLad , "zposition"     ).c_str() ); 
+			//double lzposition = atof( getXMLAttribute( xmlLad , "zposition"     ).c_str() ); 
 			double lThick     = atof( getXMLAttribute( xmlLad , "thickness" ).c_str() );
 			double lWidth     = atof( getXMLAttribute( xmlLad , "width"     ).c_str() ) ;
 			double lLengthMin = atof( getXMLAttribute( xmlLad , "lengthMin"    ).c_str() ) ;
@@ -134,7 +140,7 @@ namespace gear
 			double lRinner    = atof( getXMLAttribute( xmlLad , "rInner"    ).c_str() ) ;
 			double lRadLen    = atof( getXMLAttribute( xmlLad , "radLength" ).c_str() ) ;
 			
-			double szposition = atof( getXMLAttribute( xmlSen ,"zposition"     ).c_str() ); 
+			//double szposition = atof( getXMLAttribute( xmlSen ,"zposition"     ).c_str() ); 
 			double sThick     = atof( getXMLAttribute( xmlSen , "thickness" ).c_str() ) ;
 			double sWidth     = atof( getXMLAttribute( xmlSen , "width"     ).c_str() ) ;
 			double sLengthMin = atof( getXMLAttribute( xmlSen , "lengthMin"    ).c_str() ) ;
@@ -142,9 +148,11 @@ namespace gear
 			double sRinner    = atof( getXMLAttribute( xmlSen , "rInner"    ).c_str() ) ;
 			double sRadLen = atof( getXMLAttribute( xmlSen , "radLength" ).c_str() ) ;
 			
-			ftdParam->addLayer( nPetals, sensorType, phi0 ,alpha,zoffset,
-					lzposition,lRinner, lThick, lLengthMin, lLengthMax, lWidth, lRadLen,
-					szposition,sRinner, sThick, sLengthMin, sLengthMax, sWidth, sRadLen ) ;
+			ftdParam->addLayer( nPetals, sensorType,  petalOpAngle, phi0 ,alpha, zposition, zoffset, zsign0,
+					//lzposition,
+					lRinner, lThick, lLengthMin, lLengthMax, lWidth, lRadLen,
+					//szposition,
+					sRinner, sThick, sLengthMin, sLengthMax, sWidth, sRadLen ) ;
 		} // end loop
 		
 		// ------- add to GearMgr ----
