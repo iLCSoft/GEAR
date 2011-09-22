@@ -3,10 +3,10 @@
  ======================
 
   --------
- | v01-00-pre00 |  
+ | v01-00 |  
   --------
 
-     - added FTDParameters and FTDLayerLayout  by J. Duarte Campderros, IFCA   
+     - Added and FTDLayerLayout  by J. Duarte Campderros, IFCA   
 
      - renamed VXDParameters and VXDLayerLayout to ZPlanarParameters and ZPlanarLayerLayout
        which can also be used for SIT and SET 
