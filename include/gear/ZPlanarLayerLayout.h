@@ -66,8 +66,10 @@ public:
      */
     virtual double getLadderWidth(int layerIndex) const = 0;
 
-    /** The length of the ladder in z direction in mm for ladders in layer layerIndex -
-     *  layer indexing starting at 0 from the layer closest to IP.
+    /** The (half) length of the ladder in z direction in mm for ladders in layer layerIndex -
+     *  layer indexing starting at 0 from the layer closest to IP. Note: for historic reasons
+     *  this is typically used to describe the half of the ladder in positive z, so it is the 
+     *  half length really.
      */
     virtual double getLadderLength(int layerIndex) const = 0;
 
