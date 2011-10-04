@@ -110,9 +110,6 @@ double FTDLayerLayoutImpl::getSupportZposition(const int & layerIndex, const int
 	{
 		finalsign = -1;
 	}
-std::cout << "FTDLayerLayoutImpl::getSupportZposition-> disk pos:" << petal.zposition << " offset: " << petal.zoffset <<
-	" petalIndex:" << petalIndex << " offsetsign:" << offsetsign << " init z-sign0: " << petal.zsign0 << 
-	" PETAL POSITION:"<< zpos << std::endl;
 	
 	return finalsign*zpos;
 }
@@ -125,23 +122,23 @@ double FTDLayerLayoutImpl::getSensitiveZposition(const int & layerIndex, const i
 	int layerId = getEquivLayer(layerIndex);
 
 	// Extract if the sensor is back to IP or facing the IP
-	int zpossign = (int)(zsupport/fabs(zsupport));
-	int sign = -1*zpossign;
-	if( sensorIndex == 3 || sensorIndex == 4 )
+	int zdisksign = (int)(zsupport/fabs(zsupport));
+	int sign = -zdisksign;
+	if( sensorIndex == 3 || sensorIndex == 4 ) 
 	{
-		sign = 1;
+		sign = zdisksign;
 	}
 	else if( sensorIndex > 4 || sensorIndex < 1 )
 	{
-		std::cout << "FTDLayerLayoutImpl::getSensitiveZposition Error!! The Sensor Index \'" << sensorIndex << 
-			"\' is not determined. This is error shows an incoherence!" << std::endl;
+		std::cout << "FTDLayerLayoutImpl::getSensitiveZposition Error!!" 
+			<< " The Sensor Index \'" << sensorIndex 
+			<< "\' is not determined. This is error shows an incoherence!" 
+			<< std::endl;
 		exit(-1);
 	}
 	double petalthickness = _lVec.at(layerId).thickness;
 	double sensorthickness = _sVec.at(layerId).thickness;
 	double zpos = zsupport+sign*(petalthickness+sensorthickness)/2.0;
-std::cout << "FTDLayerLayoutImpl::getSensorZposition-> petal position: " << zsupport 
-	<< " sensor index:" << sensorIndex << " SENSOR POSITION:"<< zpos << std::endl;
 
 	return zpos;
 }
@@ -152,10 +149,9 @@ std::cout << "FTDLayerLayoutImpl::getSensorZposition-> petal position: " << zsup
 double FTDLayerLayoutImpl::getPhiPetalCd(const int & layerIndex, const int & petalIndex) const
 {
 	int layerId = getEquivLayer(layerIndex);
-	// the first petal is over the y-axis,
-	// Correcting the phi0 in order to describe
-	// the angle phi (x-axis --> y-axis)
-	return M_PI/2.0+_lVec.at(layerId).phi0+(double)petalIndex*2.0*_lVec.at(layerId).petalOpenningAngle;
+
+  	return _lVec.at(layerId).phi0+
+		(double)petalIndex*2.0*_lVec.at(layerId).petalOpenningAngle;
 }
 
 // Returns the maximum radius for a given layer (No le veo utilidad aun)
