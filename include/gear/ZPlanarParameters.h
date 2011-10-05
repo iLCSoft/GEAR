@@ -70,13 +70,14 @@ public:
      */
     virtual double getShellRadLength() const = 0;
 
-    /** returns whether a point is inside a ladder
+    /** returns whether a point is inside a ladder 
      */
-    virtual bool isPointInLadder(Vector3D p) const = 0;
+  virtual bool isPointInLadder(Vector3D p ) const = 0;
 
-    /** returns wheter a point is inside a sensitive volume
-     */
-    virtual bool isPointInSensitive(Vector3D p) const = 0;
+  /** returns wheter a point is inside a sensitive volume- if sensorID != 0 the sensorID is returned in case the point
+   *  is inside the sensitive
+   */
+  virtual bool isPointInSensitive(Vector3D p, SensorID* sensorID=0 ) const = 0;
 
     /** returns vector from point to nearest ladder
      */

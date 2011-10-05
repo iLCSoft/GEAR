@@ -127,6 +127,18 @@ namespace gear {
     virtual ~OutsideGeometryException() throw() { /*no_op*/; } 
 
   }; 
+
+
+  /** Helper struct for decoding a sensor ID */
+  struct SensorID{
+    SensorID() : layer(0), side(0), module(0), sensor(0) {}
+    int layer ;
+    int side ;
+    int module ;
+    int sensor ;
+  } ;
+  
+
 }
 
 namespace gear {

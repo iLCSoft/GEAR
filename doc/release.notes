@@ -1,6 +1,14 @@
  ======================
   Gear release notes
  ======================
+  --------
+ | v01-01-pre |  
+  --------
+      - added SensorID helper class with side, layer, module, sensor to Gear.h
+
+      - added ZPlanarParameters::isPointInSensitive(Vector3D p, SensorID* sensorID=0 )
+        to compute the detector element (sensor) that contains the point
+
 
   --------
  | v01-00 |  

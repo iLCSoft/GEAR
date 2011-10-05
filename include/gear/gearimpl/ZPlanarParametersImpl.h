@@ -116,8 +116,8 @@ public:
   
   /** returns wheter a point is inside a sensitive volume
    */
-  virtual bool isPointInSensitive(Vector3D p) const {
-    return isPointInLadder( p, true ) ;
+  virtual bool isPointInSensitive(Vector3D p, SensorID* sensorID=0 ) const {
+    return isPointInLadder( p, true , sensorID ) ;
   }
   
   /** returns vector from given point p to nearest ladder
@@ -166,7 +166,7 @@ private:
 
   /** returns if a point is in ladder (sensitive == false) or in sensitive (sensitive == true)
    */
-  bool isPointInLadder(Vector3D p , bool sensitive = false) const ;
+  bool isPointInLadder(Vector3D p , bool sensitive = false, SensorID* sensorID=0 ) const ;
 
   /** returns distance to nearest ladder (sensitive == false) or nearest sensitiv (sensitive == true)
    */

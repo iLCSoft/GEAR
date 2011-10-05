@@ -24,9 +24,9 @@ namespace gear{
     _shellRadLength( shellRadLength ) {}
 
 
- bool ZPlanarParametersImpl::isPointInLadder( Vector3D p , bool sensitive ) const 
+ bool ZPlanarParametersImpl::isPointInLadder( Vector3D p , bool sensitive , SensorID* sensorID ) const 
   {
-    
+
     // very first check for quick calculation
     if( fabs( p[2] ) > ( _shellHalfLength + _shellGap/2 ) ) {
       // Outside shell
@@ -158,6 +158,17 @@ namespace gear{
 	     && ( differsLess( nBase[1] , thisVector[1] ) || isEqual( thisVector[1] , -c*nBase[1] ) )
 	     && ( differsLess( nBase[2] , thisVector[2] ) || isEqual( thisVector[2] , -c*nBase[2] ) )
 	     && ( ( c <= thick ) || isEqual( c , thick ) ) ) {
+
+
+	  if( sensorID != 0 ){
+	  // return an encoding of the actual sensor that contains the point
+
+	    sensorID->layer   = possibleLayer ;
+	    sensorID->side    = ( p.z() >= 0.  ?  +1  :  -1  )  ;
+	    sensorID->module  =  i ; 
+	    sensorID->sensor  =  0 ; 
+	  }
+
 	  return true ;
 	}
 	
