@@ -94,7 +94,8 @@ namespace gear{
       double endPhi = _layer.getEndInnerPhi( possibleLayer , sensitive ) ;
 
       // go through all ladders/sensitive
-      for( int i = 0 ; i < _layer.getNLadders( possibleLayer ) ; i++ ) {
+      int nLadders = _layer.getNLadders( possibleLayer ) ;
+      for( int i = 0 ; i < nLadders  ; i++ ) {
 
 	double phi = _layer.getInternalPhi0( possibleLayer ) + i*deltaPhi ;
 	phi = correctPhiRange( phi ) ;
@@ -165,7 +166,10 @@ namespace gear{
 
 	    sensorID->layer   = possibleLayer ;
 	    sensorID->side    = ( p.z() >= 0.  ?  +1  :  -1  )  ;
-	    sensorID->module  =  i ; 
+
+	    //fg: it seems that this code counts clockwise (negative rotation!)... 
+	    sensorID->module  = ( i ? nLadders - i : 0  ) ; 
+
 	    sensorID->sensor  =  0 ; 
 	  }
 
