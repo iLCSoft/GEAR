@@ -79,7 +79,7 @@ SET( test_bins
 )
 
 IF( GEAR_TGEO )
-    SET( test_bins ${test_bins} testGearTGeo ) #testMaterialBudget testMaterialMap testMaterialMapFactory )
+  SET( test_bins ${test_bins} testGearTGeo testMaterialBudgetNew testMaterialBudget testMaterialMap ) #testMaterialMapFactory )
 ENDIF()
 
 ADD_CUSTOM_TARGET( tests )

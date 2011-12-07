@@ -2,12 +2,21 @@
   Gear release notes
  ======================
   --------
- | v01-01-pre |  
+ | v01-01 |  
   --------
       - added SensorID helper class with side, layer, module, sensor to Gear.h
 
       - added ZPlanarParameters::isPointInSensitive(Vector3D p, SensorID* sensorID=0 )
         to compute the detector element (sensor) that contains the point
+  
+      - added test program testMaterialBudgetNew 
+        computes material budget in cylinders just inside the SIT, TPC and ECal 
+
+      - fixed FTDLayerLayoutImpl  ( J.Duarte)  
+          Added in the layeer instantiation relative methods the new parameters:
+	  - zposition (centered position of the disk support)
+	  - zsign0 ( sign of the offset of the first petal)
+	  Removed the zposition for the support and sensors from the layer
 
 
   --------
