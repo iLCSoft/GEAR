@@ -26,9 +26,28 @@ public:
     virtual int getNLayers() const = 0;
     
     /** The number of petals in the layer layerIndex - layer indexing starts at 0
-     *  for the layer closest to IP.  
+     *  for the layer closest to IP.    
      */
     virtual int getNPetals(int layerIndex) const = 0;
+    
+    /** The number of sensors per petal on a specific layer - 
+     *  Sensor indexing is defined as follows: (illustrated here by a doublesided petal with 4 sensors)
+     *  it starts with number 1: the sensor on the side facing the IP (the front), that is 
+     *  farthest from the xy - origin. 
+     *  2 is the next sensor on the same side closer to the xy - origin.
+     *  3 is on the back ( the side not facing the IP ) and is back to back to sensor 1.
+     *  4 is then back to back to sensor 2. 
+     * 
+     *  If it were for exmaple 8 sensors on a doublesided petal, it would be (from outside to inside) 1,2,3,4 on the front
+     *  and 5,6,7,8 on the back.
+     * 
+     * If it were 3 sensors on a singlesided petal, it would be just 1,2,3 on the front.
+     */
+    virtual int getNSensors(int layerIndex) const = 0;
+    
+    /** Whether the petals on a layer have sensors in front and back
+     */
+    virtual bool isDoubleSided(int layerIndex) const = 0;
     
     /** The sensor type of the disk: pixel of micro-strip
     */
@@ -126,9 +145,12 @@ public:
      *  layer indexing starting at 0 from the layer closest to IP.
      *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
      *  with positive rotation around Z-axis.
-     *  Sensor indexing is defined from Y-axis higher values, 1 (UP) 2 (DOWN) for the 
-     *  sensor facing the IP;  and 3 (UP), 4 (DOWN) for the sensor backing the IP.
-     *  The z-position is defined in the centroid point of the sensor.
+     *  Sensor indexing is defined as follows: (illustrated here by a doublesided petal with 4 sensors)
+     *  it starts with number 1: the sensor on the side facing the IP (the front), that is 
+     *  farthest from the xy - origin. 
+     *  2 is the next sensor on the same side closer to the xy - origin.
+     *  3 is on the back ( the side not facing the IP ) and is back to back to sensor 1.
+     *  4 is then back to back to sensor 2. 
      */
     virtual double getSensitiveZposition(const int & layerIndex, const int & petalIndex, const int & sensorId) const = 0;
 

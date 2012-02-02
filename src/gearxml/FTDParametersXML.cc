@@ -40,6 +40,8 @@ namespace gear
 			//std::cout << "                     layer #petals " << ftdLayers.getNPetals( i ) << std::endl ; //debug			
 			TiXmlElement layer("layer" ) ;
 			layer.SetAttribute( "nPetals" , ftdLayers.getNPetals(i) ) ;
+                        layer.SetAttribute( "nSensors" , ftdLayers.getNSensors(i) ) ;
+                        layer.SetAttribute( "isDoubleSided" , ftdLayers.isDoubleSided(i) ) ;
 			std::string strType;
 			switch( (int)ftdLayers.getSensorType(i) ) 
 			{
@@ -107,6 +109,8 @@ namespace gear
 		while( ( xmlLayer = xmlLayers->IterateChildren( "layer" , xmlLayer ) ) != 0 ) 
 		{
 			int nPetals    = atoi( getXMLAttribute( xmlLayer , "nPetals" ).c_str() );
+                        int nSensors   = atoi( getXMLAttribute( xmlLayer , "nSensors" ).c_str() );
+                        bool isDoubleSided = atoi( getXMLAttribute( xmlLayer , "isDoubleSided" ).c_str() );
 			std::string type= getXMLAttribute( xmlLayer, "sensorType" );
 			int sensorType;
 			if(  type == "PIXEL"  ) 
@@ -148,7 +152,7 @@ namespace gear
 			double sRinner    = atof( getXMLAttribute( xmlSen , "rInner"    ).c_str() ) ;
 			double sRadLen = atof( getXMLAttribute( xmlSen , "radLength" ).c_str() ) ;
 			
-			ftdParam->addLayer( nPetals, sensorType,  petalOpAngle, phi0 ,alpha, zposition, zoffset, zsign0,
+			ftdParam->addLayer( nPetals, nSensors, isDoubleSided, sensorType,  petalOpAngle, phi0 ,alpha, zposition, zoffset, zsign0,
 					//lzposition,
 					lRinner, lThick, lLengthMin, lLengthMax, lWidth, lRadLen,
 					//szposition,

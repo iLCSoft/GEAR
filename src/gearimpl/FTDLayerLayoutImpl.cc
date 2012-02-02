@@ -5,7 +5,7 @@
 
 namespace gear
 {
-void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double petalOpAngle, double phi0, double alpha, 
+  void FTDLayerLayoutImpl::addLayer(int nPetals, int nSensors, bool isDoubleSided,  int sensorType, double petalOpAngle, double phi0, double alpha, 
 		// common for support and sensitive
 		double zposition, double zoffset, double zsignpetal0,
 		// support
@@ -24,6 +24,8 @@ void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double petalOpAng
 	Layer lL, sL ; 
 	
 	lL.nPetals     = nPetals ;
+        lL.nSensors    = nSensors;
+        lL.isDoubleSided = isDoubleSided;
 	lL.sensorType  = sensorType;
 	//lL.phi       = phi ; 
 	lL.petalOpenningAngle= petalOpAngle;
@@ -40,6 +42,8 @@ void FTDLayerLayoutImpl::addLayer(int nPetals, int sensorType, double petalOpAng
 	lL.radLength   = supportRadLength ;
 
 	sL.nPetals     = nPetals ;
+        sL.nSensors    = nSensors;
+        sL.isDoubleSided = isDoubleSided;
 	sL.sensorType  = sensorType;
 	//sL.phi       = phi ; 
 	sL.petalOpenningAngle= petalOpAngle;
@@ -123,16 +127,20 @@ double FTDLayerLayoutImpl::getSensitiveZposition(const int & layerIndex, const i
 
 	// Extract if the sensor is back to IP or facing the IP
 	int zdisksign = (int)(zsupport/fabs(zsupport));
-	int sign = -zdisksign;
-	if( sensorIndex == 3 || sensorIndex == 4 ) 
-	{
-		sign = zdisksign;
-	}
-	else if( sensorIndex > 4 || sensorIndex < 1 )
+	int sign = -zdisksign; // the direction of the sensor: we start with a value directed to the IP -> if disk is at +z , the direction is - and vice versa
+	
+	if( ( _lVec.at(layerId).isDoubleSided )&&( sensorIndex > _lVec.at(layerId).nSensors/2 ) ){ // If the sensor is on the back
+          
+                sign = zdisksign; //the it looks into the other direction
+                
+        }
+	
+	if( sensorIndex > _lVec.at(layerId).nSensors || sensorIndex < 1 )
 	{
 		std::cout << "FTDLayerLayoutImpl::getSensitiveZposition Error!!" 
 			<< " The Sensor Index \'" << sensorIndex 
-			<< "\' is not determined. This is error shows an incoherence!" 
+			<< "\' is not determined. There are only sensors from 1 to " << _lVec.at(layerId).nSensors 
+			<< ". This is error shows an incoherence!" 
 			<< std::endl;
 		exit(-1);
 	}

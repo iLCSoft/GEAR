@@ -42,6 +42,8 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		struct Layer 
 		{
 			int    nPetals ;    // Number of petals
+			int    nSensors ;   // Number of sensors per petal
+			bool   isDoubleSided; // if Petals have sensors on front AND back
 			int    sensorType ; // The sensor type of the disk: pixel or strips
 			                    // For future changes: could be extended the types
 			                    // to Double Side Micro Strips, for instance...		                    
@@ -75,6 +77,25 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		/** The number of petals in the layer layerIndex - layer indexing starts at 0
 		 *  for the layer closest to IP.  */
 		virtual int getNPetals(int layerIndex) const { return _lVec.at( getEquivLayer(layerIndex) ).nPetals  ; }
+		
+		/** The number of sensors per petal on a specific layer - 
+                 *  Sensor indexing is defined as follows: (illustrated here by a doublesided petal with 4 sensors)
+                 *  it starts with number 1: the sensor on the side facing the IP (the front), that is 
+                 *  farthest from the xy - origin. 
+                 *  2 is the next sensor on the same side closer to the xy - origin.
+                 *  3 is on the back ( the side not facing the IP ) and is back to back to sensor 1.
+                 *  4 is then back to back to sensor 2. 
+                 * 
+                 *  If it were for exmaple 8 sensors on a doublesided petal, it would be (from outside to inside) 1,2,3,4 on the front
+                 *  and 5,6,7,8 on the back.
+                 * 
+                 * If it were 3 sensors on a singlesided petal, it would be just 1,2,3 on the front.
+                 */
+                virtual int getNSensors(int layerIndex) const { return _lVec.at( getEquivLayer(layerIndex) ).nSensors; }
+                
+                /** Whether the petals on a layer have sensors in front and back
+                 */
+                virtual bool isDoubleSided(int layerIndex) const { return _lVec.at( getEquivLayer(layerIndex) ).isDoubleSided; }
 		
 		/** The sensor type of the disk: pixel of micro-strip
 		  */
@@ -160,15 +181,18 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		virtual double getSupportWidth(int layerIndex) const { return _lVec.at( getEquivLayer(layerIndex) ).width  ; }
 	
 
-		/** The position of the sensitive in z direction in mm for sensor sensorIndex of
-		 *  the petal support petalIndex in layer layerIndex -
-		 *  layer indexing starting at 0 from the layer closest to IP.
-		 *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
-		 *  with positive rotation around Z-axis.
-		 *  Sensor indexing is defined from Y-axis higher values, 1 (UP) 2 (DOWN) for the 
-		 *  sensor facing the IP;  and 3 (UP), 4 (DOWN) for the sensor backing the IP.
-		 *  The z-position is defined in the centroid point of the sensor.
-		 */
+                /** The position of the sensitive in z direction in mm for sensor sensorIndex of
+                *  the petal support petalIndex in layer layerIndex -
+                *  layer indexing starting at 0 from the layer closest to IP.
+                *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+                *  with positive rotation around Z-axis.
+                *  Sensor indexing is defined as follows: (illustrated here by a doublesided petal with 4 sensors)
+                *  it starts with number 1: the sensor on the side facing the IP (the front), that is 
+                *  farthest from the xy - origin. 
+                *  2 is the next sensor on the same side closer to the xy - origin.
+                *  3 is on the back ( the side not facing the IP ) and is back to back to sensor 1.
+                *  4 is then back to back to sensor 2. 
+                */
 		virtual double getSensitiveZposition(const int & layerIndex, const int & petalIndex, 
 				const int & sensorIndex) const;
 
@@ -205,7 +229,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	
 		/** Add a new layer at the given position
 		 */
-		virtual void addLayer(int nPetals, int sensorType, double petalOpAngle, double phi0, double alpha, 
+		virtual void addLayer(int nPetals, int nSensors, bool isDoubleSided ,int sensorType, double petalOpAngle, double phi0, double alpha, 
 				      // common for support and sensitive
 				      double zposition, double zoffset, double zsign0,
 				      // support

@@ -45,7 +45,9 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 		 *  are trapezoids),  width (perpendicular to connection IP-spacepoint) and thickness 
 		 *  (extension to connection IP-spacepoint).
 		 *
-		 * @param nPetals   the number of petals and sensitive areas inside the layer        
+		 * @param nPetals   the number of petals and sensitive areas inside the layer 
+                 * @param nSensors  the number of sensors per petal
+                 * @param isDoubleSided whether the Petal has sensors on front AND back       
 		 * @param sensorType the type of the sensors: PIXEL, STRIP
 		 * @param phi0        azimuthal angle of vector defined by the Z-axis to first petal
 		 *                   x-positive, y-positive edge 
@@ -65,7 +67,7 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 		 *                   sensitive area (sensitiveRadLength) in mm                         
 		 *  		     
 		 */
-		virtual void addLayer(int nPetals, int sensorType, double petalOpAngle, double phi0, double alpha, 
+		virtual void addLayer(int nPetals, int nSensors, bool isDoubleSided, int sensorType, double petalOpAngle, double phi0, double alpha, 
 				double zposition, double zoffset, double zsign0,
 				//double supportZposition,
 				double supportRinner, double supportThickness,
@@ -76,7 +78,7 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 				double sensitiveLengthMin, double sensitiveLengthMax,
 				double sensitiveWidth, double sensitiveRadLength )
 		{
-			_layer.addLayer( nPetals, sensorType, petalOpAngle,phi0, alpha, 
+			_layer.addLayer( nPetals, nSensors, isDoubleSided, sensorType, petalOpAngle,phi0, alpha, 
 					zposition,zoffset,zsign0,
 					//supportZposition,
 					supportRinner,supportThickness, 
