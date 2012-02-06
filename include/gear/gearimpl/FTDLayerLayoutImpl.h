@@ -97,9 +97,12 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
                  */
                 virtual bool isDoubleSided(int layerIndex) const { return _lVec.at( getEquivLayer(layerIndex) ).isDoubleSided; }
 		
-		/** The sensor type of the disk: pixel of micro-strip
-		  */
-		virtual double getSensorType(int layerIndex) const { return _lVec.at(getEquivLayer(layerIndex)).sensorType; }
+		/** The sensor type of the disk: pixel or micro-strip
+		 * The return value corresponds to the following values: 
+		 *    gear::FTDParameters::PIXEL
+		 *    gear::FTDParameters::STRIP
+		*/
+		virtual int getSensorType(int layerIndex) const { return _lVec.at(getEquivLayer(layerIndex)).sensorType; }
 
 		/** Angular half-width of the petals of a layer. This angle define
 		    the trapezoid.
@@ -139,7 +142,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	
 		/** The position of the support in z direction in mm for the petalIndex petal
 		    in layer layerIndex - layer indexing starting at 0 from the layer closest to IP.
-		    Petal indexing starting at 0 for the petal placed in the y-axis and grows
+		    Petal indexing starting at 0 for the petal placed in the X-axis and grows
 		    with positive rotation around Z-axis.
 		    The position is defined in the centroid point of the support.
 		 */
@@ -183,8 +186,8 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 
                 /** The position of the sensitive in z direction in mm for sensor sensorIndex of
                 *  the petal support petalIndex in layer layerIndex -
-                *  layer indexing starting at 0 from the layer closest to IP.
-                *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+                *  Layer indexing starting at 0 from the layer closest to IP.
+                *  Petal indexing starting at 0 for the petal placed in the X-axis and grows
                 *  with positive rotation around Z-axis.
                 *  Sensor indexing is defined as follows: (illustrated here by a doublesided petal with 4 sensors)
                 *  it starts with number 1: the sensor on the side facing the IP (the front), that is 
@@ -248,7 +251,7 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	
     		/** Azimuthal angle of the petal petalIndex Centroid at layer layerIndex.
 		 *  Layer indexing starting at 0 from the layer closest to IP.
-		 *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+		 *  Petal indexing starting at 0 for the petal placed in the X-axis and grows
 		 *  with positive rotation around Z-axis.
 		 */
 		virtual double getPhiPetalCd(const int & layerIndex, const int & petalIndex) const;

@@ -49,9 +49,12 @@ public:
      */
     virtual bool isDoubleSided(int layerIndex) const = 0;
     
-    /** The sensor type of the disk: pixel of micro-strip
+    /** The sensor type of the disk: pixel or micro-strip
+      * The return value corresponds to the following values: 
+      *    gear::FTDParameters::PIXEL
+      *    gear::FTDParameters::STRIP
     */
-    virtual double getSensorType(int layerIndex) const = 0;
+    virtual int getSensorType(int layerIndex) const = 0;
     
     /** Angular half-width of the petals of a layer - half of the opening angle of the trapezoid
       */
@@ -96,7 +99,7 @@ public:
   
     /** The position of the support in z direction in mm for the petalIndex petal
       * in layer layerIndex - layer indexing starting at 0 from the layer closest to IP.
-      * Petal indexing starting at 0 for the petal placed in the y-axis and grows
+      * Petal indexing starting at 0 for the petal placed in the X-axis and grows
       * with positive rotation around Z-axis.
       * The position is defined in the centroid point of the support.
      */
@@ -143,7 +146,7 @@ public:
     /** The position of the sensitive in z direction in mm for sensor sensorIndex of
      *  the petal support petalIndex in layer layerIndex -
      *  layer indexing starting at 0 from the layer closest to IP.
-     *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+     *  Petal indexing starting at 0 for the petal placed in the X-axis and grows
      *  with positive rotation around Z-axis.
      *  Sensor indexing is defined as follows: (illustrated here by a doublesided petal with 4 sensors)
      *  it starts with number 1: the sensor on the side facing the IP (the front), that is 
@@ -187,7 +190,7 @@ public:
 
     /** Azimuthal angle of the petal petalIndex Centroid at layer layerIndex.
      *  Layer indexing starting at 0 from the layer closest to IP.
-     *  Petal indexing starting at 0 for the petal placed in the y-axis and grows
+     *  Petal indexing starting at 0 for the petal placed in the X-axis and grows
      *  with positive rotation around Z-axis.
      */
     virtual double getPhiPetalCd(const int & layerIndex, const int & petalIndex) const = 0;

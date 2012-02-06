@@ -20,7 +20,7 @@ class FTDLayerLayout;
  *  The sensitive volumes can be placed relative to the (insensitive) ladders.
  *  @see addLayer .</p>
  *  NB: The FTDParameters describe the one half of the detector at the positive z-axis and the other half 
- *  of the detector is just a rotation about pi around the y-axis.<br>
+ *  of the detector is built as a reflection in the XY-plane.<br>
 
  *  @author J. Duarte; IFCA (based from VXDParametersImpl)
  *  @version $Id: 
