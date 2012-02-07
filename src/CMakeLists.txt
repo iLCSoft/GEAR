@@ -33,6 +33,12 @@ IF( GEAR_TGEO )
 ENDIF()
 # ----------------------------------------------------
 
+# -------- libgearsurf -------------------------------
+IF( GEAR_SURF )
+    ADD_SUBDIRECTORY( ./gearsurf )
+ENDIF()
+# ----------------------------------------------------
+
 
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
