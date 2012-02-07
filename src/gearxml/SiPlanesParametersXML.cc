@@ -291,6 +291,10 @@ namespace gear {
     } // end loop
 
 
+
+    // now read the generic parameters
+    GearParametersXML::setParametersFromXML( xmlElement, siplanesParam  ) ;
+    
     // ------- add to GearMgr ----
     if( gearMgr != 0 ) {
       
