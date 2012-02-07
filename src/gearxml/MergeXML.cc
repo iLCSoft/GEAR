@@ -40,7 +40,9 @@ namespace gear{
 
     // variables
     const std::string gear = "gear" ;
+    const std::string global = "global" ;
     const std::string detectors = "detectors" ;
+    const std::string materials = "materials" ;
 
     // correct the files for dominancy
     correctDominantFile() ;
@@ -61,15 +63,20 @@ namespace gear{
     }
 
     // go to specified nodes
-    TiXmlNode* nodeGear1 = _file1->FirstChild( gear ) ;
+    TiXmlNode* nodeGear1      = _file1->FirstChild( gear ) ;
+    TiXmlNode* nodeGlobal1    = nodeGear1->FirstChild( global ) ;
     TiXmlNode* nodeDetectors1 = nodeGear1->FirstChild( detectors ) ;
-
-    TiXmlNode* nodeGearMerged = _fileMerged->FirstChild( gear ) ;
-    TiXmlNode* nodeDetectorsMerged = nodeGearMerged->FirstChild( detectors ) ;
+    TiXmlNode* nodeMaterials1 = nodeGear1->FirstChild( materials ) ;
     
-
+    TiXmlNode* nodeGearMerged = _fileMerged->FirstChild( gear ) ;
+    TiXmlNode* nodeGlobalMerged    = nodeGearMerged->FirstChild( global ) ;
+    TiXmlNode* nodeDetectorsMerged = nodeGearMerged->FirstChild( detectors ) ;
+    TiXmlNode* nodeMaterialsMerged = nodeGearMerged->FirstChild( materials ) ;
+    
     // loop through all nodes
+    mergeNode( nodeGlobal1, nodeGlobalMerged ) ;
     mergeNode( nodeDetectors1, nodeDetectorsMerged ) ;
+    mergeNode( nodeMaterials1, nodeMaterialsMerged ) ;
     
     // save file
     return _fileMerged->SaveFile( fileName ) ;
