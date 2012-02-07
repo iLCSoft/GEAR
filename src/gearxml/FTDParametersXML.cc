@@ -159,6 +159,11 @@ namespace gear
 					sRinner, sThick, sLengthMin, sLengthMax, sWidth, sRadLen ) ;
 		} // end loop
 		
+
+		// now read the generic parameters
+		GearParametersXML::setParametersFromXML( xmlElement, ftdParam  ) ;
+		
+
 		// ------- add to GearMgr ----
 		if( gearMgr != 0 ) 
 		{

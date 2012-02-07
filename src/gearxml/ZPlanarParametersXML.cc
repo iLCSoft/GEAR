@@ -198,6 +198,10 @@ namespace gear {
     } // end loop
 
       
+    // now read the generic parameters
+    GearParametersXML::setParametersFromXML( xmlElement, param  ) ;
+
+
     //--------- add to proper section in GearMgr ----
     if( gearMgr != 0 ) {
       
