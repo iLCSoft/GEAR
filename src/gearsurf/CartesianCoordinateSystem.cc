@@ -1,4 +1,4 @@
-#include "CartesianCoordinateSystem.h"
+#include "gearsurf/CartesianCoordinateSystem.h"
 
 namespace GearSurfaces{
   

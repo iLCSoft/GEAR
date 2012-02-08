@@ -1,24 +1,16 @@
 
-#include "MeasurementSurfaceStore.h"
+#include "gearsurf/MeasurementSurfaceStore.h"
 
-#include <stdexcept>
-#include <vector>
-#include <algorithm>
 #include <sstream>
+#include <vector>
 
-#include "MeasurementSurface.h"
-#include "BoundaryRectangle.h"
-#include "BoundaryTrapezoid.h"
+#include "GEAR.h"
 
-//#include <gear/ZPlanarParameters.h>
-//#include <gear/ZPlanarLayerLayout.h>
-//#include <gear/FTDLayerLayout.h>
-//#include <gear/FTDParameters.h>
-//#include <gear/GEAR.h>
-//#include <gear/GearMgr.h>
+#include "gearsurf/MeasurementSurface.h"
+#include "gearsurf/BoundaryRectangle.h"
+#include "gearsurf/BoundaryTrapezoid.h"
 
-
-#include "CartesianCoordinateSystem.h"
+#include "gearsurf/CartesianCoordinateSystem.h"
 
 
 
@@ -66,7 +58,7 @@ namespace GearSurfaces{
       
       std::stringstream s;
       s << "GetMeasurementSurface: The surface with ID " << ID << " is not in the map!";
-      MeasurementSurfaceStoreException exp( s.str() ) ;
+      gear::Exception exp( s.str() ) ;
       
       throw exp ; 
     } 
@@ -76,29 +68,28 @@ namespace GearSurfaces{
     
   }
   
-  void MeasurementSurfaceStore::initialise(gear::GearMgr* gear_mgr){
-    
-    if ( ! _isInitialised) {
-      //      this->createStore(gear_mgr); 
-      _isInitialised = true ;
-    }
-    
-    
-  }
-  
+//  void MeasurementSurfaceStore::initialise(gear::GearMgr* gear_mgr){
+//    
+//    if ( ! _isInitialised) {
+//      //      this->createStore(gear_mgr); 
+//      _isInitialised = true ;
+//    }
+//    
+//    
+//  }
+//  
   void MeasurementSurfaceStore::addMeasurementSurface(MeasurementSurface* ms) {
     
     int ID = ms->getID();
     
     ms_map_it it = _measurement_surface_map.find(ID) ; 
     
-    
-    
+  
     if ( it != _measurement_surface_map.end() ) { 
       
       std::stringstream s;
       s << "addMeasurementSurface: The surface with ID " << ID << " can't be added as it already is in the map!";
-      MeasurementSurfaceStoreException exp( s.str() ) ;
+      gear::Exception  exp( s.str() ) ;
       throw exp; 
       
     } 
@@ -107,6 +98,33 @@ namespace GearSurfaces{
     }
   }
   
+  
+  void MeasurementSurfaceStore::FillStore(MeasurementSurfaceStoreFiller* filler){
+    
+    if ( first_filler == 0 ) {
+      std::vector<MeasurementSurface*> surface_list;
+      filler->fill_store(surface_list);
+      
+      std::vector<MeasurementSurface*>::iterator it;
+      
+      for (it = surface_list.begin(); it!=surface_list.end(); ++it) {
+        this->addMeasurementSurface(*it);
+      }
+      
+    }
+    else if( filler != first_filler ) {
+      
+      std::stringstream s;
+      s << "FillStore: Store already filled with MeasurementSurfaceStoreFiller " << first_filler ;
+      gear::Exception exp( s.str() ) ;
+      
+      throw exp ; 
+
+      
+    }
+    
+    
+  }
   
   
 } // end of GearSurfaces namespace 

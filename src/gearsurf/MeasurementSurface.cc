@@ -1,6 +1,6 @@
 
-#include "MeasurementSurface.h"
-#include "ICoordinateSystem.h"
+#include "gearsurf/MeasurementSurface.h"
+#include "gearsurf/ICoordinateSystem.h"
 
 
 namespace GearSurfaces {

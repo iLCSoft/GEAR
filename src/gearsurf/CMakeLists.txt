@@ -1,6 +1,6 @@
 
 ########################################
-# cmake file for building libgeartgeo
+# cmake file for building libgearsurf
 # @author Jan Engels, DESY
 ########################################
 

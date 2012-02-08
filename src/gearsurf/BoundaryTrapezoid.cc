@@ -1,4 +1,4 @@
-#include "BoundaryTrapezoid.h"
+#include "gearsurf/BoundaryTrapezoid.h"
 
 #include "CLHEP/Vector/Rotation.h"
 

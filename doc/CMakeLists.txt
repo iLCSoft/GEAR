@@ -29,10 +29,12 @@ ADD_CUSTOM_COMMAND(
             ../include/gear/gearcga/*
             ../include/gear/gearimpl/*
             ../include/gear/geartgeo/*
+            ../include/gear/gearsurf/*
             ../include/gear/gearxml/*
             ../src/gearcga/*
             ../src/gearimpl/*
             ../src/geartgeo/*
+            ../src/gearsurf/*
             ../src/gearxml/*
 )
 

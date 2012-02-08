@@ -1,4 +1,5 @@
-#include "BoundaryRectangle.h"
+
+#include "gearsurf/BoundaryRectangle.h"
 
 #include "CLHEP/Vector/Rotation.h"
 
