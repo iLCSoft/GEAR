@@ -1,7 +1,9 @@
+#include "gear/GEAR.h"
 #include "gearimpl/FTDLayerLayoutImpl.h"
 #include <math.h>
 #include <iostream>
 #include <stdlib.h>
+#include <sstream>
 
 namespace gear
 {
@@ -137,13 +139,13 @@ double FTDLayerLayoutImpl::getSensitiveZposition(const int & layerIndex, const i
 	
 	if( sensorIndex > _lVec.at(layerId).nSensors || sensorIndex < 1 )
 	{
-		std::cout << "FTDLayerLayoutImpl::getSensitiveZposition Error!!" 
+	  std::stringstream ss ;
+	  ss << "FTDLayerLayoutImpl::getSensitiveZposition Error!!" 
+	     << " The Sensor Index \'" << sensorIndex 
+	     << "\' is out of range. There are only sensors from 1 to " << _lVec.at(layerId).nSensors  << " !"
+	     << std::endl;
 
-      << " The Sensor Index \'" << sensorIndex 
-			<< "\' is not determined. There are only sensors from 1 to " << _lVec.at(layerId).nSensors 
-			<< ". This is error shows an incoherence!" 
-			<< std::endl;
-		exit(-1);
+	  throw gear::Exception( ss.str() ) ;
 	}
 	double petalthickness = _lVec.at(layerId).thickness;
 	double sensorthickness = _sVec.at(layerId).thickness;
