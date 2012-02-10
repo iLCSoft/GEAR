@@ -8,6 +8,10 @@
 #include "GEAR.h"
 #include "gear/GearParameters.h"
 
+
+
+
+
 namespace gear {
 
 class BField;
@@ -19,8 +23,9 @@ class TPCParameters;
 class ZPlanarParameters ;
 class FTDParameters ;
 class SimpleMaterial ;
-
-/** Abstract interface for a manager class that returns the Gear classes for the 
+class MeasurementSurfaceStore;
+  
+  /** Abstract interface for a manager class that returns the Gear classes for the 
  *  relevant subdetectors.
  * 
  *
@@ -176,14 +181,17 @@ class SimpleMaterial ;
 
     
     /** Return the SimpleMaterial for the given name throws UnknownParameterException if no material is unknown.*/
-    virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const throw (UnknownParameterException, std::exception )  =0 ;
+    virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const throw (UnknownParameterException, std::exception )  = 0 ;
     
-
     /** Names of registered materials.
      */ 
     virtual const std::vector<std::string>  & getMaterialNames() const = 0;
 
+    /** Return the MeasurementSurfaceStore
+     */
+    virtual MeasurementSurfaceStore& getMeasurementSurfaceStore() const = 0 ;
 
+    
     /** Set detector name.
      */
     virtual void setDetectorName(const std::string & name) = 0;
@@ -277,11 +285,12 @@ class SimpleMaterial ;
      */
     virtual void setDistanceProperties(GearDistanceProperties * distanceProperties) = 0;
 
-    /** Register the SimpleMaterial with  SimpleMaterial::getName() - throws Exception if a material of the given name has allready been added.
+    /** Register the SimpleMaterial with  SimpleMaterial::getName() - throws Exception if a material of the given name has already been added.
      *  This takes ownership of the SimpleMaterial object.
      */
-    virtual void registerSimpleMaterial( const SimpleMaterial* material) throw( Exception , std::exception ) =0 ;
+    virtual void registerSimpleMaterial( const SimpleMaterial* material ) throw( Exception , std::exception ) = 0 ;
     
+
   }; // class
 } // namespace gear
 #endif /* ifndef GEAR_GEARMGR_H */

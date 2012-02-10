@@ -40,6 +40,9 @@ IF( GEAR_TGEO )
 ENDIF( GEAR_TGEO )
 
 
+FIND_PACKAGE( CLHEP REQUIRED ) # needed for gearsurf
+
+
 
 ### DOCUMENTATION ###########################################################
 
@@ -88,6 +91,7 @@ INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/incl
 IF( GEAR_TGEO )
     INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
 ENDIF()
+
 
 ADD_CUSTOM_TARGET( uninstall_links
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"

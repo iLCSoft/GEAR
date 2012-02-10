@@ -16,7 +16,6 @@
 #include "gearimpl/ConstantBField.h"
 #include "gearimpl/SimpleMaterialImpl.h"
 
-
 #include <sstream>
 
 namespace gear{
@@ -43,9 +42,12 @@ namespace gear{
     _siplanesParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) ,
-    _bField(0),
+    _bField(0) ,
     _detectorName(""){
-  }
+      
+    _surfaceStore = new MeasurementSurfaceStore();
+
+    }
   
   GearMgrImpl::GearMgrImpl(const  GearMgrImpl & right)
   {
@@ -54,17 +56,15 @@ namespace gear{
       copy_and_assign(right);
   }
 
-  void GearMgrImpl::copy_and_assign(const  GearMgrImpl & right)
-  {
+  void GearMgrImpl::copy_and_assign(const  GearMgrImpl & right) {
     ///FIXME!!! this also contains pointers
     //ParameterMap::iterator it_end = _map.end() ;
-
-    for( ParameterMap::iterator paramIter = _map.begin() ; paramIter != _map.end() ; paramIter++ )
-    {
-	// the map should only have GearParametersImpl, not anything derrived from it
-	paramIter->second = new GearParametersImpl( *dynamic_cast<GearParametersImpl *>(paramIter->second) );
+    
+    for( ParameterMap::iterator paramIter = _map.begin() ; paramIter != _map.end() ; paramIter++ ) {
+      // the map should only have GearParametersImpl, not anything derrived from it
+      paramIter->second = new GearParametersImpl( *dynamic_cast<GearParametersImpl *>(paramIter->second) );
     }
-
+    
     _tpcParameters = new TPCParametersImpl( *dynamic_cast<TPCParametersImpl *> (right._tpcParameters ));
     _ecalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalBarrelParameters));
     _ecalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalEndcapParameters));
@@ -98,6 +98,7 @@ namespace gear{
       this->registerSimpleMaterial( new SimpleMaterialImpl( *dynamic_cast<const SimpleMaterialImpl*>( it->second ) ) ) ; 
     }
 
+    _surfaceStore = new MeasurementSurfaceStore( (*right._surfaceStore) ) ;
 
   }
 
@@ -141,6 +142,8 @@ namespace gear{
     for(MatMap::iterator it = _matMap.begin(), end = _matMap.end() ; it != end ; ++it ){
       delete it->second ;
     }
+    
+    delete _surfaceStore ; _surfaceStore = 0 ;
     
   }
 
