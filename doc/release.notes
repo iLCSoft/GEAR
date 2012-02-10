@@ -1,6 +1,18 @@
  ======================
   Gear release notes
  ======================
+
+
+  --------
+ | v01-02 |  
+  --------
+
+      - Added new functionality for surfaces. 
+        Surfaces have a CoordinateSystem and may optionally be bounded. 
+        So far only Cartesian Coordinate System are available with rectangular and trapezoid boundaries. 
+        gearsurf remains in a separate directory and builds a separate library which is then linked to the gear library. 
+        All new functionality is included within the gear namespace.         
+
   --------
  | v01-01 |  
   --------
