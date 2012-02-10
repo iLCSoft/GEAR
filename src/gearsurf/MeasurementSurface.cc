@@ -3,7 +3,7 @@
 #include "gearsurf/ICoordinateSystem.h"
 
 
-namespace GearSurfaces {
+namespace gear {
 
   MeasurementSurface::~MeasurementSurface(){ 
     
@@ -13,7 +13,7 @@ namespace GearSurfaces {
   }
   
   // only checks the boundary if a boundary is present
-  bool MeasurementSurface::isLocalInBoundary( CLHEP::Hep3Vector local ){
+  bool MeasurementSurface::isLocalInBoundary( CLHEP::Hep3Vector local ) const{
     
     bool inbounds = true ; 
     
@@ -27,7 +27,7 @@ namespace GearSurfaces {
   
   
   // only checks the boundary if a boundary is present
-  bool MeasurementSurface::isGlobalInBoundary( CLHEP::Hep3Vector global ){
+  bool MeasurementSurface::isGlobalInBoundary( CLHEP::Hep3Vector global ) const{
     
     bool inbounds = true ; 
     
@@ -46,7 +46,7 @@ namespace GearSurfaces {
   
   
   
-} //end of GearSurfaces namespace 
+} //end of gear namespace 
 
 
 

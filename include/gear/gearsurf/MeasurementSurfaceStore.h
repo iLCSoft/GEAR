@@ -9,86 +9,67 @@
 #include <map>
 #include <vector>
 #include <iostream>
-  
+
 namespace gear{
-  class GearMgr;
-}
-
   
-  namespace GearSurfaces{
-        
+  class MeasurementSurface;
+  
+  class MeasurementSurfaceStoreFiller;
+  
+  
+  class MeasurementSurfaceStore {
     
-    class MeasurementSurface;
-
-    class MeasurementSurfaceStoreFiller;
-
+  public:
     
-    class MeasurementSurfaceStore {
-      
-    public:
-      
-      /** Accessor Method */
-      static MeasurementSurfaceStore& Instance() {
-        
-        static MeasurementSurfaceStore singleton;
-        
-        return singleton;
-        
-      }
-      
-      // Other non-static member functions
-      
-    public:
-      
-      friend class MeasurementSurfaceStoreFiller;
-      
-      /** Destructor */
-      ~MeasurementSurfaceStore();   
-      
-      void Print() { std::cout << "Print Method" << std::endl; }
-      
-      /** Get Measurement Surface via ID */
-      MeasurementSurface* GetMeasurementSurface( int ID ) const ;  
-      
-      /** Fill Store. Only one filler will be accepted, the filler may be sent multiple times but it will only be processed once. Whenever a filler is sent it will be checked that it is the same as the first.*/
-      void FillStore(MeasurementSurfaceStoreFiller* filler);
-      
-    private:
-      
-      MeasurementSurfaceStore() : first_filler(0) { _measurement_surface_map.clear() ;}                               // Private constructor
-      
-      
-      MeasurementSurfaceStore(const MeasurementSurfaceStore&) ;                 // Prevent copy-construction
-      MeasurementSurfaceStore& operator=(const MeasurementSurfaceStore&) ;      // Prevent assignment
-      
-      void addMeasurementSurface(MeasurementSurface* ms); 
-            
-      
-      // only one filler will be accepted, the filler may be sent multiple times but it will only be processed once. Whenever a filler is sent it will be checked that it is the same as the first.
-      MeasurementSurfaceStoreFiller* first_filler;
-      
-      // private member variables
-      std::map<int,MeasurementSurface* > _measurement_surface_map;
-      
-      typedef std::map<int, MeasurementSurface*>::const_iterator ms_map_it ; 
-      
-      static bool _isInitialised;
-
-      
-    };
+    /** Default Constructor */
+    MeasurementSurfaceStore() : _store_filled(0) , _fillerName("") { _measurement_surface_map.clear() ;}
+ 
+    /** Copy Constructor */
+    MeasurementSurfaceStore( const MeasurementSurfaceStore& ) ;                 
+  
     
-    class MeasurementSurfaceStoreFiller {
-      
-      friend class MeasurementSurfaceStore;
-      
-    protected:
-      
-      virtual void fill_store(std::vector<MeasurementSurface*>&) const = 0 ;
-      
-      
-    } ;
-
+    /** Destructor */
+    ~MeasurementSurfaceStore(); 
     
-  } // end of GearSurfaces namespace 
+    /** Get Measurement Surface via ID */
+    MeasurementSurface const* GetMeasurementSurface( int ID ) const ;  
+    
+    /** Fill Store. Only one filler will be accepted. Exception will be thrown on further attempts */
+    void FillStore(MeasurementSurfaceStoreFiller* filler);
+  
+    /** Check if the store has been filled already */
+    bool isFilled() const { return _store_filled ; } 
+
+    /** Get the Name of the Filler used to fill the store. In the case of an empty store the string STORE_NOT_YET_FILLED will be returned. */
+    std::string getFillerName() const ;
+    
+  private:
+    
+    MeasurementSurfaceStore& operator=(const MeasurementSurfaceStore&) ;      // prevent assignment operator
+     
+    void addMeasurementSurface(MeasurementSurface* ms); 
+    
+    // private member variables
+    std::map<int,MeasurementSurface* > _measurement_surface_map;
+    
+    typedef std::map<int, MeasurementSurface*>::const_iterator ms_map_it ; 
+    
+    bool _store_filled;
+  
+    std::string _fillerName;
+    
+  };
+  
+  class MeasurementSurfaceStoreFiller {
+    
+  public:
+    
+    virtual void getMeasurementSurfaces(std::vector<MeasurementSurface*>&) const = 0 ;
+    virtual std::string getName() const = 0;      
+    
+  } ;
+  
+  
+} // end of gear namespace 
 
 #endif

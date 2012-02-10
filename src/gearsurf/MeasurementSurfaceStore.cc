@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 
-#include "GEAR.h"
+#include "gear/Gear.h"
 
 #include "gearsurf/MeasurementSurface.h"
 #include "gearsurf/BoundaryRectangle.h"
@@ -14,28 +14,18 @@
 
 
 
-namespace GearSurfaces{
+namespace gear{
   
-  
-  void printRotation( const CLHEP::HepRotation& R ){
+  MeasurementSurfaceStore::MeasurementSurfaceStore(const MeasurementSurfaceStore& right) {
     
-    std::cout.precision(2);
-    std::cout.setf( std::ios::fixed , std::ios::floatfield );
-    std::cout << "R:\n"
-    << "| " << R.xx() << "  " << R.xy() << "  " << R.xz() << " |\n"
-    << "| " << R.yx() << "  " << R.yy() << "  " << R.yz() << " |\n"
-    << "| " << R.zx() << "  " << R.zy() << "  " << R.zz() << " |\n";
-  }
-  
-  void printVector( const CLHEP::Hep3Vector& vec ){
+    _store_filled = right._store_filled;
+
+    _measurement_surface_map = right._measurement_surface_map;
     
-    std::cout.precision(2);
-    std::cout.setf( std::ios::fixed , std::ios::floatfield );
-    std::cout << "( " << vec.x() << "  " << vec.y() << "  " << vec.z() << " )\n";
+    _fillerName = right._fillerName;
     
   }
   
-  bool MeasurementSurfaceStore::_isInitialised = false ;
   
   MeasurementSurfaceStore::~MeasurementSurfaceStore(){
     
@@ -50,7 +40,7 @@ namespace GearSurfaces{
       }
   }
   
-  MeasurementSurface* MeasurementSurfaceStore::GetMeasurementSurface(int ID) const {
+  MeasurementSurface const* MeasurementSurfaceStore::GetMeasurementSurface(int ID) const {
     
     ms_map_it it = _measurement_surface_map.find(ID) ;        
     
@@ -68,16 +58,7 @@ namespace GearSurfaces{
     
   }
   
-//  void MeasurementSurfaceStore::initialise(gear::GearMgr* gear_mgr){
-//    
-//    if ( ! _isInitialised) {
-//      //      this->createStore(gear_mgr); 
-//      _isInitialised = true ;
-//    }
-//    
-//    
-//  }
-//  
+
   void MeasurementSurfaceStore::addMeasurementSurface(MeasurementSurface* ms) {
     
     int ID = ms->getID();
@@ -99,11 +80,33 @@ namespace GearSurfaces{
   }
   
   
-  void MeasurementSurfaceStore::FillStore(MeasurementSurfaceStoreFiller* filler){
+  std::string MeasurementSurfaceStore::getFillerName() const { 
     
-    if ( first_filler == 0 ) {
+    if ( _store_filled == false ) {
+      gear::Exception exp( "MeasurementSurfaceStore::getFillerName(): Store has not yet been filled!" ) ;
+      throw  exp ; 
+    }
+
+    return _fillerName;
+    
+  }
+  
+  void MeasurementSurfaceStore::FillStore(MeasurementSurfaceStoreFiller* filler){
+
+    if( _store_filled ) {
+      
+      std::stringstream s;
+      s << "FillStore: Store already filled with MeasurementSurfaceStoreFiller " << _fillerName ;
+      gear::Exception exp( s.str() ) ;
+      
+      throw exp ; 
+      
+    }
+    else {
+      
+      _fillerName = filler->getName(); 
       std::vector<MeasurementSurface*> surface_list;
-      filler->fill_store(surface_list);
+      filler->getMeasurementSurfaces(surface_list);
       
       std::vector<MeasurementSurface*>::iterator it;
       
@@ -111,23 +114,14 @@ namespace GearSurfaces{
         this->addMeasurementSurface(*it);
       }
       
-    }
-    else if( filler != first_filler ) {
+      _store_filled = true;
       
-      std::stringstream s;
-      s << "FillStore: Store already filled with MeasurementSurfaceStoreFiller " << first_filler ;
-      gear::Exception exp( s.str() ) ;
-      
-      throw exp ; 
-
-      
-    }
-    
+    }    
     
   }
   
   
-} // end of GearSurfaces namespace 
+} // end of gear namespace 
 
 
 

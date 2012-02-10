@@ -8,6 +8,7 @@
 #include "gear/GearParameters.h"
 #include "gear/TPCParameters.h"
 #include "gear/SimpleMaterial.h"
+#include "gearsurf/MeasurementSurfaceStore.h"
 
 namespace gear {
     
@@ -218,7 +219,11 @@ namespace gear {
      */
     virtual void  registerSimpleMaterial( const SimpleMaterial* material) throw(Exception , std::exception ) ;
  
-
+    /** Return the MeasurementSurfaceStore 
+     */
+    virtual MeasurementSurfaceStore& getMeasurementSurfaceStore() const {return *_surfaceStore;} 
+    
+    
     virtual void setDetectorName(const std::string& name) { _detectorName = name ; }
 
     /** Set the GearParameters for the given key - overwrites any 
@@ -342,6 +347,8 @@ namespace gear {
     typedef std::map< std::string,const SimpleMaterial* >  MatMap ;
     MatMap _matMap ;
 
+    MeasurementSurfaceStore* _surfaceStore ;
+    
     mutable StringVec _keys ;
 
     mutable StringVec _matNames ;

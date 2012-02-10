@@ -460,6 +460,7 @@ namespace gear{
     } else {
       
       _gearMgr = new GearMgrImpl ;
+
     }
     
     

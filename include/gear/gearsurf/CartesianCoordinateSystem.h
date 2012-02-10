@@ -5,7 +5,7 @@
 #include "CLHEP/Vector/Rotation.h"
 
 
-namespace GearSurfaces{
+namespace gear{
   
   /** Cartesian coordinate system class */
   class CartesianCoordinateSystem : public ICoordinateSystem{
@@ -45,7 +45,7 @@ namespace GearSurfaces{
     
   };
   
-} // end of GearSurfaces namespace
+} // end of gear namespace
 
 #endif
 

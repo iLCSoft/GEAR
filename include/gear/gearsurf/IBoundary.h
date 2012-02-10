@@ -3,7 +3,7 @@
 
 #include "CLHEP/Vector/ThreeVector.h"
   
-  namespace GearSurfaces {
+  namespace gear {
     
     
     class IBoundary{
@@ -21,7 +21,7 @@
     };
     
     
-  } // end of GearSurfaces namespace 
+  } // end of gear namespace 
 
 #endif
 

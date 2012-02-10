@@ -39,13 +39,8 @@ IF( GEAR_TGEO )
 
 ENDIF( GEAR_TGEO )
 
-OPTION( GEAR_SURF "Set to ON to build tracking surface extensions" OFF )
 
-IF( GEAR_SURF )
-
-    FIND_PACKAGE( CLHEP REQUIRED )
-
-ENDIF( GEAR_SURF )
+FIND_PACKAGE( CLHEP REQUIRED ) # needed for gearsurf
 
 
 
@@ -97,17 +92,11 @@ IF( GEAR_TGEO )
     INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/geartgeo geartgeo )" )
 ENDIF()
 
-IF( GEAR_SURF )
-    INSTALL( CODE "EXEC_PROGRAM( \"${CMAKE_COMMAND}\" \"${CMAKE_INSTALL_PREFIX}/include\" ARGS -E create_symlink gear/gearsurf gearsurf )" )
-ENDIF()
-
-
 
 ADD_CUSTOM_TARGET( uninstall_links
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearimpl"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearxml"
     COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/geartgeo"
-    COMMAND "${CMAKE_COMMAND}" -E remove "${CMAKE_INSTALL_PREFIX}/include/gearsurf"
 )
 
 ADD_DEPENDENCIES( uninstall uninstall_links )
@@ -119,7 +108,6 @@ ADD_DEPENDENCIES( uninstall uninstall_links )
 DISPLAY_STD_VARIABLES()
 
 MESSAGE( STATUS "GEAR_TGEO = ${GEAR_TGEO}" )
-MESSAGE( STATUS "GEAR_SURF = ${GEAR_SURF}" )
 MESSAGE( STATUS )
 
 

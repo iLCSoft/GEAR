@@ -1,6 +1,6 @@
 #include "gearsurf/CartesianCoordinateSystem.h"
 
-namespace GearSurfaces{
+namespace gear{
   
   CLHEP::Hep3Vector CartesianCoordinateSystem::getLocalPoint( CLHEP::Hep3Vector globalPoint ){
     
@@ -23,7 +23,7 @@ namespace GearSurfaces{
     
   }
   
-} //end of GearSurfaces namespace 
+} //end of gear namespace 
 
 
 

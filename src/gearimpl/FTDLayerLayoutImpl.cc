@@ -138,7 +138,8 @@ double FTDLayerLayoutImpl::getSensitiveZposition(const int & layerIndex, const i
 	if( sensorIndex > _lVec.at(layerId).nSensors || sensorIndex < 1 )
 	{
 		std::cout << "FTDLayerLayoutImpl::getSensitiveZposition Error!!" 
-			<< " The Sensor Index \'" << sensorIndex 
+
+      << " The Sensor Index \'" << sensorIndex 
 			<< "\' is not determined. There are only sensors from 1 to " << _lVec.at(layerId).nSensors 
 			<< ". This is error shows an incoherence!" 
 			<< std::endl;

@@ -21,10 +21,21 @@ INCLUDE_DIRECTORIES( BEFORE "${PROJECT_SOURCE_DIR}/include/gear" )
 
 ###### LIBRARIES #####################################################
 
+# -------- libgearsurf -------------------------------
+INCLUDE_DIRECTORIES( ${CLHEP_INCLUDE_DIRS} ) # needed for gearsurf only
+
+AUX_SOURCE_DIRECTORY( ./gearsurf libgearsurf_srcs )
+ADD_SHARED_LIBRARY( gearsurf ${libgearsurf_srcs} )
+TARGET_LINK_LIBRARIES( gearsurf ${CLHEP_LIBRARIES} )
+INSTALL_SHARED_LIBRARY( gearsurf DESTINATION lib )
+# ----------------------------------------------------
+
+
 # -------- libgear (impl) ----------------------------
 AUX_SOURCE_DIRECTORY( ./gearimpl libgear_srcs )
 ADD_SHARED_LIBRARY( gear ${libgear_srcs} )
 INSTALL_SHARED_LIBRARY( gear DESTINATION lib )
+TARGET_LINK_LIBRARIES( gear gearsurf )
 # ----------------------------------------------------
 
 # -------- libgeartgeo -------------------------------
@@ -32,13 +43,6 @@ IF( GEAR_TGEO )
     ADD_SUBDIRECTORY( ./geartgeo )
 ENDIF()
 # ----------------------------------------------------
-
-# -------- libgearsurf -------------------------------
-IF( GEAR_SURF )
-    ADD_SUBDIRECTORY( ./gearsurf )
-ENDIF()
-# ----------------------------------------------------
-
 
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )

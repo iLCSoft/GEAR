@@ -3,7 +3,7 @@
 
 #include "CLHEP/Vector/ThreeVector.h"
 
-namespace GearSurfaces{
+namespace gear{
   
   /** An abstract base class for coordinate systems
    */
@@ -27,7 +27,7 @@ namespace GearSurfaces{
     
   };
   
-} // end of GearSurfaces namespace
+} // end of gear namespace
 
 
 #endif
