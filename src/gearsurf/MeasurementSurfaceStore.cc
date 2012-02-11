@@ -4,7 +4,7 @@
 #include <sstream>
 #include <vector>
 
-#include "gear/Gear.h"
+#include "gear/GEAR.h"
 
 #include "gearsurf/MeasurementSurface.h"
 #include "gearsurf/BoundaryRectangle.h"
@@ -49,7 +49,7 @@ namespace gear{
       std::stringstream s;
       s << "GetMeasurementSurface: The surface with ID " << ID << " is not in the map!";
       gear::Exception exp( s.str() ) ;
-      
+
       throw exp ; 
     } 
     else { 
