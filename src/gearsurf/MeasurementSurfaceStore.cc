@@ -3,6 +3,7 @@
 
 #include <sstream>
 #include <vector>
+#include <algorithm>
 
 #include "gear/GEAR.h"
 
