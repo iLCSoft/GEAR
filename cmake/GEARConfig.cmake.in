@@ -45,6 +45,7 @@ IF( GEAR_INCLUDE_DIRS )
 ENDIF( GEAR_INCLUDE_DIRS )
 
 
+
 # ---------- libraries --------------------------------------------------------
 INCLUDE( "@ILCSOFT_CMAKE_MODULES_ROOT@/MacroCheckPackageLibs.cmake" )
 
@@ -56,10 +57,14 @@ CHECK_PACKAGE_LIBS( GEAR gearsurf gear gearxml )
 
 
 
-# ---------- libraries dependencies -------------------------------------------
-# this sets GEAR_${COMPONENT}_LIB_DEPENDS variables
-INCLUDE( "${GEAR_ROOT}/lib/cmake/GEARLibDeps.cmake" )
- 
+# ---------- dependencies -----------------------------------------------------
+INCLUDE( "@ILCSOFT_CMAKE_MODULES_ROOT@/MacroExportPackageDeps.cmake" )
+# exports following package dependencies (if set)
+# first argument of macro should be the package name
+SET( GEAR_DEPENDS_INCLUDE_DIRS  @GEAR_DEPENDS_INCLUDE_DIRS@ )
+SET( GEAR_DEPENDS_LIBRARY_DIRS  @GEAR_DEPENDS_LIBRARY_DIRS@ )
+SET( GEAR_DEPENDS_LIBRARIES  @GEAR_DEPENDS_LIBRARIES@ )
+EXPORT_PACKAGE_DEPENDENCIES( GEAR )
 
 
 

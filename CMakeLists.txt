@@ -42,6 +42,11 @@ ENDIF( GEAR_TGEO )
 
 FIND_PACKAGE( CLHEP REQUIRED ) # needed for gearsurf
 
+# export CLHEP dependency to GEARConfig.cmake
+SET( GEAR_DEPENDS_INCLUDE_DIRS ${CLHEP_INCLUDE_DIRS} )
+SET( GEAR_DEPENDS_LIBRARY_DIRS ${CLHEP_LIBRARY_DIRS} )
+SET( GEAR_DEPENDS_LIBRARIES ${CLHEP_LIBRARIES} )
+
 
 
 ### DOCUMENTATION ###########################################################
