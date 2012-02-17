@@ -64,7 +64,7 @@ namespace gear{
     
   public:
     
-    // virtual ~MeasurementSurfaceStoreFiller() { /* no op */ }
+    virtual ~MeasurementSurfaceStoreFiller() { /* no op */ }
     
     virtual void getMeasurementSurfaces(std::vector<MeasurementSurface*>&) const = 0 ;
     virtual std::string getName() const = 0;      
