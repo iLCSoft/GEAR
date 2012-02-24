@@ -167,17 +167,39 @@ namespace gear {
 	    // no need to check whether the default module was found, the module parser can run without
 	    //std::cout << "GEARDEBUG: " << "defaultModuleElement = "<<defaultModuleElement<<  std::endl;
 	    
-	    // now loop all modules
+	    // Now loop the content of the modules section. It might be comments, "module" or
+	    // "default" elements.
+	    const TiXmlNode * moduleNode = 0;
 	    
-	    // modulesElement (with s ) is for a block of (all) modules
-	    // moduleElement (without s ) is for a single module
-	    const TiXmlElement* moduleElement =0;
-	    
-	    while( ( moduleElement = dynamic_cast<const TiXmlElement*>(
-			 modulesElement->IterateChildren( "module", moduleElement ) )  ) != 0  )
+	    while( ( moduleNode = modulesElement->IterateChildren( moduleNode ) ) != 0  )
 	    {
 		//std::cout << "GEARDEBUG: " << "looping modules "<<  std::endl;
+
+	        // modulesElement (with s ) is for a block of (all) modules
+	        // moduleElement (without s ) is for a single module
+	        const TiXmlElement* moduleElement = dynamic_cast<const TiXmlElement*>(moduleNode);
 		
+		// Check if the dynamic cast succeeded. This is not the case for comments.
+		// In this case just continue with the next node.
+		if (moduleElement==0) continue;
+
+		// Check if it is a new default module
+                if( std::string(moduleElement->Value()) == std::string("default") )
+                {
+                    defaultModuleElement = moduleElement;
+                    continue;
+                } 
+ 
+		// Now the element should be a module. If not give a warning and ignore it.
+		if ( std::string(moduleElement->Value()) != std::string("module") )
+		{
+		    std::cout << "GEAR::TPCParametersXML: WARNING " 
+			      << " Unknown tag " << moduleNode->Value() << " in <modules> section."
+			      << std::endl;
+		    continue;
+		}
+
+		// finaly create the module from the xml element and add it to the TPC
 		modularTPC->addModule (_tpcModuleXML.fromXML(moduleElement,
 							     defaultModuleElement, 
 							     coordinateType,
