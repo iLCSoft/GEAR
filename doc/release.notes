@@ -13,6 +13,8 @@
         gearsurf remains in a separate directory and builds a separate library which is then linked to the gear library. 
         All new functionality is included within the gear namespace.         
 
+      - TPCParametersXML now allows for multiple default modules ( M. Killenberg )
+
   --------
  | v01-01 |  
   --------
