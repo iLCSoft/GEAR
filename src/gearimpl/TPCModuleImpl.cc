@@ -125,7 +125,7 @@ namespace gear {
 		// already done
 		if ( (_momsCoordinateType == PadRowLayout2D::POLAR ) && 
 		     (_offset_cartesian[0] == 0 ) &&
-		     (_offset_cartesian[0] == 0 ) )
+		     (_offset_cartesian[1] == 0 ) )
 		{
 		  // flip angle in case of negative half TPC
 		  if ( _zPosition <=0 )
