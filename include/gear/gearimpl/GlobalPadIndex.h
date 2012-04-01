@@ -33,11 +33,23 @@ public:
 	    }
 	}
 
+	/** equals operator */
+	bool operator == (const  GlobalPadIndex & cmp) const
+	{
+	  return (_moduleID==cmp._moduleID && _padIndex==cmp._padIndex);
+	}
+
     /** Get pad index */
     virtual int getPadIndex() const;
 
     /** Get module index */
     virtual int getModuleID() const;
+
+    /** Set the pad index */
+    virtual void setPadIndex(int padIndex);
+
+    /** Set the module ID */
+    virtual void setModuleID(int moduleID);
 
 
 }; // class

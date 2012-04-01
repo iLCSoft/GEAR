@@ -14,5 +14,11 @@ namespace gear {
     int GlobalPadIndex::getModuleID() const {
 	return _moduleID;
     }
+    void GlobalPadIndex::setPadIndex(int padIndex) {
+      _padIndex=padIndex;
+    }
+    void GlobalPadIndex::setModuleID(int moduleID) {
+      _moduleID=moduleID;
+    }
 
 }// namespace gear
