@@ -214,6 +214,8 @@ namespace gear{
 
   std::ostream& operator<< (  std::ostream& s, const  SimpleMaterial& m ) {
 
+    const std::streamsize old_precision = s.precision(); // save current
+    
     s << "    " << m.getName() 
       <<  std::showpos << std::scientific << std::setprecision(8) 
       << ", A= "    << m.getA() 
@@ -221,7 +223,7 @@ namespace gear{
       << ", density [kg/m3]= "         << m.getDensity() 
       << ", radiation length [mm]= "   << m.getRadLength() 
       << ", interaction length [mm]= " << m.getIntLength() 
-      << std::dec
+      <<  std::noshowpos << std::fixed << std::setprecision(old_precision) << std::dec
       << std::endl ;
 
     return s ;
