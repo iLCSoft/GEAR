@@ -2,6 +2,16 @@
   Gear release notes
  ======================
 
+  -----------
+ | v01-02-01 |  
+  -----------
+
+    - extended functionality of GlobalPadIndex of the TPC (M. Killenberg)
+    - fixed bug in globalToLocal of TPCModule (check for identical coorinate systems was wrong)
+    - restore stream formatting after use
+    - added CMP0008 cmake policy statement
+    - removed unnecessary const in function declarations (clang++ warning)
+
 
   --------
  | v01-02 |  
