@@ -44,7 +44,7 @@ namespace gear {
     for(unsigned int i=0; i<3; i++)
       direction[i]=direction[i]/sqrt(L);
 
-    _tgeomanager->AddTrack(0,11);
+    _tgeomanager->AddTrack(0,10);
     TGeoNode *node1 = _tgeomanager->InitTrack(startpoint, direction);
     //check if there is a node at startpoint
     if(!node1)

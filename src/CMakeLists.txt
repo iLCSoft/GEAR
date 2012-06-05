@@ -69,6 +69,13 @@ TARGET_LINK_LIBRARIES( mergeXML gear gearxml )
 ADD_EXECUTABLE( printParameters ./test/printParameters.cc )
 TARGET_LINK_LIBRARIES( printParameters gear gearxml )
 
+# printMaterials
+IF( GEAR_TGEO )
+  ADD_EXECUTABLE( printMaterials ./test/printMaterials.cc )
+  TARGET_LINK_LIBRARIES( printMaterials gear gearxml )
+  INSTALL( TARGETS printMaterials DESTINATION bin )
+ENDIF()
+
 INSTALL( TARGETS mergeXML printParameters DESTINATION bin )
 
 # test binaries
@@ -89,7 +96,7 @@ SET( test_bins
 )
 
 IF( GEAR_TGEO )
-  SET( test_bins ${test_bins} testGearTGeo testMaterialBudgetNew testMaterialBudget testMaterialMap ) #testMaterialMapFactory )
+  SET( test_bins ${test_bins} testGearTGeo testMaterialBudgetNew testMaterialBudget testMaterialMap )
 ENDIF()
 
 ADD_CUSTOM_TARGET( tests )
