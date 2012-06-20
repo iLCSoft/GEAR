@@ -1285,6 +1285,19 @@ namespace gear {
 
     bool TPCModuleImpl::isInsidePad(double c0, double c1)  const{
 	Vector2D temp = globalToLocal(c0,c1);
+
+	switch (_padRowLayout->getCoordinateType())
+	{
+	    case PadRowLayout2D::CARTESIAN :
+		// don't do anything
+		break;
+	    case PadRowLayout2D::POLAR :
+		while ( temp[1] < _localModuleExtent[2] )
+		    temp[1] += 2*M_PI;
+		while ( temp[1] >= _localModuleExtent[2] + 2*M_PI )
+		    temp[1] -= 2*M_PI;
+	}
+
 	int nearestPad = _padRowLayout->getNearestPad(temp[0],temp[1]);
 	return _padRowLayout->isInsidePad(temp[0],temp[1],nearestPad);
     }
