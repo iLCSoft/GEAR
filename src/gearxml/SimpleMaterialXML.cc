@@ -13,7 +13,7 @@ namespace gear {
   
   TiXmlElement SimpleMaterialXML::toXML( const SimpleMaterial& material ) const {
     
-    std::cout << "SimpleMaterial::toXML called" << std::endl ; //debug
+    //std::cout << "SimpleMaterial::toXML called" << std::endl ; //debug
     
     TiXmlElement matElem("material") ;
     
@@ -36,7 +36,7 @@ namespace gear {
     std::string name =  getXMLAttribute( xmlElement , "name" )  ; 
     
 
-    std::cout << "  SimpleMaterialXML::fromXML( " << name << " ... ) " << std::endl ;
+    //std::cout << "  SimpleMaterialXML::fromXML( " << name << " ... ) " << std::endl ;
 
     std::stringstream ss ; 
     double dummy ;
