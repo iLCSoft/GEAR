@@ -412,6 +412,15 @@ int RectangularPadRowLayout::getNearestPad(double x, double y) const {
 			const double param = remaining_rows * (offset / remaining_distance);
 			const int delta_row = (int)((param < 0)? floor(param): ceil(param));
 
+			if (delta_row==0)
+			{
+			  // hm, something went wrong in the logic. The next best guess should not be the
+			  // same row. This can happen due to rounding errors. So within numerical precision
+			  // we already found the nearest row. Breaking here avouids an endless loop.
+			  std::cout << "delta_row is 0, breaking loop" << std::endl;
+			  break;
+			}
+
 			row_number += delta_row;
 		}
 		
@@ -580,11 +589,11 @@ int RectangularPadRowLayout::getNearestPad(double x, double y) const {
        Vector2D testCoordinates;
        testCoordinates[0]=c0; testCoordinates[1]=c1;
        
-       double distance = distanceToBox( testCoordinates, padCentre[0] - padWidth*0.5,
-					                 padCentre[0] + padWidth*0.5,
-                                                         padCentre[1] - padHeight*0.5,
-					                 padCentre[1] + padHeight*0.5);
-       
+       double distance = distanceToBox( testCoordinates, padCentre[0] - padWidth*0.5,//xmin
+ 					                 padCentre[1] - padHeight*0.5,//ymin
+					                 padCentre[0] + padWidth*0.5,//xmax
+					                 padCentre[1] + padHeight*0.5);//ymax
+
        return (distance < 0. ? 0. : distance);
    }
 } // namespace

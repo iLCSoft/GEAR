@@ -123,8 +123,8 @@ namespace gear {
 	throw gear::Exception(message.str());
 
       }
-      int temp = _moduleIDMap.find(moduleID)->second;
-      TPCModule * tempMod = _TPCModules.at(temp);
+      int temp = moduleIter->second;
+      TPCModule * tempMod = _TPCModules[temp];
       return *tempMod;
     }
 
