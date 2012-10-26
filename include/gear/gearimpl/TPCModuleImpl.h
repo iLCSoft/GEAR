@@ -292,7 +292,9 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      */
     int getTPCCoordinateType() const {return _momsCoordinateType;}
 
-    /// Set the offset of the local pad plane wrt. the local coordinate system
+    /// Set the offset of the local pad plane wrt. the local coordinate system.
+    /// This value is in global coordinates (cartesian or polar, depeding on the 
+    /// TPC coordinate type).
     void setOffset(double x_r, double y_phi);
 
     /// Set the z position of the module
@@ -305,13 +307,11 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
     /// kept for backward compatibility, please set readout frequency in constructor
     void setReadoutFrequency(double frequency);
 
-    /** Returns a reference to the instance of the underlaying pad layout.
-     */   
     const PadRowLayout2D & getLocalPadLayout() const {return *_padRowLayout;}
     
 
-    gear::Vector2D globalToLocal(double c0,double c1) const; ///< Transforms a point from the global coordinates to Layout2D coordinates.
-    gear::Vector2D localToGlobal(double c0,double c1) const; ///< Transforms a point from the Layout2D coordinates to global coordinates. 
+    gear::Vector2D globalToLocal(double c0,double c1) const;
+    gear::Vector2D localToGlobal(double c0,double c1) const;
     
 
  }; // class

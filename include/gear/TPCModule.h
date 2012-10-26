@@ -239,17 +239,26 @@ public:
      */   
     virtual const PadRowLayout2D & getLocalPadLayout() const = 0;
 
-    /** Returns the global coordinates for a point in local coordinates.
-     *	Usally you don't need this since all member functions of the module
-     *  use global coordinates only. Please use for debugging only, for production
-     *  code the usage is discourraged.
+    /** Returns the local coordinates for a point in global coordinates.
+     *  It performs a complete coordinate transformation, applying the translation, 
+     *  rotation and coordinate conversion to the coordinate type of the local
+     *  pad layout. Use getLocalPadLayout()->getCoordinateType() to interpret the
+     *  return value correctly.
+     *
+     *	Usally you don't need this function since all member functions of the module
+     *  use global coordinates only.
      */
     virtual Vector2D globalToLocal(double c0, double c1) const = 0;
 
-    /** Returns the local coordinates for a point in global coordinates.
-     *	Usally you don't need this since all member functions of the module
-     *  use global coordinates only. Please use for debugging only, for production
-     *  code the usage is discourraged.
+    /** Returns the global coordinates for a point in local coordinates.
+     *  It performs a complete coordinate transformation, applying the coordinate conversion
+     *  from the coordinate type of the local pad layout to the global coordinate type,
+     *  rotation and translation.
+     *  Use getLocalPadLayout()->getCoordinateType() to produce the input in the correct
+     *  coordinate type.
+     *
+     *	Usally you don't need this fuction since all member functions of the module
+     *  use global coordinates only.
      */
     virtual Vector2D localToGlobal(double c0, double c1) const = 0;
 
