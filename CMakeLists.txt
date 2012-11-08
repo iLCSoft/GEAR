@@ -51,7 +51,7 @@ SET( GEAR_DEPENDS_LIBRARIES ${CLHEP_LIBRARIES} )
 
 ### DOCUMENTATION ###########################################################
 
-OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" OFF )
+OPTION( INSTALL_DOC "Set to OFF to skip build/install Documentation" ON )
 
 IF( INSTALL_DOC )
 

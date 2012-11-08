@@ -15,6 +15,9 @@ namespace gear {
  *  The geometry is specified as frayed if the edge of a the first or last pad in
  *  a row is further away from the edge than half its height. In this case the 
  *  getNearestPad() function does not work reliably.
+ *
+ *  For a description and visualisation of the geometric parameters see the documentation of
+ *  the XML syntax in VersatileDiskRowLayoutXML.
  * 
  *  @author M. Killenberg, University of Bonn
  *  @version $Id$
@@ -121,7 +124,10 @@ class VersatileDiskRowLayout : public FixedDiskLayoutBase {
 	 */
 	PadRowLayout2D* clone() const;
 	
-	/** Add 'repeat' rows with the given parameters.
+	/** Add 'repeat' rows with the given parameters. padPitch, padWidth and offset are measured 
+	 *  at the central radius of the pad (middle of the pad row). All dimensions are in mm in this function.
+	 *  Note that this is different from the getPadWidth() and getPadPitch() functions (and all other functions
+	 *  derrived from PadRowLayout2D), which answer in radian as this is a polar layout.
 	 */
 	virtual void addRow(  int nPads , double padPitch , double rowHeight , 
 			      double offset = 0., double padWidth =0., double padHeight = 0., 
