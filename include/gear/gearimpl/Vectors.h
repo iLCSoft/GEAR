@@ -21,7 +21,7 @@ namespace gear {
     
   public: 
 
-    VectorND_T() {} ;
+    VectorND_T() { for(int i = 0; i < N; ++i) _c[i] = 0.; } ;
 
     /** The i-th coordinate */
     inline Float_T& operator[](unsigned i) {  
