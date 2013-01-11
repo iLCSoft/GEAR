@@ -65,6 +65,16 @@ namespace gear{
       paramIter->second = new GearParametersImpl( *dynamic_cast<GearParametersImpl *>(paramIter->second) );
     }
     
+    //*** these two need qualification for construction -- how?? CR ***/
+    //~ _distanceProperties   = new (right._distanceProperties ); GearDistanceProperties
+    //~ _pointProperties      = new (right._pointProperties );GearPointProperties
+
+    _beamcalParameters    = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._beamcalParameters ));
+    _lhcalParameters      = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lhcalParameters ));
+    _yokeBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokeBarrelParameters ));
+    _yokeEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokeEndcapParameters ));
+    _yokePlugParameters   = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokePlugParameters ));
+    
     _tpcParameters = new TPCParametersImpl( *dynamic_cast<TPCParametersImpl *> (right._tpcParameters ));
     _ecalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalBarrelParameters));
     _ecalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalEndcapParameters));
@@ -78,10 +88,6 @@ namespace gear{
     _setParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._setParameters));
     _ftdParameters = new FTDParametersImpl( *dynamic_cast<FTDParametersImpl *>(right._ftdParameters));
     _siplanesParameters = new SiPlanesParametersImpl( *dynamic_cast<SiPlanesParametersImpl *>(right._siplanesParameters));
-
-    // 
-//    _pointProperties = new GearPointProperties(right._pointProperties);
-//    _distanceProperties = new GearDistanceProperties(right._distanceProperties);
 
     // there might be different implementations for bField , so test whether casting works
     if (dynamic_cast<ConstantBField *>(right._bField) != 0)
