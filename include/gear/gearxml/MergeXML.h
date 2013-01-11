@@ -47,6 +47,10 @@ namespace gear {
     /**constructor
      */
     MergeXML() : 
+      _file1(NULL),
+      _file2(NULL),
+      _fileSwap(NULL),
+      _fileMerged(NULL),
       _domFile(2),
       _name(NAME_STR) {
     }
