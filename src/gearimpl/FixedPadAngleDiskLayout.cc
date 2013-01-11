@@ -121,6 +121,7 @@ namespace gear {
 
   void FixedPadAngleDiskLayout::copy_and_assign(const  FixedPadAngleDiskLayout & right)
   {
+      _padAngle = right._padAngle;
       _rMin = right._rMin;
       _rMax = right._rMax;
       _nRow = right._nRow;
