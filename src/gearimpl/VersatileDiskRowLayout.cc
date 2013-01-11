@@ -28,6 +28,7 @@ VersatileDiskRowLayout::VersatileDiskRowLayout( const VersatileDiskRowLayout & r
 
 void VersatileDiskRowLayout::copy_and_assign(const VersatileDiskRowLayout & right)
 {
+    _isFrayed = right._isFrayed;
     _nPad = right._nPad;
     _rows = right._rows;
     _extent = right._extent;
