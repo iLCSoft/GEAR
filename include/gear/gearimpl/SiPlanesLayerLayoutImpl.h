@@ -32,6 +32,9 @@ public:
     double SizeY ;
     double Thickness ;
     double RadLength ;
+    
+     /** safe default contructor **/
+  Layer() : ID(0), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) { ; } ;
   } ;
 
   struct SensLayer {
