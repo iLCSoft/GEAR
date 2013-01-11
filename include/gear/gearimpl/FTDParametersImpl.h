@@ -27,7 +27,7 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 {
 	public: 
 
-                FTDParametersImpl() {}
+        FTDParametersImpl() : _ftdType(0) {}
 		// Destructor.
 		virtual ~FTDParametersImpl() { /* nop */; }
 		
