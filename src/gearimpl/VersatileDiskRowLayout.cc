@@ -348,7 +348,7 @@ VersatileDiskRowLayout::Row::Row(int rowNumber, int nPads, double rCentre, doubl
 				 double padWidth_mm, double padHeight, double offset_mm) :
 	 _rowNumber(rowNumber), _nPads(nPads), _padPitch_mm(padPitch_mm), _padWidth_mm(padWidth_mm),
 	 _rowHeight(rowHeight), _padHeight(padHeight), _offset_mm(offset_mm), 
-	 _rCentre(rCentre)
+	 _rCentre(rCentre), _rMax(0.)
 {
     _offset   = _offset_mm / rCentre;
 
