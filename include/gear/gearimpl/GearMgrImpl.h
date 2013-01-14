@@ -29,12 +29,7 @@ namespace gear {
     // C'tor 
     GearMgrImpl() ;
 
-    // Copy constructor. Needed because the mgr own the objects it has pointer to 
-    GearMgrImpl(const GearMgrImpl &) ;
-
-    // we also need an assigment operator
-    GearMgrImpl& operator = (const GearMgrImpl&);
-    
+ 
     /// Destructor.
     virtual ~GearMgrImpl() ;
 	
@@ -320,6 +315,16 @@ namespace gear {
     
   protected:
     
+    // Copy constructor. Needed because the mgr own the objects it has pointer to
+    // problem: since some are base class pointers
+    //          the actual qualification in copying needs a different scheme
+    // solution: too much work, make private
+    GearMgrImpl(const GearMgrImpl &) ;
+
+    // we also need an assigment operator
+    GearMgrImpl& operator = (const GearMgrImpl&);
+    
+    
     ParameterMap _map ;
     TPCParameters* _tpcParameters ;
     CalorimeterParameters* _ecalBarrelParameters ;
@@ -357,8 +362,9 @@ namespace gear {
     /** function to copy all internal variables, incl. the objects
      *  pointed to and owned by the GearMgr.
      *  Used by constructor and assigment operator to avoid code duplication
+     * -- no longer needed, when copy c'tor and assignment are private
      */
-     void copy_and_assign(const  GearMgrImpl & );
+     //void copy_and_assign(const  GearMgrImpl & );
 
     /** function to delete all the objects
      *  pointed to and owned by the GearMgr.

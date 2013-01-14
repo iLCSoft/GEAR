@@ -53,60 +53,60 @@ namespace gear{
   {
       // the same code will be called in the assigment operator, so it's in 
       // a separate function to avoid code replication
-      copy_and_assign(right);
+      //~ copy_and_assign(right);
   }
 
-  void GearMgrImpl::copy_and_assign(const  GearMgrImpl & right) {
-    ///FIXME!!! this also contains pointers
-    //ParameterMap::iterator it_end = _map.end() ;
-    
-    for( ParameterMap::iterator paramIter = _map.begin() ; paramIter != _map.end() ; paramIter++ ) {
-      // the map should only have GearParametersImpl, not anything derrived from it
-      paramIter->second = new GearParametersImpl( *dynamic_cast<GearParametersImpl *>(paramIter->second) );
-    }
-    
-    //*** these two need qualification for construction -- how?? CR ***/
+  //~ void GearMgrImpl::copy_and_assign(const  GearMgrImpl & right) {
+    //~ ///FIXME!!! this also contains pointers
+    //~ //ParameterMap::iterator it_end = _map.end() ;
+    //~ 
+    //~ for( ParameterMap::iterator paramIter = _map.begin() ; paramIter != _map.end() ; paramIter++ ) {
+      //~ // the map should only have GearParametersImpl, not anything derrived from it
+      //~ paramIter->second = new GearParametersImpl( *dynamic_cast<GearParametersImpl *>(paramIter->second) );
+    //~ }
+    //~ 
+    //~ //*** these two need qualification for construction -- how?? CR ***/
     //~ _distanceProperties   = new (right._distanceProperties ); GearDistanceProperties
     //~ _pointProperties      = new (right._pointProperties );GearPointProperties
-
-    _beamcalParameters    = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._beamcalParameters ));
-    _lhcalParameters      = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lhcalParameters ));
-    _yokeBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokeBarrelParameters ));
-    _yokeEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokeEndcapParameters ));
-    _yokePlugParameters   = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokePlugParameters ));
-    
-    _tpcParameters = new TPCParametersImpl( *dynamic_cast<TPCParametersImpl *> (right._tpcParameters ));
-    _ecalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalBarrelParameters));
-    _ecalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalEndcapParameters));
-    _ecalPlugParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalPlugParameters));
-    _hcalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalBarrelParameters));
-    _hcalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalEndcapParameters));
-    _hcalRingParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalRingParameters));
-    _lcalParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lcalParameters));
-    _vxdParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._vxdParameters));
-    _sitParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._sitParameters));
-    _setParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._setParameters));
-    _ftdParameters = new FTDParametersImpl( *dynamic_cast<FTDParametersImpl *>(right._ftdParameters));
-    _siplanesParameters = new SiPlanesParametersImpl( *dynamic_cast<SiPlanesParametersImpl *>(right._siplanesParameters));
-
-    // there might be different implementations for bField , so test whether casting works
-    if (dynamic_cast<ConstantBField *>(right._bField) != 0)
-	_bField = new ConstantBField(*dynamic_cast<ConstantBField *>(right._bField));
-	else
-	    throw gear::Exception(" GearMgrImpl::GearMgrImpl(const  GearMgrImpl & r) Unknown BField type");
-
-    _detectorName = right._detectorName;
-    _keys = right._keys;      
-
-
-    for( MatMap::const_iterator it = right._matMap.begin(), end = right._matMap.end() ; it != end ; ++it ){
-
-      this->registerSimpleMaterial( new SimpleMaterialImpl( *dynamic_cast<const SimpleMaterialImpl*>( it->second ) ) ) ; 
-    }
-
-    _surfaceStore = new MeasurementSurfaceStore( (*right._surfaceStore) ) ;
-
-  }
+//~ 
+    //~ _beamcalParameters    = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._beamcalParameters ));
+    //~ _lhcalParameters      = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lhcalParameters ));
+    //~ _yokeBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokeBarrelParameters ));
+    //~ _yokeEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokeEndcapParameters ));
+    //~ _yokePlugParameters   = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._yokePlugParameters ));
+    //~ 
+    //~ _tpcParameters = new TPCParametersImpl( *dynamic_cast<TPCParametersImpl *> (right._tpcParameters ));
+    //~ _ecalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalBarrelParameters));
+    //~ _ecalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalEndcapParameters));
+    //~ _ecalPlugParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._ecalPlugParameters));
+    //~ _hcalBarrelParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalBarrelParameters));
+    //~ _hcalEndcapParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalEndcapParameters));
+    //~ _hcalRingParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._hcalRingParameters));
+    //~ _lcalParameters = new CalorimeterParametersImpl( *dynamic_cast<CalorimeterParametersImpl *>(right._lcalParameters));
+    //~ _vxdParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._vxdParameters));
+    //~ _sitParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._sitParameters));
+    //~ _setParameters = new ZPlanarParametersImpl( *dynamic_cast<ZPlanarParametersImpl *>(right._setParameters));
+    //~ _ftdParameters = new FTDParametersImpl( *dynamic_cast<FTDParametersImpl *>(right._ftdParameters));
+    //~ _siplanesParameters = new SiPlanesParametersImpl( *dynamic_cast<SiPlanesParametersImpl *>(right._siplanesParameters));
+//~ 
+    //~ // there might be different implementations for bField , so test whether casting works
+    //~ if (dynamic_cast<ConstantBField *>(right._bField) != 0)
+	//~ _bField = new ConstantBField(*dynamic_cast<ConstantBField *>(right._bField));
+	//~ else
+	    //~ throw gear::Exception(" GearMgrImpl::GearMgrImpl(const  GearMgrImpl & r) Unknown BField type");
+//~ 
+    //~ _detectorName = right._detectorName;
+    //~ _keys = right._keys;      
+//~ 
+//~ 
+    //~ for( MatMap::const_iterator it = right._matMap.begin(), end = right._matMap.end() ; it != end ; ++it ){
+//~ 
+      //~ this->registerSimpleMaterial( new SimpleMaterialImpl( *dynamic_cast<const SimpleMaterialImpl*>( it->second ) ) ) ; 
+    //~ }
+//~ 
+    //~ _surfaceStore = new MeasurementSurfaceStore( (*right._surfaceStore) ) ;
+//~ 
+  //~ }
 
   GearMgrImpl::~GearMgrImpl() 
   {
@@ -156,8 +156,8 @@ namespace gear{
   GearMgrImpl& GearMgrImpl::operator = (const GearMgrImpl &right)
   {
       // call the cleanup and the copy and assignment afterwards
-      cleanup();
-      copy_and_assign(right);
+      //~ cleanup();
+      //~ copy_and_assign(right);
 
       return *this;
   }
