@@ -319,7 +319,7 @@ namespace gear {
     // problem: since some are base class pointers
     //          the actual qualification in copying needs a different scheme
     // solution: too much work, make private
-    GearMgrImpl(const GearMgrImpl &) ;
+    GearMgrImpl(const GearMgrImpl &);
 
     // we also need an assigment operator
     GearMgrImpl& operator = (const GearMgrImpl&);

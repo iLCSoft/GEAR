@@ -49,12 +49,12 @@ namespace gear{
 
     }
   
-  GearMgrImpl::GearMgrImpl(const  GearMgrImpl & right)
-  {
+  //~ GearMgrImpl::GearMgrImpl(const  GearMgrImpl & right)
+  //~ {
       // the same code will be called in the assigment operator, so it's in 
       // a separate function to avoid code replication
       //~ copy_and_assign(right);
-  }
+  //~ }
 
   //~ void GearMgrImpl::copy_and_assign(const  GearMgrImpl & right) {
     //~ ///FIXME!!! this also contains pointers
@@ -110,8 +110,6 @@ namespace gear{
 
   GearMgrImpl::~GearMgrImpl() 
   {
-      // the same code will be called in the assigment operator, so it's in 
-      // a separate function to avoid code replication
       cleanup();
   }
 
@@ -153,14 +151,14 @@ namespace gear{
     
   }
 
-  GearMgrImpl& GearMgrImpl::operator = (const GearMgrImpl &right)
-  {
+  //~ GearMgrImpl& GearMgrImpl::operator = (const GearMgrImpl &right)
+  //~ {
       // call the cleanup and the copy and assignment afterwards
       //~ cleanup();
       //~ copy_and_assign(right);
 
-      return *this;
-  }
+      //~ return *this;
+  //~ }
 
   const std::string& GearMgrImpl::getDetectorName() const    
 
