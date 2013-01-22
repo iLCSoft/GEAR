@@ -148,7 +148,7 @@ int main(int argc, char**argv){
     
     double nrSET  = distProp.getNRadlen( ip , pointOnCylinder(  theta ,  Recal_i , Zecal ) ) ; 
     
-    if( i== 9 ) { //N-2 ) {
+    if( i== N-10 ) {
 
 
       gear::Vector3D dir =  pointOnCylinder(  theta ,  Recal_i , Zecal ) - ip   ;

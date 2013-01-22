@@ -118,13 +118,15 @@ int main(int argc, char**argv){
     gear::Vector3D next = p0 + lambda * dir ;
 
     double rL =  distProp.getNRadlen( prev, next )  ;
+    double iL =  distProp.getNIntlen( prev, next )  ;
 
     //    std::cout << "   " <<  names[j] << " -  " << thicks[j] * 10.  <<  " "  <<  rL  <<  std::endl ;  
     //    printf( "%25s  %1.8e  %1.8e \n" ,  names[j].c_str() , thicks[j] * 10. , rL   ) ;
 
-    printf( "%25s  %1.8e  %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   %1.8e \n" ,  names[j].c_str() , thicks[j] * 10. , rL ,
+    printf( "%25s  %1.8e, %1.8e,  %1.8e,   %1.8e  %1.8e  %1.8e  -  %1.8e   %1.8e   %1.8e \n" ,  
+	    names[j].c_str() , thicks[j] * 10., rL, iL ,
 	    prev[0]*10.,  prev[1]*10.,  prev[2]*10.,  next[0]*10.,  next[1]*10.,  next[2]*10. ) ;
- 
+    
   }
 } 
 
