@@ -31,6 +31,10 @@ namespace gear {
       _radLen.clear();
     }
     
+
+    // printf( " ----- beamOn  called :  %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   %1.8e \n" , 
+    // 	    p0[0], p0[1], p0[2], p1[0], p1[1], p1[2] ) ;
+
     double startpoint[3], endpoint[3], direction[3];
     double L=0;
     for(unsigned int i=0; i<3; i++) {
@@ -39,12 +43,13 @@ namespace gear {
       direction[i] = endpoint[i] - startpoint[i];
       L+=direction[i]*direction[i];
     }
-    
+    double totDist = sqrt( L ) ;
+
     //normalize direction
     for(unsigned int i=0; i<3; i++)
       direction[i]=direction[i]/sqrt(L);
 
-    _tgeomanager->AddTrack(0,10);
+    _tgeomanager->AddTrack(0,12);
     TGeoNode *node1 = _tgeomanager->InitTrack(startpoint, direction);
     //check if there is a node at startpoint
     if(!node1)
@@ -59,8 +64,8 @@ namespace gear {
 	if(!node2 || _tgeomanager->IsOutside())
 	  break;
 	
-	double *position =(double*) _tgeomanager->GetCurrentPoint();
-	double *previouspos =(double*) _tgeomanager->GetLastPoint();
+	const double *position =(double*) _tgeomanager->GetCurrentPoint();
+	const double *previouspos =(double*) _tgeomanager->GetLastPoint();
 	double length=_tgeomanager->GetStep();
 	track = _tgeomanager->GetLastTrack();
 	//protection against infinitive loop in root which should not happen, but well it does...
@@ -72,11 +77,25 @@ namespace gear {
 	    _tgeomanager->SetCurrentPoint(position[0]+MINSTEP*direction[0], position[1]+MINSTEP*direction[1], position[2]+MINSTEP*direction[2]);
 	    length=_tgeomanager->GetStep();
 	    node2 = _tgeomanager->FindNextBoundaryAndStep(500, 1) ;
+
+	    //fg: need to update positions as well !?
+	    position = (const double*) _tgeomanager->GetCurrentPoint();
+	    previouspos = (const double*) _tgeomanager->GetLastPoint();
+
 	  }
 
-	//if the next boundary is further than end point
-	 if(fabs(position[0])>fabs(endpoint[0]) || fabs(position[1])>fabs(endpoint[1]) 
-	 || fabs(position[2])>fabs(endpoint[2]))
+	//	printf( " --  step length :  %1.8e %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   %1.8e   - %s \n" , length ,
+	//		position[0], position[1], position[2], previouspos[0], previouspos[1], previouspos[2] , node1->GetMedium()->GetMaterial()->GetName() ) ;
+
+	Vector3D posV( position ) ;
+	double currDistance = ( posV - p0 ).r() ;
+
+	// //if the next boundary is further than end point
+	//  if(fabs(position[0])>fabs(endpoint[0]) || fabs(position[1])>fabs(endpoint[1]) 
+	//  || fabs(position[2])>fabs(endpoint[2]))
+
+	//if we travelled too far:
+	 if( currDistance > totDist  )
 	  {
 	    length=sqrt(pow(endpoint[0]-previouspos[0],2)
 			+pow(endpoint[1]-previouspos[1],2)
