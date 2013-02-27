@@ -43,9 +43,9 @@ namespace gear{
 
   TGeoMaterialPropertiesFactory::TGeoMaterialPropertiesFactory() {
 
-    std::cout << " TGeoMaterialPropertiesFactory::TGeoMaterialPropertiesFactory() +++++++++++++++++ " 
-	      << GearMaterialPropertiesFactory::me() 
-	      << std::endl ;
+//    std::cout << " TGeoMaterialPropertiesFactory::TGeoMaterialPropertiesFactory() +++++++++++++++++ " 
+//	      << GearMaterialPropertiesFactory::me() 
+//	      << std::endl ;
 
     GearMaterialPropertiesFactory::me() = this ;
   }
