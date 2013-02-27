@@ -1,6 +1,39 @@
  ======================
   Gear release notes
  ======================
+  --------
+ | v01-03 |  
+  --------
+
+  - F.Gaede: added test/testInteractionLengths
+      new example program to print interaction lengths as a function
+      of theta for different cylinders between the calorimeters
+    - updated testMaterialBudgetNew.cc: incl. 1st layer of Ecal
+
+    - added example macros for DBD material plots:
+       ./example/drawintlen_DBD.C
+       ./example/drawmat_DBD.C
+       ./example/treeFromAscii.C
+
+  - C.Rosemann: fixed many issues found by coverity
+    mostly unitialized member variables
+    GearMgrImpl.cc:make assignment operator and copy c'tor private
+    -> see Changelog for details
+
+  - M.Killenberg: wrote XML documentation for the VersatileDiskRowLayout
+     doc/VersatileDiskRowLayoutXML.*
+    - improved the documentation of localToGlobal and globalToLocal in TPCModule
+    - speedup of TPCParametersImpl::getModule(), removed duplicate search in map
+    - getDistanceToPad called distanceToBox with wrong oder of arguments
+
+
+  - bug fixes:
+     - fixed error handling in stepping in ./src/geartgeo/TGeoGearDistanceProperties.cc
+     - two bug fixes for the RectangularPadRowLayout (M.Killenberg)
+     - fixed endless loop in case of rounding errors TPCParametersImpl/RectangularPadRowLayout
+     - two pi wrap around for coordinates in TPCModuleImpl (Bo Li)
+
+
 
   -----------
  | v01-02-02 |  
