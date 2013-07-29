@@ -125,7 +125,7 @@ int main(int argc, char**argv){
 
   // ----- getting Bz from the field map
   try{
-    double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ; 
+    double bfield = gearMgr->getBField().at( 0, 0, 0  ).z() ; 
     
     std::cout << std::endl  
 	      <<	" --  Bz at origin [double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ;]  : " << bfield

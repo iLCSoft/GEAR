@@ -1,6 +1,11 @@
  ======================
   Gear release notes
  ======================
+  -----------
+ | v01-03-01 |  
+  -----------
+    - added convenience wrapper BField::at(double x, double y, double z)
+
   --------
  | v01-03 |  
   --------
