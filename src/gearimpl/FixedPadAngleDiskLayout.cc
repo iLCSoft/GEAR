@@ -210,13 +210,15 @@ namespace gear {
 
   int FixedPadAngleDiskLayout::getNearestPad(double r, double phi) const 
   {
-
+   
     if( r < 0.0 ) 
 	throw  std::out_of_range("FixedPadAngleDiskLayout::getNearestPad: radius must not be negative in polar coordinates!" );
 
-    // wrap phi to +- 2*pi, which is the max range for phiMin and phiMax
-    while( phi < -2*M_PI ) {  phi += 2. * M_PI  ; }
-    while( phi > 2*M_PI ) {  phi -= 2. * M_PI  ; }
+    double phiMean = (_phiMax+_phiMin)/2.;
+
+    // wrap phi to a symmetric range of 2*pi around the mean angle of the module
+    while( phi < phiMean-M_PI ) {  phi += 2. * M_PI  ; }
+    while( phi > phiMean+M_PI ) {  phi -= 2. * M_PI  ; }
 
     if  ( (phi <= _phiMax) && (phi >= _phiMin) )
     {
@@ -231,28 +233,49 @@ namespace gear {
 	return getPadIndex( rowNum , padNumber ) ;
     }
 
-    // calculate pca to straight line along radius with _phiMin
+    int rowNum_right;
+    if (fabs(phi - _phiMin) > M_PI_2)
+    {
+        // Note: It is also possible that fabs(phi - _phiMin) > M_PI_2 is larger than 3/2 pi, in which case
+        // the statement 'rowNum_right =0' is not necessarily correct and the calculation below 
+        // might be used. However, the nearest pad will not be on this edge (has to be within +- pi).
+        // Hence the calculation of the distance will pick the other, correct pad, so it does not matter
+        // if the calculated distance is done to the nearest pad on this edge or the pad in row 0.
+        rowNum_right = 0;
+    }
+    else
+    {  
+        // calculate pca to straight line along radius with _phiMin
 
-    // determine r_intersect for x = r_intersect * cos(_phiMin) = r* cos(phi) - m * sin(_phiMin)
-    //                           y = r_intersect * sin(_phiMin) = r*sin(phi) + m * cos(_phiMin)
-    // solve this to r_intersect and m
-    double r_intersect_min = r * (cos(phi)*cos(_phiMin) + sin(phi)*sin(_phiMin));
-//    double m_min =  r * (cos(phi)*sin(_phiMin) - sin(phi)*cos(_phiMin));
+        // determine r_intersect for x = r_intersect * cos(_phiMin) = r* cos(phi) - m * sin(_phiMin)
+        //                           y = r_intersect * sin(_phiMin) = r*sin(phi) + m * cos(_phiMin)
+        // solve this to r_intersect and m
+        double r_intersect_min = r * (cos(phi)*cos(_phiMin) + sin(phi)*sin(_phiMin));
+	//    double m_min =  r * (cos(phi)*sin(_phiMin) - sin(phi)*cos(_phiMin));
+      
+	// determine the nearest pad on the rightmost edge
+	rowNum_right = r_intersect_min < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
+	if( rowNum_right >= _nRow  )       
+	    rowNum_right = _nRow -1 ;
+    }
 
-    // determine the nearest pad on the rightmost edge
-    int rowNum_right = r_intersect_min < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
-    if( rowNum_right >= _nRow  )       
-	rowNum_right = _nRow -1 ;
-	    
     // now the same for _phiMax
-    double r_intersect_max = r * (cos(phi)*cos(_phiMax) + sin(phi)*sin(_phiMax));
-//    double m_max =  r * (cos(phi)*sin(_phiMax) - sin(phi)*cos(_phiMax));
+    int rowNum_left;
+    if (fabs(phi - _phiMax) > M_PI_2)
+    {
+        rowNum_left = 0;
+    }
+    else
+    {  
+        double r_intersect_max = r * (cos(phi)*cos(_phiMax) + sin(phi)*sin(_phiMax));
+	//    double m_max =  r * (cos(phi)*sin(_phiMax) - sin(phi)*cos(_phiMax));
 
-    // determine the nearest pad on the leftmost edge
-    int rowNum_left = r_intersect_max < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
-    if( rowNum_left >= _nRow  )       
-	rowNum_left = _nRow -1 ;
-    
+	// determine the nearest pad on the leftmost edge
+	int rowNum_left = r_intersect_max < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
+	if( rowNum_left >= _nRow  )       
+	    rowNum_left = _nRow -1 ;
+    }
+   
     double distance_right = getDistanceToPad( r, phi, getPadIndex( rowNum_right , 0 ) );
     double distance_left  = getDistanceToPad( r, phi, getPadIndex( rowNum_left  , _nPadsInRow - 1 ) );
 
