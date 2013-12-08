@@ -63,6 +63,17 @@ public:
      */
     virtual double getLayerRotationZY(int layerIndex) const = 0;
 
+    virtual void setLayerRadLength(int layerIndex, double value)    = 0;
+    virtual void setLayerPositionX(int layerIndex, double value)    = 0;
+    virtual void setLayerPositionY(int layerIndex, double value)    = 0;
+    virtual void setLayerPositionZ(int layerIndex, double value)    = 0;
+    virtual void setLayerRotationXY(int layerIndex, double value)   = 0;
+    virtual void setLayerRotationZX(int layerIndex, double value)   = 0;
+    virtual void setLayerRotationZY(int layerIndex, double value)   = 0;
+    virtual void setLayerSizeX(int layerIndex, double value)        = 0;
+    virtual void setLayerSizeY(int layerIndex, double value)        = 0;
+    virtual void setLayerThickness(int layerIndex, double value)    = 0;
+
 
     /** Size in x direction of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source. 

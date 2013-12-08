@@ -83,6 +83,19 @@ public:
   virtual double getLayerSizeY(int layerIndex) const { return _lVec.at( layerIndex ).SizeY  ; }
   virtual double getLayerThickness(int layerIndex) const { return _lVec.at( layerIndex ).Thickness  ; }
 
+// add "set" methods:
+  virtual void setLayerRadLength(int layerIndex, double value)  {  _lVec.at( layerIndex ).RadLength = value  ; }
+  virtual void setLayerPositionX(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionX = value  ; }
+  virtual void setLayerPositionY(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionY = value  ; }
+  virtual void setLayerPositionZ(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionZ = value  ; }
+  virtual void setLayerRotationXY(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationXY = value  ; }
+  virtual void setLayerRotationZX(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationZX = value  ; }
+  virtual void setLayerRotationZY(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationZY = value  ; }
+  virtual void setLayerSizeX(int layerIndex, double value)      {  _lVec.at( layerIndex ).SizeX = value  ; }
+  virtual void setLayerSizeY(int layerIndex, double value)      {  _lVec.at( layerIndex ).SizeY = value  ; }
+  virtual void setLayerThickness(int layerIndex, double value)  {  _lVec.at( layerIndex ).Thickness = value ; }
+
+
   virtual int getSensitiveID(int layerIndex) const { return _sVec.at( layerIndex ).ID  ; }
 
   virtual double getSensitiveRadLength(int layerIndex) const { return _sVec.at( layerIndex ).RadLength  ; }
