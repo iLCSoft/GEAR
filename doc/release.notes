@@ -1,6 +1,16 @@
  ======================
   Gear release notes
  ======================
+  --------
+ | v01-04 |
+  --------
+
+   - added set methods to SiPlanesLayerLayout (I.Rubinsky)
+
+   - bug fix for  FixedPadAngleDiskLayout::getNearestPad (A.Muennich)
+     - Wrap around of angle was not done correctly.
+
+
   -----------
  | v01-03-01 |  
   -----------
