@@ -1496,8 +1496,8 @@ namespace gear {
 		throw gear::Exception("TPCModuleImpl::globalToLocal: unkown coorinate type");	
 	}
 	// recalculate the plane extents
-	convertLocalPlaneToGlobalPlaneExtend();
 	checkLocalIsGlobal();
+	convertLocalPlaneToGlobalPlaneExtend();
     }
 
     void TPCModuleImpl::setZPosition(double z)
@@ -1512,8 +1512,8 @@ namespace gear {
 	_cos_angle =  std::cos( angle );
 	_sin_angle =  std::sin( angle );
 	// recalculate the plane extents
-	convertLocalPlaneToGlobalPlaneExtend();
 	checkLocalIsGlobal();
+	convertLocalPlaneToGlobalPlaneExtend();
     }
     
     void TPCModuleImpl::setReadoutFrequency(double frequency) 

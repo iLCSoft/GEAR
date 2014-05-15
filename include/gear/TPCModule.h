@@ -17,6 +17,16 @@ namespace gear {
  * coordinate systems.
  * Adds some module appropriate functionality.
  * 
+ * The local pad layout, which is contained in the module, can have an offset and be rotated
+ * with respect to the global coordinate system, and it can have a different coodinate type.
+ *
+ * The global coordinate type of the TPC can be chosen by the user (usually cartesian is the right choise.
+ * Global polar coordinates only make sense if there is no offset and the local coordinate systems are also polar).
+ * The local coordinate type is determinded by the local pad geometry (type of the pad layout).
+ *
+ * For a visualisation of the module specific parameters please refer to the documentation of the XML syntax
+ * in TPCModuleXML.
+ *
  * New in v00-15: The z position of the module can be set to distinguish the two end plates.
  * \attention For the "negative" half TPC (the half with drift direction in negative z direction)
  * the x coodinate of global system is mirrored. The reason is that in case of two identical end plates,
