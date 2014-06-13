@@ -172,6 +172,13 @@ namespace gear {
       throw (UnknownParameterException, std::exception )  ;
 
 
+    /** Get the TelPlanes parameters.
+     *
+     *  @throws UnknownParameterException
+     */
+    virtual const TelPlanesParameters & getTelPlanesParameters() const
+      throw (UnknownParameterException, std::exception )  ;
+
     /** Get the SiPlanes parameters.
      *
      *  @throws UnknownParameterException
@@ -297,7 +304,11 @@ namespace gear {
     virtual void setSETParameters( ZPlanarParameters * setParameters ) ;
     
 
-     /** Set the SiPlanesParameters.
+    /** Set the TelPlanesParameters.
+     */
+    virtual void setTelPlanesParameters( TelPlanesParameters * telplanesParameters ) ;
+
+    /** Set the SiPlanesParameters.
      */
     virtual void setSiPlanesParameters( SiPlanesParameters * siplanesParameters ) ;
 
@@ -343,6 +354,7 @@ namespace gear {
     ZPlanarParameters*     _sitParameters ;
     ZPlanarParameters*     _setParameters ;
     FTDParameters*         _ftdParameters;
+    TelPlanesParameters*   _telplanesParameters ;
     SiPlanesParameters*    _siplanesParameters ;
     GearPointProperties*   _pointProperties ;
     GearDistanceProperties* _distanceProperties ;

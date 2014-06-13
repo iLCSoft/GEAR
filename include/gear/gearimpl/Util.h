@@ -8,6 +8,7 @@
 #include "gear/TPCModule.h"
 #include "gear/ZPlanarParameters.h"
 #include "gear/FTDParameters.h"
+#include "gear/TelPlanesParameters.h"
 #include "gear/SiPlanesParameters.h"
 #include "gear/CalorimeterParameters.h"
 #include "gear/GearMgr.h"
@@ -40,8 +41,9 @@ namespace gear {
   std::ostream& operator<< (  std::ostream& s,  const FTDParameters& p ) ;
 
 
-  std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) ;
+  std::ostream& operator<< (  std::ostream& s,  const TelPlanesParameters& p ) ;
 
+  std::ostream& operator<< (  std::ostream& s,  const SiPlanesParameters& p ) ;
 
   std::ostream& operator<< (  std::ostream& s, const  SimpleMaterial& m ) ;
 

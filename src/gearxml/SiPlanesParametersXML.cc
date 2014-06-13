@@ -191,18 +191,6 @@ namespace gear {
 		       "Needs to be 'TelescopeWithDUT' or 'TelescopeWithoutDUT'." ) ;
     }
 
-    // const char* strType = getXMLAttribute( siplanesType , "type" ) .c_str() ;
-    // if( !std::strcmp( strType , "TelescopeWithDUT" ) ) {
-    //   intType = SiPlanesParameters::TelescopeWithDUT ;
-    //  }
-    // if( !std::strcmp( strType ,"TelescopeWithoutDUT" ) ) {
-    //   intType = SiPlanesParameters::TelescopeWithoutDUT ;
-    // }
-    // if( std::strcmp( strType , "TelescopeWithDUT" ) && std::strcmp( strType ,"TelescopeWithoutDUT" ) ) {
-    //   throw Exception( "SiPlanesParametersXML::fromXML type of SiPlanes not known."
-    // 		       "Needs to be 'TelescopeWithDUT' or 'TelescopeWithoutDUT'." ) ;
-    // }
-
     // number of telescope planes
 
     const TiXmlElement* siplanesNumber = xmlElement->FirstChildElement( "siplanesNumber" ) ;

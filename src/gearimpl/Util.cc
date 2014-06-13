@@ -4,6 +4,7 @@
 #include "gear/PadRowLayout2D.h"
 #include "gear/ZPlanarLayerLayout.h"
 #include "gear/FTDLayerLayout.h"
+#include "gear/TelPlanesLayerLayout.h"
 #include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 #include "gear/SimpleMaterial.h"
@@ -163,11 +164,15 @@ namespace gear{
     } catch(UnknownParameterException &e){}
        
     try{ 
-      // SiPlanes parameters
-      s <<  m.getSiPlanesParameters() <<  std::endl  ;
+      s  << "   ----  TelPlanes ---- "  << std::endl 
+         <<  m.getTelPlanesParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}  
     
- 
+    try{ 
+      s  << "   ----  SiPlanes ---- "  << std::endl 
+         <<  m.getSiPlanesParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}  
+
     //------------------------------------------------------------------
 
     s << std::endl 
@@ -745,5 +750,30 @@ namespace gear{
     
     
   }
+
+  std::ostream& operator<< (  std::ostream& s,  const TelPlanesParameters& p ) {
+    
+    s << std::endl 
+      << "   -----------   TelPlanesParameters  ------- "  << std::endl         ;
+    
+    s << dynamic_cast<const GearParameters&>( p )  ;
+    
+    const TelPlanesLayerLayout & l = p.getTelPlanesLayerLayout() ;
+
+
+    s <<  std::endl << " Setup ID : " << p.getTelPlanesID() << std::endl;
+
+
+    s << " Number of telescope planes : " << p.getTelPlanesNumber() << std::endl;
+    
+    l.PrintHeader(s);
+    l.PrintLayers(s);
+    l.PrintFooter(s);
+
+    return s ;
+    
+    
+  }
+
 
 }
