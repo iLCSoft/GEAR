@@ -1,0 +1,57 @@
+<gear>
+	<!--
+		GEAR file for IBL April 2011 testbeam setup, for runs 040114-????
+		By I.Rubinskiy and Sh.Tsiskaridze
+	-->
+	<global detectorName="EUTelescope"/>
+	<BField type="ConstantBField" x="0.0" y="0.0" z="0.0"/>
+	<detectors>
+		<detector name="SiPlanes" geartype="TelPlanesParameters">
+			<telplanesID ID="225"/>
+			<telplanesNumber number="2"/>
+
+			<layers>
+			<!--APIX-Plane 1 - FE-I4 3D  -->
+				<layer ID="1" info="tel" >			  
+					<ladder 	ID="11" info="Kapton"
+							positionX="0.00"	positionY="0.00"	positionZ="-12.0" 
+                                                        rotationXY="0.00"       rotationZX="0.00"       rotationZY="0.00"
+							sizeX="20.0"		sizeY="16.8"		thickness="0.250" radLength="93.660734"
+					/>	
+					<sensitive 	ID="1"  info="Mimosa26"
+							positionX="0.00"	positionY="0.00"	positionZ="-10.0" 
+	                                                sizeX="20.0"            sizeY="16.8"            thickness="0.250" radLength="93.660734"
+
+                                                        npixelX="80"            npixelY="336"
+                                                        pitchX="0.250"          pitchY="0.05"           resolutionX="0.071"  resolutionY="0.071" 
+	                     		/>
+					<ladder 	ID="12" info="Kapton"
+							positionX="0.00"	positionY="0.00"	positionZ="-09.0" 
+                                                        rotationXY="0.00"       rotationZX="0.00"       rotationZY="0.00"
+							sizeX="20.0"		sizeY="16.8"		thickness="0.250" radLength="93.660734"
+					/>
+				</layer>
+	
+				<layer ID="2"  info="tel">			  
+					<ladder 	ID="21"  info="Kapton"
+							positionX="0.00"	positionY="0.00"	positionZ="-02.0" 
+                                                        rotationXY="0.00"       rotationZX="0.00"       rotationZY="0.00"
+							sizeX="20.0"		sizeY="16.8"		thickness="0.250" radLength="93.660734"
+					/>	
+					<sensitive 	ID="2"  info="Mimosa26"
+							positionX="0.00"	positionY="0.00"	positionZ="-00.0" 
+	                                                sizeX="20.0"            sizeY="16.8"            thickness="0.250" radLength="93.660734"
+
+                                                        npixelX="80"            npixelY="336"
+                                                        pitchX="0.250"          pitchY="0.05"           resolutionX="0.071"  resolutionY="0.071" 
+	                     		/>
+					<ladder 	ID="22"  info="Kapton"
+							positionX="0.00"	positionY="0.00"	positionZ=" 01.0" 
+                                                        rotationXY="0.00"       rotationZX="0.00"       rotationZY="0.00"
+							sizeX="20.0"		sizeY="16.8"		thickness="0.250" radLength="93.660734"
+					/>
+			</layer>
+			</layers>
+		</detector>
+	</detectors>
+</gear>
