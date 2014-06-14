@@ -11,7 +11,7 @@
 			<telplanesNumber number="2"/>
 
 			<layers>
-			<!--APIX-Plane 1 - FE-I4 3D  -->
+				<!--APIX-Plane 1 - most upstream/ the most-downstream at the end of the list  -->
 				<layer ID="20" info="roi" >			  
 					<ladder 	ID="100" info="Kapton"
 							positionX="0.00"	positionY="0.00"	positionZ="-22.0" 
