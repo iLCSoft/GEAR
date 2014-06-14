@@ -412,13 +412,13 @@ class TelPlanesLayerLayoutImpl : public TelPlanesLayerLayout {
  		s << " layer parameters : "  << std::endl ;
 
       char buffer[1024] ;    
-sprintf(buffer,"|----------||----------------------------------------------------------------------||------------------------------------------------------------------------------------------------------------|\n") ;
+sprintf(buffer,"|------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ; 
-sprintf(buffer,"| layer:   ||                 ladder:                                              ||                           sensitive part:                                                                  |\n") ;
+sprintf(buffer,"| layer:           |                 ladder/scattering only                                       |          sensitive /       scattering part                                   `      measurement part             |\n") ;
       s << buffer ;
-sprintf(buffer,"| ID| info || ID| info | pozX| pozY| pozZ|rotXY|rotZX|rotZY| sizX| sizY|Thick|  X  || ID|   info | pozX| pozY| pozZ|rotXY|rotZX|rotZY| sizX| sizY|Thick|  X  |  NX |  NY |PtchX|PtchY| ResX| RexY| \n") ;
+sprintf(buffer,"| ID      info     | ID      info       pozX  pozY  pozZ rotXY rotZX rotZY  sizX  sizY Thick   X  | ID     info        pozX  pozY  pozZ rotXY rotZX rotZY  sizX  sizY Thick   X  `  NX    NY  PtchX PtchY  ResX  RexY| \n") ;
       s << buffer ;
-sprintf(buffer,"|----------||----------------------------------------------------------------------||------------------------------------------------------------------------------------------------------------|\n") ;
+sprintf(buffer,"|------------------|------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
 
 	}
@@ -427,13 +427,15 @@ sprintf(buffer,"|----------||---------------------------------------------------
 	virtual void PrintLayers( std::ostream& s) const {
 
             	char buffer[1024] ;
+                const char* a=""; 
 
 		for( TelPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
 			TelPlanesLayerImpl* layer = const_cast<TelPlanesLayerImpl* > (&(*it)) ;
 
- 		sprintf(buffer,"|%3d|%6s||\n"
+ 		sprintf(buffer,"|%3d %14s|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s`%5s %5s %5s %5s %5s %5s|\n"
 			, layer->getID() 
-			, layer->getInfo().c_str() 
+			, layer->getInfo().c_str()
+                        ,  a,a ,a,a,a,a,a,a,a,a,a,a, a,a ,a,a,a,a,a,a,a,a,a,a, a,a,a,a,a,a 
 		);
 		s << buffer ;
 
@@ -442,9 +444,8 @@ sprintf(buffer,"|----------||---------------------------------------------------
                 TelPlanesSensitiveLayerImplVec::const_iterator sb = layer->getSensitiveLayerVec().begin();
                 TelPlanesSensitiveLayerImplVec::const_iterator se = layer->getSensitiveLayerVec().end();
 
-                const char* a=""; 
                 for( TelPlanesMaterialLayerImplVec::const_iterator ml = mb ; ml < me; ml++) {
-      		  sprintf(buffer,"|%3s|%6s||%3d|%6s|%5.0f|%5.0f|%5.0f|%5.0f|%5.0f|%5.0f|%5.2f|%5.2f|%5.2f|%5.2f||\n"
+      		  sprintf(buffer,"|%3s %14s|%3d %14s %5.0f %5.0f %5.0f %5.0f %5.0f %5.0f %5.2f %5.2f %5.2f %5.2f|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s`%5s %5s %5s %5s %5s %5s|\n"
                       , a,a
                       , (*ml).getID() 
 		      , (*ml).getInfo().c_str() 
@@ -458,12 +459,13 @@ sprintf(buffer,"|----------||---------------------------------------------------
 		      , (*ml).getSizeY() 
 		      , (*ml).getThickness()
  		      , (*ml).getRadLength()
+	              , a,a ,a,a,a,a,a,a,a,a,a,a, a,a,a,a,a,a
  		  ); 
 	   	  s << buffer ;
                 }
 	
                 for( TelPlanesSensitiveLayerImplVec::const_iterator sl = sb ; sl < se; sl++) {
-	sprintf(buffer,"|%3s|%6s||%3s|%6s|%5s|%5s|%5s|%5s|%5s|%5s|%5s|%5s|%5s|%5s||%3d|%8s|%5.0f|%5.0f|%5.0f|%5.0f|%5.0f|%5.0f|%5.2f|%5.2f|%5.2f|%5.2f`%5d|%5d|%5.1f|%5.1f|%5.2f|%5.2f|\n"
+	sprintf(buffer,"|%3s %14s|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s|%3d %14s %5.0f %5.0f %5.0f %5.0f %5.0f %5.0f %5.2f %5.2f %5.2f %5.2f`%5d %5d %5.1f %5.1f %5.2f %5.2f|\n"
                       , a,a,   a,a,  a,a,  a,a,  a,a,  a,a,  a,a
  		      , (*sl).getID() 
  		      , (*sl).getInfo().c_str()
@@ -488,7 +490,7 @@ sprintf(buffer,"|----------||---------------------------------------------------
 		  s << buffer ;
                   }
                 }
-sprintf(buffer,"|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+sprintf(buffer,"|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       		s << buffer ;
 
 	}
@@ -497,7 +499,7 @@ sprintf(buffer,"|---------------------------------------------------------------
 	virtual void PrintFooter( std::ostream& s) const {
 		char buffer[1024] ;
 
-sprintf(buffer,"|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+sprintf(buffer,"|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
 		s << buffer ;
 
 	}
