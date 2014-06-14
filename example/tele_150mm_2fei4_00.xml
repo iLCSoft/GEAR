@@ -1,7 +1,7 @@
 <gear>
 	<!--
-		GEAR file for IBL April 2011 testbeam setup, for runs 040114-????
-		By I.Rubinskiy and Sh.Tsiskaridze
+		GEAR file for new telescope geometry description
+		By I.Rubinskiy June-2014
 	-->
 	<global detectorName="EUTelescope"/>
 	<BField type="ConstantBField" x="0.0" y="0.0" z="0.0"/>
