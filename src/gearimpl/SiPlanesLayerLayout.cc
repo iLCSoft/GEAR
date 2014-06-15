@@ -20,10 +20,13 @@ namespace gear{
 			      // sensitive
 			      int sensitiveID,
 			      double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
+			      double sensitiveRotationXY, double sensitiveRotationZX, double sensitiveRotationZY,
 			      double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
 			      int sensitiveNpixelX, int sensitiveNpixelY,
 			      double sensitivePitchX,double sensitivePitchY,
 			      double sensitiveResolution,
+			      double sensitiveResolutionX,
+			      double sensitiveResolutionY,
 			      double sensitiveRotation1,
 			      double sensitiveRotation2,
 			      double sensitiveRotation3,
@@ -49,6 +52,9 @@ namespace gear{
     sL.PositionX  = sensitivePositionX ;
     sL.PositionY  = sensitivePositionY ;
     sL.PositionZ  = sensitivePositionZ ;
+    sL.RotationXY = layerRotationXY;
+    sL.RotationZX = layerRotationZX;
+    sL.RotationZY = layerRotationZY;
     sL.SizeX      = sensitiveSizeX ;
     sL.SizeY      = sensitiveSizeY ;
     sL.Thickness  = sensitiveThickness ;
@@ -57,6 +63,8 @@ namespace gear{
     sL.PitchX     = sensitivePitchX;
     sL.PitchY     = sensitivePitchY;
     sL.Resolution = sensitiveResolution,
+    sL.ResolutionX = sensitiveResolutionX,
+    sL.ResolutionY = sensitiveResolutionY,
     sL.Rotation1  = sensitiveRotation1;
     sL.Rotation2  = sensitiveRotation2;
     sL.Rotation3  = sensitiveRotation3;
