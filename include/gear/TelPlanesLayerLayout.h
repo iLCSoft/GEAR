@@ -340,7 +340,11 @@ public:
  
     /** a free parameter string field
      */
-    virtual const TelPlanesLayerImpl* getLayer( int ID ) const = 0;
+    virtual const TelPlanesLayerImpl* getLayer( unsigned int ID ) const = 0;
+ 
+    /** a free parameter string field
+     */
+    virtual const TelPlanesLayerImpl* getLayerByID( int ID ) const = 0;
   
     /** a free parameter string field
      */

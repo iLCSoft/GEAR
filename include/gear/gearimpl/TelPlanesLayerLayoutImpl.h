@@ -393,9 +393,17 @@ class TelPlanesLayerLayoutImpl : public TelPlanesLayerLayout {
           }	 
 
           /** */
-	  virtual const TelPlanesLayerImpl* getLayer( int ID ) const { 
+	  virtual const TelPlanesLayerImpl* getLayer( unsigned int ID ) const { 
 
-//            TelPlanesLayerImplVec::const_iterator it = _layerVec.begin(); 
+            if( ID < _layerVec.size() ) {
+              return &(_layerVec.at(ID)); // return an address
+            }
+
+            return 0; 
+          }
+
+          /** */
+	  virtual const TelPlanesLayerImpl* getLayerByID( int ID ) const { 
 
             for( TelPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
               if( (*it).getID() == ID ) return &(*it); // return a pointer (*it) is the element of the vector
