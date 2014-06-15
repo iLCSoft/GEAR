@@ -91,8 +91,7 @@ namespace gear{
     const TiXmlElement* el = node->ToElement() ;
     if( el == 0 ) {
        std::stringstream str ;
-      str  << "XMLParser::getAttribute " << name 
-           << " not an XMLElement " ;
+      str  << "XMLParser::getAttribute [" << name << "] not an XMLElement " ;
       throw ParseException( str.str() ) ;
     }
     const char* at = el->Attribute( name ) ;
@@ -131,8 +130,11 @@ namespace gear{
   std::string getChildElementValue(const TiXmlNode* node , const std::string& name ) {
     
     const TiXmlElement* el = node->ToElement() ;
-    if( el == 0 ) 
-      throw ParseException("XMLParser::getAttribute not an XMLElement " ) ;
+    if( el == 0 ) {
+        std::stringstream str ;
+      str  << "XMLParser::getAttribute [" << name << "] not an XMLElement " ;
+      throw ParseException( str.str() ) ;
+    }
     
     const TiXmlElement* cE = el->FirstChildElement( name );
     
