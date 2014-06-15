@@ -151,10 +151,13 @@ public:
 			// sensitive
 			int sensitiveID,
 			double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
+	                double sensitiveRotationXY, double sensitiveRotationZX, double sensitiveRotationZY,
 			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
 			int sensitiveNpixelX, int sensitiveNpixelY,
 			double sensitivePitchX,double sensitivePitchY,
 			double sensitiveResolution,
+			double sensitiveResolutionX,
+			double sensitiveResolutionY,
 			double Rotation1,
 			double Rotation2,
 			double Rotation3,
