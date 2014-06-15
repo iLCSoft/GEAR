@@ -271,10 +271,10 @@ namespace gear {
     double sPitX   = atof(getXMLAttribute( xmlSen , "pitchX" ).c_str() ) ;
     double sPitY   = atof(getXMLAttribute( xmlSen , "pitchY" ).c_str() ) ;
     double sResol   = atof(getXMLAttribute( xmlSen , "resolution" ).c_str() ) ;
-    double sResolX   = atof(getXMLAttribute( xmlSen , "resolutionX", "-1.0" ).c_str() ) ;
-    double sResolY   = atof(getXMLAttribute( xmlSen , "resolutionY"," -1.0" ).c_str() ) ;
-    if( sResolX < 0 ) sResolX = SResol;
-    if( sResolY < 0 ) sResolY = SResol;
+    double sResolX   = atof(getOptionalXMLAttribute( xmlSen , "resolutionX", "-1.0" ).c_str() ) ;
+    double sResolY   = atof(getOptionalXMLAttribute( xmlSen , "resolutionY"," -1.0" ).c_str() ) ;
+    if( sResolX < 0 ) sResolX = sResol;
+    if( sResolY < 0 ) sResolY = sResol;
     double sRotat1 = atof(getOptionalXMLAttribute( xmlSen , "rotation1", "1.0" ).c_str() ) ;
     double sRotat2 = atof(getOptionalXMLAttribute( xmlSen , "rotation2", "0.0" ).c_str() ) ;
     double sRotat3 = atof(getOptionalXMLAttribute( xmlSen , "rotation3", "0.0" ).c_str() ) ;
