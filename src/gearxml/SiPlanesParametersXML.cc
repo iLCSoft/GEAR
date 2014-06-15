@@ -226,10 +226,10 @@ namespace gear {
       double sdutPitX   = atof(getXMLAttribute( xmlDUTSen , "pitchX" ).c_str() ) ;
       double sdutPitY   = atof(getXMLAttribute( xmlDUTSen , "pitchY" ).c_str() ) ;
       double sdutResol   = atof(getXMLAttribute( xmlDUTSen , "resolution" ).c_str() ) ;
-      double sdutRotat1 =  atof(getXMLAttribute( xmlDUTSen , "rotation1" ).c_str() ) ;
-      double sdutRotat2 =  atof(getXMLAttribute( xmlDUTSen , "rotation2" ).c_str() ) ;
-      double sdutRotat3 =  atof(getXMLAttribute( xmlDUTSen , "rotation3" ).c_str() ) ;
-      double sdutRotat4 =  atof(getXMLAttribute( xmlDUTSen , "rotation4" ).c_str() ) ;
+      double sdutRotat1 =  atof(getOptionalXMLAttribute( xmlDUTSen , "rotation1", "1.0" ).c_str() ) ;
+      double sdutRotat2 =  atof(getOptionalXMLAttribute( xmlDUTSen , "rotation2", "0.0" ).c_str() ) ;
+      double sdutRotat3 =  atof(getOptionalXMLAttribute( xmlDUTSen , "rotation3", "0.0" ).c_str() ) ;
+      double sdutRotat4 =  atof(getOptionalXMLAttribute( xmlDUTSen , "rotation4", "1.0" ).c_str() ) ;
       double sdutRadLen = atof(getXMLAttribute( xmlDUTSen , "radLength" ).c_str() ) ;
     
       siplanesParam->addDUT(ldutID, ldutPosX, ldutPosY, ldutPosZ, ldutSizX, ldutSizY, ldutThick, ldutRadLen, sdutID, sdutPosX, sdutPosY, sdutPosZ, sdutSizX, sdutSizY, sdutThick, sdutNPixX, sdutNPixY, sdutPitX, sdutPitY, sdutResol, sdutRotat1, sdutRotat2,sdutRotat3,sdutRotat4, sdutRadLen) ;
@@ -260,6 +260,9 @@ namespace gear {
     double sPosX   = atof( getXMLAttribute( xmlSen , "positionX" ).c_str() ) ;
     double sPosY   = atof( getXMLAttribute( xmlSen , "positionY" ).c_str() ) ;
     double sPosZ   = atof( getXMLAttribute( xmlSen , "positionZ" ).c_str() ) ;
+    double sRotXY  = atof( getOptionalXMLAttribute( xmlSen , "rotationXY", "0." ).c_str() ) ;
+    double sRotZX  = atof( getOptionalXMLAttribute( xmlSen , "rotationZX", "0." ).c_str() ) ;  
+    double sRotZY  = atof( getOptionalXMLAttribute( xmlSen , "rotationZY", "0." ).c_str() ) ;
     double sSizX   = atof( getXMLAttribute( xmlSen , "sizeX" ).c_str() ) ;
     double sSizY   = atof( getXMLAttribute( xmlSen , "sizeY" ).c_str() ) ;
     double sThick   = atof( getXMLAttribute( xmlSen , "thickness" ).c_str() ) ;
@@ -268,13 +271,18 @@ namespace gear {
     double sPitX   = atof(getXMLAttribute( xmlSen , "pitchX" ).c_str() ) ;
     double sPitY   = atof(getXMLAttribute( xmlSen , "pitchY" ).c_str() ) ;
     double sResol   = atof(getXMLAttribute( xmlSen , "resolution" ).c_str() ) ;
-    double sRotat1 = atof(getXMLAttribute( xmlSen , "rotation1" ).c_str() ) ;
-    double sRotat2 = atof(getXMLAttribute( xmlSen , "rotation2" ).c_str() ) ;
-    double sRotat3 = atof(getXMLAttribute( xmlSen , "rotation3" ).c_str() ) ;
-    double sRotat4 = atof(getXMLAttribute( xmlSen , "rotation4" ).c_str() ) ;
+    double sResolX   = atof(getXMLAttribute( xmlSen , "resolutionX", "-1.0" ).c_str() ) ;
+    double sResolY   = atof(getXMLAttribute( xmlSen , "resolutionY"," -1.0" ).c_str() ) ;
+    if( sResolX < 0 ) sResolX = SResol;
+    if( sResolY < 0 ) sResolY = SResol;
+    double sRotat1 = atof(getOptionalXMLAttribute( xmlSen , "rotation1", "1.0" ).c_str() ) ;
+    double sRotat2 = atof(getOptionalXMLAttribute( xmlSen , "rotation2", "0.0" ).c_str() ) ;
+    double sRotat3 = atof(getOptionalXMLAttribute( xmlSen , "rotation3", "0.0" ).c_str() ) ;
+    double sRotat4 = atof(getOptionalXMLAttribute( xmlSen , "rotation4", "1.0" ).c_str() ) ;
     double sRadLen = atof( getXMLAttribute( xmlSen , "radLength" ).c_str() ) ;
     
-    siplanesParam->addLayer(lID, lPosX, lPosY, lPosZ, lRotXY, lRotZX, lRotZY, lSizX, lSizY, lThick, lRadLen, sID, sPosX, sPosY, sPosZ, sSizX, sSizY, sThick, sNPixX, sNPixY, sPitX, sPitY, sResol, sRotat1, sRotat2,sRotat3,sRotat4,sRadLen) ;
+    siplanesParam->addLayer(lID, lPosX, lPosY, lPosZ, lRotXY, lRotZX, lRotZY, lSizX, lSizY, lThick, lRadLen, 
+                            sID, sPosX, sPosY, sPosZ, sRotXY, sRotZX, sRotZY, sSizX, sSizY, sThick, sNPixX, sNPixY, sPitX, sPitY,  sResol,  sResolX, sResolY, sRotat1, sRotat2, sRotat3, sRotat4, sRadLen) ;
 
     } // end loop
 
