@@ -34,7 +34,8 @@ public:
     double RadLength ;
     
      /** safe default contructor **/
-  Layer() : ID(0), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) { ; } ;
+    Layer() : ID(0), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.)
+             { ; } ;
   } ;
 
   struct SensLayer {
@@ -42,19 +43,30 @@ public:
     double PositionX ;
     double PositionY ;
     double PositionZ ;
+    double RotationXY;
+    double RotationZX;
+    double RotationZY;
     double SizeX ;
     double SizeY ;
     double Thickness ;
+    double RadLength ;
+ 
     int NpixelX;
     int NpixelY;
     double PitchX;
     double PitchY;
     double Resolution;
+    double ResolutionX;
+    double ResolutionY;
     double Rotation1;
     double Rotation2;
     double Rotation3;
     double Rotation4;
-    double RadLength ;
+    /** safe default contructor **/
+    SensLayer() : ID(0), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.)
+                 , NpixelX(0), NpixelY(0),  Resolution(0.), ResolutionX(0.),ResolutionY(0.), 
+		Rotation1(0.0), Rotation2(0.0), Rotation3(0.0), Rotation4(0.0)
+                 { ; } ;
   } ;
 
   typedef std::vector<Layer> LayerVec ;
@@ -104,6 +116,11 @@ public:
   virtual double getSensitivePositionY(int layerIndex) const { return _sVec.at( layerIndex ).PositionY  ; }
   virtual double getSensitivePositionZ(int layerIndex) const { return _sVec.at( layerIndex ).PositionZ  ; }
 
+  virtual double getSensitiveRotationXY(int layerIndex) const { return _sVec.at( layerIndex ).RotationXY  ; }
+  virtual double getSensitiveRotationZX(int layerIndex) const { return _sVec.at( layerIndex ).RotationZX  ; }
+  virtual double getSensitiveRotationZY(int layerIndex) const { return _sVec.at( layerIndex ).RotationZY  ; }
+
+
   virtual double getSensitiveSizeX(int layerIndex) const { return _sVec.at( layerIndex ).SizeX  ; }
   virtual double getSensitiveSizeY(int layerIndex) const { return _sVec.at( layerIndex ).SizeY  ; }
   virtual double getSensitiveThickness(int layerIndex) const { return _sVec.at( layerIndex ).Thickness  ; }
@@ -112,6 +129,9 @@ public:
   virtual int getSensitiveNpixelY(int layerIndex) const { return _sVec.at( layerIndex ).NpixelY  ; }
 
   virtual double getSensitiveResolution(int layerIndex) const { return _sVec.at( layerIndex ).Resolution  ; }
+  virtual double getSensitiveResolutionX(int layerIndex) const { return _sVec.at( layerIndex ).ResolutionX  ; }
+  virtual double getSensitiveResolutionY(int layerIndex) const { return _sVec.at( layerIndex ).ResolutionY  ; }
+
 
   virtual double getSensitivePitchX(int layerIndex) const { return _sVec.at( layerIndex ).PitchX  ; }
   virtual double getSensitivePitchY(int layerIndex) const { return _sVec.at( layerIndex ).PitchY  ; }
