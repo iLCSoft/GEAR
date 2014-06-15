@@ -372,7 +372,7 @@ namespace gear{
     throw (UnknownParameterException, std::exception ) {
 
     if( _telplanesParameters == 0 )
-      throw UnknownParameterException( "No SiPlanesParameters set ") ;
+      throw UnknownParameterException( "No TelPlanesParameters set ") ;
 
     return *_telplanesParameters ;
 
