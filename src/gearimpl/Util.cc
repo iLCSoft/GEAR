@@ -644,23 +644,23 @@ namespace gear{
 
     char buffer[1024] ;
     
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
     s << buffer ;
 
-    sprintf(buffer,"  |              ladder:                        |                    sensitive part:                                                                |\n") ;
+    sprintf(buffer,"  |              ladder:                                           |                    sensitive part:                                                                  |\n") ;
     s << buffer ;
 
-    sprintf(buffer,"  | ID | pozX| pozY|  pozZ |rotXY|rotZX|rotZY| sizeX| sizeY| Thick| ID| pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Resol| Rot1| Rot2| Rot3| Rot4| \n") ;
+    sprintf(buffer,"  |  ID | pozX| pozY|  pozZ |rotXY|rotZX|rotZY| sizeX| sizeY| Thick|  ID | pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Resol| Rot1| Rot2| Rot3| Rot4| \n") ;
 
     s << buffer ;
 
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
     s << buffer ;
 
     for( int i = 0 ; i < l.getNLayers() ; i++ ) {
 
       char buffer1[1024] ;
-      sprintf(buffer1,"  |%4d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%5.2f|%6.2f|%6.2f|%6.3f|%3d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f| %4d| %4d|%6.2f|%6.2f|%6.4f| %4.2f| %4.2f| %4.2f| %4.2f|\n"
+      sprintf(buffer1,"  |%5d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%5.2f|%6.2f|%6.2f|%6.3f|%5d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f|%5d|%5d|%6.2f|%6.2f|%6.4f|%5.2f|%5.2f|%5.2f|%5.2f|\n"
 	      , l.getID(i) 
 	      , l.getLayerPositionX(i) 
 	      , l.getLayerPositionY(i) 
@@ -692,7 +692,7 @@ namespace gear{
 
     }
 
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
     s << buffer ;
 
     // DUT
@@ -703,20 +703,20 @@ namespace gear{
       
       s << buffer ;
       
-      sprintf(buffer,"  |              ladder:                        |                    sensitive part:                                                         |\n") ;
+      sprintf(buffer,"  |              ladder:                          |                    sensitive part:                                                           |\n") ;
       s << buffer ;
       
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+      sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
       
-      sprintf(buffer,"  | ID |  pozX| pozY|  pozZ | sizeX| sizeY| Thick| ID| pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Rot1| Rot2| Rot3| Rot4| \n") ;
+      sprintf(buffer,"  |  ID |  pozX| pozY|  pozZ | sizeX| sizeY| Thick|  ID | pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Rot1| Rot2| Rot3| Rot4| \n") ;
       s << buffer ;
       
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+      sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
       
       char buffer1[1024] ;
-      sprintf(buffer1,"  |%4d|%5.2f|%5.2f|%7.2f|%6.2f|%6.2f|%6.3f|%3d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f| %4d| %4d|%6.2f|%6.2f| %4.2f| %4.2f| %4.2f| %4.2f|\n"
+      sprintf(buffer1,"  |%5d|%5.2f|%5.2f|%7.2f|%6.2f|%6.2f|%6.3f|%5d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f|%5d|%5d|%6.2f|%6.2f|%5.2f|%5.2f|%5.2f|%5.2f|\n"
 	      , l.getDUTID() 
 	      , l.getDUTPositionX() 
 	      , l.getDUTPositionY() 
@@ -742,7 +742,7 @@ namespace gear{
       
       s << buffer1 ;
       
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+      sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
       
     }
