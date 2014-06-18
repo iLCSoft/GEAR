@@ -125,9 +125,9 @@ namespace gear {
 		    double sPosX   = atof( getOptionalXMLAttribute( xmlSen , "positionX", "0." ).c_str() ) ;
 		    double sPosY   = atof( getOptionalXMLAttribute( xmlSen , "positionY", "0." ).c_str() ) ;
 		    double sPosZ   = atof( getOptionalXMLAttribute( xmlSen , "positionZ", "0." ).c_str() ) ;
-		    double sRotXY  = atof( getOptionalXMLAttribute( xmlLad , "rotationXY", "0." ).c_str() ) ;
-		    double sRotZX  = atof( getOptionalXMLAttribute( xmlLad , "rotationZX", "0." ).c_str() ) ;  
-		    double sRotZY  = atof( getOptionalXMLAttribute( xmlLad , "rotationZY", "0." ).c_str() ) ;
+		    double sRotXY  = atof( getOptionalXMLAttribute( xmlSen , "rotationXY", "0." ).c_str() ) ;
+		    double sRotZX  = atof( getOptionalXMLAttribute( xmlSen , "rotationZX", "0." ).c_str() ) ;  
+		    double sRotZY  = atof( getOptionalXMLAttribute( xmlSen , "rotationZY", "0." ).c_str() ) ;
 		    double sSizX   = atof( getOptionalXMLAttribute( xmlSen , "sizeX", "1." ).c_str() ) ;
 		    double sSizY   = atof( getOptionalXMLAttribute( xmlSen , "sizeY", "1." ).c_str() ) ;
 		    double sThick  = atof( getOptionalXMLAttribute( xmlSen , "thickness", "0." ).c_str() ) ;
