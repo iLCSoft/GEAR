@@ -107,8 +107,8 @@ namespace gear {
 		    double lRotXY  = atof( getOptionalXMLAttribute( xmlLad , "rotationXY", "0." ).c_str() ) ;
 		    double lRotZX  = atof( getOptionalXMLAttribute( xmlLad , "rotationZX", "0." ).c_str() ) ;  
 		    double lRotZY  = atof( getOptionalXMLAttribute( xmlLad , "rotationZY", "0." ).c_str() ) ;
-		    double lSizX   = atof( getOptionalXMLAttribute( xmlLad , "sizeX", "1"  ).c_str() ) ;
-		    double lSizY   = atof( getOptionalXMLAttribute( xmlLad , "sizeY", "1"  ).c_str() ) ;
+		    double lSizX   = atof( getOptionalXMLAttribute( xmlLad , "sizeX", "1."  ).c_str() ) ;
+		    double lSizY   = atof( getOptionalXMLAttribute( xmlLad , "sizeY", "1."  ).c_str() ) ;
 		    double lThick  = atof( getOptionalXMLAttribute( xmlLad , "thickness", "0.0" ).c_str() ) ;
 		    double lRadLen = atof( getOptionalXMLAttribute( xmlLad , "radLength", "0.0" ).c_str() ) ;
 
