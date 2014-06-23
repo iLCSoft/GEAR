@@ -761,10 +761,10 @@ namespace gear{
     const TrackerPlanesLayerLayout & l = p.getTrackerPlanesLayerLayout() ;
 
 
-    s <<  std::endl << " Setup ID : " << p.getTrackerPlanesID() << std::endl;
+    s <<  std::endl << " Setup ID : " << p.getLayoutID() << std::endl;
 
 
-    s << " Number of telescope planes : " << p.getTrackerPlanesNumber() << std::endl;
+    s << " Number of telescope planes : " << p.getLayoutNumberOfLayers() << std::endl;
     
     l.PrintHeader(s);
     l.PrintLayers(s);

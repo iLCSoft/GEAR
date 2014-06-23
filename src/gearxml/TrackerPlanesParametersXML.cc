@@ -39,12 +39,12 @@ namespace gear {
     TiXmlElement det("detector") ;
 
     TiXmlElement setup_id( "LayoutID" ) ;
-    setup_id.SetAttribute("ID", param->getTrackerPlanesID()) ;
+    setup_id.SetAttribute("ID", param->getLayoutID()) ;
     det.InsertEndChild( setup_id ) ;
 
 
     TiXmlElement nplanes( "LayoutNumberOfLayers" ) ;
-    nplanes.SetAttribute("number", param->getTrackerPlanesNumber()) ;
+    nplanes.SetAttribute("number", param->getLayoutNumberOfLayers()) ;
     det.InsertEndChild( nplanes ) ;
 
     // layerLayout
