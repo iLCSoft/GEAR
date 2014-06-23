@@ -4,6 +4,8 @@
 #include "gear/CalorimeterParameters.h"
 #include "gear/ZPlanarParameters.h"
 #include "gear/SiPlanesParameters.h"
+#include "gear/TrackerPlanesParameters.h"
+
 #include "gear/GearPointProperties.h"
 #include "gear/GearDistanceProperties.h"
 #include "gear/BField.h"
@@ -13,6 +15,8 @@
 #include "gearimpl/ZPlanarParametersImpl.h"
 #include "gearimpl/FTDParametersImpl.h"
 #include "gearimpl/SiPlanesParametersImpl.h"
+#include "gearimpl/TrackerPlanesParametersImpl.h"
+
 #include "gearimpl/ConstantBField.h"
 #include "gearimpl/SimpleMaterialImpl.h"
 
@@ -39,6 +43,7 @@ namespace gear{
     _sitParameters(0) ,
     _setParameters(0) ,
     _ftdParameters(0) ,
+    _trackerplanesParameters(0) ,
     _siplanesParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) ,
@@ -134,6 +139,7 @@ namespace gear{
     if( _sitParameters ) delete _sitParameters ;
     if( _setParameters ) delete _setParameters ;
     if( _ftdParameters ) delete _ftdParameters ;
+    if( _trackerplanesParameters ) delete _trackerplanesParameters ;
     if( _siplanesParameters ) delete _siplanesParameters ;
     if( _pointProperties ) delete _pointProperties ;
     if( _distanceProperties ) delete _distanceProperties ;
@@ -362,6 +368,16 @@ namespace gear{
 
   }
 
+  const TrackerPlanesParameters & GearMgrImpl::getTrackerPlanesParameters() const
+    throw (UnknownParameterException, std::exception ) {
+
+    if( _trackerplanesParameters == 0 )
+      throw UnknownParameterException( "No TrackerPlanesParameters set ") ;
+
+    return *_trackerplanesParameters ;
+
+  }  
+ 
   const SiPlanesParameters & GearMgrImpl::getSiPlanesParameters() const
     throw (UnknownParameterException, std::exception ) {
 
@@ -552,6 +568,11 @@ namespace gear{
   void GearMgrImpl::setSETParameters( ZPlanarParameters* setParameters ) {
 
     _setParameters = setParameters ;
+  }
+
+  void GearMgrImpl::setTrackerPlanesParameters( TrackerPlanesParameters* trackerplanesParameters ) {
+
+    _trackerplanesParameters = trackerplanesParameters ;
   }
 
   void GearMgrImpl::setSiPlanesParameters( SiPlanesParameters* siplanesParameters ) {

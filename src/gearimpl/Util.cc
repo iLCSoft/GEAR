@@ -4,6 +4,7 @@
 #include "gear/PadRowLayout2D.h"
 #include "gear/ZPlanarLayerLayout.h"
 #include "gear/FTDLayerLayout.h"
+#include "gear/TrackerPlanesLayerLayout.h"
 #include "gear/SiPlanesLayerLayout.h"
 #include "gear/LayerLayout.h"
 #include "gear/SimpleMaterial.h"
@@ -163,11 +164,15 @@ namespace gear{
     } catch(UnknownParameterException &e){}
        
     try{ 
-      // SiPlanes parameters
-      s <<  m.getSiPlanesParameters() <<  std::endl  ;
+      s  << "   ----  TrackerPlanes ---- "  << std::endl 
+         <<  m.getTrackerPlanesParameters() <<  std::endl  ;
     } catch(UnknownParameterException &e){}  
     
- 
+    try{ 
+      s  << "   ----  SiPlanes ---- "  << std::endl 
+         <<  m.getSiPlanesParameters() <<  std::endl  ;
+    } catch(UnknownParameterException &e){}  
+
     //------------------------------------------------------------------
 
     s << std::endl 
@@ -639,23 +644,23 @@ namespace gear{
 
     char buffer[1024] ;
     
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
     s << buffer ;
 
-    sprintf(buffer,"  |              ladder:                        |                    sensitive part:                                                                |\n") ;
+    sprintf(buffer,"  |              ladder:                                           |                    sensitive part:                                                                  |\n") ;
     s << buffer ;
 
-    sprintf(buffer,"  | ID | pozX| pozY|  pozZ |rotXY|rotZX|rotZY| sizeX| sizeY| Thick| ID| pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Resol| Rot1| Rot2| Rot3| Rot4| \n") ;
+    sprintf(buffer,"  |  ID | pozX| pozY|  pozZ |rotXY|rotZX|rotZY| sizeX| sizeY| Thick|  ID | pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Resol| Rot1| Rot2| Rot3| Rot4| \n") ;
 
     s << buffer ;
 
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
     s << buffer ;
 
     for( int i = 0 ; i < l.getNLayers() ; i++ ) {
 
       char buffer1[1024] ;
-      sprintf(buffer1,"  |%4d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%5.2f|%6.2f|%6.2f|%6.3f|%3d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f| %4d| %4d|%6.2f|%6.2f|%6.4f| %4.2f| %4.2f| %4.2f| %4.2f|\n"
+      sprintf(buffer1,"  |%5d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%5.2f|%6.2f|%6.2f|%6.3f|%5d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f|%5d|%5d|%6.2f|%6.2f|%6.4f|%5.2f|%5.2f|%5.2f|%5.2f|\n"
 	      , l.getID(i) 
 	      , l.getLayerPositionX(i) 
 	      , l.getLayerPositionY(i) 
@@ -687,7 +692,7 @@ namespace gear{
 
     }
 
-    sprintf(buffer,"  |-------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+    sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
     s << buffer ;
 
     // DUT
@@ -698,20 +703,20 @@ namespace gear{
       
       s << buffer ;
       
-      sprintf(buffer,"  |              ladder:                        |                    sensitive part:                                                         |\n") ;
+      sprintf(buffer,"  |              ladder:                          |                    sensitive part:                                                           |\n") ;
       s << buffer ;
       
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+      sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
       
-      sprintf(buffer,"  | ID |  pozX| pozY|  pozZ | sizeX| sizeY| Thick| ID| pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Rot1| Rot2| Rot3| Rot4| \n") ;
+      sprintf(buffer,"  |  ID |  pozX| pozY|  pozZ | sizeX| sizeY| Thick|  ID | pozX| pozY|  pozZ |sizeX|sizeY| Thick|NpixX|NpixY|PitchX|PitchY| Rot1| Rot2| Rot3| Rot4| \n") ;
       s << buffer ;
       
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+      sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
       
       char buffer1[1024] ;
-      sprintf(buffer1,"  |%4d|%5.2f|%5.2f|%7.2f|%6.2f|%6.2f|%6.3f|%3d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f| %4d| %4d|%6.2f|%6.2f| %4.2f| %4.2f| %4.2f| %4.2f|\n"
+      sprintf(buffer1,"  |%5d|%5.2f|%5.2f|%7.2f|%6.2f|%6.2f|%6.3f|%5d|%5.2f|%5.2f|%7.2f|%5.2f|%5.2f|%6.3f|%5d|%5d|%6.2f|%6.2f|%5.2f|%5.2f|%5.2f|%5.2f|\n"
 	      , l.getDUTID() 
 	      , l.getDUTPositionX() 
 	      , l.getDUTPositionY() 
@@ -737,7 +742,7 @@ namespace gear{
       
       s << buffer1 ;
       
-      sprintf(buffer,"  |------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
+      sprintf(buffer,"  |----------------------------------------------------------------------------------------------------------------------------------------------|\n") ;
       s << buffer ;
       
     }
@@ -745,5 +750,30 @@ namespace gear{
     
     
   }
+
+  std::ostream& operator<< (  std::ostream& s,  const TrackerPlanesParameters& p ) {
+    
+    s << std::endl 
+      << "   -----------   TrackerPlanesParameters  ------- "  << std::endl         ;
+    
+    s << dynamic_cast<const GearParameters&>( p )  ;
+    
+    const TrackerPlanesLayerLayout & l = p.getTrackerPlanesLayerLayout() ;
+
+
+    s <<  std::endl << " Setup ID : " << p.getLayoutID() << std::endl;
+
+
+    s << " Number of telescope planes : " << p.getLayoutNumberOfLayers() << std::endl;
+    
+    l.PrintHeader(s);
+    l.PrintLayers(s);
+    l.PrintFooter(s);
+
+    return s ;
+    
+    
+  }
+
 
 }

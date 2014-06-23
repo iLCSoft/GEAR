@@ -8,15 +8,16 @@
 #include "gearxml/ZPlanarParametersXML.h"
 #include "gearxml/FTDParametersXML.h"
 #include "gearxml/ConstantBFieldXML.h"
+#include "gearxml/TrackerPlanesParametersXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
 #include "gearxml/SimpleMaterialXML.h"
-
 #include "gearimpl/GearMgrImpl.h"
 
 #include "gear/GEAR.h"
 #include "gear/CalorimeterParameters.h"
 #include "gear/ZPlanarParameters.h"
 #include "gear/FTDParameters.h"
+#include "gear/TrackerPlanesParameters.h"
 #include "gear/SiPlanesParameters.h"
 
 // #ifdef GEAR_TGEO
@@ -377,7 +378,25 @@ namespace gear{
     }
     catch( UnknownParameterException& e) {
     }
-    
+     
+    // ------- add TrackerPlanes parameters ----------------------------
+    try{
+
+      TrackerPlanesParametersXML handler ;
+
+      TiXmlElement detector = handler.toXML( mgr->getTrackerPlanesParameters() ) ;
+
+      // debugging
+      //      std::cout << "TrackerPlanes called." << std::endl ;
+
+      detector.SetAttribute( "name" , "TrackerPlanes" ) ;
+      detector.SetAttribute( "geartype" , GEAR::TRACKERPLANESPARAMETERS ) ;
+      detectors.InsertEndChild( detector ) ;
+    }
+    catch( UnknownParameterException& e) {
+    }
+
+
     // ------- add SiPlanes parameters ----------------------------
     try{
 

@@ -110,6 +110,22 @@ public:
      */
     virtual double getSensitivePositionZ(int layerIndex) const = 0;
 
+    /** rotation angles according to Euler implementation scheme
+     * (in XY plane -> around axis Z: gamma )
+     */
+    virtual double getSensitiveRotationXY(int layerIndex) const = 0;
+    
+    /** rotation angles according to Euler implmentation scheme
+     * (in ZX plane -> around axis Y: beta  )
+     */
+    virtual double getSensitiveRotationZX(int layerIndex) const = 0;
+  
+    /** rotation angles according to Euler implmentation scheme
+     *  (in ZY plane -> around axis X: alfa  )
+     */
+    virtual double getSensitiveRotationZY(int layerIndex) const = 0;
+
+
     /** Size in x direction of sensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source. 
      */	
@@ -149,6 +165,17 @@ public:
      *  for the layer closest to the beam source. 
      */
     virtual double getSensitiveResolution(int layerIndex) const = 0;
+ 
+    /** Intrinsic resolution of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual double getSensitiveResolutionX(int layerIndex) const = 0;
+
+    /** Intrinsic resolution of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual double getSensitiveResolutionY(int layerIndex) const = 0;
+
 
     /** First element (cos(theta)) of rotation matrix of sensitive volume 
      *  of layer layerIndex - layer indexing starts at 0

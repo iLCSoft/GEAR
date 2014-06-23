@@ -71,10 +71,11 @@ public:
 			// sensitive
 			int sensitiveID,
 			double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
+	                double sensitiveRotationXY, double sensitiveRotationZX, double sensitiveRotationZY,
 			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
 			int sensitiveNpixelX, int sensitiveNpixelY,
 			double sensitivePitchX,double sensitivePitchY,
-			double sensitiveResolution,
+			double sensitiveResolution, double sensitiveResolutionX, double sensitiveResolutionY,
 			double sensitiveRotation1,
 			double sensitiveRotation2,
 			double sensitiveRotation3,
@@ -88,10 +89,11 @@ public:
 		     layerRadLength,
 		     sensitiveID,
                      sensitivePositionX, sensitivePositionY, sensitivePositionZ,
-		     sensitiveSizeX, sensitiveSizeY, sensitiveThickness,
+	             sensitiveRotationXY, sensitiveRotationZX, sensitiveRotationZY,
+	             sensitiveSizeX, sensitiveSizeY, sensitiveThickness,
 		     sensitiveNpixelX, sensitiveNpixelY,
 		     sensitivePitchX, sensitivePitchY,
-		     sensitiveResolution,
+                     sensitiveResolution, sensitiveResolutionX, sensitiveResolutionY,
 		     sensitiveRotation1,
 		     sensitiveRotation2,
 		     sensitiveRotation3,
@@ -103,7 +105,7 @@ public:
   /** Adding a Layer to the SiPlanes detector (without parameters for layer rotation)
    **/
   virtual void addLayer(int layerID,
-            double layerPositionX, double layerPositionY, double layerPositionZ,
+	                double layerPositionX, double layerPositionY, double layerPositionZ,
 			double layerSizeX, double layerSizeY, double layerThickness,
 			double layerRadLength,
 			// sensitive
@@ -112,7 +114,7 @@ public:
 			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
 			int sensitiveNpixelX, int sensitiveNpixelY,
 			double sensitivePitchX, double sensitivePitchY,
-			double sensitiveResolution,
+			double sensitiveResolution, double sensitiveResolutionX, double sensitiveResolutionY,
 			double sensitiveRotation1,
 			double sensitiveRotation2,
 			double sensitiveRotation3,
@@ -120,10 +122,10 @@ public:
 			double sensitiveRadLength ){
 
     // call addLayer with layerRotation parameters set to 0
-    addLayer( layerID, layerPositionX, layerPositionY, layerPositionZ, 0, 0, 0,
+    addLayer( layerID, layerPositionX, layerPositionY, layerPositionZ, 0., 0., 0.,
     layerSizeX, layerSizeY, layerThickness, layerRadLength,
-    sensitiveID, sensitivePositionX, sensitivePositionY, sensitivePositionZ, sensitiveSizeX, sensitiveSizeY,
-    sensitiveThickness, sensitiveNpixelX, sensitiveNpixelY, sensitivePitchX, sensitivePitchY, sensitiveResolution,
+    sensitiveID, sensitivePositionX, sensitivePositionY, sensitivePositionZ, 0., 0., 0., sensitiveSizeX, sensitiveSizeY,
+    sensitiveThickness, sensitiveNpixelX, sensitiveNpixelY, sensitivePitchX, sensitivePitchY, sensitiveResolution, sensitiveResolutionX, sensitiveResolutionY,  
     sensitiveRotation1, sensitiveRotation2, sensitiveRotation3, sensitiveRotation4, sensitiveRadLength ) ;
   }
 

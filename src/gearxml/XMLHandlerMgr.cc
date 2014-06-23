@@ -5,6 +5,7 @@
 #include "gearxml/CalorimeterParametersXML.h"
 #include "gearxml/ZPlanarParametersXML.h"
 #include "gearxml/FTDParametersXML.h"
+#include "gearxml/TrackerPlanesParametersXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
 #include "gearxml/tinyxml.h"
 
@@ -49,6 +50,7 @@ namespace gear{
     _map[ GEAR::CALORIMETERPARAMETERS ]  = new CalorimeterParametersXML ;
     _map[ GEAR::ZPLANARPARAMETERS ] = new ZPlanarParametersXML ;
     _map[ GEAR::FTDPARAMETERS ] = new FTDParametersXML ;
+    _map[ GEAR::TRACKERPLANESPARAMETERS ] = new TrackerPlanesParametersXML ;
     _map[ GEAR::SIPLANESPARAMETERS ] = new SiPlanesParametersXML ;
 
   }
@@ -87,9 +89,11 @@ namespace gear{
   std::string getXMLAttribute(const TiXmlNode* node , const std::string& name ) {
     
     const TiXmlElement* el = node->ToElement() ;
-    if( el == 0 ) 
-      throw ParseException("XMLParser::getAttribute not an XMLElement " ) ;
-    
+    if( el == 0 ) {
+       std::stringstream str ;
+      str  << "XMLParser::getAttribute [" << name << "] not an XMLElement " ;
+      throw ParseException( str.str() ) ;
+    }
     const char* at = el->Attribute( name ) ;
     
     if( at == 0 ){
@@ -126,8 +130,11 @@ namespace gear{
   std::string getChildElementValue(const TiXmlNode* node , const std::string& name ) {
     
     const TiXmlElement* el = node->ToElement() ;
-    if( el == 0 ) 
-      throw ParseException("XMLParser::getAttribute not an XMLElement " ) ;
+    if( el == 0 ) {
+        std::stringstream str ;
+      str  << "XMLParser::getAttribute [" << name << "] not an XMLElement " ;
+      throw ParseException( str.str() ) ;
+    }
     
     const TiXmlElement* cE = el->FirstChildElement( name );
     
