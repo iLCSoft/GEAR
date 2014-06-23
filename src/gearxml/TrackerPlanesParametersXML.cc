@@ -43,7 +43,7 @@ namespace gear {
     det.InsertEndChild( setup_id ) ;
 
 
-    TiXmlElement nplanes( "NumberOfLayers" ) ;
+    TiXmlElement nplanes( "LayoutNumberOfLayers" ) ;
     nplanes.SetAttribute("number", param->getTrackerPlanesNumber()) ;
     det.InsertEndChild( nplanes ) ;
 
@@ -73,7 +73,7 @@ namespace gear {
 
     int intType = 0;
  
-    const TiXmlElement* trackerplanesNumber = xmlElement->FirstChildElement( "NumberOfLayers" ) ;
+    const TiXmlElement* trackerplanesNumber = xmlElement->FirstChildElement( "LayoutNumberOfLayers" ) ;
     int nplanes = atoi( getXMLAttribute( trackerplanesNumber , "number" ).c_str() ) ;
 
 
