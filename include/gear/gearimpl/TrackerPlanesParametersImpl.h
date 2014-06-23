@@ -47,15 +47,15 @@ public:
   /** Returns the ID of TrackerPlanes detector setup
    */
 
-  virtual int getTrackerPlanesID() const { return _layoutID ; }
+  virtual int getLayoutID() const { return _layoutID ; }
 
   /** Returns the type of TrackerPlanes detector
    */
-  virtual int getTrackerPlanesType() const { return _layoutType ; }
+  virtual int getLayoutType() const { return _layoutType ; }
 
   /** Returns the number of Si planes
    */
-  virtual int getTrackerPlanesNumber() const { return _layoutNumberOfLayers ; }
+  virtual int getLayoutNumberOfLayers() const { return _layoutNumberOfLayers ; }
   
 protected:
   
