@@ -517,4 +517,5 @@ sprintf(buffer,"|---------------------------------------------------------------
 }; // class
 
 } // namespace gear
-#endif /* ifndef GEAR_SIPLANESLAYERLAYOUT_H */
+#endif /* #ifndef GEAR_TrackerPlanesLayerLayoutImpl_H */
+
