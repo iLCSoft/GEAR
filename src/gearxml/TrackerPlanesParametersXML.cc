@@ -1,10 +1,10 @@
-#include "gearxml/TelPlanesParametersXML.h"
+#include "gearxml/TrackerPlanesParametersXML.h"
 
 #include "gearxml/XMLHandlerMgr.h"
 #include "gearxml/GearParametersXML.h"
 
 #include "gearxml/tinyxml.h"
-#include "gearimpl/TelPlanesParametersImpl.h"
+#include "gearimpl/TrackerPlanesParametersImpl.h"
 
 #include "gear/GearMgr.h"
 
@@ -23,32 +23,32 @@
 
 namespace gear {
 
-  TiXmlElement TelPlanesParametersXML::toXML( const GearParameters & parameters ) const {
+  TiXmlElement TrackerPlanesParametersXML::toXML( const GearParameters & parameters ) const {
 
 
-    // check whether parameter is valid TelPlanesParameter
-    const TelPlanesParameters* param = dynamic_cast<const TelPlanesParameters*> ( &parameters ) ;
+    // check whether parameter is valid TrackerPlanesParameter
+    const TrackerPlanesParameters* param = dynamic_cast<const TrackerPlanesParameters*> ( &parameters ) ;
 
     if( param == 0 ) {
 
-      throw Exception( "TelPlanesParametersXML::toXML given parameters not of correct type. "
-		       "needs to be gear::TelPlanesParameters." ) ;
+      throw Exception( "TrackerPlanesParametersXML::toXML given parameters not of correct type. "
+		       "needs to be gear::TrackerPlanesParameters." ) ;
     }
 
     // Set up Beam telescope  as Element
     TiXmlElement det("detector") ;
 
-    TiXmlElement setup_id( "telplanesID" ) ;
-    setup_id.SetAttribute("ID", param->getTelPlanesID()) ;
+    TiXmlElement setup_id( "LayoutID" ) ;
+    setup_id.SetAttribute("ID", param->getTrackerPlanesID()) ;
     det.InsertEndChild( setup_id ) ;
 
 
-    TiXmlElement nplanes( "telplanesNumber" ) ;
-    nplanes.SetAttribute("number", param->getTelPlanesNumber()) ;
+    TiXmlElement nplanes( "NumberOfLayers" ) ;
+    nplanes.SetAttribute("number", param->getTrackerPlanesNumber()) ;
     det.InsertEndChild( nplanes ) ;
 
     // layerLayout
-    const TelPlanesLayerLayout& telplanesLayers = param->getTelPlanesLayerLayout() ;
+    const TrackerPlanesLayerLayout& telplanesLayers = param->getTrackerPlanesLayerLayout() ;
 
     TiXmlElement layers("layers") ;
 
@@ -64,21 +64,21 @@ namespace gear {
 
   }
 
-  GearParameters* TelPlanesParametersXML::fromXML( const TiXmlElement* xmlElement, GearMgr* gearMgr) const {
+  GearParameters* TrackerPlanesParametersXML::fromXML( const TiXmlElement* xmlElement, GearMgr* gearMgr) const {
 
     // setup ID
 
-    const TiXmlElement* telplanesID = xmlElement->FirstChildElement( "telplanesID" ) ;
+    const TiXmlElement* telplanesID = xmlElement->FirstChildElement( "LayoutID" ) ;
     int setupID = atoi( getXMLAttribute( telplanesID , "ID" ).c_str() ) ;
 
     int intType = 0;
  
-    const TiXmlElement* telplanesNumber = xmlElement->FirstChildElement( "telplanesNumber" ) ;
+    const TiXmlElement* telplanesNumber = xmlElement->FirstChildElement( "NumberOfLayers" ) ;
     int nplanes = atoi( getXMLAttribute( telplanesNumber , "number" ).c_str() ) ;
 
 
-    // create TelPlanesParameters
-    TelPlanesParametersImpl* telplanesParam = new TelPlanesParametersImpl( setupID, intType , nplanes) ;
+    // create TrackerPlanesParameters
+    TrackerPlanesParametersImpl* telplanesParam = new TrackerPlanesParametersImpl( setupID, intType , nplanes) ;
 
     // layers
     const TiXmlNode* xmlLayers = xmlElement->FirstChildElement( "layers" ) ;
@@ -86,7 +86,7 @@ namespace gear {
     const TiXmlNode* xmlLayer = 0 ;
     while( ( xmlLayer = xmlLayers->IterateChildren( "layer" , xmlLayer ) ) != 0 ) {
 
-            TelPlanesLayerImpl* layerImpl = new TelPlanesLayerImpl() ;
+            TrackerPlanesLayerImpl* layerImpl = new TrackerPlanesLayerImpl() ;
 
             int layerID = atoi( getXMLAttribute( xmlLayer, "ID" ).c_str() ) ;
 	    std::cout << " layer ID " << layerID << std::endl;
@@ -156,7 +156,7 @@ namespace gear {
     // ------- add to GearMgr ----
     if( gearMgr != 0 ) {
       
-      gearMgr->setTelPlanesParameters( telplanesParam ) ;
+      gearMgr->setTrackerPlanesParameters( telplanesParam ) ;
 
     }
 
