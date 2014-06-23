@@ -6,10 +6,10 @@ namespace gear{
 
 
   TrackerPlanesParametersImpl::TrackerPlanesParametersImpl
-  (int siplanesID, int siplanesType, int siplanesNumber) :
-    _siplanesID( siplanesID ),
-    _siplanesType( siplanesType ) ,
-    _siplanesNumber( siplanesNumber ) {}
+  (int layoutID, int layoutType, int layoutNumberOfLayers ) :
+    _layoutID( layoutID ),
+    _layoutType( layoutType ) ,
+    _layoutNumberOfLayers( layoutNumberOfLayers ) {}
  
 } // namespace
 
