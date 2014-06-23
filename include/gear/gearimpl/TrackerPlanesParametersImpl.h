@@ -20,11 +20,11 @@ class TrackerPlanesParametersImpl : public GearParametersImpl, public TrackerPla
 
 public: 
   /** C'tor  
-   *  @param siplanesID             ID of TrackerPlanes detector setup   
-   *  @param siplanesType           the type of the TrackerPlanes detector
-   *  @param siplanesNumber         the number of Si planes
+   *  @param layoutID             ID of TrackerPlanes detector setup   
+   *  @param layoutType           the type of the TrackerPlanes detector
+   *  @param layoutNumberOfLayers         the number of Si planes
    */
-  TrackerPlanesParametersImpl(int siplanesID, int siplanesType, int siplanesNumber) ;
+  TrackerPlanesParametersImpl(int layoutID, int layoutType, int layoutNumberOfLayers) ;
 
   // Destructor.
   virtual ~TrackerPlanesParametersImpl() { /* nop */; }
@@ -47,25 +47,25 @@ public:
   /** Returns the ID of TrackerPlanes detector setup
    */
 
-  virtual int getTrackerPlanesID() const { return _siplanesID ; }
+  virtual int getTrackerPlanesID() const { return _layoutID ; }
 
   /** Returns the type of TrackerPlanes detector
    */
-  virtual int getTrackerPlanesType() const { return _siplanesType ; }
+  virtual int getTrackerPlanesType() const { return _layoutType ; }
 
   /** Returns the number of Si planes
    */
-  virtual int getTrackerPlanesNumber() const { return _siplanesNumber ; }
+  virtual int getTrackerPlanesNumber() const { return _layoutNumberOfLayers ; }
   
 protected:
   
   TrackerPlanesLayerLayoutImpl _layerLayout ;
   
-  int _siplanesID;
+  int _layoutID;
 
-  int _siplanesType ;
+  int _layoutType ;
   
-  int _siplanesNumber ;
+  int _layoutNumberOfLayers ;
 
 private:
 
