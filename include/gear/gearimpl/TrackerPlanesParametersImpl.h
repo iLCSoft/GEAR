@@ -73,4 +73,5 @@ private:
 
 } // namespace gear
 
-#endif /* ifndef GEAR_SIPLANESPARAMETERS_H */
+#endif /* #ifndef GEAR_TrackerPlanesParametersImpl_H */
+
