@@ -43,7 +43,7 @@ namespace gear{
     _sitParameters(0) ,
     _setParameters(0) ,
     _ftdParameters(0) ,
-    _telplanesParameters(0) ,
+    _trackerplanesParameters(0) ,
     _siplanesParameters(0) ,
     _pointProperties(0) ,
     _distanceProperties(0) ,
@@ -139,7 +139,7 @@ namespace gear{
     if( _sitParameters ) delete _sitParameters ;
     if( _setParameters ) delete _setParameters ;
     if( _ftdParameters ) delete _ftdParameters ;
-    if( _telplanesParameters ) delete _telplanesParameters ;
+    if( _trackerplanesParameters ) delete _trackerplanesParameters ;
     if( _siplanesParameters ) delete _siplanesParameters ;
     if( _pointProperties ) delete _pointProperties ;
     if( _distanceProperties ) delete _distanceProperties ;
@@ -371,10 +371,10 @@ namespace gear{
   const TrackerPlanesParameters & GearMgrImpl::getTrackerPlanesParameters() const
     throw (UnknownParameterException, std::exception ) {
 
-    if( _telplanesParameters == 0 )
+    if( _trackerplanesParameters == 0 )
       throw UnknownParameterException( "No TrackerPlanesParameters set ") ;
 
-    return *_telplanesParameters ;
+    return *_trackerplanesParameters ;
 
   }  
  
@@ -570,9 +570,9 @@ namespace gear{
     _setParameters = setParameters ;
   }
 
-  void GearMgrImpl::setTrackerPlanesParameters( TrackerPlanesParameters* telplanesParameters ) {
+  void GearMgrImpl::setTrackerPlanesParameters( TrackerPlanesParameters* trackerplanesParameters ) {
 
-    _telplanesParameters = telplanesParameters ;
+    _trackerplanesParameters = trackerplanesParameters ;
   }
 
   void GearMgrImpl::setSiPlanesParameters( SiPlanesParameters* siplanesParameters ) {

@@ -48,11 +48,11 @@ namespace gear {
     det.InsertEndChild( nplanes ) ;
 
     // layerLayout
-    const TrackerPlanesLayerLayout& telplanesLayers = param->getTrackerPlanesLayerLayout() ;
+    const TrackerPlanesLayerLayout& trackerplanesLayers = param->getTrackerPlanesLayerLayout() ;
 
     TiXmlElement layers("layers") ;
 
-    for( int i=0 ; i < telplanesLayers.getNLayers() ; i++ ) {
+    for( int i=0 ; i < trackerplanesLayers.getNLayers() ; i++ ) {
       TiXmlElement layer("layer" ) ;
       det.InsertEndChild( layers ) ;
     }
@@ -68,17 +68,17 @@ namespace gear {
 
     // setup ID
 
-    const TiXmlElement* telplanesID = xmlElement->FirstChildElement( "LayoutID" ) ;
-    int setupID = atoi( getXMLAttribute( telplanesID , "ID" ).c_str() ) ;
+    const TiXmlElement* trackerplanesID = xmlElement->FirstChildElement( "LayoutID" ) ;
+    int setupID = atoi( getXMLAttribute( trackerplanesID , "ID" ).c_str() ) ;
 
     int intType = 0;
  
-    const TiXmlElement* telplanesNumber = xmlElement->FirstChildElement( "NumberOfLayers" ) ;
-    int nplanes = atoi( getXMLAttribute( telplanesNumber , "number" ).c_str() ) ;
+    const TiXmlElement* trackerplanesNumber = xmlElement->FirstChildElement( "NumberOfLayers" ) ;
+    int nplanes = atoi( getXMLAttribute( trackerplanesNumber , "number" ).c_str() ) ;
 
 
     // create TrackerPlanesParameters
-    TrackerPlanesParametersImpl* telplanesParam = new TrackerPlanesParametersImpl( setupID, intType , nplanes) ;
+    TrackerPlanesParametersImpl* trackerplanesParam = new TrackerPlanesParametersImpl( setupID, intType , nplanes) ;
 
     // layers
     const TiXmlNode* xmlLayers = xmlElement->FirstChildElement( "layers" ) ;
@@ -144,23 +144,23 @@ namespace gear {
 	       	    layerImpl->addSensitiveLayer( sID, sInfo, sPosX, sPosY, sPosZ, sRotXY, sRotZX, sRotZY, sSizX, sSizY, sThick, sRadLen, sNPixX, sNPixY, sPitX, sPitY, sResolX, sResolY);
 	    }  
 
-            telplanesParam->addLayer( layerImpl ) ; // ? many scattering ladders and multi sensitive scructure -> double layer?
+            trackerplanesParam->addLayer( layerImpl ) ; // ? many scattering ladders and multi sensitive scructure -> double layer?
 
     } // end loop
 
 
 
     // now read the generic parameters
-    GearParametersXML::setParametersFromXML( xmlElement, telplanesParam  ) ;
+    GearParametersXML::setParametersFromXML( xmlElement, trackerplanesParam  ) ;
     
     // ------- add to GearMgr ----
     if( gearMgr != 0 ) {
       
-      gearMgr->setTrackerPlanesParameters( telplanesParam ) ;
+      gearMgr->setTrackerPlanesParameters( trackerplanesParam ) ;
 
     }
 
-    return telplanesParam ;
+    return trackerplanesParam ;
 
   } // fromXML
 

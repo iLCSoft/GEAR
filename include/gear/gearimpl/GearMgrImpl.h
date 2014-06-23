@@ -306,7 +306,7 @@ namespace gear {
 
     /** Set the TrackerPlanesParameters.
      */
-    virtual void setTrackerPlanesParameters( TrackerPlanesParameters * telplanesParameters ) ;
+    virtual void setTrackerPlanesParameters( TrackerPlanesParameters * trackerplanesParameters ) ;
 
     /** Set the SiPlanesParameters.
      */
@@ -354,7 +354,7 @@ namespace gear {
     ZPlanarParameters*     _sitParameters ;
     ZPlanarParameters*     _setParameters ;
     FTDParameters*         _ftdParameters;
-    TrackerPlanesParameters*   _telplanesParameters ;
+    TrackerPlanesParameters*   _trackerplanesParameters ;
     SiPlanesParameters*    _siplanesParameters ;
     GearPointProperties*   _pointProperties ;
     GearDistanceProperties* _distanceProperties ;

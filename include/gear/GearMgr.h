@@ -270,7 +270,7 @@ class MeasurementSurfaceStore;
 
     /** Set the TrackerPlanesParameters.
      */
-    virtual void setTrackerPlanesParameters(TrackerPlanesParameters * telplanesParameters) = 0;
+    virtual void setTrackerPlanesParameters(TrackerPlanesParameters * trackerplanesParameters) = 0;
 
     /** Set the SiPlanesParameters.
      */
