@@ -4,7 +4,7 @@
 #include "gear/CalorimeterParameters.h"
 #include "gear/ZPlanarParameters.h"
 #include "gear/SiPlanesParameters.h"
-#include "gear/TelPlanesParameters.h"
+#include "gear/TrackerPlanesParameters.h"
 
 #include "gear/GearPointProperties.h"
 #include "gear/GearDistanceProperties.h"
@@ -15,7 +15,7 @@
 #include "gearimpl/ZPlanarParametersImpl.h"
 #include "gearimpl/FTDParametersImpl.h"
 #include "gearimpl/SiPlanesParametersImpl.h"
-#include "gearimpl/TelPlanesParametersImpl.h"
+#include "gearimpl/TrackerPlanesParametersImpl.h"
 
 #include "gearimpl/ConstantBField.h"
 #include "gearimpl/SimpleMaterialImpl.h"
@@ -368,11 +368,11 @@ namespace gear{
 
   }
 
-  const TelPlanesParameters & GearMgrImpl::getTelPlanesParameters() const
+  const TrackerPlanesParameters & GearMgrImpl::getTrackerPlanesParameters() const
     throw (UnknownParameterException, std::exception ) {
 
     if( _telplanesParameters == 0 )
-      throw UnknownParameterException( "No TelPlanesParameters set ") ;
+      throw UnknownParameterException( "No TrackerPlanesParameters set ") ;
 
     return *_telplanesParameters ;
 
@@ -570,7 +570,7 @@ namespace gear{
     _setParameters = setParameters ;
   }
 
-  void GearMgrImpl::setTelPlanesParameters( TelPlanesParameters* telplanesParameters ) {
+  void GearMgrImpl::setTrackerPlanesParameters( TrackerPlanesParameters* telplanesParameters ) {
 
     _telplanesParameters = telplanesParameters ;
   }

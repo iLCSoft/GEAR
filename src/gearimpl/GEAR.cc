@@ -7,7 +7,7 @@ namespace gear{
   const char* GEAR::CALORIMETERPARAMETERS = "CalorimeterParameters" ;
   const char* GEAR::ZPLANARPARAMETERS     = "ZPlanarParameters" ;
   const char* GEAR::FTDPARAMETERS         = "FTDParameters" ;
-  const char* GEAR::TELPLANESPARAMETERS   = "TelPlanesParameters" ;
+  const char* GEAR::TRACKERPLANESPARAMETERS   = "TrackerPlanesParameters" ;
   const char* GEAR::SIPLANESPARAMETERS    = "SiPlanesParameters" ;
 
 }

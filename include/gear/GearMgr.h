@@ -18,7 +18,7 @@ class BField;
 class CalorimeterParameters;
 class GearDistanceProperties;
 class GearPointProperties;
-class TelPlanesParameters;
+class TrackerPlanesParameters;
 class SiPlanesParameters;
 class TPCParameters;
 class ZPlanarParameters ;
@@ -158,11 +158,11 @@ class MeasurementSurfaceStore;
      */
     virtual const ZPlanarParameters & getSETParameters() const throw (UnknownParameterException, std::exception )  = 0;
 
-    /** Get the TelPlanes parameters.
+    /** Get the TrackerPlanes parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const TelPlanesParameters & getTelPlanesParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const TrackerPlanesParameters & getTrackerPlanesParameters() const throw (UnknownParameterException, std::exception )  = 0;
 
     /** Get the SiPlanes parameters.
      *
@@ -268,9 +268,9 @@ class MeasurementSurfaceStore;
      */
     virtual void setSETParameters(ZPlanarParameters * setParameters) = 0;
 
-    /** Set the TelPlanesParameters.
+    /** Set the TrackerPlanesParameters.
      */
-    virtual void setTelPlanesParameters(TelPlanesParameters * telplanesParameters) = 0;
+    virtual void setTrackerPlanesParameters(TrackerPlanesParameters * telplanesParameters) = 0;
 
     /** Set the SiPlanesParameters.
      */

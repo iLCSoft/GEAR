@@ -1,65 +1,65 @@
 // -*- C++ -*-
-#ifndef GEAR_TelPlanesParametersImpl_H
-#define GEAR_TelPlanesParametersImpl_H 1
+#ifndef GEAR_TrackerPlanesParametersImpl_H
+#define GEAR_TrackerPlanesParametersImpl_H 1
 
-#include "gear/TelPlanesParameters.h"
+#include "gear/TrackerPlanesParameters.h"
 #include "gearimpl/GearParametersImpl.h"
-#include "gearimpl/TelPlanesLayerLayoutImpl.h"
+#include "gearimpl/TrackerPlanesLayerLayoutImpl.h"
 
 
 namespace gear {
 
-class TelPlanesLayerLayout;
+class TrackerPlanesLayerLayout;
 
   /** Abstract description of layers in pixel beam telescope.
    *  This assumes a number of silicon layers, arranged perpendicular to the beam.
    *  @author I. Rubinskiy, DESY
    *  @version $Id: 
    */
-class TelPlanesParametersImpl : public GearParametersImpl, public TelPlanesParameters {
+class TrackerPlanesParametersImpl : public GearParametersImpl, public TrackerPlanesParameters {
 
 public: 
   /** C'tor  
-   *  @param siplanesID             ID of TelPlanes detector setup   
-   *  @param siplanesType           the type of the TelPlanes detector
+   *  @param siplanesID             ID of TrackerPlanes detector setup   
+   *  @param siplanesType           the type of the TrackerPlanes detector
    *  @param siplanesNumber         the number of Si planes
    */
-  TelPlanesParametersImpl(int siplanesID, int siplanesType, int siplanesNumber) ;
+  TrackerPlanesParametersImpl(int siplanesID, int siplanesType, int siplanesNumber) ;
 
   // Destructor.
-  virtual ~TelPlanesParametersImpl() { /* nop */; }
+  virtual ~TrackerPlanesParametersImpl() { /* nop */; }
   
 
-  /** Adding a Layer to the TelPlanes detector (without parameters for layer rotation)
+  /** Adding a Layer to the TrackerPlanes detector (without parameters for layer rotation)
    **/
-  virtual void addLayer( TelPlanesLayerImpl* _layer ){
+  virtual void addLayer( TrackerPlanesLayerImpl* _layer ){
 
      _layerLayout.addLayer( _layer ); // pointer as input
   }
  
  
       
-  /** Returns the layer layout of TelPlanes detector 
+  /** Returns the layer layout of TrackerPlanes detector 
    */
-  virtual const TelPlanesLayerLayout & getTelPlanesLayerLayout() const { return _layerLayout ; }
+  virtual const TrackerPlanesLayerLayout & getTrackerPlanesLayerLayout() const { return _layerLayout ; }
   
 
-  /** Returns the ID of TelPlanes detector setup
+  /** Returns the ID of TrackerPlanes detector setup
    */
 
-  virtual int getTelPlanesID() const { return _siplanesID ; }
+  virtual int getTrackerPlanesID() const { return _siplanesID ; }
 
-  /** Returns the type of TelPlanes detector
+  /** Returns the type of TrackerPlanes detector
    */
-  virtual int getTelPlanesType() const { return _siplanesType ; }
+  virtual int getTrackerPlanesType() const { return _siplanesType ; }
 
   /** Returns the number of Si planes
    */
-  virtual int getTelPlanesNumber() const { return _siplanesNumber ; }
+  virtual int getTrackerPlanesNumber() const { return _siplanesNumber ; }
   
 protected:
   
-  TelPlanesLayerLayoutImpl _layerLayout ;
+  TrackerPlanesLayerLayoutImpl _layerLayout ;
   
   int _siplanesID;
 

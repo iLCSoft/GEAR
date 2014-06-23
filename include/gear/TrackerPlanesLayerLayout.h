@@ -1,6 +1,6 @@
 // -*- C++ -*-
-#ifndef GEAR_TelPlanesLAYERLAYOUT_H
-#define GEAR_TelPlanesLAYERLAYOUT_H 1
+#ifndef GEAR_TrackerPlanesLAYERLAYOUT_H
+#define GEAR_TrackerPlanesLAYERLAYOUT_H 1
 
 #include <vector>
 #include <string>
@@ -17,14 +17,14 @@ namespace gear {
  * @version $Id: 
  */
 
-class TelPlanesLayerImpl;
+class TrackerPlanesLayerImpl;
 
-class TelPlanesMaterialLayer  {
+class TrackerPlanesMaterialLayer  {
 
     
 public:
     /// Destructor.
-    virtual ~TelPlanesMaterialLayer() { /* nop */; }
+    virtual ~TrackerPlanesMaterialLayer() { /* nop */; }
 
     virtual int getID() const = 0;
 
@@ -132,12 +132,12 @@ public:
 
 };
 
-class TelPlanesSensitiveLayer  {
+class TrackerPlanesSensitiveLayer  {
 
     
 public:
     /// Destructor.
-    virtual ~TelPlanesSensitiveLayer() { /* nop */; }
+    virtual ~TrackerPlanesSensitiveLayer() { /* nop */; }
 
 
     /** ID of sensitive volume of layer layerIndex - layer indexing starts at 0
@@ -279,11 +279,11 @@ public:
 };
 
 
-class TelPlanesLayer  {
+class TrackerPlanesLayer  {
 
 public:
     /// Destructor.
-    virtual ~TelPlanesLayer() { /* nop */; }
+    virtual ~TrackerPlanesLayer() { /* nop */; }
 
     /** Layer ID of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source.*/
@@ -329,26 +329,26 @@ public:
 };
 
 
-class TelPlanesLayerLayout  {
+class TrackerPlanesLayerLayout  {
 
 public: 
     /// Destructor.
-    virtual ~TelPlanesLayerLayout() { /* nop */; }
+    virtual ~TrackerPlanesLayerLayout() { /* nop */; }
 
     /** The total number of layers. */
     virtual int getNLayers() const = 0;
  
     /** a free parameter string field
      */
-    virtual const TelPlanesLayerImpl* getLayer( unsigned int ID ) const = 0;
+    virtual const TrackerPlanesLayerImpl* getLayer( unsigned int ID ) const = 0;
  
     /** a free parameter string field
      */
-    virtual const TelPlanesLayerImpl* getLayerByID( int ID ) const = 0;
+    virtual const TrackerPlanesLayerImpl* getLayerByID( int ID ) const = 0;
   
     /** a free parameter string field
      */
-    virtual void addLayer( TelPlanesLayerImpl* )  = 0;
+    virtual void addLayer( TrackerPlanesLayerImpl* )  = 0;
 
      /** Layer ID of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source.*/
@@ -379,4 +379,4 @@ public:
 
 
 } // namespace gear
-#endif /* ifndef GEAR_TelPlanesLAYERLAYOUT_H */
+#endif /* ifndef GEAR_TrackerPlanesLAYERLAYOUT_H */

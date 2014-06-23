@@ -1,4 +1,4 @@
-#include "gearimpl/TelPlanesLayerLayoutImpl.h"
+#include "gearimpl/TrackerPlanesLayerLayoutImpl.h"
 #include <math.h>
 
 /** Abstract description of layers in pixel beam telescope with or without DUT.
@@ -9,7 +9,7 @@
 
 namespace gear{
 
-  void TelPlanesLayerImpl::addMaterialLayer(
+  void TrackerPlanesLayerImpl::addMaterialLayer(
 			      // layer
 			      int ID, std::string info,
 			      double PositionX, double PositionY, double PositionZ,
@@ -18,7 +18,7 @@ namespace gear{
                               )
   {
 
-    TelPlanesMaterialLayerImpl lL ;
+    TrackerPlanesMaterialLayerImpl lL ;
     lL.setID         ( ID        );
     lL.setInfo       ( info      );
     lL.setPositionX  ( PositionX );
@@ -35,7 +35,7 @@ namespace gear{
     _materialVec.push_back( lL ) ;
   }
 
-  void TelPlanesLayerImpl::addSensitiveLayer(
+  void TrackerPlanesLayerImpl::addSensitiveLayer(
 			      int ID, std::string info,
 			      double PositionX, double PositionY, double PositionZ,
 			      double RotationXY, double RotationZX, double RotationZY,
@@ -44,7 +44,7 @@ namespace gear{
                               )
   {
 
-    TelPlanesSensitiveLayerImpl sL ;
+    TrackerPlanesSensitiveLayerImpl sL ;
     sL.setID         ( ID        );
     sL.setInfo       ( info      );
     sL.setPositionX  ( PositionX );

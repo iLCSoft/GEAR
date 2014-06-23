@@ -1,8 +1,8 @@
 // -*- C++ -*-
-#ifndef GEAR_TelPlanesLayerLayoutImpl_H
-#define GEAR_TelPlanesLayerLayoutImpl_H 1
+#ifndef GEAR_TrackerPlanesLayerLayoutImpl_H
+#define GEAR_TrackerPlanesLayerLayoutImpl_H 1
 
-#include "gear/TelPlanesLayerLayout.h"
+#include "gear/TrackerPlanesLayerLayout.h"
 #include <vector>
 #include <iostream>
 
@@ -17,7 +17,7 @@ namespace gear {
 
 
 // basic scattering only layer
-class TelPlanesMaterialLayerImpl: public TelPlanesMaterialLayer  {
+class TrackerPlanesMaterialLayerImpl: public TrackerPlanesMaterialLayer  {
 
     private:
 	
@@ -48,11 +48,11 @@ class TelPlanesMaterialLayerImpl: public TelPlanesMaterialLayer  {
     
     public:
      /** safe default contructor **/
-    TelPlanesMaterialLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.),  RotationXY(0.), RotationZX(0.), RotationZY(0.), SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) { ; } ;
+    TrackerPlanesMaterialLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.),  RotationXY(0.), RotationZX(0.), RotationZY(0.), SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) { ; } ;
 
     /// Destructor.
     /**      */
-    virtual ~TelPlanesMaterialLayerImpl() { /* nop */; }
+    virtual ~TrackerPlanesMaterialLayerImpl() { /* nop */; }
     /**      */
     virtual int getID() const { return ID  ; }
     /**      */
@@ -108,7 +108,7 @@ class TelPlanesMaterialLayerImpl: public TelPlanesMaterialLayer  {
 };
 
 //basic scattering and sensitve layer
-class TelPlanesSensitiveLayerImpl: public TelPlanesSensitiveLayer   {
+class TrackerPlanesSensitiveLayerImpl: public TrackerPlanesSensitiveLayer   {
 
     private:   
    
@@ -152,12 +152,12 @@ class TelPlanesSensitiveLayerImpl: public TelPlanesSensitiveLayer   {
 
     public:
     /** safe default contructor **/
-    TelPlanesSensitiveLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) 
+    TrackerPlanesSensitiveLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) 
                                   , NpixelX(0), NpixelY(0), PitchX(0.), PitchY(0.), ResolutionX(0.), ResolutionY(0.)
      { ; } ;
 
     /// Destructor.
-    virtual ~TelPlanesSensitiveLayerImpl() { /* nop */; }
+    virtual ~TrackerPlanesSensitiveLayerImpl() { /* nop */; }
 
     /**      */
     virtual int getID() const { return ID  ; }
@@ -238,12 +238,12 @@ class TelPlanesSensitiveLayerImpl: public TelPlanesSensitiveLayer   {
 
 };
 
-  typedef std::vector<TelPlanesMaterialLayerImpl> TelPlanesMaterialLayerImplVec ;
-  typedef std::vector<TelPlanesSensitiveLayerImpl> TelPlanesSensitiveLayerImplVec ;
+  typedef std::vector<TrackerPlanesMaterialLayerImpl> TrackerPlanesMaterialLayerImplVec ;
+  typedef std::vector<TrackerPlanesSensitiveLayerImpl> TrackerPlanesSensitiveLayerImplVec ;
 
 
 // a detector element consisting of a vector of scatterrers and sensors
-class TelPlanesLayerImpl: public TelPlanesLayer  {
+class TrackerPlanesLayerImpl: public TrackerPlanesLayer  {
 
   private:
 
@@ -254,19 +254,19 @@ class TelPlanesLayerImpl: public TelPlanesLayer  {
     std::string info;
 
     /** material Layer vector */
-    TelPlanesMaterialLayerImplVec _materialVec ;
+    TrackerPlanesMaterialLayerImplVec _materialVec ;
 
     /** sensitive Layer vector */
-    TelPlanesSensitiveLayerImplVec _sensitiveVec ;
+    TrackerPlanesSensitiveLayerImplVec _sensitiveVec ;
 
   public:
 
     /** default constructor */
-    TelPlanesLayerImpl() : ID(0), info("")
+    TrackerPlanesLayerImpl() : ID(0), info("")
     { ; };
 
     /** normal constructor */
-    TelPlanesLayerImpl( TelPlanesMaterialLayerImplVec& materials, TelPlanesSensitiveLayerImplVec& sensors) : ID(0), info("")
+    TrackerPlanesLayerImpl( TrackerPlanesMaterialLayerImplVec& materials, TrackerPlanesSensitiveLayerImplVec& sensors) : ID(0), info("")
     {
        //          
        _materialVec.clear(); 
@@ -283,7 +283,7 @@ class TelPlanesLayerImpl: public TelPlanesLayer  {
 
     /** Destructor.
      */
-    virtual ~TelPlanesLayerImpl() { /* nop */; }
+    virtual ~TrackerPlanesLayerImpl() { /* nop */; }
 
     /** get methods
      */
@@ -309,11 +309,11 @@ class TelPlanesLayerImpl: public TelPlanesLayer  {
 
     /** get methods
      */
-    TelPlanesMaterialLayerImplVec& getMaterialLayerVec(){ return _materialVec;}
+    TrackerPlanesMaterialLayerImplVec& getMaterialLayerVec(){ return _materialVec;}
 
     /** get methods
      */
-    TelPlanesSensitiveLayerImplVec& getSensitiveLayerVec(){ return _sensitiveVec;}
+    TrackerPlanesSensitiveLayerImplVec& getSensitiveLayerVec(){ return _sensitiveVec;}
 
     /** add methods
      */
@@ -339,10 +339,10 @@ class TelPlanesLayerImpl: public TelPlanesLayer  {
 };
 
 /** */
-typedef std::vector<TelPlanesLayerImpl> TelPlanesLayerImplVec ;
+typedef std::vector<TrackerPlanesLayerImpl> TrackerPlanesLayerImplVec ;
 
 /**  a collection of layers = telescope description */
-class TelPlanesLayerLayoutImpl : public TelPlanesLayerLayout {
+class TrackerPlanesLayerLayoutImpl : public TrackerPlanesLayerLayout {
 
 	protected:
 
@@ -358,22 +358,22 @@ class TelPlanesLayerLayoutImpl : public TelPlanesLayerLayout {
           std::string info;
 
 	  /** Layer */
-	  TelPlanesLayerImplVec _layerVec ;
+	  TrackerPlanesLayerImplVec _layerVec ;
 
 	public: 
 
           /** */
-	  TelPlanesLayerLayoutImpl() {
+	  TrackerPlanesLayerLayoutImpl() {
 	    _layerVec.clear();
 	  };
 
           /** */
-	  virtual void addLayer( TelPlanesLayerImpl* layer ){
+	  virtual void addLayer( TrackerPlanesLayerImpl* layer ){
 	    _layerVec.push_back( *layer ) ;
 	  }
 
 	  /**  Destructor */
-	  virtual ~TelPlanesLayerLayoutImpl() { /* nop */; }
+	  virtual ~TrackerPlanesLayerLayoutImpl() { /* nop */; }
 		
           /** */
           virtual int getID() const { return 0; }
@@ -393,7 +393,7 @@ class TelPlanesLayerLayoutImpl : public TelPlanesLayerLayout {
           }	 
 
           /** */
-	  virtual const TelPlanesLayerImpl* getLayer( unsigned int ID ) const { 
+	  virtual const TrackerPlanesLayerImpl* getLayer( unsigned int ID ) const { 
 
             if( ID < _layerVec.size() ) {
               return &(_layerVec.at(ID)); // return an address
@@ -403,9 +403,9 @@ class TelPlanesLayerLayoutImpl : public TelPlanesLayerLayout {
           }
 
           /** */
-	  virtual const TelPlanesLayerImpl* getLayerByID( int ID ) const { 
+	  virtual const TrackerPlanesLayerImpl* getLayerByID( int ID ) const { 
 
-            for( TelPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
+            for( TrackerPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
               if( (*it).getID() == ID ) return &(*it); // return a pointer (*it) is the element of the vector
             }
 
@@ -437,8 +437,8 @@ sprintf(buffer,"|------------------|--------------------------------------------
             	char buffer[1024] ;
                 const char* a=""; 
 
-		for( TelPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
-			TelPlanesLayerImpl* layer = const_cast<TelPlanesLayerImpl* > (&(*it)) ;
+		for( TrackerPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
+			TrackerPlanesLayerImpl* layer = const_cast<TrackerPlanesLayerImpl* > (&(*it)) ;
 
  		sprintf(buffer,"|%3d %14s|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s`%5s %5s %5s %5s %5s %5s|\n"
 			, layer->getID() 
@@ -447,12 +447,12 @@ sprintf(buffer,"|------------------|--------------------------------------------
 		);
 		s << buffer ;
 
-                TelPlanesMaterialLayerImplVec::const_iterator mb = layer->getMaterialLayerVec().begin();
-                TelPlanesMaterialLayerImplVec::const_iterator me = layer->getMaterialLayerVec().end();
-                TelPlanesSensitiveLayerImplVec::const_iterator sb = layer->getSensitiveLayerVec().begin();
-                TelPlanesSensitiveLayerImplVec::const_iterator se = layer->getSensitiveLayerVec().end();
+                TrackerPlanesMaterialLayerImplVec::const_iterator mb = layer->getMaterialLayerVec().begin();
+                TrackerPlanesMaterialLayerImplVec::const_iterator me = layer->getMaterialLayerVec().end();
+                TrackerPlanesSensitiveLayerImplVec::const_iterator sb = layer->getSensitiveLayerVec().begin();
+                TrackerPlanesSensitiveLayerImplVec::const_iterator se = layer->getSensitiveLayerVec().end();
 
-                for( TelPlanesMaterialLayerImplVec::const_iterator ml = mb ; ml < me; ml++) {
+                for( TrackerPlanesMaterialLayerImplVec::const_iterator ml = mb ; ml < me; ml++) {
       		  sprintf(buffer,"|%3s %14s|%3d %14s %5.0f %5.0f %5.0f %5.0f %5.0f %5.0f %5.2f %5.2f %5.2f %5.2f|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s`%5s %5s %5s %5s %5s %5s|\n"
                       , a,a
                       , (*ml).getID() 
@@ -472,7 +472,7 @@ sprintf(buffer,"|------------------|--------------------------------------------
 	   	  s << buffer ;
                 }
 	
-                for( TelPlanesSensitiveLayerImplVec::const_iterator sl = sb ; sl < se; sl++) {
+                for( TrackerPlanesSensitiveLayerImplVec::const_iterator sl = sb ; sl < se; sl++) {
 	sprintf(buffer,"|%3s %14s|%3s %14s %5s %5s %5s %5s %5s %5s %5s %5s %5s %5s|%3d %14s %5.0f %5.0f %5.0f %5.0f %5.0f %5.0f %5.2f %5.2f %5.2f %5.2f`%5d %5d %5.1f %5.1f %5.2f %5.2f|\n"
                       , a,a,   a,a,  a,a,  a,a,  a,a,  a,a,  a,a
  		      , (*sl).getID() 

@@ -1,5 +1,5 @@
-#ifndef GEAR_TelPlanesParametersXML_H
-#define GEAR_TelPlanesParametersXML_H 1
+#ifndef GEAR_TrackerPlanesParametersXML_H
+#define GEAR_TrackerPlanesParametersXML_H 1
 
 #include "gearxml/XMLHandler.h"
 
@@ -9,12 +9,12 @@ namespace gear {
 
   class TiXmlNode ;
 
-  /** XML handler for TelPlanesParameters.
+  /** XML handler for TrackerPlanesParameters.
    *
    * @author T. Klimkovich, DESY
    * @version $Id $
    */
-  class TelPlanesParametersXML : public XMLHandler {
+  class TrackerPlanesParametersXML : public XMLHandler {
 
   public:
     
