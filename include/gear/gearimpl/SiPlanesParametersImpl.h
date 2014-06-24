@@ -203,7 +203,6 @@ public:
 
   /** Returns the ID of SiPlanes detector setup
    */
-
   virtual int getSiPlanesID() const { return _siplanesID ; }
 
   /** Returns the type of SiPlanes detector: SiPlanesParametersImpl.TelescopeWithDUT 
@@ -214,7 +213,21 @@ public:
   /** Returns the number of Si planes
    */
   virtual int getSiPlanesNumber() const { return _siplanesNumber ; }
-  
+ 
+  /** Returns the ID of SiPlanes detector setup
+   */
+
+  virtual void setSiPlanesID(int value )  {  _siplanesID = value ; }
+
+  /** Returns the type of SiPlanes detector: SiPlanesParametersImpl.TelescopeWithDUT 
+   *  or SiPlanesParametersImpl.TelescopeWithoutDUT
+   */
+  virtual void setSiPlanesType(int value)  { _siplanesType = value ; }
+
+  /** Returns the number of Si planes
+   */
+  virtual void setSiPlanesNumber(int value)  {  _siplanesNumber = value ; }
+ 
 protected:
   
   SiPlanesLayerLayoutImpl _layer ;

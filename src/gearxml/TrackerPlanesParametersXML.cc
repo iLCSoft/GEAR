@@ -21,6 +21,8 @@
    *  @version $Id: 
    */
 
+using namespace gear;
+
 namespace gear {
 
   TiXmlElement TrackerPlanesParametersXML::toXML( const GearParameters & parameters ) const {
@@ -48,13 +50,68 @@ namespace gear {
     det.InsertEndChild( nplanes ) ;
 
     // layerLayout
-    const TrackerPlanesLayerLayout& trackerplanesLayers = param->getTrackerPlanesLayerLayout() ;
+    const TrackerPlanesLayerLayout& trackerplanesLayerLayout = param->getTrackerPlanesLayerLayout() ;
 
     TiXmlElement layers("layers") ;
 
-    for( int i=0 ; i < trackerplanesLayers.getNLayers() ; i++ ) {
-      TiXmlElement layer("layer" ) ;
-      det.InsertEndChild( layers ) ;
+    for( int i=0 ; i < trackerplanesLayerLayout.getNLayers() ; i++ ) {
+      TiXmlElement xmlLayer("layer" ) ;
+
+      TrackerPlanesLayerImpl* layer = const_cast<gear::TrackerPlanesLayerImpl*  > (trackerplanesLayerLayout.getLayer(i));
+      if( layer == 0 ) continue;
+
+      TrackerPlanesMaterialLayerImplVec& material = layer->getMaterialLayerVec();
+
+      TrackerPlanesSensitiveLayerImplVec& sensitive = layer->getSensitiveLayerVec();
+
+        for( int i=0 ; i < material.size() ; i++ ) {
+           TrackerPlanesMaterialLayerImpl& ladder = material.at(i);
+
+           TiXmlElement xmlLadder("ladder") ;
+           xmlLadder.SetAttribute( "ID" , ladder.getID() ) ;
+           xmlLadder.SetAttribute( "info" , ladder.getInfo() ) ;
+           xmlLadder.SetDoubleAttribute( "positionX" , ladder.getPositionX() ) ;
+           xmlLadder.SetDoubleAttribute( "positionY" , ladder.getPositionY() ) ;
+           xmlLadder.SetDoubleAttribute( "positionZ" , ladder.getPositionZ() ) ;
+           xmlLadder.SetDoubleAttribute( "rotationXY" , ladder.getRotationXY() ) ;
+           xmlLadder.SetDoubleAttribute( "rotationZX" , ladder.getRotationZX() ) ;
+           xmlLadder.SetDoubleAttribute( "rotationZY" , ladder.getRotationZY() ) ;
+           xmlLadder.SetDoubleAttribute( "sizeX" , ladder.getSizeX() ) ;
+           xmlLadder.SetDoubleAttribute( "sizeY" , ladder.getSizeY() ) ;
+           xmlLadder.SetDoubleAttribute( "thickness" , ladder.getThickness() ) ;
+           xmlLadder.SetDoubleAttribute( "radLength" , ladder.getRadLength() ) ;
+     
+           xmlLayer.InsertEndChild( xmlLadder ) ;
+        }
+      
+ 
+        for( int i=0 ; i < sensitive.size() ; i++ ) {
+           TrackerPlanesSensitiveLayerImpl& sensor = sensitive.at(i);
+ 
+           TiXmlElement xmlSensor("sensitive" ) ;
+           xmlSensor.SetAttribute( "ID" , sensor.getID() ) ;
+           xmlSensor.SetAttribute( "info" , sensor.getInfo() ) ;
+           xmlSensor.SetDoubleAttribute( "positionX" , sensor.getPositionX() ) ;
+           xmlSensor.SetDoubleAttribute( "positionY" , sensor.getPositionY() ) ;
+           xmlSensor.SetDoubleAttribute( "positionZ" , sensor.getPositionZ() ) ;
+           xmlSensor.SetDoubleAttribute( "rotationXY" , sensor.getRotationXY() ) ;
+           xmlSensor.SetDoubleAttribute( "rotationZX" , sensor.getRotationZX() ) ;
+           xmlSensor.SetDoubleAttribute( "rotationZY" , sensor.getRotationZY() ) ;
+           xmlSensor.SetDoubleAttribute( "sizeX" , sensor.getSizeX() ) ;
+           xmlSensor.SetDoubleAttribute( "sizeY" , sensor.getSizeY() ) ;
+           xmlSensor.SetDoubleAttribute( "thickness" , sensor.getThickness() ) ;
+           xmlSensor.SetAttribute( "npixelX" , sensor.getNpixelX() ) ;
+           xmlSensor.SetAttribute( "npixelY" , sensor.getNpixelY() ) ;
+           xmlSensor.SetDoubleAttribute( "pitchX" , sensor.getPitchX() ) ;
+           xmlSensor.SetDoubleAttribute( "pitchY" , sensor.getPitchY() ) ;
+           xmlSensor.SetDoubleAttribute( "resolutionX" , sensor.getResolutionX() ) ;
+           xmlSensor.SetDoubleAttribute( "resolutionY" , sensor.getResolutionY() ) ;
+           xmlSensor.SetDoubleAttribute( "radLength" , sensor.getRadLength() ) ;
+ 
+           xmlLayer.InsertEndChild( xmlSensor ) ;
+       }
+
+      det.InsertEndChild( xmlLayer ) ;
     }
 
     // Assemble Detector

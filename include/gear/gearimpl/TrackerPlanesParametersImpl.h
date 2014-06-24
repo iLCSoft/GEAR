@@ -46,7 +46,6 @@ public:
 
   /** Returns the ID of TrackerPlanes detector setup
    */
-
   virtual int getLayoutID() const { return _layoutID ; }
 
   /** Returns the type of TrackerPlanes detector
@@ -56,6 +55,18 @@ public:
   /** Returns the number of Si planes
    */
   virtual int getLayoutNumberOfLayers() const { return _layoutNumberOfLayers ; }
+
+  /** Returns the ID of TrackerPlanes detector setup
+   */
+  virtual void setLayoutID(int value)  { _layoutID = value ; }
+
+  /** Returns the type of TrackerPlanes detector
+   */
+  virtual void setLayoutType(int value)  { _layoutType = value; }
+
+  /** Returns the number of Si planes
+   */
+  virtual void setLayoutNumberOfLayers(int value)  { _layoutNumberOfLayers = value; }
   
 protected:
   

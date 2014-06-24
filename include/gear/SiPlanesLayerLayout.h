@@ -23,16 +23,6 @@ public:
      *  for the layer closest to the beam source.*/
     virtual int getID(int layerIndex) const = 0;
 
-   /** The radiation length of nonsensitive volume of layer layerIndex - layer indexing starts at 0
-     *  for the layer closest to the beam source.
-     */
-    virtual double getLayerRadLength(int layerIndex) const = 0;
-
-    /** The radiation length of sensitive volume of layer layerIndex - layer indexing starts at 0
-     *  for the layer closest to the beam source.
-     */
-    virtual double getSensitiveRadLength(int layerIndex) const = 0;
-
     /** x position of the center of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source.
      */
@@ -63,17 +53,6 @@ public:
      */
     virtual double getLayerRotationZY(int layerIndex) const = 0;
 
-    virtual void setLayerRadLength(int layerIndex, double value)    = 0;
-    virtual void setLayerPositionX(int layerIndex, double value)    = 0;
-    virtual void setLayerPositionY(int layerIndex, double value)    = 0;
-    virtual void setLayerPositionZ(int layerIndex, double value)    = 0;
-    virtual void setLayerRotationXY(int layerIndex, double value)   = 0;
-    virtual void setLayerRotationZX(int layerIndex, double value)   = 0;
-    virtual void setLayerRotationZY(int layerIndex, double value)   = 0;
-    virtual void setLayerSizeX(int layerIndex, double value)        = 0;
-    virtual void setLayerSizeY(int layerIndex, double value)        = 0;
-    virtual void setLayerThickness(int layerIndex, double value)    = 0;
-
 
     /** Size in x direction of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source. 
@@ -89,6 +68,46 @@ public:
      *  for the layer closest to the beam source. 
      */	
     virtual double getLayerThickness(int layerIndex) const = 0;
+
+   /** The radiation length of nonsensitive volume of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source.
+     */
+    virtual double getLayerRadLength(int layerIndex) const = 0;
+
+ 
+    /** */
+    virtual void setID(int layerIndex, int value)  = 0;
+
+    /** */
+    virtual void setLayerPositionX(int layerIndex, double value)    = 0;
+ 
+    /** */
+    virtual void setLayerPositionY(int layerIndex, double value)    = 0;
+ 
+    /** */
+    virtual void setLayerPositionZ(int layerIndex, double value)    = 0;
+ 
+    /** */
+    virtual void setLayerRotationXY(int layerIndex, double value)   = 0;
+ 
+    /** */
+    virtual void setLayerRotationZX(int layerIndex, double value)   = 0;
+ 
+    /** */
+    virtual void setLayerRotationZY(int layerIndex, double value)   = 0;
+ 
+    /** */
+    virtual void setLayerSizeX(int layerIndex, double value)        = 0;
+ 
+    /** */
+    virtual void setLayerSizeY(int layerIndex, double value)        = 0;
+ 
+    /** */
+    virtual void setLayerThickness(int layerIndex, double value)    = 0;
+
+    /** */
+    virtual void setLayerRadLength(int layerIndex, double value)    = 0;
+
 
     /** ID of sensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source.*/
@@ -140,6 +159,11 @@ public:
      *  for the layer closest to the beam source. 
      */	
     virtual double getSensitiveThickness(int layerIndex) const = 0;
+
+    /** The radiation length of sensitive volume of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source.
+     */
+    virtual double getSensitiveRadLength(int layerIndex) const = 0;
 
     /** Number of pixels in x direction in sensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source. 
@@ -199,13 +223,109 @@ public:
      *  of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source. 
      */
-
     virtual double getSensitiveRotation4(int layerIndex) const = 0;
 
-     /** ID of nonsensitive volume of the DUT.*/
+ 
+    /** */
+    virtual void setSensitiveID(int layerIndex, int value ) = 0;
+
+    /** */
+    virtual void setSensitivePositionX(int layerIndex, double value)    = 0;
+ 
+    /** */
+    virtual void setSensitivePositionY(int layerIndex, double value)    = 0;
+ 
+    /** */
+    virtual void setSensitivePositionZ(int layerIndex, double value)    = 0;
+ 
+    /** */
+    virtual void setSensitiveRotationXY(int layerIndex, double value)   = 0;
+ 
+    /** */
+    virtual void setSensitiveRotationZX(int layerIndex, double value)   = 0;
+ 
+    /** */
+    virtual void setSensitiveRotationZY(int layerIndex, double value)   = 0;
+ 
+    /** */
+    virtual void setSensitiveSizeX(int layerIndex, double value)        = 0;
+ 
+    /** */
+    virtual void setSensitiveSizeY(int layerIndex, double value)        = 0;
+ 
+    /** */
+    virtual void setSensitiveThickness(int layerIndex, double value)    = 0;
+
+    /** */
+    virtual void setSensitiveRadLength(int layerIndex, double value)    = 0;
+
+    /** Number of pixels in x direction in sensitive volume of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveNpixelX(int layerIndex, int value ) = 0;
+
+    /** Number of pixels in y direction in sensitive volume of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveNpixelY(int layerIndex, int value ) = 0;
+
+    /** Pitch size in x direction in sensitive volume of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitivePitchX(int layerIndex, double value ) = 0;
+
+    /** Pitch size in y direction in sensitive volume of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitivePitchY(int layerIndex, double value ) = 0;
+
+    /** Intrinsic resolution of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveResolution(int layerIndex, double value )   = 0;
+ 
+    /** Intrinsic resolution of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveResolutionX(int layerIndex, double value )   = 0;
+
+    /** Intrinsic resolution of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveResolutionY(int layerIndex, double value )   = 0;
+
+
+    /** First element (cos(theta)) of rotation matrix of sensitive volume 
+     *  of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveRotation1(int layerIndex, double value )   = 0;
+
+    /** Second element (-sin(theta)) of rotation matrix of sensitive volume 
+     *  of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveRotation2(int layerIndex, double value )   = 0;
+
+    /** Third element (sin(theta)) of rotation matrix of sensitive volume 
+     *  of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveRotation3(int layerIndex, double value )   = 0;
+
+    /** Fourth element (cos(theta)) of rotation matrix of sensitive volume 
+     *  of layer layerIndex - layer indexing starts at 0
+     *  for the layer closest to the beam source. 
+     */
+    virtual void setSensitiveRotation4(int layerIndex, double value )   = 0;
+
+
+// the code below -> DEPRECATED - will be removed at next release !!
+
+    /** ID of nonsensitive volume of the DUT.*/
     virtual int getDUTID() const = 0;
 
-   /** The radiation length of nonsensitive volume of the DUT.
+    /** The radiation length of nonsensitive volume of the DUT.
      */
     virtual double getDUTRadLength() const = 0;
 

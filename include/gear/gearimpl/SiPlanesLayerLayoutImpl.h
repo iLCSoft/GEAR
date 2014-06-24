@@ -96,21 +96,20 @@ public:
   virtual double getLayerThickness(int layerIndex) const { return _lVec.at( layerIndex ).Thickness  ; }
 
 // add "set" methods:
-  virtual void setLayerRadLength(int layerIndex, double value)  {  _lVec.at( layerIndex ).RadLength = value  ; }
-  virtual void setLayerPositionX(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionX = value  ; }
-  virtual void setLayerPositionY(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionY = value  ; }
-  virtual void setLayerPositionZ(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionZ = value  ; }
-  virtual void setLayerRotationXY(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationXY = value  ; }
-  virtual void setLayerRotationZX(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationZX = value  ; }
-  virtual void setLayerRotationZY(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationZY = value  ; }
-  virtual void setLayerSizeX(int layerIndex, double value)      {  _lVec.at( layerIndex ).SizeX = value  ; }
-  virtual void setLayerSizeY(int layerIndex, double value)      {  _lVec.at( layerIndex ).SizeY = value  ; }
-  virtual void setLayerThickness(int layerIndex, double value)  {  _lVec.at( layerIndex ).Thickness = value ; }
+  virtual void setID(int layerIndex, int value )                {  _lVec.at( layerIndex ).ID           = value  ; }
+  virtual void setLayerPositionX(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionX    = value  ; }
+  virtual void setLayerPositionY(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionY    = value  ; }
+  virtual void setLayerPositionZ(int layerIndex, double value)  {  _lVec.at( layerIndex ).PositionZ    = value  ; }
+  virtual void setLayerRotationXY(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationXY   = value  ; }
+  virtual void setLayerRotationZX(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationZX   = value  ; }
+  virtual void setLayerRotationZY(int layerIndex, double value) {  _lVec.at( layerIndex ).RotationZY   = value  ; }
+  virtual void setLayerSizeX(int layerIndex, double value)      {  _lVec.at( layerIndex ).SizeX        = value  ; }
+  virtual void setLayerSizeY(int layerIndex, double value)      {  _lVec.at( layerIndex ).SizeY        = value  ; }
+  virtual void setLayerThickness(int layerIndex, double value)  {  _lVec.at( layerIndex ).Thickness    = value  ; }
+  virtual void setLayerRadLength(int layerIndex, double value)  {  _lVec.at( layerIndex ).RadLength    = value  ; }
 
 
   virtual int getSensitiveID(int layerIndex) const { return _sVec.at( layerIndex ).ID  ; }
-
-  virtual double getSensitiveRadLength(int layerIndex) const { return _sVec.at( layerIndex ).RadLength  ; }
 
   virtual double getSensitivePositionX(int layerIndex) const { return _sVec.at( layerIndex ).PositionX  ; }
   virtual double getSensitivePositionY(int layerIndex) const { return _sVec.at( layerIndex ).PositionY  ; }
@@ -120,27 +119,52 @@ public:
   virtual double getSensitiveRotationZX(int layerIndex) const { return _sVec.at( layerIndex ).RotationZX  ; }
   virtual double getSensitiveRotationZY(int layerIndex) const { return _sVec.at( layerIndex ).RotationZY  ; }
 
-
   virtual double getSensitiveSizeX(int layerIndex) const { return _sVec.at( layerIndex ).SizeX  ; }
   virtual double getSensitiveSizeY(int layerIndex) const { return _sVec.at( layerIndex ).SizeY  ; }
   virtual double getSensitiveThickness(int layerIndex) const { return _sVec.at( layerIndex ).Thickness  ; }
+  virtual double getSensitiveRadLength(int layerIndex) const { return _sVec.at( layerIndex ).RadLength  ; }
+
+  virtual void setSensitiveID(int layerIndex, int value)            { _sVec.at( layerIndex ).ID         = value  ; }
+
+  virtual void setSensitivePositionX(int layerIndex, double value)  {  _sVec.at( layerIndex ).PositionX = value  ; }
+  virtual void setSensitivePositionY(int layerIndex, double value)  {  _sVec.at( layerIndex ).PositionY = value  ; }
+  virtual void setSensitivePositionZ(int layerIndex, double value)  {  _sVec.at( layerIndex ).PositionZ = value  ; }
+  virtual void setSensitiveRotationXY(int layerIndex, double value) {  _sVec.at( layerIndex ).RotationXY = value  ; }
+  virtual void setSensitiveRotationZX(int layerIndex, double value) {  _sVec.at( layerIndex ).RotationZX = value  ; }
+  virtual void setSensitiveRotationZY(int layerIndex, double value) {  _sVec.at( layerIndex ).RotationZY = value  ; }
+  virtual void setSensitiveSizeX(int layerIndex, double value)      {  _sVec.at( layerIndex ).SizeX = value  ; }
+  virtual void setSensitiveSizeY(int layerIndex, double value)      {  _sVec.at( layerIndex ).SizeY = value  ; }
+  virtual void setSensitiveThickness(int layerIndex, double value)  {  _sVec.at( layerIndex ).Thickness = value ; }
+  virtual void setSensitiveRadLength(int layerIndex, double value)  {  _sVec.at( layerIndex ).RadLength = value  ; }
+
 
   virtual int getSensitiveNpixelX(int layerIndex) const { return _sVec.at( layerIndex ).NpixelX  ; }
   virtual int getSensitiveNpixelY(int layerIndex) const { return _sVec.at( layerIndex ).NpixelY  ; }
-
+ 
   virtual double getSensitiveResolution(int layerIndex) const { return _sVec.at( layerIndex ).Resolution  ; }
   virtual double getSensitiveResolutionX(int layerIndex) const { return _sVec.at( layerIndex ).ResolutionX  ; }
   virtual double getSensitiveResolutionY(int layerIndex) const { return _sVec.at( layerIndex ).ResolutionY  ; }
-
-
   virtual double getSensitivePitchX(int layerIndex) const { return _sVec.at( layerIndex ).PitchX  ; }
   virtual double getSensitivePitchY(int layerIndex) const { return _sVec.at( layerIndex ).PitchY  ; }
-
   virtual double getSensitiveRotation1(int layerIndex) const { return _sVec.at( layerIndex ).Rotation1  ; }
   virtual double getSensitiveRotation2(int layerIndex) const { return _sVec.at( layerIndex ).Rotation2  ; }
   virtual double getSensitiveRotation3(int layerIndex) const { return _sVec.at( layerIndex ).Rotation3  ; }
   virtual double getSensitiveRotation4(int layerIndex) const { return _sVec.at( layerIndex ).Rotation4  ; }
 
+  virtual void setSensitiveNpixelX(int layerIndex, int value)       {  _sVec.at( layerIndex ).NpixelX     = value ; }
+  virtual void setSensitiveNpixelY(int layerIndex, int value)       {  _sVec.at( layerIndex ).NpixelY     = value ; }
+
+  virtual void setSensitiveResolution(int layerIndex, double value) {  _sVec.at( layerIndex ).Resolution  = value ; }
+  virtual void setSensitiveResolutionX(int layerIndex, double value){  _sVec.at( layerIndex ).ResolutionX = value ; }
+  virtual void setSensitiveResolutionY(int layerIndex, double value){  _sVec.at( layerIndex ).ResolutionY = value ; }
+  virtual void setSensitivePitchX(int layerIndex, double value)     {  _sVec.at( layerIndex ).PitchX      = value ; }
+  virtual void setSensitivePitchY(int layerIndex, double value)     {  _sVec.at( layerIndex ).PitchY      = value ; }
+  virtual void setSensitiveRotation1(int layerIndex, double value)  {  _sVec.at( layerIndex ).Rotation1   = value ; }
+  virtual void setSensitiveRotation2(int layerIndex, double value)  {  _sVec.at( layerIndex ).Rotation2   = value ; }
+  virtual void setSensitiveRotation3(int layerIndex, double value)  {  _sVec.at( layerIndex ).Rotation3   = value ; }
+  virtual void setSensitiveRotation4(int layerIndex, double value)  {  _sVec.at( layerIndex ).Rotation4   = value ; }
+
+ 
   /** Add a new layer at the given position
    */
   virtual void addLayer(int layerID,

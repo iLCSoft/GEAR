@@ -27,18 +27,28 @@ public:
 
     /** ID of telescope setup.
      */
-
     virtual int getLayoutID() const = 0;
 
     /** The type of TrackerPlanes detector: 
      */
-
     virtual int getLayoutType() const = 0;
 
     /** Number of telescope planes of TrackerPlanes detector.
      */
-
     virtual int getLayoutNumberOfLayers() const = 0;
+
+    /** ID of telescope setup.
+     */
+    virtual void setLayoutID(int)  = 0;
+
+    /** The type of TrackerPlanes detector: 
+     */
+    virtual void setLayoutType(int)  = 0;
+
+    /** Number of telescope planes of TrackerPlanes detector.
+     */
+    virtual void setLayoutNumberOfLayers(int)  = 0;
+
 
     /** The layer layout of pixel beam telescope. */
     virtual const TrackerPlanesLayerLayout & getTrackerPlanesLayerLayout() const = 0;
