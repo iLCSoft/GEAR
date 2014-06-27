@@ -14,7 +14,7 @@ namespace gear{
 			      // layer
 			      int layerID,	 
 			      double layerPositionX, double layerPositionY, double layerPositionZ,
-			      double layerRotationXY, double layerRotationZX, double layerRotationZY,
+			      // no rotations of the support ladder neither
 			      double layerSizeX, double layerSizeY, double layerThickness,
 			      double layerRadLength,
 			      // sensitive
@@ -25,8 +25,8 @@ namespace gear{
 			      int sensitiveNpixelX, int sensitiveNpixelY,
 			      double sensitivePitchX,double sensitivePitchY,
 			      double sensitiveResolution,
-			      // 
-			      //
+			      // no resolution X  
+			      // and Y
 			      double sensitiveRotation1,
 			      double sensitiveRotation2,
 			      double sensitiveRotation3,
@@ -34,7 +34,7 @@ namespace gear{
 			      double sensitiveRadLength )
   {
      addLayer( layerID, layerPositionX, layerPositionY, layerPositionZ,
-                        layerRotationXY, layerRotationZX, layerRotationZY,
+                        0., 0., 0.,
                	        layerSizeX, layerSizeY, layerThickness,
 		        layerRadLength,
 		        // sensitive

@@ -190,7 +190,7 @@ public:
 
   virtual void addLayer(int layerID,
                         double layerPositionX, double layerPositionY, double layerPositionZ,
-                        double layerRotationXY, double layerRotationZX, double layerRotationZY,
+                        // no rotations of the support ladder neither
 			double layerSizeX, double layerSizeY, double layerThickness,
 			double layerRadLength,
 			// sensitive
