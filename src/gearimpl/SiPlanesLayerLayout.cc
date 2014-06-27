@@ -10,6 +10,51 @@
 
 namespace gear{
 
+  void SiPlanesLayerLayoutImpl::addLayer( // old interface method // overloaded to reuse new one with 5 more parameters.
+			      // layer
+			      int layerID,	 
+			      double layerPositionX, double layerPositionY, double layerPositionZ,
+			      double layerRotationXY, double layerRotationZX, double layerRotationZY,
+			      double layerSizeX, double layerSizeY, double layerThickness,
+			      double layerRadLength,
+			      // sensitive
+			      int sensitiveID,
+			      double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
+			      // no sensitive layer Rotations previously, as the sensitive layer was bound to the ladder ("layer" here)
+			      double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
+			      int sensitiveNpixelX, int sensitiveNpixelY,
+			      double sensitivePitchX,double sensitivePitchY,
+			      double sensitiveResolution,
+			      // 
+			      //
+			      double sensitiveRotation1,
+			      double sensitiveRotation2,
+			      double sensitiveRotation3,
+			      double sensitiveRotation4,
+			      double sensitiveRadLength )
+  {
+     addLayer( layerID, layerPositionX, layerPositionY, layerPositionZ,
+                        layerRotationXY, layerRotationZX, layerRotationZY,
+               	        layerSizeX, layerSizeY, layerThickness,
+		        layerRadLength,
+		        // sensitive
+		        sensitiveID,
+		        sensitivePositionX, sensitivePositionY, sensitivePositionZ,
+		        0., 0., 0., // pass zeros as these fields were never present in the old interface
+		        sensitiveSizeX, sensitiveSizeY, sensitiveThickness,
+		        sensitiveNpixelX, sensitiveNpixelY,
+		        sensitivePitchX,sensitivePitchY,
+		        sensitiveResolution,
+		        0., // pass zeros as X and Y resolution fields 
+		        0., // were not present in the old interface
+		        sensitiveRotation1,
+		        sensitiveRotation2,
+		        sensitiveRotation3,
+		        sensitiveRotation4,
+  		        sensitiveRadLength );
+
+  }
+
   void SiPlanesLayerLayoutImpl::addLayer(
 			      // layer
 			      int layerID,	 

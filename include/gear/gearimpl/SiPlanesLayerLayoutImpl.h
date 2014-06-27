@@ -188,6 +188,26 @@ public:
 			double Rotation4,
 			double sensitiveRadLength);
 
+  virtual void addLayer(int layerID,
+                        double layerPositionX, double layerPositionY, double layerPositionZ,
+                        double layerRotationXY, double layerRotationZX, double layerRotationZY,
+			double layerSizeX, double layerSizeY, double layerThickness,
+			double layerRadLength,
+			// sensitive
+			int sensitiveID,
+			double sensitivePositionX, double sensitivePositionY, double sensitivePositionZ,
+		        // no Rotations here // old interface
+       			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
+			int sensitiveNpixelX, int sensitiveNpixelY,
+			double sensitivePitchX,double sensitivePitchY,
+			double sensitiveResolution,
+                        // no ResolutionX and Y parameters 
+			double Rotation1,
+			double Rotation2,
+			double Rotation3,
+			double Rotation4,
+			double sensitiveRadLength);
+
 
   // the DUT
 
