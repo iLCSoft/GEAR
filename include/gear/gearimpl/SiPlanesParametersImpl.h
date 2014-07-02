@@ -114,7 +114,7 @@ public:
 			double sensitiveSizeX, double sensitiveSizeY, double sensitiveThickness,
 			int sensitiveNpixelX, int sensitiveNpixelY,
 			double sensitivePitchX, double sensitivePitchY,
-			double sensitiveResolution, double sensitiveResolutionX, double sensitiveResolutionY,
+			double sensitiveResolution,
 			double sensitiveRotation1,
 			double sensitiveRotation2,
 			double sensitiveRotation3,
@@ -125,7 +125,7 @@ public:
     addLayer( layerID, layerPositionX, layerPositionY, layerPositionZ, 0., 0., 0.,
     layerSizeX, layerSizeY, layerThickness, layerRadLength,
     sensitiveID, sensitivePositionX, sensitivePositionY, sensitivePositionZ, 0., 0., 0., sensitiveSizeX, sensitiveSizeY,
-    sensitiveThickness, sensitiveNpixelX, sensitiveNpixelY, sensitivePitchX, sensitivePitchY, sensitiveResolution, sensitiveResolutionX, sensitiveResolutionY,  
+    sensitiveThickness, sensitiveNpixelX, sensitiveNpixelY, sensitivePitchX, sensitivePitchY, sensitiveResolution, sensitiveResolution, sensitiveResolution,  
     sensitiveRotation1, sensitiveRotation2, sensitiveRotation3, sensitiveRotation4, sensitiveRadLength ) ;
   }
 
