@@ -27,14 +27,17 @@ namespace gear{
  bool ZPlanarParametersImpl::isPointInLadder( Vector3D p , bool sensitive , SensorID* sensorID ) const 
   {
 
+
     // very first check for quick calculation
-    if( fabs( p[2] ) > ( _shellHalfLength + _shellGap/2 ) ) {
-      // Outside shell
-      return false ;
-    }
-    if( fabs( p[2] ) < ( _shellGap/2 ) ) {
-      // Inside gap
-      return false ;
+    if( fabs( _shellHalfLength ) > 1e-3 ) {  // shell parameters can be zero if no shell !
+      if( fabs( p[2] ) > ( _shellHalfLength + _shellGap/2 ) ) {
+	// Outside shell
+	return false ;
+      }
+      if( fabs( p[2] ) < ( _shellGap/2 ) ) {
+	// Inside gap
+	return false ;
+      }
     }
 
     // get radius of point in projection 2D
