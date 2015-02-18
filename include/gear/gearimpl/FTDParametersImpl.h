@@ -124,7 +124,8 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
   		// double _shellGap ;
 		// double _shellRadLength ;
 		
-	private:
+  //private:
+public:
 		
 		/** returns if a point is in support (sensitive == false) or in sensitive (sensitive == true)
 		 */

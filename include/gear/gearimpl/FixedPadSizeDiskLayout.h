@@ -123,11 +123,11 @@ namespace gear {
 
     /** The row height in mm.
      */
-    virtual double getRowHeight(int rowNumber) const { return _rowHeight ; }
+    virtual double getRowHeight(int /*rowNumber*/) const { return _rowHeight ; }
 
     /** The height of the pad in mm.
      */
-    virtual double getPadHeight(int padIndex) const { return _padHeight ; }
+    virtual double getPadHeight(int /*padIndex*/) const { return _padHeight ; }
 
     /** The width of the pad in radians (only the metal)
      */
