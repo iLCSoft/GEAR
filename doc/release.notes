@@ -1,6 +1,32 @@
  ======================
   Gear release notes
  ======================
+
+
+
+  -----------
+ | v01-04-02 |
+  -----------
+
+  - F. Gaede
+    - fixed a few warning wrt unused parameters  (F. Gaede)
+    - made some methods public in FTDParametersImpl
+    - fix in ZPlanarParametersImpl::isPointInLadder for missing shell (shell parameters zero)
+
+
+  -----------
+ | v01-04-01 |
+  -----------
+
+  - I.Rubinsky
+    - Merge with telPlanes branch: introducing new TrackePlanes geometry classes 
+    - Add set methods to SiPlanes and TrackerPlanes classes
+    - Adding an TrackerPlanes example geometry
+    - Introduce a redundant method for backward compatibility to old code using SiPlanes interface
+    - Patching an interface function for backward compatibility of the SiPlanes geoemtry layout
+
+    - Fixed bug that extents were calculated before the test for identical coordinate systems was performed  (M.Killenberg)
+
   --------
  | v01-04 |
   --------
