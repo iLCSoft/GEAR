@@ -36,10 +36,10 @@ public:
   
 
   /** Default corrdinate system for initialization is cartesian */
-  Vector3D( double x,double y, double z ) :
-    _x(x),
-    _y(y),
-    _z(z) {
+  Vector3D( double xx,double yy, double zz ) :
+    _x(xx),
+    _y(yy),
+    _z(zz) {
   }
   
   
@@ -234,20 +234,20 @@ inline Vector3D operator*( double s , const Vector3D& v ) {
  *  Vector3D  v( x, y, c , Vector3D::cartesian ) ;
  */
 template <>
-inline Vector3D::Vector3D( double x,double y, double z, Vector3D::Cartesian (&)() ) : 
-  _x(x),
-  _y(y),
-  _z(z) {
+inline Vector3D::Vector3D( double xx,double yy, double zz, Vector3D::Cartesian (&)() ) : 
+  _x(xx),
+  _y(yy),
+  _z(zz) {
 }
 
 /** Cylindrical c'tor  - example: <br> 
  *  Vector3D  v( rho, phi, z , Vector3D::cylindrical ) ;
  */
 template <>
-inline Vector3D::Vector3D( double rho,double phi, double z, Vector3D::Cylindrical (&)() ) : _z(z)  {
+inline Vector3D::Vector3D( double arho,double aphi, double zz, Vector3D::Cylindrical (&)() ) : _z(zz)  {
   
-  _x = rho * cos( phi ) ;
-  _y = rho * sin( phi ) ;
+  _x = arho * cos( aphi ) ;
+  _y = arho * sin( aphi ) ;
 }
 
 
@@ -255,11 +255,11 @@ inline Vector3D::Vector3D( double rho,double phi, double z, Vector3D::Cylindrica
  *  Vector3D  v( r, phi, theta , Vector3D::spherical ) ;
  */
 template <>
-inline Vector3D::Vector3D( double r,double phi, double theta, Vector3D::Spherical (&)() ) {
-  double rst =  r * sin( theta ) ;
-  _x = rst * cos( phi ) ;
-  _y = rst * sin( phi ) ;
-  _z = r * cos( theta ) ;
+inline Vector3D::Vector3D( double rr,double aphi, double atheta, Vector3D::Spherical (&)() ) {
+  double rst =  rr * sin( atheta ) ;
+  _x = rst * cos( aphi ) ;
+  _y = rst * sin( aphi ) ;
+  _z = rr * cos( atheta ) ;
 }
 
 
