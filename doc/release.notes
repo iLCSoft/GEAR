@@ -2,7 +2,14 @@
   Gear release notes
  ======================
 
+  --------
+ | v01-05 |
+  --------
 
+   - Vector3D.h: fixed compiler warnings of type:
+     declaration of 'phi' shadows a member of 'this' 
+
+   - added search field to doxygen doc
 
   -----------
  | v01-04-02 |
