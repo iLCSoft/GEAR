@@ -5,8 +5,8 @@
 ##################################
 
 # common definitions to ALL sources
-ADD_DEFINITIONS( "-Wno-long-long" )
-ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
+#ADD_DEFINITIONS( "-Wno-long-long" )
+#ADD_DEFINITIONS( "-Wall -ansi -pedantic" )
 
 IF(APPLE)
     ADD_DEFINITIONS( "-D__APPLE__" )

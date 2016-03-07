@@ -16,7 +16,7 @@ namespace gear {
 					 double zmin, double zmax, int nzsteps, 
 					 int coord)
   {
-    double gridA[]={xmin,xmax,nxsteps,ymin,ymax,nysteps,zmin,zmax,nzsteps};
+    double gridA[]={xmin,xmax,double(nxsteps),ymin,ymax,double(nysteps),zmin,zmax,double(nzsteps)};
     std::vector<double> gridV;
     gridV.assign(gridA,gridA+9);
 
