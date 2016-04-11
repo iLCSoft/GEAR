@@ -271,7 +271,7 @@ namespace gear {
 	//    double m_max =  r * (cos(phi)*sin(_phiMax) - sin(phi)*cos(_phiMax));
 
 	// determine the nearest pad on the leftmost edge
-	int rowNum_left = r_intersect_max < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
+	rowNum_left = r_intersect_max < _rMin ? 0 : (int) std::floor( ( r - _rMin ) / _rowHeight  ) ;
 	if( rowNum_left >= _nRow  )       
 	    rowNum_left = _nRow -1 ;
     }
