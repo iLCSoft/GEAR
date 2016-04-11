@@ -3,6 +3,21 @@
  ======================
 
   --------
+ | v01-06 |
+  --------
+     - made compatible w/ c++11 and ROOT 6
+        - removed -ansi -pedantic -Wno-long-long
+        - fixed narrowing in initializer lists
+
+
+  -----------
+ | v01-05-01 |
+  -----------
+
+   - bug fix in src/gearimpl/FixedPadAngleDiskLayout.cc:
+       - unititalized variable (rowNum_left)
+
+  --------
  | v01-05 |
   --------
 
