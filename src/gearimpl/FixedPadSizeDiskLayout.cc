@@ -63,7 +63,9 @@ namespace gear {
 
     // compute the row properties
 
-    int nr = (int) std::floor ( ( rMax - rMin ) /  _padHeight ) ;
+    //int nr = (int) std::floor ( ( rMax - rMin ) /  _padHeight ) ;
+    //int nr = (int) ( ( rMax - rMin ) /  _padHeight ) ;
+    int nr = ( ( rMax + 0.01  - rMin ) /  _padHeight ) ;
 
     _nRow = ( nRow > 0 ) ? nRow : nr ;
 
@@ -76,6 +78,7 @@ namespace gear {
 		<< std::endl ;
 
       _nRow = nr ;
+
 
     }
 
