@@ -2,6 +2,15 @@
   Gear release notes
  ======================
 
+  -----------
+ | v01-06-01 |
+  -----------
+    - patch releases:
+      - make computation of number of pad rows in 
+        FixedPadSizeDiskLayout more robust
+      - needed for ILD_s1_v01 
+  
+
   --------
  | v01-06 |
   --------
