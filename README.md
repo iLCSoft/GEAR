@@ -1,5 +1,6 @@
 # GEAR
 [![Build Status](https://travis-ci.org/iLCSoft/GEAR.svg?branch=master)](https://travis-ci.org/iLCSoft/GEAR)
+[![Coverity Scan Build Status](https://scan.coverity.com/projects/12369/badge.svg)](https://scan.coverity.com/projects/ilcsoft-gear)
 
 GEAR: GEometry Api for Reconstruction 
 
