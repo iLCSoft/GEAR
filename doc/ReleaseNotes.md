@@ -1,43 +1,30 @@
- ======================
-  Gear release notes
- ======================
+ # v01-06-01
 
-  -----------
- | v01-06-01 |
-  -----------
     - patch releases:
       - make computation of number of pad rows in 
         FixedPadSizeDiskLayout more robust
       - needed for ILD_s1_v01 
   
 
-  --------
- | v01-06 |
-  --------
+ # v01-06
      - made compatible w/ c++11 and ROOT 6
         - removed -ansi -pedantic -Wno-long-long
         - fixed narrowing in initializer lists
 
 
-  -----------
- | v01-05-01 |
-  -----------
+ # v01-05-01
 
    - bug fix in src/gearimpl/FixedPadAngleDiskLayout.cc:
        - unititalized variable (rowNum_left)
 
-  --------
- | v01-05 |
-  --------
+ # v01-05
 
    - Vector3D.h: fixed compiler warnings of type:
      declaration of 'phi' shadows a member of 'this' 
 
    - added search field to doxygen doc
 
-  -----------
- | v01-04-02 |
-  -----------
+ # v01-04-02
 
   - F. Gaede
     - fixed a few warning wrt unused parameters  (F. Gaede)
@@ -45,9 +32,7 @@
     - fix in ZPlanarParametersImpl::isPointInLadder for missing shell (shell parameters zero)
 
 
-  -----------
- | v01-04-01 |
-  -----------
+ # v01-04-01
 
   - I.Rubinsky
     - Merge with telPlanes branch: introducing new TrackePlanes geometry classes 
@@ -58,9 +43,7 @@
 
     - Fixed bug that extents were calculated before the test for identical coordinate systems was performed  (M.Killenberg)
 
-  --------
- | v01-04 |
-  --------
+ # v01-04
 
    - added set methods to SiPlanesLayerLayout (I.Rubinsky)
 
@@ -68,14 +51,10 @@
      - Wrap around of angle was not done correctly.
 
 
-  -----------
- | v01-03-01 |  
-  -----------
+ # v01-03-01  
     - added convenience wrapper BField::at(double x, double y, double z)
 
-  --------
- | v01-03 |  
-  --------
+ # v01-03  
 
   - F.Gaede: added test/testInteractionLengths
       new example program to print interaction lengths as a function
@@ -107,17 +86,13 @@
 
 
 
-  -----------
- | v01-02-02 |  
-  -----------
+ # v01-02-02  
 
      - new utility printMaterials to print material between two points
      - added some debug printout to testMaterialBudgetNew.cc
 
 
-  -----------
- | v01-02-01 |  
-  -----------
+ # v01-02-01  
 
     - extended functionality of GlobalPadIndex of the TPC (M. Killenberg)
     - fixed bug in globalToLocal of TPCModule (check for identical coorinate systems was wrong)
@@ -126,9 +101,7 @@
     - removed unnecessary const in function declarations (clang++ warning)
 
 
-  --------
- | v01-02 |  
-  --------
+ # v01-02  
 
       - Added new functionality for surfaces. 
         Surfaces have a CoordinateSystem and may optionally be bounded. 
@@ -138,9 +111,7 @@
 
       - TPCParametersXML now allows for multiple default modules ( M. Killenberg )
 
-  --------
- | v01-01 |  
-  --------
+ # v01-01  
       - added SensorID helper class with side, layer, module, sensor to Gear.h
 
       - added ZPlanarParameters::isPointInSensitive(Vector3D p, SensorID* sensorID=0 )
@@ -156,9 +127,7 @@
 	  Removed the zposition for the support and sensors from the layer
 
 
-  --------
- | v01-00 |  
-  --------
+ # v01-00  
 
      - Added and FTDLayerLayout  by J. Duarte Campderros, IFCA   
 
@@ -187,9 +156,7 @@
 
 
 
-  --------
- | v00-17 |  
-  --------
+ # v00-17  
 
      - made TGeo implementation of the detailed material properties a plugin,
        i.e. no dependence on ROOT, unless it is requested in the Gear file that TGeo should be used (tag <GDML>)
@@ -203,17 +170,13 @@
      - removed deprecated GEAR_DEFINITIONS (-DUSE_GEAR) from GEARConfig.cmake
 
 
-  --------
- | v00-16 |  
-  --------
+ # v00-16  
 
    - updated SiPlanesParameters (I.Rubinsky) :
        Three new Layer related parameters  added.
        Three rotation angles: rotationXY = alfa, rotationZX = beta, rotationZY = gamma -> rotations around the local sensor frame axes
  
-  --------
- | v00-15 |  
-  --------
+ # v00-15  
 
         * A. Muennich:
           New implementation of GearDistanceProperties and GearPointProperties using TGeo from ROOT:
@@ -254,23 +217,17 @@
            - improved getNearestPad() in VersatileDiskRowLayout
 
 
-  -----------
- | v00-14-02 |
-  -----------
+ # v00-14-02
 
     * fixed bug in calculation of overall TPC plane extent (M.Killenberg)
 
-  -----------
- | v00-14-01 |  
-  -----------
+ # v00-14-01  
 
     * added release notes (missing in v00-14)  
 
     * fixed generation of html documentation (was in ./doc/gear/html -> ./doc/html)
 
-  --------
- | v00-14 |  
-  --------
+ # v00-14  
     * removed aid files and generation of header files
       - now pure C++
 
@@ -279,15 +236,11 @@
     * generate html documentation in build directory 
       -> will be removed with 'make uninstall' 
 
-  ----------
- | v00-13-01 |  
-  -----------
+ # v00-13-01  
 
     * gcc 4.4 compliant
 
-   -------
- | v00-13 |  
-  --------
+ # v00-13  
      * fixed missing xml in/output for generic parameters in TPCParametersXML
        and TPCModuleXML
         - made testgear work with modular TPC
@@ -299,24 +252,18 @@
      * bug fix: swapped getRightNeighbour / getLeftNeighbour in FixedPadSizeDiskLayout
           (M. Killenberg)
 
-   -------
- | v00-12 |  
-  --------
+ # v00-12  
     changes added by M.Killenberg:
     - Added VersatileDiscRowLayout: new flexible pad layout for polar coordinates
     - Implemented modular TPC endplate functionality
     ( see doc/eudet_memo_GearModularTPC.pdf for documentation )
 
-   ----------
- | v00-11-01 |  
-  -----------
+ # v00-11-01  
      bug fix release
 	- fixed reading of lhcal/hcal parameters (hcal endcap had lhcal params...)
         - added FixedPadAngleDiskLayout: new padlayout for const-phi segments (M.Killenberg)
 
-  -------
- | v00-11 |  
-  --------
+ # v00-11  
   - added parameters for BeamCal and LHcal:
         just like Lcal, BeamCal and LHcal sections in xml also need mandatory user
         parameter 'beam_crossing_angle' - enforced in GearMgr::setLcalParameters
@@ -326,21 +273,15 @@
     - added 32 bit compatibility build option
     - made cmake 2.6 compatible
 	
-  -------
- | v00-10 |  
-  --------
+ # v00-10  
    - added Yoke calorimeter parameters :
 	   YokeBarrel, YokeEndcap and YokePlug
 				   
-  -----------
- | v00-09-01 |
-  -----------
+ # v00-09-01
     - added tool to print detector parameters: printParameters
 
 
-  --------
- | v00-09 |
-  --------
+ # v00-09
   - added new attribute GearMgr::get(set)DetectorName()
     stored in <global detectorName="LDC01_06Sc"/> element
 	-> can be used for automated consistency checks of gear file and lcio file
@@ -349,15 +290,11 @@
   - improved  RectangularPadRowLayout::getNearestPad()  - (J.Abernathy)
 
 
-  -----------
- | v00-08-03 |
-  -----------
+ # v00-08-03
    - bug fix release:
       - fixed bug in VXDParameters::isEqual() w/ small values and exact zeros
 
-  -----------
- | v00-08-02 |
-  -----------
+ # v00-08-02
    - bug fix release:
 
      - clarified definition of phi0 and offset in VCXDParameters:
@@ -368,14 +305,10 @@
 
      - changed sign of offset wrt. v00-08
 
-  ----------
- | v00-08   |
-  ----------
+ # v00-08  
    - added HcalRing and EcalPlug calorimeter parameters
 
-  ----------
- | v00-07   |
-  ----------
+ # v00-07  
    - no interface change wrt. v00-06
 
    - improved CMake files 
@@ -394,15 +327,11 @@
 
      -  fixed minor memory leaks in globals/singletons
 
-  ----------
- | v00-06-01|
-  ----------
+ # v00-06-01|
 
    - changed xml output format to scientific with precision 9: "%.9e"
 
-  ----------
- | v00-06   |
-  ----------
+ # v00-06  
   - added SiPlanes detector for pixel telescope
     (author T.Klimkovich, DESY)
  
@@ -411,27 +340,19 @@
   - improved CMake  - now default build tool
 
  
-  ----------
- | v00-05   |
-  ----------
+ # v00-05  
    - added BField map (only constant)
      ( double bfield = gearMgr->getBField().at( Vector3D(0,0,0) ).z() ; )
 
-  ----------
- | v00-04-02|
-  ----------
+ # v00-04-02|
    patch release - identical to v00-04-01, except
    -  added support for cmake (experimental)
 
-----------
-| v00-04-01|
- ----------
+# v00-04-01|
    
   - patch release: reintroduce typedef for Point2D/3D
 
- ---------
-| v00-04  |
- ---------
+# v00-04 
 
    - replaced Point3D and Point2D from all interfaces - only Vector3D/Vector2D
      are used now. Kept Point3D/Point2D definition for backward compatibility.
@@ -445,9 +366,7 @@
      parameter 'beam_crossing_angle' - enforced in GearMgr::setLcalParameters
      ( will also be written with MokkaGear)	
 
- ---------
-| v00-03  |
- ---------
+# v00-03 
 
   - initial version of VXDParameters implementation
     -> see example file gear_ldc.xml
@@ -477,17 +396,13 @@
   - updated (clarified) GearPointProperties and GearDistanceProperties
    
 
- ----------
-| v00-02   |
- ----------
+# v00-02  
   
   - first public version of GEAR
     
   - added calorimeter cell sizes
 
 
- -----------------
-| v00-01-snowmass |
- ----------------
+# v00-01-snowmass
   
  - pre-release for snowmass DVD
