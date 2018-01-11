@@ -1,6 +1,6 @@
 #include "gearxml/GearParametersXML.h"
 
-#include "gearxml/tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "gearimpl/GearParametersImpl.h"
 #include "gear/GearMgr.h"
 

@@ -6,7 +6,7 @@
 #include <gear/PadRowLayout2D.h>
 #include <gearxml/XMLHandlerMgr.h>
 #include <gearxml/TPCParametersXML.h>
-#include <gearxml/tinyxml.h>
+#include <tinyxml/tinyxml.h>
 #include <iostream>
 
 using namespace gear;

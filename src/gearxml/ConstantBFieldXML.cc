@@ -3,7 +3,7 @@
 #include "gearxml/XMLHandlerMgr.h"
 #include "gearxml/GearParametersXML.h"
 
-#include "gearxml/tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "gearimpl/ConstantBField.h"
 // #include "gear/LayerLayout.h"
 #include "gear/GearMgr.h"
