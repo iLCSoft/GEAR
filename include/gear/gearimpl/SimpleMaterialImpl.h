@@ -53,12 +53,12 @@ namespace gear {
     virtual double getIntLength() const { return _il ; }
 
   protected:
-    std::string _name ;
-    double _A ;
-    double _Z ;
-    double _d ;
-    double _rl ;
-    double _il ;
+    std::string _name {};
+    double _A {};
+    double _Z {};
+    double _d {};
+    double _rl {};
+    double _il {};
     
   }; // class
   

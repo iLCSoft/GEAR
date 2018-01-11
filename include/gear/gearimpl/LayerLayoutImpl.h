@@ -27,11 +27,11 @@ namespace gear {
     
     /** Helper class for layer properties */
     struct Layer {
-      double Distance;
-      double Thickness ;
-      double AbsorberThickness ;
-      double CellSize0 ;
-      double CellSize1 ;
+      double Distance{};
+      double Thickness {};
+      double AbsorberThickness {};
+      double CellSize0 {};
+      double CellSize1 {};
     } ;
     
     typedef std::vector<Layer> LayerVec ;
@@ -83,7 +83,7 @@ namespace gear {
     virtual void addLayer(double thickness, double cellSize0, double cellSize1, double absorberThickness = 0. ) ; 
 
   protected:
-    LayerVec _vec ;
+    LayerVec _vec{} ;
     
   }; // class
 

@@ -26,25 +26,25 @@ namespace gear {
 
     /** Internal helper class for FixedPadSizeDiskLayout */
     struct Row{
-      int NPad ;
-      double RCenter ;
-      double PhiPad ;
+      int NPad {};
+      double RCenter {};
+      double PhiPad {};
     } ;
 
 
   protected:
-    double _rMin ;
-    double _rMax ;
-    double _phiMax ;
-    double _rowHeight ;
-    double _padWidth ;
-    double _padHeight ;
-    double _padGap ;
-    int _nRow ;
-    int _nPad ;
-    std::vector<Row> _rows ;
-    std::vector<double> _extent ;
-    mutable std::vector< std::vector<int>* > _padIndices ;
+    double _rMin {};
+    double _rMax {};
+    double _phiMax {};
+    double _rowHeight {};
+    double _padWidth {};
+    double _padHeight {};
+    double _padGap {};
+    int _nRow {};
+    int _nPad {};
+    std::vector<Row> _rows {};
+    std::vector<double> _extent {};
+    mutable std::vector< std::vector<int>* > _padIndices {};
 
   /** function to copy all internal variables, incl. the objects
    *  pointed to and owned by the FixedPadSizeDiskLayout.

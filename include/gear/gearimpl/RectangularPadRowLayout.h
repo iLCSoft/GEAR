@@ -29,25 +29,25 @@ namespace gear {
 
     /** Internal helper class for RectangularPadRowLayout */
     struct Row{
-      int NPad ;
-      double PadWidth ;
-      double PadHeight ;
-      double Height ;
-      double LeftOffset ;
-      double RightOffset ;
-      double Center ;
-      double WidthPerPad ; // pad + insensitive ( gap ) 
+      int NPad {};
+      double PadWidth {};
+      double PadHeight {};
+      double Height {};
+      double LeftOffset {};
+      double RightOffset {};
+      double Center {};
+      double WidthPerPad {}; // pad + insensitive ( gap ) 
     } ;
     
     
   protected:
-    int _nRow ;
-    int _nPad ;
-    int _repeatRows ;
-    std::vector<Row> _rows ;
-    std::vector<double> _extent ;
-    mutable std::vector< std::vector<int>* > _padIndices ;
-    std::vector<unsigned> _nRows ;  // helper vector to keep track of equal rows
+    int _nRow {};
+    int _nPad {};
+    int _repeatRows {};
+    std::vector<Row> _rows {};
+    std::vector<double> _extent {};
+    mutable std::vector< std::vector<int>* > _padIndices {};
+    std::vector<unsigned> _nRows {};  // helper vector to keep track of equal rows
 
      /** function to copy all internal variables, incl. the objects
      *  pointed to and owned by the GearMgr.

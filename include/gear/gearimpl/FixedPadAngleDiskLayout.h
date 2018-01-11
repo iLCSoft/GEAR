@@ -27,21 +27,21 @@ namespace gear {
 
 
   protected:
-    double _rMin ;
-    double _rMax ;
-    int _nRow ;
-    double _rowHeight ;
-    double _phiMin;
-    double _phiMax;
-//    double _padWidth ;
-//    double _padHeight ;
-//    double _padGap ;
-    double _padAngle;
-    int _nPadsInRow;
-    int _nPad ;
+    double _rMin {};
+    double _rMax {};
+    int _nRow {};
+    double _rowHeight {};
+    double _phiMin{};
+    double _phiMax{};
+//    double _padWidth {};
+//    double _padHeight {};
+//    double _padGap {};
+    double _padAngle{};
+    int _nPadsInRow{};
+    int _nPad {};
 
-    std::vector<double> _extent ;
-    mutable std::vector< std::vector<int>* > _padIndices ;
+    std::vector<double> _extent {};
+    mutable std::vector< std::vector<int>* > _padIndices {};
 
   /** Function to copy all internal variables, incl.\ the objects
    *  pointed to and owned by the FixedPadAngleDiskLayout.

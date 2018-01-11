@@ -148,19 +148,19 @@ public:
 
 protected:
   
-  ZPlanarLayerLayoutImpl _layer ;
+  ZPlanarLayerLayoutImpl _layer{} ;
   
-  int _type ;
+  int _type{} ;
   
-  double _shellInnerRadius ;
+  double _shellInnerRadius{} ;
   
-  double _shellOuterRadius ;
+  double _shellOuterRadius{} ;
 
-  double _shellHalfLength ;
+  double _shellHalfLength{} ;
 
-  double _shellGap ;
+  double _shellGap{} ;
 
-  double _shellRadLength ;
+  double _shellRadLength{} ;
 
 private:
 

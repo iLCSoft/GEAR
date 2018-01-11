@@ -230,13 +230,13 @@ public:
  
 protected:
   
-  SiPlanesLayerLayoutImpl _layer ;
+  SiPlanesLayerLayoutImpl _layer{} ;
   
-  int _siplanesID;
+  int _siplanesID{};
 
-  int _siplanesType ;
+  int _siplanesType{} ;
   
-  int _siplanesNumber ;
+  int _siplanesNumber{} ;
 
 private:
 
