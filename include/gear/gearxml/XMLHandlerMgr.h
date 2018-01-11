@@ -33,7 +33,7 @@ namespace gear {
     
     /** Register XMLHandler for type. 
      */
-    const void setHandler( const std::string& type , XMLHandler* handler )  ;
+    void setHandler( const std::string& type , XMLHandler* handler )  ;
    
     // no need for copy-constructor or assignment operator
     // this is a sinleton class
@@ -43,11 +43,10 @@ namespace gear {
 
   protected:
 
-    XMLHandlerMap _map ;
+    XMLHandlerMap _map{} ;
 
   private:
     XMLHandlerMgr() ;
-    //    static XMLHandlerMgr* _me ;
 
   }; // class
   

@@ -11,7 +11,7 @@ namespace gear{
 
   void TrackerPlanesLayerImpl::addMaterialLayer(
 			      // layer
-			      int ID, std::string info,
+			      int id, std::string infostr,
 			      double PositionX, double PositionY, double PositionZ,
 			      double RotationXY, double RotationZX, double RotationZY,
 			      double SizeX, double SizeY, double Thickness, double RadLength 
@@ -19,8 +19,8 @@ namespace gear{
   {
 
     TrackerPlanesMaterialLayerImpl lL ;
-    lL.setID         ( ID        );
-    lL.setInfo       ( info      );
+    lL.setID         ( id        );
+    lL.setInfo       ( infostr   );
     lL.setPositionX  ( PositionX );
     lL.setPositionY  ( PositionY );
     lL.setPositionZ  ( PositionZ );
@@ -36,7 +36,7 @@ namespace gear{
   }
 
   void TrackerPlanesLayerImpl::addSensitiveLayer(
-			      int ID, std::string info,
+			      int id, std::string infostr,
 			      double PositionX, double PositionY, double PositionZ,
 			      double RotationXY, double RotationZX, double RotationZY,
 			      double SizeX, double SizeY, double Thickness, double RadLength,
@@ -45,8 +45,8 @@ namespace gear{
   {
 
     TrackerPlanesSensitiveLayerImpl sL ;
-    sL.setID         ( ID        );
-    sL.setInfo       ( info      );
+    sL.setID         ( id        );
+    sL.setInfo       ( infostr   );
     sL.setPositionX  ( PositionX );
     sL.setPositionY  ( PositionY );
     sL.setPositionZ  ( PositionZ );
@@ -63,7 +63,7 @@ namespace gear{
     sL.setPitchX     ( PitchX    );
     sL.setPitchY     ( PitchY    );
     sL.setResolutionX ( ResolutionX );
-    sL.setResolutionY ( ResolutionX );
+    sL.setResolutionY ( ResolutionY );
 
     _sensitiveVec.push_back( sL ) ;
 

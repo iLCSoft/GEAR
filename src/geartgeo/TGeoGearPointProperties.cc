@@ -18,7 +18,7 @@ namespace gear {
 //   //vec getPosition returns the current position (if ID is known)
   /** The cellID of the the sensitive detector at pos.
    */
-  long64 TGeoGearPointProperties::getCellID(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  long64 TGeoGearPointProperties::getCellID(const Vector3D & ) const throw (NotImplementedException, std::exception ) {
     throw NotImplementedException("getCellID not implemented yet in TGeoGearPointProperties");
     return 0;
     
@@ -147,14 +147,14 @@ namespace gear {
   
   /** The magnetic field vector at pos in [Tesla].  
    */
-  Vector3D TGeoGearPointProperties::getB(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  Vector3D TGeoGearPointProperties::getB(const Vector3D &) const throw (NotImplementedException, std::exception ) {
       throw NotImplementedException("getB not implemented yet in TGeoGearPointProperties");
       return Vector3D() ; 
   }
   
   /** The electric field vector at pos in [V/m].  
    */
-  Vector3D TGeoGearPointProperties::getE(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  Vector3D TGeoGearPointProperties::getE(const Vector3D & ) const throw (NotImplementedException, std::exception ) {
      throw NotImplementedException("getE not implemented yet in TGeoGearPointProperties");
      return Vector3D();
      
@@ -217,19 +217,19 @@ namespace gear {
  
  /** Names of (geant4) region that contains the given pos.
      */
-  std::string TGeoGearPointProperties::getRegion(const Vector3D & pos) const throw (NotImplementedException, std::exception ){
+  std::string TGeoGearPointProperties::getRegion(const Vector3D &) const throw (NotImplementedException, std::exception ){
     throw NotImplementedException("getRegion not implemented yet in TGeoGearPointProperties");
     return "";
   }
   /** True if region that contains pos is defined as a tracker.
    */
-  bool TGeoGearPointProperties::isTracker(const Vector3D & pos) const throw (NotImplementedException, std::exception ){
+  bool TGeoGearPointProperties::isTracker(const Vector3D & ) const throw (NotImplementedException, std::exception ){
     throw NotImplementedException("isTracker not implemented yet in TGeoGearPointProperties");
     return 0;
   }
   /** True if region that contains pos is defined as a calorimeter.
    */
-  bool TGeoGearPointProperties::isCalorimeter(const Vector3D & pos) const throw (NotImplementedException, std::exception ){
+  bool TGeoGearPointProperties::isCalorimeter(const Vector3D & ) const throw (NotImplementedException, std::exception ){
     throw NotImplementedException("isCalorimeter not implemented yet in TGeoGearPointProperties");
     return 0;
      

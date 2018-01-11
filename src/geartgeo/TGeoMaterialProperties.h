@@ -20,7 +20,9 @@ namespace gear {
   class TGeoMaterialProperties : public GearMaterialProperties {
     
   public: 
-    
+    TGeoMaterialProperties(const TGeoMaterialProperties&) = delete ;
+    TGeoMaterialProperties& operator=(const TGeoMaterialProperties&) = delete ;
+
     /**C'tor. */
     TGeoMaterialProperties() ;
 

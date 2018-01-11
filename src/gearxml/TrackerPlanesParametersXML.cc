@@ -54,17 +54,17 @@ namespace gear {
 
     TiXmlElement layers("layers") ;
 
-    for( int i=0 ; i < trackerplanesLayerLayout.getNLayers() ; i++ ) {
+    for( int il=0 ; il < trackerplanesLayerLayout.getNLayers() ; il++ ) {
       TiXmlElement xmlLayer("layer" ) ;
 
-      TrackerPlanesLayerImpl* layer = const_cast<gear::TrackerPlanesLayerImpl*  > (trackerplanesLayerLayout.getLayer(i));
+      TrackerPlanesLayerImpl* layer = const_cast<gear::TrackerPlanesLayerImpl*  > (trackerplanesLayerLayout.getLayer(il));
       if( layer == 0 ) continue;
 
       TrackerPlanesMaterialLayerImplVec& material = layer->getMaterialLayerVec();
 
       TrackerPlanesSensitiveLayerImplVec& sensitive = layer->getSensitiveLayerVec();
 
-        for( int i=0 ; i < material.size() ; i++ ) {
+        for( unsigned i=0 ; i < material.size() ; i++ ) {
            TrackerPlanesMaterialLayerImpl& ladder = material.at(i);
 
            TiXmlElement xmlLadder("ladder") ;
@@ -85,7 +85,7 @@ namespace gear {
         }
       
  
-        for( int i=0 ; i < sensitive.size() ; i++ ) {
+        for( unsigned i=0 ; i < sensitive.size() ; i++ ) {
            TrackerPlanesSensitiveLayerImpl& sensor = sensitive.at(i);
  
            TiXmlElement xmlSensor("sensitive" ) ;

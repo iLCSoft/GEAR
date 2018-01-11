@@ -62,7 +62,7 @@ namespace gear{
   }
   
   
-  const void XMLHandlerMgr::setHandler( const std::string& type , XMLHandler* handler ) {
+  void XMLHandlerMgr::setHandler( const std::string& type , XMLHandler* handler ) {
 
     if( handler == 0 )  // don't allow null pointer
       return  ;
