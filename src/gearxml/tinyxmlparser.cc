@@ -186,9 +186,9 @@ class TiXmlParsingData
 		cursor.col = col;
 	}
 
-	TiXmlCursor		cursor;
-	const char*		stamp;
-	int				tabsize;
+  TiXmlCursor		cursor{};
+  const char*		stamp{};
+  int			tabsize{};
 };
 
 
@@ -1104,12 +1104,12 @@ const char* TiXmlElement::Parse( const char* p, TiXmlParsingData* data, TiXmlEnc
 			}
 
 			attrib->SetDocument( document );
-			const char* pErr = p;
+			const char* ppErr = p;
 			p = attrib->Parse( p, data, encoding );
 
 			if ( !p || !*p )
 			{
-				if ( document ) document->SetError( TIXML_ERROR_PARSING_ELEMENT, pErr, data, encoding );
+				if ( document ) document->SetError( TIXML_ERROR_PARSING_ELEMENT, ppErr, data, encoding );
 				delete attrib;
 				return 0;
 			}
@@ -1318,9 +1318,10 @@ const char* TiXmlAttribute::Parse( const char* p, TiXmlParsingData* data, TiXmlE
 	p = SkipWhiteSpace( p, encoding );
 	if ( !p || !*p ) return 0;
 
-	int tabsize = 4;
-	if ( document )
-		tabsize = document->TabSize();
+//fg  this code has no effect and causes: -Wunused-but-set-variable
+//fg	int tabsize = 4;
+//fg	if ( document )
+//fg		tabsize = document->TabSize();
 
 //	TiXmlParsingData data( p, prevData );
 	if ( data )
