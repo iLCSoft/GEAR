@@ -70,13 +70,13 @@ public:
   
 protected:
   
-  TrackerPlanesLayerLayoutImpl _layerLayout ;
+  TrackerPlanesLayerLayoutImpl _layerLayout{} ;
   
-  int _layoutID;
+  int _layoutID{};
 
-  int _layoutType ;
+  int _layoutType{} ;
   
-  int _layoutNumberOfLayers ;
+  int _layoutNumberOfLayers{} ;
 
 private:
 

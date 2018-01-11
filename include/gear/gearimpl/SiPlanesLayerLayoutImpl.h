@@ -21,52 +21,52 @@ public:
 
   /** Helper class for layer properties */
   struct Layer {
-    int ID ;
-    double PositionX ;
-    double PositionY ;
-    double PositionZ ;
-    double RotationXY;
-    double RotationZX;
-    double RotationZY;
-    double SizeX ;
-    double SizeY ;
-    double Thickness ;
-    double RadLength ;
+    int ID {};
+    double PositionX {};
+    double PositionY {};
+    double PositionZ {};
+    double RotationXY{};
+    double RotationZX{};
+    double RotationZY{};
+    double SizeX {};
+    double SizeY {};
+    double Thickness {};
+    double RadLength {};
     
      /** safe default contructor **/
     Layer() : ID(0), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.)
-             { ; } ;
+             {} ;
   } ;
 
   struct SensLayer {
-    int ID ;
-    double PositionX ;
-    double PositionY ;
-    double PositionZ ;
-    double RotationXY;
-    double RotationZX;
-    double RotationZY;
-    double SizeX ;
-    double SizeY ;
-    double Thickness ;
-    double RadLength ;
+    int ID {};
+    double PositionX {};
+    double PositionY {};
+    double PositionZ {};
+    double RotationXY{};
+    double RotationZX{};
+    double RotationZY{};
+    double SizeX {};
+    double SizeY {};
+    double Thickness {};
+    double RadLength {};
  
-    int NpixelX;
-    int NpixelY;
-    double PitchX;
-    double PitchY;
-    double Resolution;
-    double ResolutionX;
-    double ResolutionY;
-    double Rotation1;
-    double Rotation2;
-    double Rotation3;
-    double Rotation4;
+    int NpixelX{};
+    int NpixelY{};
+    double PitchX{};
+    double PitchY{};
+    double Resolution{};
+    double ResolutionX{};
+    double ResolutionY{};
+    double Rotation1{};
+    double Rotation2{};
+    double Rotation3{};
+    double Rotation4{};
     /** safe default contructor **/
     SensLayer() : ID(0), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.)
                  , NpixelX(0), NpixelY(0),  Resolution(0.), ResolutionX(0.),ResolutionY(0.), 
 		Rotation1(0.0), Rotation2(0.0), Rotation3(0.0), Rotation4(0.0)
-                 { ; } ;
+                 {} ;
   } ;
 
   typedef std::vector<Layer> LayerVec ;
@@ -273,14 +273,14 @@ protected:
   typedef double MyMatrix[2][2];
   
   // Layer
-  LayerVec _lVec ;
+  LayerVec _lVec {};
   // Sensitive layer
-  SensLayerVec _sVec ;
+  SensLayerVec _sVec {};
 
   // DUT plane
-  DUT _lDut ;
+  DUT _lDut {};
   // Sensitive of DUT
-  SensDUT _sDut ;
+  SensDUT _sDut {};
 
 private:
 

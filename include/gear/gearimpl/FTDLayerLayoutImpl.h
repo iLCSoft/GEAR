@@ -28,9 +28,9 @@ class vframe  // TO BE DEPRECATED...
 			x(xval),y(yval),z(zval) { ; }
 		~vframe() { ; }
 
-		double x;
-		double y;
-		double z;
+		double x{};
+		double y{};
+		double z{};
 };
 
 class FTDLayerLayoutImpl : public FTDLayerLayout 
@@ -41,28 +41,28 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 		/** Helper class for layer properties */
 		struct Layer 
 		{
-			int    nPetals ;    // Number of petals
-			int    nSensors ;   // Number of sensors per petal
-			bool   isDoubleSided; // if Petals have sensors on front AND back
-			int    sensorType ; // The sensor type of the disk: pixel or strips
+			int    nPetals {};    // Number of petals
+			int    nSensors {};   // Number of sensors per petal
+			bool   isDoubleSided{}; // if Petals have sensors on front AND back
+			int    sensorType {}; // The sensor type of the disk: pixel or strips
 			                    // For future changes: could be extended the types
 			                    // to Double Side Micro Strips, for instance...		                    
-			double petalOpenningAngle ; // Angle defining the half-width of a petal
-			double phi0 ;       // azimuthal angle  of the first petal (paralel to Y-axis,
+			double petalOpenningAngle {}; // Angle defining the half-width of a petal
+			double phi0 {};       // azimuthal angle  of the first petal (paralel to Y-axis,
 			                    // and in the Y-positive direction)
-			double alpha;       // Angle of the rotation of the petal in 
+			double alpha{};       // Angle of the rotation of the petal in 
 			                    // its own plane (turbine-blade design)
-			double zposition;   // Z-position of the centroid of the layer  (disk).
-			double zoffset;     // z-distance from the zposition to the centroid
+			double zposition{};   // Z-position of the centroid of the layer  (disk).
+			double zoffset{};     // z-distance from the zposition to the centroid
 			                    // of a petal (staggered design)
-			double zsign0;      // Sign of the zoffset of the first petal --> FIXME: int
-			double rInner;      // Distance from Z-axis to the closest point of a petal (or sensitive)
-			double thickness ;  // thickness (petal or sensor) 
-			double lengthMin ;  // smaller length of a trapezoid (petal or sensor)
-			double lengthMax ;  // biggest length of a trapezoid (petal or sensor)
-			double width ;      // y-distance (between the lengthMin line
+			double zsign0{};      // Sign of the zoffset of the first petal --> FIXME: int
+			double rInner{};      // Distance from Z-axis to the closest point of a petal (or sensitive)
+			double thickness {};  // thickness (petal or sensor) 
+			double lengthMin {};  // smaller length of a trapezoid (petal or sensor)
+			double lengthMax {};  // biggest length of a trapezoid (petal or sensor)
+			double width {};      // y-distance (between the lengthMin line
 			                    // and the lengthMax line) for petal or sensor
-			double radLength ;  // Radiation length (petal or sensor)
+			double radLength {};  // Radiation length (petal or sensor)
 		} ;
 		
 	
@@ -282,16 +282,16 @@ class FTDLayerLayoutImpl : public FTDLayerLayout
 	
 	protected:
 		// Support
-		LayerVec _lVec ;
+		LayerVec _lVec {};
 		// Sensitive
-		LayerVec _sVec ;
+		LayerVec _sVec {};
 	
 
 		// Reference frame of the petal (left side ).  
 		// The frame is defined in the way of that all the points inside the 
 		// trapezoid are defined positives. 
-		std::vector<vframe> _eL; //FIXME: TO BE DEPRECATED
-		std::vector<vframe> _eS; //FIXME: TO BE DEPRECATED
+		std::vector<vframe> _eL{}; //FIXME: TO BE DEPRECATED
+		std::vector<vframe> _eS{}; //FIXME: TO BE DEPRECATED
 		
 	private:
 		// Internal function to convert the raw layerIndex (which goes from 0 to 2N-1,

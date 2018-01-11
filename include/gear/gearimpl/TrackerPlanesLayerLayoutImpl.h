@@ -22,33 +22,33 @@ class TrackerPlanesMaterialLayerImpl: public TrackerPlanesMaterialLayer  {
     private:
 	
     /**      */
-    int ID ;	
+    int ID {};	
     /**      */
-    std::string info;
+    std::string info{};
     /**      */
-    double PositionX ;
+    double PositionX {};
     /**      */
-    double PositionY ;
+    double PositionY {};
     /**      */
-    double PositionZ ;
+    double PositionZ {};
     /**      */
-    double RotationXY;
+    double RotationXY{};
     /**      */
-    double RotationZX;
+    double RotationZX{};
     /**      */
-    double RotationZY;
+    double RotationZY{};
     /**      */
-    double SizeX ;
+    double SizeX {};
     /**      */
-    double SizeY ;
+    double SizeY {};
     /**      */
-    double Thickness ;
+    double Thickness {};
     /**      */
-    double RadLength ;
+    double RadLength {};
     
     public:
      /** safe default contructor **/
-    TrackerPlanesMaterialLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.),  RotationXY(0.), RotationZX(0.), RotationZY(0.), SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) { ; } ;
+    TrackerPlanesMaterialLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.),  RotationXY(0.), RotationZX(0.), RotationZY(0.), SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) {} ;
 
     /// Destructor.
     /**      */
@@ -113,48 +113,48 @@ class TrackerPlanesSensitiveLayerImpl: public TrackerPlanesSensitiveLayer   {
     private:   
    
     /**      */
-    int ID ;
+    int ID {};
     /**      */
-    std::string info;
+    std::string info{};
     /**      */
-    double PositionX ;
+    double PositionX {};
     /**      */
-    double PositionY ;
+    double PositionY {};
     /**      */
-    double PositionZ ;
+    double PositionZ {};
     /**      */
-    double RotationXY;
+    double RotationXY{};
     /**      */
-    double RotationZX;
+    double RotationZX{};
     /**      */
-    double RotationZY;
+    double RotationZY{};
     /**      */
-    double SizeX ;
+    double SizeX {};
     /**      */
-    double SizeY ;
+    double SizeY {};
     /**      */
-    double Thickness ;
+    double Thickness {};
     /**      */
-    double RadLength ;
+    double RadLength {};
 
     /**      */
-    int NpixelX;
+    int NpixelX{};
     /**      */
-    int NpixelY;
+    int NpixelY{};
     /**      */
-    double PitchX;
+    double PitchX{};
     /**      */
-    double PitchY;
+    double PitchY{};
     /**      */
-    double ResolutionX;
+    double ResolutionX{};
     /**      */
-    double ResolutionY;
+    double ResolutionY{};
 
     public:
     /** safe default contructor **/
     TrackerPlanesSensitiveLayerImpl() : ID(0), info(""), PositionX(0.), PositionY(0.), PositionZ(0.), RotationXY(0.), RotationZX(0.), RotationZY(0.),  SizeX(0.), SizeY(0.), Thickness(0.), RadLength(0.) 
                                   , NpixelX(0), NpixelY(0), PitchX(0.), PitchY(0.), ResolutionX(0.), ResolutionY(0.)
-     { ; } ;
+     {} ;
 
     /// Destructor.
     virtual ~TrackerPlanesSensitiveLayerImpl() { /* nop */; }
@@ -248,22 +248,22 @@ class TrackerPlanesLayerImpl: public TrackerPlanesLayer  {
   private:
 
     /**      */
-    int ID;
+    int ID{};
 
     /**      */
-    std::string info;
+    std::string info{};
 
     /** material Layer vector */
-    TrackerPlanesMaterialLayerImplVec _materialVec ;
+    TrackerPlanesMaterialLayerImplVec _materialVec {};
 
     /** sensitive Layer vector */
-    TrackerPlanesSensitiveLayerImplVec _sensitiveVec ;
+    TrackerPlanesSensitiveLayerImplVec _sensitiveVec {};
 
   public:
 
     /** default constructor */
     TrackerPlanesLayerImpl() : ID(0), info("")
-    { ; };
+    {};
 
     /** normal constructor */
     TrackerPlanesLayerImpl( TrackerPlanesMaterialLayerImplVec& materials, TrackerPlanesSensitiveLayerImplVec& sensors) : ID(0), info("")
@@ -352,13 +352,13 @@ class TrackerPlanesLayerLayoutImpl : public TrackerPlanesLayerLayout {
 	private:
 
           /** */
-          int ID;
+          int ID{};
 
 	  /**      */
-          std::string info;
+          std::string info{};
 
 	  /** Layer */
-	  TrackerPlanesLayerImplVec _layerVec ;
+	  TrackerPlanesLayerImplVec _layerVec {};
 
 	public: 
 

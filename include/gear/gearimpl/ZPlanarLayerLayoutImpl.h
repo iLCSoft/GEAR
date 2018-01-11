@@ -26,14 +26,14 @@ public:
   
   /** Helper class for layer properties */
   struct Layer {
-    int    NLadders ;
-    double internalPhi0 ;
-    double Distance ;
-    double Offset ;
-    double Thickness ;
-    double Length ;
-    double Width ;
-    double RadLength ;
+    int    NLadders{} ;
+    double internalPhi0{} ;
+    double Distance{} ;
+    double Offset{} ;
+    double Thickness{} ;
+    double Length{} ;
+    double Width{} ;
+    double RadLength{} ;
   } ;
 
   typedef std::vector<Layer> LayerVec ;
@@ -162,9 +162,9 @@ protected:
 
 
   // Ladder
-  LayerVec _lVec ;
+  LayerVec _lVec{} ;
   // Sensitive
-  LayerVec _sVec ;
+  LayerVec _sVec{} ;
     
 private:
 

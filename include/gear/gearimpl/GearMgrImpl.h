@@ -336,39 +336,39 @@ namespace gear {
     GearMgrImpl& operator = (const GearMgrImpl&);
     
     
-    ParameterMap _map ;
-    TPCParameters* _tpcParameters ;
-    CalorimeterParameters* _ecalBarrelParameters ;
-    CalorimeterParameters* _ecalEndcapParameters ;
-    CalorimeterParameters* _ecalPlugParameters ;
-    CalorimeterParameters* _yokeBarrelParameters ;
-    CalorimeterParameters* _yokeEndcapParameters ;
-    CalorimeterParameters* _yokePlugParameters ;
-    CalorimeterParameters* _hcalBarrelParameters ;
-    CalorimeterParameters* _hcalEndcapParameters ;
-    CalorimeterParameters* _hcalRingParameters ;
-    CalorimeterParameters* _lcalParameters ;
-    CalorimeterParameters* _lhcalParameters ;
-    CalorimeterParameters* _beamcalParameters ;
-    ZPlanarParameters*     _vxdParameters ;
-    ZPlanarParameters*     _sitParameters ;
-    ZPlanarParameters*     _setParameters ;
+    ParameterMap _map{} ;
+    TPCParameters* _tpcParameters = nullptr ;
+    CalorimeterParameters* _ecalBarrelParameters = nullptr ;
+    CalorimeterParameters* _ecalEndcapParameters = nullptr ;
+    CalorimeterParameters* _ecalPlugParameters = nullptr ;
+    CalorimeterParameters* _yokeBarrelParameters = nullptr ;
+    CalorimeterParameters* _yokeEndcapParameters = nullptr ;
+    CalorimeterParameters* _yokePlugParameters = nullptr ;
+    CalorimeterParameters* _hcalBarrelParameters = nullptr ;
+    CalorimeterParameters* _hcalEndcapParameters = nullptr ;
+    CalorimeterParameters* _hcalRingParameters = nullptr ;
+    CalorimeterParameters* _lcalParameters = nullptr ;
+    CalorimeterParameters* _lhcalParameters = nullptr ;
+    CalorimeterParameters* _beamcalParameters = nullptr ;
+    ZPlanarParameters*     _vxdParameters = nullptr ;
+    ZPlanarParameters*     _sitParameters = nullptr ;
+    ZPlanarParameters*     _setParameters = nullptr ;
     FTDParameters*         _ftdParameters;
-    TrackerPlanesParameters*   _trackerplanesParameters ;
-    SiPlanesParameters*    _siplanesParameters ;
-    GearPointProperties*   _pointProperties ;
-    GearDistanceProperties* _distanceProperties ;
-    BField* _bField ;
-    std::string _detectorName ;
+    TrackerPlanesParameters*   _trackerplanesParameters = nullptr ;
+    SiPlanesParameters*    _siplanesParameters = nullptr ;
+    GearPointProperties*   _pointProperties = nullptr ;
+    GearDistanceProperties* _distanceProperties = nullptr ;
+    BField* _bField = nullptr ;
+    std::string _detectorName{} ;
 
     typedef std::map< std::string,const SimpleMaterial* >  MatMap ;
-    MatMap _matMap ;
+    MatMap _matMap{} ;
 
     MeasurementSurfaceStore* _surfaceStore ;
     
-    mutable StringVec _keys ;
+    mutable StringVec _keys{} ;
 
-    mutable StringVec _matNames ;
+    mutable StringVec _matNames{} ;
     
    
     /** function to copy all internal variables, incl. the objects

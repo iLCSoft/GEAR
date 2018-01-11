@@ -23,24 +23,24 @@ namespace gear {
 class TPCModuleImpl : public GearParametersImpl, public TPCModule 
 {
  protected:
-    std::vector<double> _planeExtent;
-    std::vector<double> _moduleExtent;
-    std::vector<double> _localModuleExtent; ///< The module extend in the pad plane's coordinate system
-    PadRowLayout2D * _padRowLayout;
-    double _readoutFrequency;
-    gear::Vector2D _offset; ///< The offset in cordinates described by _momsCoordinateType
-    gear::Vector2D _offset_cartesian; ///< The offset in cartesian cordinates
-    double _zPosition; ///< The z positon of the module
-    double _angle; ///< The angle wrt. the local coordinate system
-    double _cos_angle; ///< For performance: cache the cosine of the angle
-    double _sin_angle; ///< For performance: cache the sine of the angle
-    int _momsCoordinateType; ///< AKA coordinate type of the TPC which contains this module
-    int _moduleID;
-    double _border; ///< Area around a pad Plane to extend the amplification reagion so that the outmost pads don't loose elecetrons  
+    std::vector<double> _planeExtent{};
+    std::vector<double> _moduleExtent{};
+    std::vector<double> _localModuleExtent{}; ///< The module extend in the pad plane's coordinate system
+    PadRowLayout2D * _padRowLayout = nullptr ;
+    double _readoutFrequency{};
+    gear::Vector2D _offset{}; ///< The offset in cordinates described by _momsCoordinateType
+    gear::Vector2D _offset_cartesian{}; ///< The offset in cartesian cordinates
+    double _zPosition{}; ///< The z positon of the module
+    double _angle{}; ///< The angle wrt. the local coordinate system
+    double _cos_angle{}; ///< For performance: cache the cosine of the angle
+    double _sin_angle{}; ///< For performance: cache the sine of the angle
+    int _momsCoordinateType{}; ///< AKA coordinate type of the TPC which contains this module
+    int _moduleID{};
+    double _border{}; ///< Area around a pad Plane to extend the amplification reagion so that the outmost pads don't loose elecetrons  
     
-    bool _localIsGlobal; // flag to improve performance if local and global coordinates are the same
+    bool _localIsGlobal{}; // flag to improve performance if local and global coordinates are the same
 
-    bool _zPositionIsSet; ///< Flag to show whether the setZPosition() function had been called.
+    bool _zPositionIsSet{}; ///< Flag to show whether the setZPosition() function had been called.
     ///< A default value of 0 would cause a minus sign on the returned x coordinate, which
     ///< is not backward compatible. So we need a flag and only invert x if the coordinate has 
     ///< really been set.

@@ -113,9 +113,9 @@ class FTDParametersImpl : public GearParametersImpl, public FTDParameters
 
 	protected:
 		
-		FTDLayerLayoutImpl _layer ;
+                FTDLayerLayoutImpl _layer{} ;
 		
-		int _ftdType ;
+                int _ftdType{} ;
 		
 		// double _shellInnerRadiusMin;
 		// double _shellInnerRadiusMax;

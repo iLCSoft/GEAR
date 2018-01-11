@@ -185,7 +185,7 @@ public:
 
 protected:
   
-  double _x,_y,_z ;
+  double _x=0,_y=0,_z=0 ;
   
 
   // helper classes and function to allow 
@@ -244,10 +244,11 @@ inline Vector3D::Vector3D( double xx,double yy, double zz, Vector3D::Cartesian (
  *  Vector3D  v( rho, phi, z , Vector3D::cylindrical ) ;
  */
 template <>
-inline Vector3D::Vector3D( double arho,double aphi, double zz, Vector3D::Cylindrical (&)() ) : _z(zz)  {
+inline Vector3D::Vector3D( double arho,double aphi, double zz, Vector3D::Cylindrical (&)() ) :
+  _x( arho * cos( aphi ) ),
+  _y( arho * sin( aphi ) ),
+  _z(zz)  {
   
-  _x = arho * cos( aphi ) ;
-  _y = arho * sin( aphi ) ;
 }
 
 

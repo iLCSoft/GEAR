@@ -13,8 +13,8 @@ namespace gear {
 class GlobalPadIndex  {
 
 protected:
-	int _padIndex;
-	int _moduleID;
+	int _padIndex{};
+	int _moduleID{};
 
 public:
 	

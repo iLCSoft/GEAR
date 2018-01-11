@@ -30,22 +30,22 @@ class VersatileDiskRowLayout : public FixedDiskLayoutBase {
 	class Row
 	{
 	protected:
-	    int _rowNumber; ///< the row number 
-	    int _nPads ; ///< number of pads in the row
-	    double _padPitch_mm; ///< the pad pitch in mm
-	    double _padPitch; ///< the pad pitch in radians
-	    double _padWidth_mm; ///< the pad width (without gap) in mm
-	    double _padWidth; ///< the pad width (without gap) in radians
-	    double _rowHeight; ///< the row height in mm 
-	    double _padHeight; ///< the height of the pad (without gap)
-	    double _offset_mm; ///< the offset (staggering) with respect to phi=0 in mm
-	    double _offset; ///< the offset (staggering) with respect to phi=0 in radians, aka phiMin
+	    int _rowNumber{}; ///< the row number 
+	    int _nPads{}; ///< number of pads in the row
+	    double _padPitch_mm{}; ///< the pad pitch in mm
+	    double _padPitch{}; ///< the pad pitch in radians
+	    double _padWidth_mm{}; ///< the pad width (without gap) in mm
+	    double _padWidth{}; ///< the pad width (without gap) in radians
+	    double _rowHeight{}; ///< the row height in mm 
+	    double _padHeight{}; ///< the height of the pad (without gap)
+	    double _offset_mm{}; ///< the offset (staggering) with respect to phi=0 in mm
+	    double _offset{}; ///< the offset (staggering) with respect to phi=0 in radians, aka phiMin
 
-	    double _rCentre; ///< radius at the pad centre
+	    double _rCentre{}; ///< radius at the pad centre
 
-	    double _phiMax; ///< the maximum Angle of this row
-	    double _rMin; ///< lower edge of the pad (incl. gap)
-	    double _rMax; ///< upper edge of the pad (incl.gap)
+	    double _phiMax{}; ///< the maximum Angle of this row
+	    double _rMin{}; ///< lower edge of the pad (incl. gap)
+	    double _rMax{}; ///< upper edge of the pad (incl.gap)
 
 	    double distanceToPhiMin(double r, double phi) const;
 	    double distanceToPhiMax(double r, double phi) const;
@@ -79,13 +79,13 @@ class VersatileDiskRowLayout : public FixedDiskLayoutBase {
 
     protected:
 
-	int _nPad ; ///< number of pads, keep for performance reasons
-	std::vector<Row> _rows ; ///< vector with all the rows of the pad plane
-	std::vector<double> _extent ; ///< the plane extent
-	mutable std::vector< std::vector<int>* > _padIndices ; ///< vector for getPadsInRow
+	int _nPad {}; ///< number of pads, keep for performance reasons
+	std::vector<Row> _rows {}; ///< vector with all the rows of the pad plane
+	std::vector<double> _extent {}; ///< the plane extent
+	mutable std::vector< std::vector<int>* > _padIndices {}; ///< vector for getPadsInRow
 
 	/** Flag that describes if the geometry is frayed */
-	bool _isFrayed ;
+	bool _isFrayed {};
 
 	/** function to copy all internal variables, incl. the objects
 	 *  pointed to and owned by the VersatileDiskRowLayout.

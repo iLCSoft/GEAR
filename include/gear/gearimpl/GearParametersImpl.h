@@ -114,19 +114,19 @@ namespace gear {
   protected:
     
     // maps holding named parameters
-    std::map< std::string, int > _intMap ;
-    std::map< std::string, double > _doubleMap ;
-    std::map< std::string, std::string > _stringMap ;
-    std::map< std::string, IntVec > _intVecMap ;
-    std::map< std::string, DoubleVec > _doubleVecMap ;
-    std::map< std::string, StringVec > _stringVecMap ;
+    std::map< std::string, int > _intMap{} ;
+    std::map< std::string, double > _doubleMap{} ;
+    std::map< std::string, std::string > _stringMap{} ;
+    std::map< std::string, IntVec > _intVecMap{} ;
+    std::map< std::string, DoubleVec > _doubleVecMap{} ;
+    std::map< std::string, StringVec > _stringVecMap{} ;
 
-    mutable StringVec _intKeys ;
-    mutable StringVec _doubleKeys ;
-    mutable StringVec _stringKeys ;
-    mutable StringVec _intVecKeys ;
-    mutable StringVec _doubleVecKeys ;
-    mutable StringVec _stringVecKeys ;
+    mutable StringVec _intKeys{} ;
+    mutable StringVec _doubleKeys{} ;
+    mutable StringVec _stringKeys{} ;
+    mutable StringVec _intVecKeys{} ;
+    mutable StringVec _doubleVecKeys{} ;
+    mutable StringVec _stringVecKeys{} ;
               
 
   }; // class

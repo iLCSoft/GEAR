@@ -172,7 +172,7 @@ class TPCParametersImpl :  public TPCParameters,    public GearParametersImpl {
 protected:
 
   // one vector with all the modules, and one for each half tpc
-  std::vector<TPCModule *>  _TPCModules, _modulesPositiveHalfTPC, _modulesNegativeHalfTPC;
+    std::vector<TPCModule *>  _TPCModules{}, _modulesPositiveHalfTPC{}, _modulesNegativeHalfTPC{};
 
   /// Version for internal usage, for both all modules or only one half TPC
   const TPCModule & getNearestModule(double c0, double c1, 
@@ -189,26 +189,26 @@ protected:
 			       std::vector<TPCModule *> const & modulesVector ) const;
  
 
-  double _maxDriftLength ;
+  double _maxDriftLength {};
 
-  int _coordinateType;
+  int _coordinateType{};
 
   /** The cathode position is needed internally to distinguish the half TPCs.
    *  If only one half TPC is used the cathode positon is _zAnode - _maxDriftLength for positive,
    *  _zAnode + _maxDriftLength for negative half TPC ( the latter including _zAnode = 0, prototype case).
    *  In case both half TPCs are populated with modules it is ( _zAnode_positive + _zAnode_negative ) / 2;
    */
-  double _cathodePosition;
+  double _cathodePosition{};
     
   /** A map with the moduleID as key and the index in the _TPCModules vector as value.
    *  For internal use in this class only.
    */
-  std::map<int,int> _moduleIDMap ;
+  std::map<int,int> _moduleIDMap {};
 
-  std::vector<double> _planeExtent ;
+  std::vector<double> _planeExtent {};
 
   /// Drift velocity is deprecated, should come from conditions data
-  double _driftVelocity ;
+  double _driftVelocity {};
 
   /** function to copy all internal variables, incl. the objects
    *  pointed to and owned by the TPCParameters.
