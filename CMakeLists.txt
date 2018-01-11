@@ -119,5 +119,5 @@ MESSAGE( STATUS )
 
 
 # generate and install following configuration files
-GENERATE_PACKAGE_CONFIGURATION_FILES( GEARConfig.cmake GEARConfigVersion.cmake GEARLibDeps.cmake )
+GENERATE_PACKAGE_CONFIGURATION_FILES( GEARConfig.cmake GEARConfigVersion.cmake )
 
