@@ -29,7 +29,11 @@ namespace gear {
    */
   class MaterialMapFactory {
     
-  public: 
+  public:
+    MaterialMapFactory(const MaterialMapFactory&) = delete ;
+    MaterialMapFactory& operator=(const MaterialMapFactory&) = delete ;
+
+    
     MaterialMapFactory(GearMgr *gearMgr);
     /// Destructor.
     virtual ~MaterialMapFactory() { 
@@ -47,8 +51,8 @@ namespace gear {
     
     
   protected:
-    GearMgr *_gearMgr;
-    std::map< std::vector<double> , MaterialMap* > _managerMap;
+    GearMgr *_gearMgr = nullptr ;
+    std::map< std::vector<double> , MaterialMap* > _managerMap{};
   }; // class
 } // namespace gear
 #endif /* ifndef  GEAR_MATERIALMAPFACTORY_H */

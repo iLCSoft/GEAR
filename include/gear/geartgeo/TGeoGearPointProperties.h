@@ -19,7 +19,10 @@ namespace gear {
  */
 class TGeoGearPointProperties: public GearPointProperties {
 
-public: 
+public:
+  TGeoGearPointProperties(const TGeoGearPointProperties&) = delete ;
+  TGeoGearPointProperties& operator=(const TGeoGearPointProperties&) = delete ;
+
     TGeoGearPointProperties(TGeoManager *geoMgr);
 
     /// Destructor.
@@ -91,7 +94,7 @@ public:
     virtual bool isCalorimeter(const Vector3D & pos) const throw (NotImplementedException, std::exception );
 
   protected:
-    TGeoManager *_tgeomanager;
+    TGeoManager *_tgeomanager = nullptr ;
     
 };//class
 } // namespace gear

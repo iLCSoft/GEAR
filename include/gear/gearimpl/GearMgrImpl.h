@@ -364,7 +364,7 @@ namespace gear {
     typedef std::map< std::string,const SimpleMaterial* >  MatMap ;
     MatMap _matMap{} ;
 
-    MeasurementSurfaceStore* _surfaceStore ;
+    MeasurementSurfaceStore* _surfaceStore = nullptr ;
     
     mutable StringVec _keys{} ;
 

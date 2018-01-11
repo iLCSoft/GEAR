@@ -4,7 +4,7 @@
 # @author Jan Engels, DESY
 ########################################
 
-INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIRS} )
+INCLUDE_DIRECTORIES( SYSTEM ${ROOT_INCLUDE_DIRS} )
 
 # -------- libgeartgeo -------------------------------
 AUX_SOURCE_DIRECTORY( . libgeartgeo_srcs )

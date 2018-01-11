@@ -45,7 +45,7 @@ namespace gear {
     
     
   protected:
-    ConfigMap _cfg  ; 
+    ConfigMap _cfg{} ; 
 
 
   }; // class

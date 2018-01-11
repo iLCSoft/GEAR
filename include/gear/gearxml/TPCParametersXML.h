@@ -35,7 +35,7 @@ namespace gear {
   private:
     /** An instance of the parser for modules
      */
-    TPCModuleXML _tpcModuleXML;
+    TPCModuleXML _tpcModuleXML{};
 
   }; // class
 } // namespace gear

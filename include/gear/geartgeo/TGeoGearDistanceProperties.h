@@ -20,7 +20,11 @@ namespace gear {
  */
 class TGeoGearDistanceProperties: public GearDistanceProperties {
 
-public: 
+public:
+
+    TGeoGearDistanceProperties( const TGeoGearDistanceProperties&) = delete ;
+    TGeoGearDistanceProperties& operator=( const TGeoGearDistanceProperties&) = delete ;
+
     TGeoGearDistanceProperties(TGeoManager *geoMgr);
 
     /// Destructor.
@@ -61,19 +65,19 @@ public:
 
 protected:
     void beamOn(const Vector3D & p0, const Vector3D & p1)const throw (OutsideGeometryException, std::exception );
-    TGeoManager *_tgeomanager;
+    TGeoManager *_tgeomanager = nullptr ;
     //two points to keep track of what has already been called and in memory at the moment
-    mutable Vector3D _p0;
-    mutable Vector3D _p1;
+    mutable Vector3D _p0{};
+    mutable Vector3D _p1{};
     //containers for data evaluated during tracking in beamOn
     //they have to be mutable in order to be changed by beamOn
     //beamOn is const otherwise it could not be called,
     //but should still be able to change the private variables
-    mutable std::vector<std::string> _volNames;
-    mutable std::vector<std::string> _matNames;
-    mutable std::vector<double> _distance;
-    mutable std::vector<double> _intLen;
-    mutable std::vector<double> _radLen;
+    mutable std::vector<std::string> _volNames{};
+    mutable std::vector<std::string> _matNames{};
+    mutable std::vector<double> _distance{};
+    mutable std::vector<double> _intLen{};
+    mutable std::vector<double> _radLen{};
 	
 }; // class
 } // namespace gear

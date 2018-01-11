@@ -40,13 +40,13 @@ namespace gear{
   private:
     
     /** The translation vector (= the origin of the Coordinate System ) */
-    CLHEP::Hep3Vector _T;
+    CLHEP::Hep3Vector _T{};
     
     /** Rotation Matrix
      * Definition: global = R* local
      */
-    CLHEP::HepRotation _R;
-    CLHEP::HepRotation _R_inv;
+    CLHEP::HepRotation _R{};
+    CLHEP::HepRotation _R_inv{};
   };
   
 } // end of gear namespace
