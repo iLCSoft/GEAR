@@ -50,13 +50,13 @@ namespace gear{
     void addMeasurementSurface(MeasurementSurface* ms); 
     
     // private member variables
-    std::map<int,MeasurementSurface* > _measurement_surface_map;
+    std::map<int,MeasurementSurface* > _measurement_surface_map{};
     
     typedef std::map<int, MeasurementSurface*>::const_iterator ms_map_it ; 
     
-    bool _store_filled;
+    bool _store_filled{};
   
-    std::string _fillerName;
+    std::string _fillerName{};
     
   };
   

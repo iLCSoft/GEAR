@@ -40,7 +40,7 @@ namespace gear {
     
     
   private:
-    ConfigMap _cfg  ; 
+    ConfigMap _cfg{} ; 
 
 
   }; // class

@@ -17,7 +17,10 @@ namespace gear {
  */
 class TGeoGeometryInitializer {
 
-public: 
+public:
+  TGeoGeometryInitializer(const TGeoGeometryInitializer&) = delete;
+  TGeoGeometryInitializer& operator=(const TGeoGeometryInitializer&) = delete;
+  
     /// Destructor.
     virtual ~TGeoGeometryInitializer() { 
       ;}
@@ -32,7 +35,7 @@ private:
 
 
   //static TGeoGeometryInitializer *theInitializer;
-    TGeoManager *_geoMgr;
+    TGeoManager *_geoMgr = nullptr ;
 }; // class
 } // namespace gear
 #endif /* ifndef GEAR_TGeoGEOMETRYINITIALIZER_H */

@@ -31,13 +31,13 @@ namespace gear{
     
   private:
     
-    int _ID;
-    ICoordinateSystem* _coordinateSystem;
+    int _ID{};
+    ICoordinateSystem* _coordinateSystem = nullptr ;
     
-    IBoundary* _boundary;
+    IBoundary* _boundary = nullptr ;
     
-    MeasurementSurface(const MeasurementSurface& m){};   // copy constructor is private --> no cpoying allowed
-    MeasurementSurface& operator= (MeasurementSurface const& m); // assignment not allowed either
+    MeasurementSurface(const MeasurementSurface&){};   // copy constructor is private --> no cpoying allowed
+    MeasurementSurface& operator= (MeasurementSurface const&); // assignment not allowed either
     
     
   };

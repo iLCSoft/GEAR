@@ -65,11 +65,11 @@ class LayerLayoutImpl ;
 
   protected:
     
-    int _type ;
-    int _sym ;
-    double _phi ;
-    LayerLayoutImpl _layout ;
-    mutable std::vector<double> _extent ;
+    int _type {};
+    int _sym {};
+    double _phi {};
+    LayerLayoutImpl _layout {};
+    mutable std::vector<double> _extent {};
     
   }; // class
 } // namespace gear
