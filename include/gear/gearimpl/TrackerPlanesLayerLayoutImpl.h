@@ -393,20 +393,20 @@ class TrackerPlanesLayerLayoutImpl : public TrackerPlanesLayerLayout {
           }	 
 
           /** */
-	  virtual const TrackerPlanesLayerImpl* getLayer( unsigned int ID ) const { 
+	  virtual const TrackerPlanesLayerImpl* getLayer( unsigned int id ) const { 
 
-            if( ID < _layerVec.size() ) {
-              return &(_layerVec.at(ID)); // return an address
+            if( id < _layerVec.size() ) {
+              return &(_layerVec.at(id)); // return an address
             }
 
             return 0; 
           }
 
           /** */
-	  virtual const TrackerPlanesLayerImpl* getLayerByID( int ID ) const { 
+	  virtual const TrackerPlanesLayerImpl* getLayerByID( int id ) const { 
 
             for( TrackerPlanesLayerImplVec::const_iterator it = _layerVec.begin(); it != _layerVec.end(); it++ ) {  
-              if( (*it).getID() == ID ) return &(*it); // return a pointer (*it) is the element of the vector
+              if( (*it).getID() == id ) return &(*it); // return a pointer (*it) is the element of the vector
             }
 
             return 0; 

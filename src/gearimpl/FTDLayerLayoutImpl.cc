@@ -183,7 +183,7 @@ double FTDLayerLayoutImpl::getMaxRadius(const int & layerIndex, const bool & sen
 
 
 // returns starting phi for first petal in layer (on side to IP)  (No le veo utilidad)
-double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &petalIndex,const bool &sensitive ) const 
+  double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &/*petalIndex*/,const bool &sensitive ) const 
 {
 	Layer l ;
 	if ( !sensitive ) 
@@ -201,7 +201,7 @@ double FTDLayerLayoutImpl::getStartPhi(const int &layerIndex,const int &petalInd
 
 // returns ending phi for first petal in layer (on side to IP). It corresponds with
 // the phi where is defined the frame
-double FTDLayerLayoutImpl::getEndPhi( const int & layerIndex , const int & petalIndex, const bool & sensitive ) const 
+  double FTDLayerLayoutImpl::getEndPhi( const int & /*layerIndex*/ , const int & /*petalIndex*/, const bool & /*sensitive*/ ) const 
 {
 	//return getPhiPetalCd(layerIndex,petalIndex,sensitive);
 	return 0.0; //FIXME

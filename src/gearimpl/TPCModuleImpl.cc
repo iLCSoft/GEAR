@@ -1461,7 +1461,7 @@ namespace gear {
 	return 0.;
     }
 
-    bool TPCModuleImpl::isOverlapping(TPCModule * testThisModule) const {
+  bool TPCModuleImpl::isOverlapping(TPCModule * /*testThisModule*/) const {
 	// I don't have the slightest idea how to test whether modules are overlapping
 	throw gear::NotImplementedException("TPCModuleImpl::isOverlapping: This is currently not implemented.");
 	return false;

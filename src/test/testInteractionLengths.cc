@@ -126,7 +126,7 @@ int main(int argc, char**argv){
   // // double Rtpc_o = r_o ; // + wall_o ;
   
 
-  float Cos8  = cos(M_PI/8.0);
+  //  float Cos8  = cos(M_PI/8.0);
   float Cos12  = cos(M_PI/12.0);
   float Cos16 = cos(M_PI/16.);
 
@@ -147,10 +147,10 @@ int main(int argc, char**argv){
   double Zhcal_i=hcalparamsEC.getExtent()[2]/10;
   double Zhcal_o=hcalparamsEC.getExtent()[3]/10;
 
-  const gear::GearParameters&  pCoil = gearMgr->getGearParameters("CoilParameters");
-  double Zcoil_o =  pCoil.getDoubleVal("Coil_cryostat_inner_cyl_half_z" )/10 ;
-  double Rcoil_i = pCoil.getDoubleVal("Coil_cryostat_inner_cyl_inner_radius" )/10 ;
-  double Rcoil_o = pCoil.getDoubleVal("Coil_cryostat_inner_cyl_outer_radius" )/10 ;
+  const gear::GearParameters&  parCoil = gearMgr->getGearParameters("CoilParameters");
+  double Zcoil_o = parCoil.getDoubleVal("Coil_cryostat_inner_cyl_half_z" )/10 ;
+  double Rcoil_i = parCoil.getDoubleVal("Coil_cryostat_inner_cyl_inner_radius" )/10 ;
+  double Rcoil_o = parCoil.getDoubleVal("Coil_cryostat_inner_cyl_outer_radius" )/10 ;
 
   const CalorimeterParameters &yokeparamsB= gearMgr->getYokeBarrelParameters() ;
   double Ryoke_i =  yokeparamsB.getExtent()[0]/10. ; 

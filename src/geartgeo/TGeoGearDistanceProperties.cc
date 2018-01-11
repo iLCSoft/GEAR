@@ -207,7 +207,7 @@ namespace gear {
   
   /** The integrated magnetic field along  the distance between [p0,p1] in Tesla*mm.  
    */
-  double TGeoGearDistanceProperties::getBdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearDistanceProperties::getBdL(const Vector3D & /*p0*/, const Vector3D & /*p1*/) const throw (NotImplementedException, std::exception ) {
     
     throw NotImplementedException("getBdl not implemented yet in TGeoGearPointProperties");
     return 0;
@@ -217,7 +217,7 @@ namespace gear {
   
   /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
    */
-  double TGeoGearDistanceProperties::getEdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearDistanceProperties::getEdL(const Vector3D & /*p0*/, const Vector3D & /*p1*/) const throw (NotImplementedException, std::exception ) {
     
     throw NotImplementedException("getEdl not implemented yet in TGeoGearPointProperties");
     return 0;

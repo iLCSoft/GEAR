@@ -119,21 +119,21 @@ namespace gear {
     
     /** The row height in mm.
      */
-    virtual double getRowHeight(int rowNumber) const { return _rowHeight ; }
+    virtual double getRowHeight(int /*rowNumber*/) const { return _rowHeight ; }
 
     /** The height of the pad in mm.
      */
-    virtual double getPadHeight(int padIndex) const { return _rowHeight ; }
+    virtual double getPadHeight(int /*padIndex*/) const { return _rowHeight ; }
 
     /** The width of the pad in radians! 
      *	(In this implementation there is no gap, identical to the pad pitch)
      */
-    virtual double getPadWidth(int padIndex) const { return _padAngle;}
+    virtual double getPadWidth(int /*padIndex*/) const { return _padAngle;}
 
     /** The pitch of the pad in radians! 
      *	(In this implementation there is no gap, identical to the pad width)
      */
-    virtual double getPadPitch(int padIndex) const { return _padAngle;}
+    virtual double getPadPitch(int /*padIndex*/) const { return _padAngle;}
 
     /** The center of the pad in 2d coordinates (r,phi).
      */

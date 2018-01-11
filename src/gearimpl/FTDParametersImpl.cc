@@ -19,7 +19,7 @@ namespace gear
 // {
 // }
 
-int FTDParametersImpl::getLayerIndex( const Vector3D & p ) const
+  int FTDParametersImpl::getLayerIndex( const Vector3D & /*p*/ ) const
 {
 	//fg: this needs revisiting - if needed at all (changed definition of z position)
 
@@ -65,7 +65,7 @@ int FTDParametersImpl::getLayerIndex( const Vector3D & p ) const
 }
 
 // returns the index of the sensitive layers 1 facing the IP, 2 back the IP
-int FTDParametersImpl::getSensitiveIndex( const Vector3D & p ) const
+  int FTDParametersImpl::getSensitiveIndex( const Vector3D & /*p*/ ) const
 {
 	//fg: this needs revisiting - if needed at all (changed definition of z position)
   return -1 ;

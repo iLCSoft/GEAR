@@ -19,7 +19,10 @@ namespace gear {
     
   public: 
 
-    /** C'tor specifying the file name */
+    GearXML(const GearXML&) = delete ;
+    GearXML& operator=(const GearXML&) = delete ;
+
+      /** C'tor specifying the file name */
     GearXML( const std::string& fileName )  ;
 
     ~GearXML() ;
@@ -38,8 +41,8 @@ namespace gear {
 
   protected:
 
-    std::string _fileName ;
-    GearMgrImpl* _gearMgr ;
+     std::string _fileName{} ;
+    GearMgrImpl* _gearMgr = nullptr ;
 
   }; // class
   
