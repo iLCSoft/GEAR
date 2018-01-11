@@ -230,7 +230,7 @@ protected:
 	  public:
 		StringToBuffer( const TIXML_STRING& str );
 		~StringToBuffer();
-		char* buffer;
+		char* buffer{};
 	};
 
 	static const char*	SkipWhiteSpace( const char*, TiXmlEncoding encoding );
@@ -648,16 +648,16 @@ protected:
 	// Internal Value function returning a TIXML_STRING
 	const TIXML_STRING& SValue() const	{ return value ; }
 
-	TiXmlNode*		parent;
-	NodeType		type;
+	TiXmlNode*		parent{};
+	NodeType		type{};
 
-	TiXmlNode*		firstChild;
-	TiXmlNode*		lastChild;
+	TiXmlNode*		firstChild{};
+	TiXmlNode*		lastChild{};
 
-	TIXML_STRING	value;
+	TIXML_STRING	value{};
 
-	TiXmlNode*		prev;
-	TiXmlNode*		next;
+	TiXmlNode*		prev{};
+	TiXmlNode*		next{};
 
 private:
 	TiXmlNode( const TiXmlNode& );				// not implemented.
@@ -771,11 +771,11 @@ private:
 	TiXmlAttribute( const TiXmlAttribute& );				// not implemented.
 	void operator=( const TiXmlAttribute& base );	// not allowed.
 
-	TiXmlDocument*	document;	// A pointer back to a document, for error reporting.
-	TIXML_STRING name;
-	TIXML_STRING value;
-	TiXmlAttribute*	prev;
-	TiXmlAttribute*	next;
+	TiXmlDocument*	document{};	// A pointer back to a document, for error reporting.
+	TIXML_STRING name{};
+	TIXML_STRING value{};
+	TiXmlAttribute*	prev{};
+	TiXmlAttribute*	next{};
 };
 
 
@@ -814,7 +814,7 @@ private:
 	TiXmlAttributeSet( const TiXmlAttributeSet& );	// not allowed
 	void operator=( const TiXmlAttributeSet& );	// not allowed (as TiXmlAttribute)
 
-	TiXmlAttribute sentinel;
+	TiXmlAttribute sentinel{};
 };
 
 
@@ -835,7 +835,7 @@ public:
 
 	TiXmlElement( const TiXmlElement& );
 
-	void operator=( const TiXmlElement& base );
+	TiXmlElement& operator=( const TiXmlElement& base );
 
 	virtual ~TiXmlElement();
 
@@ -958,7 +958,7 @@ protected:
 
 private:
 
-	TiXmlAttributeSet attributeSet;
+	TiXmlAttributeSet attributeSet{};
 };
 
 
@@ -970,7 +970,7 @@ public:
 	/// Constructs an empty comment.
 	TiXmlComment() : TiXmlNode( TiXmlNode::COMMENT ) {}
 	TiXmlComment( const TiXmlComment& );
-	void operator=( const TiXmlComment& base );
+	TiXmlComment& operator=( const TiXmlComment& base );
 
 	virtual ~TiXmlComment()	{}
 
@@ -1020,7 +1020,7 @@ public:
 	#endif
 
 	TiXmlText( const TiXmlText& copy ) : TiXmlNode( TiXmlNode::TEXT )	{ copy.CopyTo( this ); }
-	void operator=( const TiXmlText& base )							 	{ base.CopyTo( this ); }
+	TiXmlText& operator=( const TiXmlText& base )					{ base.CopyTo( this ); return *this ;}
 
 	/// Write this text object to a FILE stream.
 	virtual void Print( FILE* cfile, int depth ) const;
@@ -1075,7 +1075,7 @@ public:
 						const char* _standalone );
 
 	TiXmlDeclaration( const TiXmlDeclaration& copy );
-	void operator=( const TiXmlDeclaration& copy );
+	TiXmlDeclaration& operator=( const TiXmlDeclaration& copy );
 
 	virtual ~TiXmlDeclaration()	{}
 
@@ -1103,9 +1103,9 @@ protected:
 
 private:
 
-	TIXML_STRING version;
-	TIXML_STRING encoding;
-	TIXML_STRING standalone;
+	TIXML_STRING version{};
+	TIXML_STRING encoding{};
+	TIXML_STRING standalone{};
 };
 
 
@@ -1123,7 +1123,7 @@ public:
 	virtual ~TiXmlUnknown() {}
 
 	TiXmlUnknown( const TiXmlUnknown& copy ) : TiXmlNode( TiXmlNode::UNKNOWN )		{ copy.CopyTo( this ); }
-	void operator=( const TiXmlUnknown& copy )										{ copy.CopyTo( this ); }
+	TiXmlUnknown& operator=( const TiXmlUnknown& copy )										{ copy.CopyTo( this ); return *this ;}
 
 	/// Creates a copy of this Unknown and returns it.
 	virtual TiXmlNode* Clone() const;
@@ -1163,7 +1163,7 @@ public:
 	#endif
 
 	TiXmlDocument( const TiXmlDocument& copy );
-	void operator=( const TiXmlDocument& copy );
+	TiXmlDocument& operator=( const TiXmlDocument& copy );
 
 	virtual ~TiXmlDocument() {}
 
@@ -1283,11 +1283,11 @@ protected :
 private:
 	void CopyTo( TiXmlDocument* target ) const;
 
-	bool error;
-	int  errorId;
-	TIXML_STRING errorDesc;
-	int tabsize;
-	TiXmlCursor errorLocation;
+	bool error{};
+	int  errorId{};
+	TIXML_STRING errorDesc{};
+	int tabsize{};
+	TiXmlCursor errorLocation{};
 };
 
 
