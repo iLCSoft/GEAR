@@ -17,12 +17,13 @@ INCLUDE_DIRECTORIES( BEFORE "${PROJECT_BINARY_DIR}" ) # generated GearConfig.h
 INCLUDE_DIRECTORIES( BEFORE "${PROJECT_SOURCE_DIR}/include" )
 INCLUDE_DIRECTORIES( BEFORE "${PROJECT_SOURCE_DIR}/include/gear" )
 
+INCLUDE_DIRECTORIES( SYSTEM  "${PROJECT_SOURCE_DIR}/include/tinyxml" )
 
 
 ###### LIBRARIES #####################################################
 
 # -------- libgearsurf -------------------------------
-INCLUDE_DIRECTORIES( ${CLHEP_INCLUDE_DIRS} ) # needed for gearsurf only
+INCLUDE_DIRECTORIES( SYSTEM ${CLHEP_INCLUDE_DIRS} ) # needed for gearsurf only
 
 AUX_SOURCE_DIRECTORY( ./gearsurf libgearsurf_srcs )
 ADD_SHARED_LIBRARY( gearsurf ${libgearsurf_srcs} )
@@ -120,7 +121,7 @@ ENDFOREACH()
 FIND_PACKAGE( ROOT COMPONENTS Geom )
 
 IF( ROOT_FOUND )
-  INCLUDE_DIRECTORIES( ${ROOT_INCLUDE_DIRS} )
+  INCLUDE_DIRECTORIES( SYSTEM ${ROOT_INCLUDE_DIRS} )
 
   IF( BUILD_TESTING )
      ADD_EXECUTABLE( testFTD ./test/testFTD.cc )

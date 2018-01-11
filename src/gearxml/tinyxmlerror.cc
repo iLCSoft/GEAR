@@ -22,12 +22,12 @@ must not be misrepresented as being the original software.
 distribution.
 
  F.Gaede, DESY : changed extension to .cc  for use with gear
-                 and include from "gearxml/tinyxml.h"
+                 and include from "tinyxml/tinyxml.h"
                : put in namespace gear
    $Id: tinyxmlerror.cc,v 1.1.1.1 2005-09-13 14:41:03 gaede Exp $
 */
 
-#include "gearxml/tinyxml.h"
+#include "tinyxml/tinyxml.h"
 
 
 namespace gear{

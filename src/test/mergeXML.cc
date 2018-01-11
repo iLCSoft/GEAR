@@ -1,4 +1,4 @@
-#include "gearxml/tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "gearxml/MergeXML.h"
 #include "gear/GEAR.h"
 

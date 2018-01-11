@@ -3,7 +3,7 @@
 #include "gear/GearMgr.h"
 #include "gearimpl/SimpleMaterialImpl.h"
 
-#include "gearxml/tinyxml.h"
+#include "tinyxml/tinyxml.h"
 #include "gearxml/XMLHandler.h"
 
 #include <string>
