@@ -45,9 +45,15 @@ FIND_PACKAGE( CLHEP REQUIRED ) # needed for gearsurf
 # export CLHEP dependency to GEARConfig.cmake
 SET( GEAR_DEPENDS_INCLUDE_DIRS ${CLHEP_INCLUDE_DIRS} )
 SET( GEAR_DEPENDS_LIBRARY_DIRS ${CLHEP_LIBRARY_DIRS} )
-SET( GEAR_DEPENDS_LIBRARIES ${CLHEP_LIBRARIES} )
-
-
+#SET( GEAR_DEPENDS_LIBRARIES ${CLHEP_LIBRARIES} )
+#fg CLHEP exports only the IMPORT target for the library - here we need to get the actual file:
+get_property( XX_clhep_lib TARGET CLHEP::CLHEP PROPERTY LOCATION_${CMAKE_BUILD_TYPE} )
+IF( XX_clhep_lib )
+  MESSAGE(INFO "************** export CLHEP_LIBRARIES: ${XX_clhep_lib}"  )
+  SET( GEAR_DEPENDS_LIBRARIES  ${XX_clhep_lib})
+ELSE()
+  SET( GEAR_DEPENDS_LIBRARIES ${CLHEP_LIBRARIES} )
+ENDIF()
 
 ### DOCUMENTATION ###########################################################
 
