@@ -2,7 +2,7 @@
 
 #include "gearxml/XMLHandler.h"
 
-#include "tinyxml/tinyxml.h"
+#include "gearxml/tinyxml.h"
 #include "gearimpl/RectangularPadRowLayout.h"
 #include "gear/GearMgr.h"
 

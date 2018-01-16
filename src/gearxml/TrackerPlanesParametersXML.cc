@@ -3,7 +3,7 @@
 #include "gearxml/XMLHandlerMgr.h"
 #include "gearxml/GearParametersXML.h"
 
-#include "tinyxml/tinyxml.h"
+#include "gearxml/tinyxml.h"
 #include "gearimpl/TrackerPlanesParametersImpl.h"
 
 #include "gear/GearMgr.h"

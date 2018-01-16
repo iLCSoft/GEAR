@@ -2,7 +2,7 @@
 #define GEAR_MergeXML_H
 
 #include <string>
-#include "tinyxml/tinyxml.h"
+#include "gearxml/tinyxml.h"
 
 #define NAME_STR "name"
 

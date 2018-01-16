@@ -5,7 +5,7 @@
 #include "gearxml/GearParametersXML.h"
 #include "gearxml/PadRowLayout2DXML.h"
 
-#include "tinyxml/tinyxml.h"
+#include "gearxml/tinyxml.h"
 #include "gear/GearMgr.h"
 
 #include "gear/PadRowLayout2D.h"
