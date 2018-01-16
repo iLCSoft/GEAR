@@ -94,8 +94,8 @@ struct TiXmlCursor
 	TiXmlCursor()		{ Clear(); }
 	void Clear()		{ row = col = -1; }
 
-	int row;	// 0 based.
-	int col;	// 0 based.
+	int row{};	// 0 based.
+	int col{};	// 0 based.
 };
 
 
@@ -228,6 +228,8 @@ protected:
 	class StringToBuffer
 	{
 	  public:
+	        StringToBuffer(const StringToBuffer&) = default ;
+	        StringToBuffer& operator=(const StringToBuffer&) = default ;
 		StringToBuffer( const TIXML_STRING& str );
 		~StringToBuffer();
 		char* buffer{};
@@ -315,7 +317,7 @@ protected:
 
 	static const char* errorString[ TIXML_ERROR_STRING_COUNT ];
 
-	TiXmlCursor location;
+	TiXmlCursor location{};
 
     /// Field containing a generic user pointer
 	void*			userData;
@@ -871,10 +873,10 @@ public:
 	/// QueryDoubleAttribute examines the attribute - see QueryIntAttribute().
 	int QueryDoubleAttribute( const char* name, double* value ) const;
 	/// QueryFloatAttribute examines the attribute - see QueryIntAttribute().
-	int QueryDoubleAttribute( const char* name, float* value ) const {
+	int QueryDoubleAttribute( const char* name, float* val ) const {
 		double d;
 		int result = QueryDoubleAttribute( name, &d );
-		*value = (float)d;
+		*val = (float)d;
 		return result;
 	}
 
@@ -887,8 +889,8 @@ public:
 	const char* Attribute( const std::string& name ) const				{ return Attribute( name.c_str() ); }
 	const char* Attribute( const std::string& name, int* i ) const		{ return Attribute( name.c_str(), i ); }
 	const char* Attribute( const std::string& name, double* d ) const	{ return Attribute( name.c_str(), d ); }
-	int QueryIntAttribute( const std::string& name, int* value ) const	{ return QueryIntAttribute( name.c_str(), value ); }
-	int QueryDoubleAttribute( const std::string& name, double* value ) const { return QueryDoubleAttribute( name.c_str(), value ); }
+	int QueryIntAttribute( const std::string& name, int* val ) const	{ return QueryIntAttribute( name.c_str(), val ); }
+	int QueryDoubleAttribute( const std::string& name, double* val ) const { return QueryDoubleAttribute( name.c_str(), val ); }
 
 	/// STL std::string form.
 	void SetAttribute( const std::string& name, const std::string& _value )	
@@ -1375,10 +1377,10 @@ class TiXmlHandle
 {
 public:
 	/// Create a handle from any node (at any depth of the tree.) This can be a null pointer.
-	TiXmlHandle( TiXmlNode* node )					{ this->node = node; }
+	TiXmlHandle( TiXmlNode* aNode )	 { this->node = aNode; }
 	/// Copy constructor
 	TiXmlHandle( const TiXmlHandle& ref )			{ this->node = ref.node; }
-	TiXmlHandle operator=( const TiXmlHandle& ref ) { this->node = ref.node; return *this; }
+	TiXmlHandle& operator=( const TiXmlHandle& ref ) { this->node = ref.node; return *this; }
 
 	/// Return a handle to the first child node.
 	TiXmlHandle FirstChild() const;
@@ -1426,7 +1428,7 @@ public:
 	TiXmlUnknown* Unknown() const			{ return ( ( node && node->ToUnknown() ) ? node->ToUnknown() : 0 ); }
 
 private:
-	TiXmlNode* node;
+	TiXmlNode* node{};
 };
 
 
