@@ -7,7 +7,7 @@
 #include "gearxml/FTDParametersXML.h"
 #include "gearxml/TrackerPlanesParametersXML.h"
 #include "gearxml/SiPlanesParametersXML.h"
-#include "tinyxml/tinyxml.h"
+#include "gearxml/tinyxml.h"
 
 #include "gear/GEAR.h"
 

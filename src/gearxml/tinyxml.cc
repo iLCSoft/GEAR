@@ -23,7 +23,7 @@ distribution.
 
 
  F.Gaede, DESY : changed extension to .cc  for use with gear
-                 and include from "tinyxml/tinyxml.h"
+                 and include from "gearxml/tinyxml.h"
                : put in namespace gear
                : changed output format to scientific with precision 9: "%.9e"
               
@@ -32,7 +32,7 @@ distribution.
 
 
 #include <ctype.h>
-#include "tinyxml/tinyxml.h"
+#include "gearxml/tinyxml.h"
 
 #ifdef TIXML_USE_STL
 #include <sstream>

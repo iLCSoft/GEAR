@@ -1,6 +1,6 @@
 #include <gearimpl/GearMgrImpl.h>
 //#include <gearxml/XMLHandlerMgr.h>
-//#include <tinyxml/tinyxml.h>
+//#include <gearxml/tinyxml.h>
 #include <gearxml/GearXML.h>
 #include <iostream>
 
