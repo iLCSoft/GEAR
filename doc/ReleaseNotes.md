@@ -1,3 +1,22 @@
+# v01-08
+
+* 2018-01-12 Frank Gaede ([PR#1](https://github.com/iLCSoft/gear/pull/1))
+  - fix all compiler warnings (gcc5.4)
+      - uninitialized, unused, shadow, ...
+      - don't create GEARLibDeps.cmake 
+      - also fix warnings in tinyxml
+
+* 2018-01-15 Frank Gaede ([PR#2](https://github.com/iLCSoft/gear/pull/2))
+  - fix export of CLHEP library dependency
+        - resolve location of CLHEP::CLHEP import target
+
+* 2018-01-16 Frank Gaede ([PR#4](https://github.com/iLCSoft/gear/pull/4))
+  - fix more warnings in tinyxml.h
+
+* 2018-01-16 Frank Gaede ([PR#3](https://github.com/iLCSoft/gear/pull/3))
+  - move tinyxml.h back to gearxml (for MarlinTPC) 
+  - rm check for this!=0 in tinyxml.h (-Wundefined-bool-conversion warning w/ clang)
+
 # v01-07
 
  # v01-06-01
