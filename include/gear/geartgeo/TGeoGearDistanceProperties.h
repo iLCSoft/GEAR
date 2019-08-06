@@ -34,37 +34,37 @@ public:
      *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
      *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<std::string>&  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual const std::vector<std::string>&  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const ;
 
  /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
      *  returned by  getMaterialNames() - WARNING: this method returns a reference to a vector that will
      *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
      *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<double>&  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual const std::vector<double>&  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const ;
 
     /** List of traversed volumes by name.
      */
-   virtual const std::vector<std::string>  getVolumeNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+   virtual const std::vector<std::string>  getVolumeNames(const Vector3D & p0, const Vector3D & p1) const ;
 
     /** The number of radiation lengths along the distance between [p0,p1] .
      */
-    virtual double getNRadlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getNRadlen(const Vector3D & p0, const Vector3D & p1) const ;
 
     /** The number of interaction lengths along the distance between [p0,p1] .
      */
-    virtual double getNIntlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getNIntlen(const Vector3D & p0, const Vector3D & p1) const ;
 
     /** The integrated magnetic field along  the distance between [p0,p1] in Tesla*mm.  
      */
-    virtual double getBdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getBdL(const Vector3D & p0, const Vector3D & p1) const ;
 
     /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
      */
-    virtual double getEdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception );
+    virtual double getEdL(const Vector3D & p0, const Vector3D & p1) const ;
 
 protected:
-    void beamOn(const Vector3D & p0, const Vector3D & p1)const throw (OutsideGeometryException, std::exception );
+    void beamOn(const Vector3D & p0, const Vector3D & p1)const ;
     TGeoManager *_tgeomanager = nullptr ;
     //two points to keep track of what has already been called and in memory at the moment
     mutable Vector3D _p0{};

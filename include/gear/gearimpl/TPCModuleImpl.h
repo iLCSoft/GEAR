@@ -169,7 +169,7 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      *  if fully covered with avtive area, but only that there is no active area outside
      *  the plane extent.
      */
-    virtual const std::vector<double>& getPlaneExtent()  const throw (gear::Exception, std::exception);
+    virtual const std::vector<double>& getPlaneExtent()  const ;
 
     /** Extent of the sensitive plane in TPC's coordinate system, with extended region
      *  just outside module from _enlargeBy,  - [xmin,xmax,ymin,ymax] CARTESIAN or 
@@ -245,7 +245,7 @@ class TPCModuleImpl : public GearParametersImpl, public TPCModule
      *  It throws a gear::TPCModule::NoZPositionException in case setZPosition has not 
      *  been called before.
      */
-    virtual double getZPosition() const throw (TPCModule::NoZPositionException);
+    virtual double getZPosition() const ;
 
     /** Returns the rotation of the module, in Rads, with respect 
      *  to the modules internal origin.

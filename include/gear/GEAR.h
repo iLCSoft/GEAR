@@ -47,13 +47,13 @@ namespace gear {
     Exception(){  /*no_op*/ ; } 
     
   public: 
-    virtual ~Exception() throw() { /*no_op*/; } 
+    virtual ~Exception()  { /*no_op*/; } 
     
     Exception( const std::string& text ){
       message = "gear::Exception: " + text ;
     }
 
-    virtual const char* what() const  throw() { return  message.c_str() ; } 
+    virtual const char* what() const noexcept  { return  message.c_str() ; } 
 
   };
 
@@ -67,7 +67,7 @@ namespace gear {
   protected:
     ParseException() {  /*no_op*/ ; } 
   public: 
-    virtual ~ParseException() throw() { /*no_op*/; } 
+    virtual ~ParseException()  { /*no_op*/; } 
 
     ParseException( std::string text ){
       message = "gear::ParseException: " + text ;
@@ -87,7 +87,7 @@ namespace gear {
     NotImplementedException( std::string text ){
       message = "gear::NotImplementedException: " + text ;
     }
-    virtual ~NotImplementedException() throw() { /*no_op*/; } 
+    virtual ~NotImplementedException()  { /*no_op*/; } 
 
   }; 
 
@@ -105,7 +105,7 @@ namespace gear {
     UnknownParameterException( std::string text ){
       message = "gear::UnknownParameterException: " + text ;
     }
-    virtual ~UnknownParameterException() throw() { /*no_op*/; } 
+    virtual ~UnknownParameterException()  { /*no_op*/; } 
 
   }; 
 
@@ -124,7 +124,7 @@ namespace gear {
     OutsideGeometryException( std::string text ){
       message = "gear::OutsideGeometryException: " + text ;
     }
-    virtual ~OutsideGeometryException() throw() { /*no_op*/; } 
+    virtual ~OutsideGeometryException()  { /*no_op*/; } 
 
   }; 
 

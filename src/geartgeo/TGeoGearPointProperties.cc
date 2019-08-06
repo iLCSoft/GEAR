@@ -18,7 +18,7 @@ namespace gear {
 //   //vec getPosition returns the current position (if ID is known)
   /** The cellID of the the sensitive detector at pos.
    */
-  long64 TGeoGearPointProperties::getCellID(const Vector3D & ) const throw (NotImplementedException, std::exception ) {
+  long64 TGeoGearPointProperties::getCellID(const Vector3D & ) const {
     throw NotImplementedException("getCellID not implemented yet in TGeoGearPointProperties");
     return 0;
     
@@ -27,7 +27,7 @@ namespace gear {
   // 	bool getMaterial  (true if defined material, false if problem)
   /** Name of material at pos.  
    */
-  const std::string & TGeoGearPointProperties::getMaterialName(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  const std::string & TGeoGearPointProperties::getMaterialName(const Vector3D & pos) const {
   
     double position[3];
     position[0] = pos[0];
@@ -45,7 +45,7 @@ namespace gear {
   }
   /** Density in kg/m^3 at pos.  
    */
-  double TGeoGearPointProperties::getDensity(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearPointProperties::getDensity(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -61,7 +61,7 @@ namespace gear {
     return density;
     
   }
-  double TGeoGearPointProperties::getTemperature(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearPointProperties::getTemperature(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -79,7 +79,7 @@ namespace gear {
   
   /** Pressure in P at pos.  
    */
-  double TGeoGearPointProperties::getPressure(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearPointProperties::getPressure(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -98,7 +98,7 @@ namespace gear {
   
   /** Radiation length of material in mm at pos.  
    */
-  double TGeoGearPointProperties::getRadlen(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearPointProperties::getRadlen(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -116,7 +116,7 @@ namespace gear {
   
   /** Interaction length of material in mm at pos.  
    */
-  double TGeoGearPointProperties::getIntlen(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearPointProperties::getIntlen(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -134,7 +134,7 @@ namespace gear {
   
   /** Position in local coordinate 
    */
-  Vector3D TGeoGearPointProperties::getLocalPosition(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  Vector3D TGeoGearPointProperties::getLocalPosition(const Vector3D & pos) const {
     
     const Double_t global[3]={pos[0],pos[1],pos[2]};
     Double_t local[3];
@@ -147,14 +147,14 @@ namespace gear {
   
   /** The magnetic field vector at pos in [Tesla].  
    */
-  Vector3D TGeoGearPointProperties::getB(const Vector3D &) const throw (NotImplementedException, std::exception ) {
+  Vector3D TGeoGearPointProperties::getB(const Vector3D &) const {
       throw NotImplementedException("getB not implemented yet in TGeoGearPointProperties");
       return Vector3D() ; 
   }
   
   /** The electric field vector at pos in [V/m].  
    */
-  Vector3D TGeoGearPointProperties::getE(const Vector3D & ) const throw (NotImplementedException, std::exception ) {
+  Vector3D TGeoGearPointProperties::getE(const Vector3D & ) const {
      throw NotImplementedException("getE not implemented yet in TGeoGearPointProperties");
      return Vector3D();
      
@@ -162,7 +162,7 @@ namespace gear {
   
   /** Names of (geant4) logical volumes in heirarchy starting at given pos ending with the world volume. 
    */
-  std::vector<std::string>  TGeoGearPointProperties::getListOfLogicalVolumes(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  std::vector<std::string>  TGeoGearPointProperties::getListOfLogicalVolumes(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -189,7 +189,7 @@ namespace gear {
   }
     /** Names of (geant4) physical volumes in heirarchy starting at given pos ending with the world volume. 
      */
-  std::vector<std::string>  TGeoGearPointProperties::getListOfPhysicalVolumes(const Vector3D & pos) const throw (NotImplementedException, std::exception ) {
+  std::vector<std::string>  TGeoGearPointProperties::getListOfPhysicalVolumes(const Vector3D & pos) const {
     
     double position[3];
     position[0] = pos[0];
@@ -217,19 +217,19 @@ namespace gear {
  
  /** Names of (geant4) region that contains the given pos.
      */
-  std::string TGeoGearPointProperties::getRegion(const Vector3D &) const throw (NotImplementedException, std::exception ){
+  std::string TGeoGearPointProperties::getRegion(const Vector3D &) const {
     throw NotImplementedException("getRegion not implemented yet in TGeoGearPointProperties");
     return "";
   }
   /** True if region that contains pos is defined as a tracker.
    */
-  bool TGeoGearPointProperties::isTracker(const Vector3D & ) const throw (NotImplementedException, std::exception ){
+  bool TGeoGearPointProperties::isTracker(const Vector3D & ) const {
     throw NotImplementedException("isTracker not implemented yet in TGeoGearPointProperties");
     return 0;
   }
   /** True if region that contains pos is defined as a calorimeter.
    */
-  bool TGeoGearPointProperties::isCalorimeter(const Vector3D & ) const throw (NotImplementedException, std::exception ){
+  bool TGeoGearPointProperties::isCalorimeter(const Vector3D & ) const {
     throw NotImplementedException("isCalorimeter not implemented yet in TGeoGearPointProperties");
     return 0;
      

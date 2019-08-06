@@ -46,7 +46,6 @@ void gear_unexpected(){
 int main(int argc, char**argv){
   
   
-  std::set_unexpected( gear_unexpected ) ;
   std::set_terminate( gear_unexpected ) ;
   
   if( argc != 8 ) {

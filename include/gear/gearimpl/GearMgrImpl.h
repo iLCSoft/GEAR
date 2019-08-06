@@ -35,7 +35,7 @@ namespace gear {
 	
    /** The unique detector name - typically the model name used in the simulation program
     */
-    virtual const std::string& getDetectorName() const  throw (UnknownParameterException, std::exception ) ;
+    virtual const std::string& getDetectorName() const   ;
 
 
     /** Get named parameters for key. This can be used to describe a subdetector that is not 
@@ -44,66 +44,66 @@ namespace gear {
      *  @throws UnknownParameterException
      */
     virtual const GearParameters & getGearParameters(const std::string & key) const 
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
     /** Get the BField.
      */
     virtual const BField & getBField() const 
-      throw (UnknownParameterException, std::exception ) ;
+       ;
 
     /** Get the TPCParameters.
      */
     virtual const TPCParameters & getTPCParameters() const
-      throw (UnknownParameterException, std::exception ) ;
+       ;
 
      /** Get the Ecal barrel parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getEcalBarrelParameters() const 
-	throw (UnknownParameterException, std::exception ) ;
+	 ;
 
     /** Get the Ecal endcap parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getEcalEndcapParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
     /** Get the Ecal plug parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getEcalPlugParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
       /** Get the Yoke barrel parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getYokeBarrelParameters() const 
-	throw (UnknownParameterException, std::exception ) ;
+	 ;
 
     /** Get the Yoke endcap parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getYokeEndcapParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
     /** Get the Yoke plug parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getYokePlugParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
    /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getHcalBarrelParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
 
     /** Get the Hcal endcap parameters.
@@ -111,7 +111,7 @@ namespace gear {
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getHcalEndcapParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
 
     /** Get the Hcal ring parameters.
@@ -119,7 +119,7 @@ namespace gear {
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getHcalRingParameters() const 
-	throw (UnknownParameterException, std::exception )  ;
+	  ;
 
 
     /** Get the Lcal parameters.
@@ -127,49 +127,49 @@ namespace gear {
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getLcalParameters() const 
-      throw (UnknownParameterException, std::exception ) ;
+       ;
     
     /** Get the LHcal parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getLHcalParameters() const 
-      throw (UnknownParameterException, std::exception ) ;
+       ;
  
     /** Get the BeamCal parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const CalorimeterParameters & getBeamCalParameters() const 
-      throw (UnknownParameterException, std::exception ) ;
+       ;
  
     /** Get the VXD parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const ZPlanarParameters & getVXDParameters() const
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
     /** Get the FTD parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const FTDParameters & getFTDParameters() const
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
     /** Get the SIT parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const ZPlanarParameters & getSITParameters() const
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
     /** Get the SET parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const ZPlanarParameters & getSETParameters() const
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
 
     /** Get the TrackerPlanes parameters.
@@ -177,21 +177,21 @@ namespace gear {
      *  @throws UnknownParameterException
      */
     virtual const TrackerPlanesParameters & getTrackerPlanesParameters() const
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
     /** Get the SiPlanes parameters.
      *
      *  @throws UnknownParameterException
      */
     virtual const SiPlanesParameters & getSiPlanesParameters() const
-      throw (UnknownParameterException, std::exception )  ;
+        ;
 
    /** Get the point properties object.
      * 
      *  @throws NotImplementedException
      */
     virtual const GearPointProperties & getPointProperties() const 
-      throw (NotImplementedException, std::exception ) ;
+       ;
     
     
     /** Get the distance properties object.
@@ -199,7 +199,7 @@ namespace gear {
      *  @throws NotImplementedException
      */
     virtual const GearDistanceProperties & getDistanceProperties() const 
-      throw (NotImplementedException, std::exception ) ;
+       ;
 
 
     /** Keys of all GearParameters. 
@@ -209,7 +209,7 @@ namespace gear {
 
     /** Return the SimpleMaterial for the given name throws UnknownParameterException if no material is unknown.*/
     virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const 
-      throw (UnknownParameterException, std::exception ) ;
+       ;
 
      /** Names of registered materials.
      */ 
@@ -219,7 +219,7 @@ namespace gear {
     /** Register the SimpleMaterial with  SimpleMaterial::getName() - throws Exception if a material of the given name has allready been added.
      *  This takes ownership of the SimpleMaterial object.
      */
-    virtual void  registerSimpleMaterial( const SimpleMaterial* material) throw(Exception , std::exception ) ;
+    virtual void  registerSimpleMaterial( const SimpleMaterial* material)  ;
  
     /** Return the MeasurementSurfaceStore 
      */

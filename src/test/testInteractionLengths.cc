@@ -100,7 +100,6 @@ void printMaterial(  TGeoGearDistanceProperties& distProp, const gear::Vector3D&
 int main(int argc, char**argv){
   
   
-  std::set_unexpected( gear_unexpected ) ;
   std::set_terminate( gear_unexpected ) ;
   
   if( argc < 2 ) {

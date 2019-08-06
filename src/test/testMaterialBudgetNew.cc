@@ -51,7 +51,6 @@ Vector3D pointOnCylinder( double theta, double r, double z, double phi= __PHI0 )
 int main(int argc, char**argv){
   
   
-  std::set_unexpected( gear_unexpected ) ;
   std::set_terminate( gear_unexpected ) ;
   
   if( argc < 2 ) {

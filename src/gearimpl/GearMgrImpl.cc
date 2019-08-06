@@ -166,9 +166,7 @@ namespace gear{
       //~ return *this;
   //~ }
 
-  const std::string& GearMgrImpl::getDetectorName() const    
-
-    throw (UnknownParameterException, std::exception ) { 
+  const std::string& GearMgrImpl::getDetectorName() const {
 
     if( _detectorName.size() == 0 )
       throw UnknownParameterException( "No DetectorName set ") ;
@@ -178,9 +176,7 @@ namespace gear{
   }
 
 
-  const GearParameters & GearMgrImpl::getGearParameters(const std::string & key) const 
-    
-    throw (UnknownParameterException, std::exception ) {
+  const GearParameters & GearMgrImpl::getGearParameters(const std::string & key) const {
     
     ParameterMap::const_iterator it = _map.find( key ) ;
     if( it == _map.end() || it->second == 0 )
@@ -189,8 +185,7 @@ namespace gear{
     
   }   
   
-  const TPCParameters & GearMgrImpl::getTPCParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const TPCParameters & GearMgrImpl::getTPCParameters() const {
     
     if( _tpcParameters == 0 )
       throw UnknownParameterException( "No TPCParameters set ") ;
@@ -199,8 +194,7 @@ namespace gear{
 
   }
 
-  const BField & GearMgrImpl::getBField() const
-    throw (UnknownParameterException, std::exception ) {
+  const BField & GearMgrImpl::getBField() const {
     
     if( _bField == 0 )
       throw UnknownParameterException( "No BField set ") ;
@@ -209,8 +203,7 @@ namespace gear{
 
   }
 
-  const CalorimeterParameters & GearMgrImpl::getEcalBarrelParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getEcalBarrelParameters() const {
     
     if( _ecalBarrelParameters == 0 )
       throw UnknownParameterException( "No EcalBarrelParameters set ") ;
@@ -218,8 +211,7 @@ namespace gear{
     return  *_ecalBarrelParameters ;
 
   }
-  const CalorimeterParameters & GearMgrImpl::getEcalEndcapParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getEcalEndcapParameters() const {
     
     if( _ecalEndcapParameters == 0 )
       throw UnknownParameterException( "No EcalEndcapParameters set ") ;
@@ -228,8 +220,7 @@ namespace gear{
 
   }
   
-  const CalorimeterParameters & GearMgrImpl::getEcalPlugParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getEcalPlugParameters() const {
     
     if( _ecalPlugParameters == 0 )
       throw UnknownParameterException( "No EcalPlugParameters set ") ;
@@ -238,8 +229,7 @@ namespace gear{
 
   }
 
-  const CalorimeterParameters & GearMgrImpl::getYokeBarrelParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getYokeBarrelParameters() const {
     
     if( _yokeBarrelParameters == 0 )
       throw UnknownParameterException( "No YokeBarrelParameters set ") ;
@@ -247,8 +237,7 @@ namespace gear{
     return  *_yokeBarrelParameters ;
 
   }
-  const CalorimeterParameters & GearMgrImpl::getYokeEndcapParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getYokeEndcapParameters() const {
     
     if( _yokeEndcapParameters == 0 )
       throw UnknownParameterException( "No YokeEndcapParameters set ") ;
@@ -257,8 +246,7 @@ namespace gear{
 
   }
   
-  const CalorimeterParameters & GearMgrImpl::getYokePlugParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getYokePlugParameters() const {
     
     if( _yokePlugParameters == 0 )
       throw UnknownParameterException( "No YokePlugParameters set ") ;
@@ -269,8 +257,7 @@ namespace gear{
 
  
   
-  const CalorimeterParameters & GearMgrImpl::getHcalBarrelParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getHcalBarrelParameters() const {
     
     if( _hcalBarrelParameters == 0 )
       throw UnknownParameterException( "No HcalBarrelParameters set ") ;
@@ -278,8 +265,7 @@ namespace gear{
     return  *_hcalBarrelParameters ;
 
   }
-  const CalorimeterParameters & GearMgrImpl::getHcalEndcapParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getHcalEndcapParameters() const {
     
     if( _hcalEndcapParameters == 0 )
       throw UnknownParameterException( "No HcalEndcapParameters set ") ;
@@ -288,8 +274,7 @@ namespace gear{
 
   }
 
-  const CalorimeterParameters & GearMgrImpl::getHcalRingParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getHcalRingParameters() const {
     
     if( _hcalRingParameters == 0 )
       throw UnknownParameterException( "No HcalRingParameters set ") ;
@@ -299,8 +284,7 @@ namespace gear{
   }
 
 
-  const CalorimeterParameters & GearMgrImpl::getLcalParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getLcalParameters() const {
     
     if( _lcalParameters == 0 )
       throw UnknownParameterException( "No LcalParameters set ") ;
@@ -309,8 +293,7 @@ namespace gear{
 
   }
 
-  const CalorimeterParameters & GearMgrImpl::getLHcalParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getLHcalParameters() const {
     
     if( _lhcalParameters == 0 )
       throw UnknownParameterException( "No LHcalParameters set ") ;
@@ -319,8 +302,7 @@ namespace gear{
 
   }
 
-  const CalorimeterParameters & GearMgrImpl::getBeamCalParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const CalorimeterParameters & GearMgrImpl::getBeamCalParameters() const {
     
     if( _beamcalParameters == 0 )
       throw UnknownParameterException( "No BeamCalParameters set ") ;
@@ -329,8 +311,7 @@ namespace gear{
 
   }
 
-  const ZPlanarParameters & GearMgrImpl::getVXDParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const ZPlanarParameters & GearMgrImpl::getVXDParameters() const {
 
     if( _vxdParameters == 0 )
       throw UnknownParameterException( "No VXDParameters set ") ;
@@ -339,8 +320,7 @@ namespace gear{
 
   }
   
-  const FTDParameters & GearMgrImpl::getFTDParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const FTDParameters & GearMgrImpl::getFTDParameters() const {
     
     if( _ftdParameters == 0 )
       throw UnknownParameterException( "No FTDParameters set ") ;
@@ -349,8 +329,7 @@ namespace gear{
     
   }
 
-  const ZPlanarParameters & GearMgrImpl::getSITParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const ZPlanarParameters & GearMgrImpl::getSITParameters() const {
 
     if( _sitParameters == 0 )
       throw UnknownParameterException( "No SITParameters set ") ;
@@ -358,8 +337,7 @@ namespace gear{
     return *_sitParameters ;
 
   }
-  const ZPlanarParameters & GearMgrImpl::getSETParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const ZPlanarParameters & GearMgrImpl::getSETParameters() const {
 
     if( _setParameters == 0 )
       throw UnknownParameterException( "No SETParameters set ") ;
@@ -368,8 +346,7 @@ namespace gear{
 
   }
 
-  const TrackerPlanesParameters & GearMgrImpl::getTrackerPlanesParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const TrackerPlanesParameters & GearMgrImpl::getTrackerPlanesParameters() const {
 
     if( _trackerplanesParameters == 0 )
       throw UnknownParameterException( "No TrackerPlanesParameters set ") ;
@@ -378,8 +355,7 @@ namespace gear{
 
   }  
  
-  const SiPlanesParameters & GearMgrImpl::getSiPlanesParameters() const
-    throw (UnknownParameterException, std::exception ) {
+  const SiPlanesParameters & GearMgrImpl::getSiPlanesParameters() const {
 
     if( _siplanesParameters == 0 )
       throw UnknownParameterException( "No SiPlanesParameters set ") ;
@@ -388,8 +364,7 @@ namespace gear{
 
   }
   
-  const GearPointProperties & GearMgrImpl::getPointProperties() const 
-    throw (NotImplementedException, std::exception ) {
+  const GearPointProperties & GearMgrImpl::getPointProperties() const {
 
     if( _pointProperties == 0 )
       throw UnknownParameterException( "No PointProperties set or implemented ") ;
@@ -399,8 +374,7 @@ namespace gear{
   
   
   
-  const GearDistanceProperties & GearMgrImpl::getDistanceProperties() const 
-    throw (NotImplementedException, std::exception ) {
+  const GearDistanceProperties & GearMgrImpl::getDistanceProperties() const {
 
     if( _distanceProperties == 0 )
       throw UnknownParameterException( "No DistanceProperties set or implemented ") ;
@@ -614,8 +588,7 @@ namespace gear{
   }
 
 
-  const SimpleMaterial& GearMgrImpl::getSimpleMaterial( const std::string name ) const 
-    throw (UnknownParameterException, std::exception ) {
+  const SimpleMaterial& GearMgrImpl::getSimpleMaterial( const std::string name ) const {
     
     MatMap::const_iterator it = _matMap.find( name ) ;
     
@@ -631,8 +604,7 @@ namespace gear{
  }
   
 
-  void GearMgrImpl::registerSimpleMaterial( const SimpleMaterial* material) 
-    throw(Exception , std::exception ) {
+  void GearMgrImpl::registerSimpleMaterial( const SimpleMaterial* material) {
 
     MatMap::iterator it = _matMap.find( material->getName() ) ;
     

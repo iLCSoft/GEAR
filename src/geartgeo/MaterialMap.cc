@@ -137,7 +137,7 @@ namespace gear {
       }//x
   }
 
-  double MaterialMap::getInteractionLength(double x, double y, double z)const throw (Exception, std::exception )
+  double MaterialMap::getInteractionLength(double x, double y, double z)const
   {
     //check whether point is in grid using calculateGridIndex
     std::vector<int> pos;
@@ -147,7 +147,7 @@ namespace gear {
     return result.second;
   }
 
-  double MaterialMap::getRadiationLength(double x, double y, double z)const throw (Exception, std::exception )
+  double MaterialMap::getRadiationLength(double x, double y, double z)const
   {
     //check whether point is in grid using calculateGridIndex
     std::vector<int> pos;
@@ -157,7 +157,7 @@ namespace gear {
     return result.first;
   }
 
-  void MaterialMap::calculateGridIndex(std::vector<int>  & gpos,double x, double y, double z) const throw (Exception, std::exception )
+  void MaterialMap::calculateGridIndex(std::vector<int>  & gpos,double x, double y, double z) const
   {
     //check if in map
     if(x+1e-5<_xmin || x-1e-5>_xmax || y+1e-5<_ymin || y-1e-5>_ymax || z+1e-5<_zmin || z-1e-5>_zmax)
