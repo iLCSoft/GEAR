@@ -28,7 +28,7 @@ namespace gear {
      *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
      *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<std::string>&  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual const std::vector<std::string>&  getMaterialNames(const Vector3D & p0, const Vector3D & p1) const   = 0;
     
 
     /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
@@ -36,25 +36,25 @@ namespace gear {
      *  change after the next call to this method with different arguments or if the GearDistanceProperties object goes out of scope.
      *  It is the users responsibility to make a copy of that vector if needed.
      */
-    virtual const std::vector<double>&  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual const std::vector<double>&  getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const   = 0;
 
 
 
     /** The number of radiation lengths along the distance between [p0,p1] .
      */
-    virtual double getNRadlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual double getNRadlen(const Vector3D & p0, const Vector3D & p1) const   = 0;
 
     /** The number of interaction lengths along the distance between [p0,p1] .
      */
-    virtual double getNIntlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual double getNIntlen(const Vector3D & p0, const Vector3D & p1) const   = 0;
 
     /** The integrated magnetic field along  the distance between [p0,p1] in Tesla*mm.  
      */
-    virtual double getBdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual double getBdL(const Vector3D & p0, const Vector3D & p1) const   = 0;
 
     /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
      */
-    virtual double getEdL(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception )  = 0;
+    virtual double getEdL(const Vector3D & p0, const Vector3D & p1) const   = 0;
 }; // class
 } // namespace gear
 #endif /* ifndef GEAR_GEARDISTANCEPROPERTIES_H */

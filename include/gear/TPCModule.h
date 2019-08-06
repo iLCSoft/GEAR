@@ -42,7 +42,7 @@ class TPCModule : virtual public GearParameters, virtual public PadRowLayout2D {
 
 public: 
 
-    /** An exception that is special for the TPCModule. It is thrown if getZPosition() is
+    /** An exception that is special for the TPCModule. It is  is
      *  called without calling setZPosition() before because there is no useful default value.
      */
     class NoZPositionException : public Exception{
@@ -51,7 +51,7 @@ public:
       NoZPositionException(){
 	message = "gear::TPCModule::NoZPositionException: Set the z position of a module before calling getZPosition(). There is no useful default value.";
       }
-      virtual ~NoZPositionException() throw() { /*no_op*/; }
+      virtual ~NoZPositionException()  { /*no_op*/; }
     };
 
 
@@ -103,7 +103,7 @@ public:
      *  if fully covered with avtive area, but only that there is no active area outside
      *  the plane extent.
      */
-    virtual const std::vector<double>  & getPlaneExtent() const throw (Exception, std::exception )  = 0;
+    virtual const std::vector<double>  & getPlaneExtent() const   = 0;
 
     /** Maximal extent of the sensitive plane, defined relative to global 
      *  origin - [xmin,xmax,ymin,ymax] CARTESIAN or 
@@ -190,7 +190,7 @@ public:
      *  It throws a gear::TPCModule::NoZPositionException in case setZPosition has not 
      *  been called before.
      */
-     virtual double getZPosition() const throw (TPCModule::NoZPositionException) = 0;
+     virtual double getZPosition() const  = 0;
 
     /** Returns the rotation of the module, in Rads, with respect 
      *  to the modules internal origin.

@@ -1269,7 +1269,7 @@ namespace gear {
 	return _momsCoordinateType;
     }
 
-    const std::vector<double>& TPCModuleImpl::getPlaneExtent()  const throw (gear::Exception, std::exception){
+    const std::vector<double>& TPCModuleImpl::getPlaneExtent()  const {
 	return _planeExtent;	
     }
 
@@ -1542,8 +1542,8 @@ namespace gear {
       }
     }
 
-  double TPCModuleImpl::getZPosition() const throw (TPCModule::NoZPositionException)
-  {
+  double TPCModuleImpl::getZPosition() const {
+    
     if (!_zPositionIsSet) throw TPCModule::NoZPositionException();
     
     return _zPosition;

@@ -33,11 +33,11 @@ namespace gear {
     /** Returns the interaction length from the vertex at (0,0,0) to (x,y,z) using a distance 
      *	wheighted interpolation of the neighbouring grid point values.
      */
-    double getInteractionLength(double x, double y, double z) const throw (Exception, std::exception );
+    double getInteractionLength(double x, double y, double z) const ;
     /** Returns the radiation length from the vertex at (0,0,0) to (x,y,z) using a distance 
      *	wheighted interpolation of the neighbouring grid point values.
      */
-    double getRadiationLength(double x, double y, double z) const throw (Exception, std::exception );
+    double getRadiationLength(double x, double y, double z) const ;
     /** coord=0 : CARTESIAN (x,y,z)*/
     static const int CARTESIAN = 0 ;
     /**  coord=1 : CYLINDRICAL (r,phi,z) */
@@ -56,7 +56,7 @@ namespace gear {
     double _xstep{},_ystep{},_zstep{};
     std::pair<double,double> _values{};
     std::vector< std::vector< std::vector< std::pair<double,double> > > > _myMap{};
-    void calculateGridIndex(std::vector<int> & gpos,double x, double y, double z) const throw (Exception, std::exception );
+    void calculateGridIndex(std::vector<int> & gpos,double x, double y, double z) const ;
     void interpolateOnGrid(std::pair<double,double> &result, double x, double y, double z) const;
   }; // class
 } // namespace gear

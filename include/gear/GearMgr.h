@@ -48,139 +48,139 @@ class MeasurementSurfaceStore;
      * 
      *  @throws UnknownParameterException
      */
-    virtual const GearParameters & getGearParameters(const std::string & key) const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const GearParameters & getGearParameters(const std::string & key) const   = 0;
 
     /** Get the B field map.
      *
      *  @throws UnknownParameterException
      */
-    virtual const BField & getBField() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const BField & getBField() const   = 0;
 
     /** Get the TPCParameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const TPCParameters & getTPCParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const TPCParameters & getTPCParameters() const   = 0;
 
     /** Get the Ecal barrel parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getEcalBarrelParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getEcalBarrelParameters() const   = 0;
 
     /** Get the Ecal endcap parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getEcalEndcapParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getEcalEndcapParameters() const   = 0;
 
     /** Get the Ecal plug parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getEcalPlugParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getEcalPlugParameters() const   = 0;
 
     /** Get the Yoke barrel parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getYokeBarrelParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getYokeBarrelParameters() const   = 0;
 
     /** Get the Yoke endcap parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getYokeEndcapParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getYokeEndcapParameters() const   = 0;
 
     /** Get the Yoke plug parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getYokePlugParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getYokePlugParameters() const   = 0;
 
     /** Get the Hcal barrel parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getHcalBarrelParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getHcalBarrelParameters() const   = 0;
 
     /** Get the Hcal endcap parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getHcalEndcapParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getHcalEndcapParameters() const   = 0;
 
     /** Get the Hcal ring parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getHcalRingParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getHcalRingParameters() const   = 0;
 
     /** Get the Lcal parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getLcalParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getLcalParameters() const   = 0;
 
     /** Get the LHcal parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getLHcalParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getLHcalParameters() const   = 0;
 
     /** Get the BeamCal parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const CalorimeterParameters & getBeamCalParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const CalorimeterParameters & getBeamCalParameters() const   = 0;
 
     /** Get the VXD parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const ZPlanarParameters & getVXDParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const ZPlanarParameters & getVXDParameters() const   = 0;
 
     /** Get the FTD parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const FTDParameters & getFTDParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const FTDParameters & getFTDParameters() const   = 0;
 
     /** Get the SIT parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const ZPlanarParameters & getSITParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const ZPlanarParameters & getSITParameters() const   = 0;
 
     /** Get the SET parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const ZPlanarParameters & getSETParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const ZPlanarParameters & getSETParameters() const   = 0;
 
     /** Get the TrackerPlanes parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const TrackerPlanesParameters & getTrackerPlanesParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const TrackerPlanesParameters & getTrackerPlanesParameters() const   = 0;
 
     /** Get the SiPlanes parameters.
      *
      *  @throws UnknownParameterException
      */
-    virtual const SiPlanesParameters & getSiPlanesParameters() const throw (UnknownParameterException, std::exception )  = 0;
+    virtual const SiPlanesParameters & getSiPlanesParameters() const   = 0;
 
     /** Get the point properties object.
      * 
      *  @throws NotImplementedException
      */
-    virtual const GearPointProperties & getPointProperties() const throw (NotImplementedException, std::exception )  = 0;
+    virtual const GearPointProperties & getPointProperties() const   = 0;
 
     /** Get the distance properties object.
      * 
      *  @throws NotImplementedException
      */
-    virtual const GearDistanceProperties & getDistanceProperties() const throw (NotImplementedException, std::exception )  = 0;
+    virtual const GearDistanceProperties & getDistanceProperties() const   = 0;
 
     /** Keys of all GearParameters. 
      */ 
@@ -188,7 +188,7 @@ class MeasurementSurfaceStore;
 
     
     /** Return the SimpleMaterial for the given name throws UnknownParameterException if no material is unknown.*/
-    virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const throw (UnknownParameterException, std::exception )  = 0 ;
+    virtual const SimpleMaterial& getSimpleMaterial( const std::string name ) const   = 0 ;
     
     /** Names of registered materials.
      */ 
@@ -299,7 +299,7 @@ class MeasurementSurfaceStore;
     /** Register the SimpleMaterial with  SimpleMaterial::getName() - throws Exception if a material of the given name has already been added.
      *  This takes ownership of the SimpleMaterial object.
      */
-    virtual void registerSimpleMaterial( const SimpleMaterial* material ) throw( Exception , std::exception ) = 0 ;
+    virtual void registerSimpleMaterial( const SimpleMaterial* material )  = 0 ;
     
 
   }; // class

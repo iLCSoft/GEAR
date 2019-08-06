@@ -16,7 +16,7 @@ namespace gear {
   }
   
   
-  void TGeoGearDistanceProperties::beamOn(const Vector3D &p0, const Vector3D &p1) const throw (OutsideGeometryException, std::exception )
+  void TGeoGearDistanceProperties::beamOn(const Vector3D &p0, const Vector3D &p1) const
   {
     //check if this point was just computetd and the values are still in memory
     if(p0==_p0 && p1==_p1)
@@ -129,7 +129,7 @@ namespace gear {
 
   /** List of matrial names along the distance between [p0,p1] .
    */
-  const std::vector<std::string>&  TGeoGearDistanceProperties::getMaterialNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  const std::vector<std::string>&  TGeoGearDistanceProperties::getMaterialNames(const Vector3D & p0, const Vector3D & p1) const {
     
     //check if itp0 and p1 are the same point, if so don't do anything, no material in between
     if(p0==p1)
@@ -142,7 +142,7 @@ namespace gear {
   
   /** List of volume names along the distance between [p0,p1] .
    */
-  const std::vector<std::string>  TGeoGearDistanceProperties::getVolumeNames(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  const std::vector<std::string>  TGeoGearDistanceProperties::getVolumeNames(const Vector3D & p0, const Vector3D & p1) const {
     
     //check if itp0 and p1 are the same point, if so don't do anything, no material in between
     if(p0==p1)
@@ -156,7 +156,7 @@ namespace gear {
   /** List of matrial thicknesses in mm along the distance between [p0,p1] - runs parallel to the array
    *  returned by  getMaterialNames().
    */
-  const std::vector<double>&  TGeoGearDistanceProperties::getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  const std::vector<double>&  TGeoGearDistanceProperties::getMaterialThicknesses(const Vector3D & p0, const Vector3D & p1) const {
         
     //check if itp0 and p1 are the same point, if so don't do anything, no material in between
     if(p0==p1)
@@ -169,7 +169,7 @@ namespace gear {
   
   /** The number of radiation lengths along the distance between [p0,p1] .
    */
-  double TGeoGearDistanceProperties::getNRadlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearDistanceProperties::getNRadlen(const Vector3D & p0, const Vector3D & p1) const {
     
      //check if itp0 and p1 are the same point, if so don't do anything, no material in between
     if(p0==p1)
@@ -188,7 +188,7 @@ namespace gear {
   
   /** The number of interaction lengths along the distance between [p0,p1] .
    */
-  double TGeoGearDistanceProperties::getNIntlen(const Vector3D & p0, const Vector3D & p1) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearDistanceProperties::getNIntlen(const Vector3D & p0, const Vector3D & p1) const {
     
    if(p0==p1)
       return 0;
@@ -207,7 +207,7 @@ namespace gear {
   
   /** The integrated magnetic field along  the distance between [p0,p1] in Tesla*mm.  
    */
-  double TGeoGearDistanceProperties::getBdL(const Vector3D & /*p0*/, const Vector3D & /*p1*/) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearDistanceProperties::getBdL(const Vector3D & /*p0*/, const Vector3D & /*p1*/) const {
     
     throw NotImplementedException("getBdl not implemented yet in TGeoGearPointProperties");
     return 0;
@@ -217,7 +217,7 @@ namespace gear {
   
   /** The integrated electric field along  the distance between [p0,p1] in  mVolt.  
    */
-  double TGeoGearDistanceProperties::getEdL(const Vector3D & /*p0*/, const Vector3D & /*p1*/) const throw (NotImplementedException, std::exception ) {
+  double TGeoGearDistanceProperties::getEdL(const Vector3D & /*p0*/, const Vector3D & /*p1*/) const {
     
     throw NotImplementedException("getEdl not implemented yet in TGeoGearPointProperties");
     return 0;
