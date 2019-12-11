@@ -1,3 +1,9 @@
+# v01-09
+
+* 2019-08-07 Frank Gaede ([PR#5](https://github.com/iLCSoft/GEAR/pull/5))
+  - make compatible with c++17:
+        - remove all `throw(...)` declarations
+
 # v01-08
 
 * 2018-01-12 Frank Gaede ([PR#1](https://github.com/iLCSoft/gear/pull/1))
