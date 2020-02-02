@@ -88,7 +88,7 @@ int main(int argc, char**argv){
       std::cout <<i<<" "<< volNames[i]<<" "<<matNames[i] << std::endl;
       
   }
-  catch(NotImplementedException e){}
+  catch(const NotImplementedException& e){}
   
  
 
