@@ -52,86 +52,79 @@ INSTALL_SHARED_LIBRARY( gearxml DESTINATION lib )
 TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
 
 
-#IF( GEAR_TGEO )
-#    # link gearxml to geartgeo
-#    TARGET_LINK_LIBRARIES( gearxml geartgeo )
-#ENDIF()
-# ----------------------------------------------------
 
 
 
 ###### TESTS #########################################################
+   
+IF( BUILD_TESTING )
 
-# mergeXML
-ADD_EXECUTABLE( mergeXML ./test/mergeXML.cc )
-TARGET_LINK_LIBRARIES( mergeXML gear gearxml )
+  # mergeXML
+  ADD_EXECUTABLE( mergeXML ./test/mergeXML.cc )
+  TARGET_LINK_LIBRARIES( mergeXML gear gearxml )
 
-# printParameters
-ADD_EXECUTABLE( printParameters ./test/printParameters.cc )
-TARGET_LINK_LIBRARIES( printParameters gear gearxml )
+  # printParameters
+  ADD_EXECUTABLE( printParameters ./test/printParameters.cc )
+  TARGET_LINK_LIBRARIES( printParameters gear gearxml )
 
-# printMaterials
-IF( GEAR_TGEO )
-  ADD_EXECUTABLE( printMaterials ./test/printMaterials.cc )
-  TARGET_LINK_LIBRARIES( printMaterials gear gearxml )
-  INSTALL( TARGETS printMaterials DESTINATION bin )
-ENDIF()
-
-INSTALL( TARGETS mergeXML printParameters DESTINATION bin )
-
-# test binaries
-SET( test_bins
-    testgear
-    testtpcproto
-    testVTXgear
-    testSiPlanesgear    
-    testAngularLayout
-    testDistanceToModule
-    testGearMgr
-    testIsInsideModule
-    testPlaneExtent
-    testTPCModule
-    testVersatileLayout
-    testXMLOut
-    testXMLCopy
-)
-
-IF( GEAR_TGEO )
-  SET( test_bins ${test_bins} testGearTGeo testMaterialBudgetNew testInteractionLengths testMaterialBudget testMaterialMap )
-ENDIF()
-
-ADD_CUSTOM_TARGET( tests )
-
-FOREACH( _testname ${test_bins} )
-    
-    IF( BUILD_TESTING )
-        ADD_EXECUTABLE( ${_testname} ./test/${_testname}.cc )
-    ELSE()
-        ADD_EXECUTABLE( ${_testname} EXCLUDE_FROM_ALL ./test/${_testname}.cc )
-    ENDIF()
-
-    ADD_DEPENDENCIES( tests ${_testname} )
-    TARGET_LINK_LIBRARIES( ${_testname} gear gearxml )
-
-ENDFOREACH()
-
-
-### FTD test needs ROOT/TGeo ######
-
-FIND_PACKAGE( ROOT COMPONENTS Geom )
-
-IF( ROOT_FOUND )
-  INCLUDE_DIRECTORIES( SYSTEM ${ROOT_INCLUDE_DIRS} )
-
-  IF( BUILD_TESTING )
-     ADD_EXECUTABLE( testFTD ./test/testFTD.cc )
-  ELSE()
-     ADD_EXECUTABLE( testFTD EXCLUDE_FROM_ALL ./test/testFTD.cc )
+  # printMaterials
+  IF( GEAR_TGEO )
+    ADD_EXECUTABLE( printMaterials ./test/printMaterials.cc )
+    TARGET_LINK_LIBRARIES( printMaterials gear gearxml )
+    INSTALL( TARGETS printMaterials DESTINATION bin )
   ENDIF()
 
-  ADD_DEPENDENCIES( tests testFTD )
-  TARGET_LINK_LIBRARIES( testFTD   gear gearxml  ${ROOT_LIBRARIES} ${ROOT_COMPONENT_LIBRARIES} )
+  INSTALL( TARGETS mergeXML printParameters DESTINATION bin )
+
+  # test binaries
+  SET( test_bins
+      testgear
+      testtpcproto
+      testVTXgear
+      testSiPlanesgear    
+      testAngularLayout
+      testDistanceToModule
+      testGearMgr
+      testIsInsideModule
+      testPlaneExtent
+      testTPCModule
+      testVersatileLayout
+      testXMLOut
+      testXMLCopy
+  )
+
+  IF( GEAR_TGEO )
+    SET( test_bins ${test_bins} testGearTGeo testMaterialBudgetNew testInteractionLengths testMaterialBudget testMaterialMap )
+  ENDIF()
+
+  ADD_CUSTOM_TARGET( tests )
+
+  FOREACH( _testname ${test_bins} )
+      
+      ADD_EXECUTABLE( ${_testname} ./test/${_testname}.cc )
+
+      ADD_DEPENDENCIES( tests ${_testname} )
+      TARGET_LINK_LIBRARIES( ${_testname} gear gearxml )
+
+  ENDFOREACH()
+
+
+  ### FTD test needs ROOT/TGeo ######
+
+  FIND_PACKAGE( ROOT COMPONENTS Geom )
+
+  IF( ROOT_FOUND )
+    INCLUDE_DIRECTORIES( SYSTEM ${ROOT_INCLUDE_DIRS} )
+
+    IF( BUILD_TESTING )
+       ADD_EXECUTABLE( testFTD ./test/testFTD.cc )
+    ELSE()
+       ADD_EXECUTABLE( testFTD EXCLUDE_FROM_ALL ./test/testFTD.cc )
+    ENDIF()
+
+    ADD_DEPENDENCIES( tests testFTD )
+    TARGET_LINK_LIBRARIES( testFTD   gear gearxml  ${ROOT_LIBRARIES} ${ROOT_COMPONENT_LIBRARIES} )
+  ENDIF()
+
 ENDIF()
-
-
 
