@@ -13,6 +13,19 @@ SET( DOC_BIN_DIR "${PROJECT_BINARY_DIR}/docbuild" )
 # directories to search for documentation
 SET( DOX_INPUT overview.html ../include/gear ../src )
 
+FILE(GLOB GEAR_DOXYGEN_SOURCES
+         ../include/gear/*
+            ../include/gear/gearcga/*
+            ../include/gear/gearimpl/*
+            ../include/gear/geartgeo/*
+            ../include/gear/gearsurf/*
+            ../include/gear/gearxml/*
+            ../src/gearcga/*
+            ../src/gearimpl/*
+            ../src/geartgeo/*
+            ../src/gearsurf/*
+            ../src/gearxml/*
+    )
 
 # custom command to build documentation
 ADD_CUSTOM_COMMAND(
@@ -24,19 +37,8 @@ ADD_CUSTOM_COMMAND(
             "${DOXYGEN_EXECUTABLE}"
     WORKING_DIRECTORY "${DOC_SRC_DIR}"
     COMMENT "Building API Documentation..."
-    DEPENDS overview.html Doxyfile CMakeLists.txt
-            ../include/gear/*
-            ../include/gear/gearcga/*
-            ../include/gear/gearimpl/*
-            ../include/gear/geartgeo/*
-            ../include/gear/gearsurf/*
-            ../include/gear/gearxml/*
-            ../src/gearcga/*
-            ../src/gearimpl/*
-            ../src/geartgeo/*
-            ../src/gearsurf/*
-            ../src/gearxml/*
-)
+    DEPENDS overview.html Doxyfile CMakeLists.txt ${GEAR_DOXYGEN_SOURCES}
+   )
 
 ADD_CUSTOM_TARGET( doc DEPENDS "${DOC_BIN_DIR}/html/index.html" )
 
