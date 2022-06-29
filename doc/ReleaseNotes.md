@@ -1,3 +1,14 @@
+# v01-09-01
+
+* 2022-06-28 Thomas Madlener ([PR#8](https://github.com/iLCSoft/GEAR/pull/8))
+  - Fix cmake doxygen configuration to work with CMake >= 3.17
+
+* 2022-06-28 Thomas Madlener ([PR#7](https://github.com/iLCSoft/GEAR/pull/7))
+  - Migrate CI to use github actions and remove travis CI
+
+* 2020-09-07 Valentin Volkl ([PR#6](https://github.com/iLCSoft/GEAR/pull/6))
+  - put more tests under the scope of BUILD_TESTING. Also fixes a build issue with spack https://github.com/key4hep/k4-spack/pull/33
+
 # v01-09
 
 * 2019-08-07 Frank Gaede ([PR#5](https://github.com/iLCSoft/GEAR/pull/5))
