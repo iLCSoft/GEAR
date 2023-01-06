@@ -64,7 +64,7 @@ ELSE()
     SET( DOC_INSTALL_PREFIX doc/gear )
     
     INSTALL( FILES
-            release.notes
+            ReleaseNotes.md
             eudet_memo_GearModularTPC.pdf
             TPCModule_tangent_rMax.pdf
             gear_banner.png
