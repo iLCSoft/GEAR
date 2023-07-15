@@ -173,7 +173,7 @@ namespace gear {
       return _padWidth / _rows.at( rowNum ).RCenter ;
 
     }
-    catch(std::out_of_range){
+    catch(std::out_of_range const&){
       return 0. ;
     }
   }
@@ -188,7 +188,7 @@ namespace gear {
 	return _rows.at( rowNum ).PhiPad;
 
     }
-    catch(std::out_of_range){
+    catch(std::out_of_range const&){
       return 0. ;
     }
   }

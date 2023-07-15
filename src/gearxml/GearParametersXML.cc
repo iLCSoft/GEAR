@@ -233,7 +233,7 @@ namespace gear {
 	
 	value = getXMLAttribute( par , "value" )  ; 
       }      
-      catch( ParseException ) {
+      catch( ParseException const& ) {
 	
 	if( par->FirstChild() )
 	  value =  par->FirstChild()->Value() ;

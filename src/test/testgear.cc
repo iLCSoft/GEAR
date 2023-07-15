@@ -239,12 +239,12 @@ void testFixedPadSizeDiskLayout( const  FixedPadSizeDiskLayout& pl ) {
       // in the other implementations, because there are pads at the edge of the pad plane
       // which have no neighbour.
       if( j == 0 ) {
-	int ln = pl.getRightNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	pl.getRightNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
 	assert(  pl.getPadNumber( ln ) ==  nPad-1 ) ;
       }
 
       if( j == nPad-1 ) {
-	int rn = pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
 	assert(  pl.getPadNumber( rn ) ==  0 ) ;
       }
 

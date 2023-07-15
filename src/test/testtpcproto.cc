@@ -156,14 +156,14 @@ void testRectangularPadRowLayout( const  RectangularPadRowLayout& pl ) {
       
       if( j != 0 ) {
 
- 	int ln = pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+ 	pl.getLeftNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
 
  	assert(  pl.getPadNumber( ln ) ==  iPad - 1 ) ;
       }
 
       if( j != nPad-1 ) {
 
-	int rn = pl.getRightNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
+	pl.getRightNeighbour(  pl.getPadIndex( iRow , iPad ) ) ; 
 
  	assert(  pl.getPadNumber( rn )  ==  iPad + 1 ) ;
       }
