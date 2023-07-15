@@ -97,13 +97,11 @@ IF( BUILD_TESTING )
     SET( test_bins ${test_bins} testGearTGeo testMaterialBudgetNew testInteractionLengths testMaterialBudget testMaterialMap )
   ENDIF()
 
-  ADD_CUSTOM_TARGET( tests )
 
   FOREACH( _testname ${test_bins} )
       
       ADD_EXECUTABLE( ${_testname} ./test/${_testname}.cc )
 
-      ADD_DEPENDENCIES( tests ${_testname} )
       TARGET_LINK_LIBRARIES( ${_testname} gear gearxml )
 
   ENDFOREACH()
@@ -122,7 +120,6 @@ IF( BUILD_TESTING )
        ADD_EXECUTABLE( testFTD EXCLUDE_FROM_ALL ./test/testFTD.cc )
     ENDIF()
 
-    ADD_DEPENDENCIES( tests testFTD )
     TARGET_LINK_LIBRARIES( testFTD   gear gearxml  ${ROOT_LIBRARIES} ${ROOT_COMPONENT_LIBRARIES} )
   ENDIF()
 
