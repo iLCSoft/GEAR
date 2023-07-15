@@ -467,7 +467,7 @@ namespace gear{
 
       lcalParameters->getDoubleVal("beam_crossing_angle") ;
 
-    }catch( UnknownParameterException ){
+    }catch( UnknownParameterException const& ){
 
       std::cout << "WARNING GearMgrImpl::setLcalParameters: added "
 	" missing parameter beam_crossing_angle 0.0 ! " << std::endl ;
@@ -488,7 +488,7 @@ namespace gear{
 
       lhcalParameters->getDoubleVal("beam_crossing_angle") ;
 
-    }catch( UnknownParameterException ){
+    }catch( UnknownParameterException const& ){
 
     std::cout << "WARNING GearMgrImpl::setLHcalParameters: added "
 	" missing parameter beam_crossing_angle 0.0 ! " << std::endl ;
@@ -509,7 +509,7 @@ namespace gear{
 
       beamcalParameters->getDoubleVal("beam_crossing_angle") ;
 
-    }catch( UnknownParameterException ){
+    }catch( UnknownParameterException const& ){
 
       std::cout << "WARNING GearMgrImpl::setBeamCalParameters: added "
 	" missing parameter beam_crossing_angle 0.0 ! " << std::endl ;
