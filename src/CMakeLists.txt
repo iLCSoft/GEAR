@@ -48,7 +48,7 @@ ENDIF()
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_SHARED_LIBRARY( gearxml ${libgearxml_srcs} )
-INSTALL_SHARED_LIBRARY( gearxml DESTINATION lib )
+INSTALL_SHARED_LIBRARY( gearxml DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
 
 
@@ -74,7 +74,7 @@ IF( BUILD_TESTING )
     INSTALL( TARGETS printMaterials DESTINATION bin )
   ENDIF()
 
-  INSTALL( TARGETS mergeXML printParameters DESTINATION bin )
+  INSTALL( TARGETS mergeXML printParameters DESTINATION ${CMAKE_INSTALL_BINDIR} )
 
   # test binaries
   SET( test_bins

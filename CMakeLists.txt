@@ -23,6 +23,10 @@ FIND_PACKAGE( ILCUTIL COMPONENTS ILCSOFT_CMAKE_MODULES REQUIRED )
 # load default settings from ILCSOFT_CMAKE_MODULES
 INCLUDE( ilcsoft_default_settings )
 
+# Build to lib instead of lib64:
+if (CMAKE_INSTALL_LIBDIR STREQUAL lib64)
+  set(CMAKE_INSTALL_LIBDIR lib)
+endif()
 
 # root is needed to build tgeo
 OPTION( GEAR_TGEO "Set to ON to build tgeo (ROOT >= 5.27.06 required)" OFF )
