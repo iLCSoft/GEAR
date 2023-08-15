@@ -28,14 +28,14 @@ INCLUDE_DIRECTORIES( SYSTEM ${CLHEP_INCLUDE_DIRS} ) # needed for gearsurf only
 AUX_SOURCE_DIRECTORY( ./gearsurf libgearsurf_srcs )
 ADD_SHARED_LIBRARY( gearsurf ${libgearsurf_srcs} )
 TARGET_LINK_LIBRARIES( gearsurf ${CLHEP_LIBRARIES} )
-INSTALL_SHARED_LIBRARY( gearsurf DESTINATION lib )
+INSTALL_SHARED_LIBRARY( gearsurf DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 # ----------------------------------------------------
 
 
 # -------- libgear (impl) ----------------------------
 AUX_SOURCE_DIRECTORY( ./gearimpl libgear_srcs )
 ADD_SHARED_LIBRARY( gear ${libgear_srcs} )
-INSTALL_SHARED_LIBRARY( gear DESTINATION lib )
+INSTALL_SHARED_LIBRARY( gear DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 TARGET_LINK_LIBRARIES( gear gearsurf )
 # ----------------------------------------------------
 
@@ -48,7 +48,7 @@ ENDIF()
 # -------- libgearxml --------------------------------
 AUX_SOURCE_DIRECTORY( ./gearxml libgearxml_srcs )
 ADD_SHARED_LIBRARY( gearxml ${libgearxml_srcs} )
-INSTALL_SHARED_LIBRARY( gearxml DESTINATION lib )
+INSTALL_SHARED_LIBRARY( gearxml DESTINATION ${CMAKE_INSTALL_LIBDIR} )
 TARGET_LINK_LIBRARIES( gearxml gear ${CMAKE_DL_LIBS} )
 
 
@@ -71,10 +71,10 @@ IF( BUILD_TESTING )
   IF( GEAR_TGEO )
     ADD_EXECUTABLE( printMaterials ./test/printMaterials.cc )
     TARGET_LINK_LIBRARIES( printMaterials gear gearxml )
-    INSTALL( TARGETS printMaterials DESTINATION bin )
+    INSTALL( TARGETS printMaterials DESTINATION ${CMAKE_INSTALL_BINDIR} )
   ENDIF()
 
-  INSTALL( TARGETS mergeXML printParameters DESTINATION bin )
+  INSTALL( TARGETS mergeXML printParameters DESTINATION ${CMAKE_INSTALL_BINDIR} )
 
   # test binaries
   SET( test_bins
