@@ -48,6 +48,7 @@ namespace gear {
     
   public: 
     virtual ~Exception()  { /*no_op*/; } 
+    Exception( const Exception& e ) = default ;
     
     Exception( const std::string& text ){
       message = "gear::Exception: " + text ;
