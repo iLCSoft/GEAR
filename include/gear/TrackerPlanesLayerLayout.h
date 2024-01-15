@@ -23,8 +23,14 @@ class TrackerPlanesMaterialLayer  {
 
     
 public:
+    /// Constructor
+    TrackerPlanesMaterialLayer() = default;
+
     /// Destructor.
     virtual ~TrackerPlanesMaterialLayer() { /* nop */; }
+
+    /// Copy-constructor.
+    TrackerPlanesMaterialLayer( const TrackerPlanesMaterialLayer& ) = default;
 
     virtual int getID() const = 0;
 
@@ -136,8 +142,14 @@ class TrackerPlanesSensitiveLayer  {
 
     
 public:
+    /// Constructor
+    TrackerPlanesSensitiveLayer() = default;
+
     /// Destructor.
     virtual ~TrackerPlanesSensitiveLayer() { /* nop */; }
+
+    /// Copy-constructor.
+    TrackerPlanesSensitiveLayer( const TrackerPlanesSensitiveLayer& ) = default;
 
 
     /** ID of sensitive volume of layer layerIndex - layer indexing starts at 0
@@ -282,8 +294,15 @@ public:
 class TrackerPlanesLayer  {
 
 public:
+
+    /// Constructor
+    TrackerPlanesLayer() = default;
+
     /// Destructor.
     virtual ~TrackerPlanesLayer() { /* nop */; }
+
+    // Copy-constructor.
+    TrackerPlanesLayer( const TrackerPlanesLayer& ) = default;
 
     /** Layer ID of nonsensitive volume of layer layerIndex - layer indexing starts at 0
      *  for the layer closest to the beam source.*/
