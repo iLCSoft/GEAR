@@ -26,7 +26,6 @@ class vframe  // TO BE DEPRECATED...
 		vframe(): x(0),y(0),z(0) { ; }
 		vframe(const double & xval, const double & yval, const double & zval):
 			x(xval),y(yval),z(zval) { ; }
-		~vframe() { ; }
 
 		double x{};
 		double y{};
