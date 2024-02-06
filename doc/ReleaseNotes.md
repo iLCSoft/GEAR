@@ -1,3 +1,19 @@
+# v01-09-02
+
+* 2024-01-15 tmadlener ([PR#12](https://github.com/iLCSoft/GEAR/pull/12))
+  - Remove no longer working gcc8 based workflow
+  - Update github actions versions
+  - Add key4hep based workflow
+
+* 2023-08-15 jmcarcell ([PR#13](https://github.com/iLCSoft/GEAR/pull/13))
+  - Respect CMAKE_INSTALL_<dir>
+
+* 2023-07-17 jmcarcell ([PR#11](https://github.com/iLCSoft/GEAR/pull/11))
+  - Drop the CMake test target that is not doing anything
+
+* 2023-07-17 jmcarcell ([PR#9](https://github.com/iLCSoft/GEAR/pull/9))
+  - Fix build with docs ON
+
 # v01-09-01
 
 * 2022-06-28 Thomas Madlener ([PR#8](https://github.com/iLCSoft/GEAR/pull/8))
