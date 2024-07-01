@@ -226,7 +226,7 @@ double FTDLayerLayoutImpl::getThicknessForAngle(const int & layerIndex,const dou
 	//                  -si entra por el petalo
 	//                  -cual es la distancia que recorre antes de salir
 	//                  -para ello hay que controlar si sale antes de que
-	//                   acabe el petalo, en Y es fácil pero en x, al ser
+	//                   acabe el petalo, en Y es facil pero en x, al ser
 	//                   un petalo, la distancia es variable y dependera
 	//                   de la zona Y de salida del rayo
 	//                  -controlar y prohibir angulos que no esten en

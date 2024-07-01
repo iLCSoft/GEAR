@@ -6,8 +6,6 @@ namespace gear {
 	_padIndex( padIndex) ,
 	_moduleID (moduleID) {
     }
-    GlobalPadIndex::~GlobalPadIndex(){
-    }
     int GlobalPadIndex::getPadIndex() const {
 	return _padIndex;
     }

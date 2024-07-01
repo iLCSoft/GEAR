@@ -68,7 +68,7 @@ namespace gear{
 
     try{   detName = mgr->getDetectorName()  ;
     }
-    catch( UnknownParameterException ){}
+    catch( UnknownParameterException const& ){}
 
     global.SetAttribute( "detectorName" , detName ) ;
     

@@ -50,9 +50,6 @@ namespace gear {
       
     } 
     
-    ~Tokenizer(){
-    }
-    
     std::vector<std::string> & result()  { 
       
       return _tokens ; 
@@ -233,7 +230,7 @@ namespace gear {
 	
 	value = getXMLAttribute( par , "value" )  ; 
       }      
-      catch( ParseException ) {
+      catch( ParseException const& ) {
 	
 	if( par->FirstChild() )
 	  value =  par->FirstChild()->Value() ;

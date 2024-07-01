@@ -6,8 +6,6 @@
 
 #include "gearimpl/GearParametersImpl.h"
 
-#include <string>
-
 
 namespace gear {
   

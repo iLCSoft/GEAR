@@ -53,6 +53,8 @@ class TrackerPlanesMaterialLayerImpl: public TrackerPlanesMaterialLayer  {
     /// Destructor.
     /**      */
     virtual ~TrackerPlanesMaterialLayerImpl() { /* nop */; }
+    /// Copy constructor.
+    TrackerPlanesMaterialLayerImpl(const TrackerPlanesMaterialLayerImpl&) = default;
     /**      */
     virtual int getID() const { return ID  ; }
     /**      */
@@ -158,6 +160,9 @@ class TrackerPlanesSensitiveLayerImpl: public TrackerPlanesSensitiveLayer   {
 
     /// Destructor.
     virtual ~TrackerPlanesSensitiveLayerImpl() { /* nop */; }
+
+    /// Copy constructor.
+    TrackerPlanesSensitiveLayerImpl(const TrackerPlanesSensitiveLayerImpl&) = default;
 
     /**      */
     virtual int getID() const { return ID  ; }
@@ -284,6 +289,9 @@ class TrackerPlanesLayerImpl: public TrackerPlanesLayer  {
     /** Destructor.
      */
     virtual ~TrackerPlanesLayerImpl() { /* nop */; }
+    /** Copy constructor.
+     */
+    TrackerPlanesLayerImpl(const TrackerPlanesLayerImpl&) = default;
 
     /** get methods
      */

@@ -1,10 +1,6 @@
 #include "gearimpl/GearParametersImpl.h"
 
-#include <algorithm>
-
 namespace gear{
-  
-  GearParametersImpl::~GearParametersImpl() { /* nop */; }
   
   int GearParametersImpl::getIntVal(const std::string & key) const {
     

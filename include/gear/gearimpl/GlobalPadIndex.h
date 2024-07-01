@@ -19,7 +19,9 @@ protected:
 public:
 	
 	GlobalPadIndex(int padIndex, int moduleID);
-	virtual ~GlobalPadIndex();
+	virtual ~GlobalPadIndex() = default;
+        GlobalPadIndex(const GlobalPadIndex&) = default;
+        GlobalPadIndex& operator=(const GlobalPadIndex&) = default;
 
 	bool operator < (const  GlobalPadIndex & cmp) const
 	{
