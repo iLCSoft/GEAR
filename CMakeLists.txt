@@ -96,12 +96,12 @@ INSTALL_DIRECTORY( ./include DESTINATION . FILES_MATCHING PATTERN "*.h" )
 
 # ------- symlinks in include directory for backwards compatibility ---------
 # FIXME: this symlinks are needed to build Mokka. Should fix this code in Mokka
-INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_INSTALL_PREFIX}/include/gear/gearimpl ${CMAKE_INSTALL_PREFIX}/include/gearimpl )" )
-INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_INSTALL_PREFIX}/include/gear/gearxml ${CMAKE_INSTALL_PREFIX}/include/gearxml )" )
-INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_INSTALL_PREFIX}/include/gear/gearsurf ${CMAKE_INSTALL_PREFIX}/include/gearsurf )" )
+INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink gear/gearimpl gearimpl WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include )" )
+INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink gear/gearxml gearxml WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include )" )
+INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink gear/gearsurf gearsurf WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include )" )
 
 IF( GEAR_TGEO )
-    INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink ${CMAKE_INSTALL_PREFIX}/include/gear/geartgeo ${CMAKE_INSTALL_PREFIX}/include/geartgeo )" )
+    INSTALL( CODE "EXECUTE_PROCESS( COMMAND ${CMAKE_COMMAND} -E create_symlink gear/geartgeo geartgeo WORKING_DIRECTORY ${CMAKE_INSTALL_PREFIX}/include)" )
 ENDIF()
 
 
