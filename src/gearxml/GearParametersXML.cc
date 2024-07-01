@@ -50,9 +50,6 @@ namespace gear {
       
     } 
     
-    ~Tokenizer(){
-    }
-    
     std::vector<std::string> & result()  { 
       
       return _tokens ; 

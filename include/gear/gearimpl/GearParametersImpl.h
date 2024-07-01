@@ -28,8 +28,13 @@ namespace gear {
     typedef std::map< std::string, StringVec > StringVecMap ;
 	
 	
+    GearParametersImpl() = default ;
+    GearParametersImpl(const GearParametersImpl&) = default ;
+    GearParametersImpl& operator = (const GearParametersImpl&) = default ;
+
     /// Destructor.
-    virtual ~GearParametersImpl() ;
+    virtual ~GearParametersImpl() = default ;
+
 	
     /** Integer value for key.     
      *  @throws UnknownParameterException

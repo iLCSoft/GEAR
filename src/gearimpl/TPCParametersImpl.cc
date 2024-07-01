@@ -78,7 +78,7 @@ namespace gear {
 
 	// call the assignment operator of the GearParametersImpl mother class:
 	// *dynamic_cast<GearParametersImpl*>(this) = *dynamic_cast<GearParametersImpl const *>(&right);
-	GearParametersImpl::operator = (right);
+        this->operator = (right);
     }
 
     /// Destructor.

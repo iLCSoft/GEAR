@@ -85,8 +85,6 @@ namespace gear {
     RectangularPadRowLayout* padRowLayout = new RectangularPadRowLayout( xMin, xMax, yMin ) ;
 
     // ----- rows ------------
-    int rowId = 0 ;
-
     const TiXmlNode* row = 0 ;
     while( ( row = xmlElement->IterateChildren( "row", row ) )  != 0  ){
 
@@ -103,7 +101,6 @@ namespace gear {
       
       padRowLayout->addRow( nRow, nPad, padWidth, padHeight, rowHeight, leftOffset, rightOffset ) ;
 	
-      rowId+= nRow ;
     }
 
     padRowLayout->repeatRows( repeatRowCount ) ;
