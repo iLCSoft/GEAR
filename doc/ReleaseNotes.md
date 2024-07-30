@@ -1,3 +1,10 @@
+# v01-09-03
+
+* 2024-07-01 jmcarcell ([PR#10](https://github.com/iLCSoft/GEAR/pull/10))
+  - Fix warnings about not passing exceptions by reference
+  - Fix warnings about an implicit copy constructor defined
+  - Fix other warnings, about fallthroughs, a weird UTF-8 character (spanish accent in comments in spanish) and unused results
+
 # v01-09-02
 
 * 2024-01-15 tmadlener ([PR#12](https://github.com/iLCSoft/GEAR/pull/12))
