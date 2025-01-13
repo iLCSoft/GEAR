@@ -14,6 +14,8 @@ SET( ${PROJECT_NAME}_VERSION_MAJOR 1 )
 SET( ${PROJECT_NAME}_VERSION_MINOR 9 )
 SET( ${PROJECT_NAME}_VERSION_PATCH 3 )
 
+include(GNUInstallDirs)
+
 cmake_policy(SET CMP0008 NEW)
 
 ### DEPENDENCIES ############################################################
