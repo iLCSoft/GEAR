@@ -1,3 +1,12 @@
+# v01-09-04
+
+* 2025-01-13 Thomas Madlener ([PR#15](https://github.com/iLCSoft/GEAR/pull/15))
+  - Switch to central Key4hep CI build workflows and remove clicdp nightlies based ones
+  - Fix warnings that are now enabled
+
+* 2025-01-13 jmcarcell ([PR#14](https://github.com/iLCSoft/GEAR/pull/14))
+  - Add GNUInstallDirs to set CMAKE_INSTALL_LIBDIR so that the default rpath is correct and can be used in downstream projects, like in `k4MarlinWrapper`
+
 # v01-09-03
 
 * 2024-07-01 jmcarcell ([PR#10](https://github.com/iLCSoft/GEAR/pull/10))
