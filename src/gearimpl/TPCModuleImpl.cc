@@ -4,6 +4,7 @@
 #include <cmath>
 #include <complex>
 #include <iostream>
+#include <limits>
 
 namespace gear {
     /* Transforms a point from the global coordinates to Layout2D coordinates.*/
@@ -464,7 +465,8 @@ namespace gear {
 	// first check if the two origins are identical (to avoid divide by zero)
 	if (_offset[0]==0) // r is 0, no offset
 	{
-	    double phiMin, phiMax;
+	    double phiMin = std::numeric_limits<double>::max();
+		double phiMax = std::numeric_limits<double>::min();
 
 	    if ( _zPosition > 0 )
 	    {
@@ -649,7 +651,8 @@ namespace gear {
 
 	    // phiMin and phiMax
 
-	    double phiMin, phiMax;
+		double phiMin = std::numeric_limits<double>::max();
+		double phiMax = std::numeric_limits<double>::min();
 
 	    // r > rMax
 	    // If the global origin is outside of local rMax, the tangents on the rMax-circle are
