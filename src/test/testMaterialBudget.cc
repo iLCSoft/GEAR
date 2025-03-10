@@ -175,7 +175,7 @@ int main(int argc, char**argv){
 	
       }
   }
-  catch(NotImplementedException e){}
+  catch(const NotImplementedException& e){}
   
 } 
 
