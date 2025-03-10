@@ -277,7 +277,7 @@ namespace gear {
 	double shortest_distance = (*itr)->getDistanceToPad( c0, c1, closest_pad.getPadIndex() );
 
 	// start at the second module
-	for( itr+1; itr!=modulesVector.end(); itr++) {
+	for( ++itr; itr!=modulesVector.end(); itr++) {
 
 		GlobalPadIndex temp_pad( (*itr)->getNearestPad( c0, c1 ), (*itr)->getModuleID() );
 
