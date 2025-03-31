@@ -6,7 +6,7 @@ CMAKE_MINIMUM_REQUIRED(VERSION 3.5 FATAL_ERROR)
 
 
 # project name
-PROJECT( GEAR )
+PROJECT( GEAR LANGUAGES CXX )
 
 
 # project version
