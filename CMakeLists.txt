@@ -1,7 +1,7 @@
 ########################################################
 # cmake file for building GEAR
 # @author Jan Engels, Desy IT
-CMAKE_MINIMUM_REQUIRED(VERSION 2.6 FATAL_ERROR)
+CMAKE_MINIMUM_REQUIRED(VERSION 3.5 FATAL_ERROR)
 ########################################################
 
 
