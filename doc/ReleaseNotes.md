@@ -1,3 +1,23 @@
+# v01-09-05
+
+* 2025-03-31 Thomas Madlener ([PR#21](https://github.com/iLCSoft/GEAR/pull/21))
+  - Make sure that all libraries go the the same place during installation.
+
+* 2025-03-31 Thomas Madlener ([PR#20](https://github.com/iLCSoft/GEAR/pull/20))
+  - Update the Key4hep build action to the latest version to include nightlies on Ubuntu24
+
+* 2025-03-31 jmcarcell ([PR#19](https://github.com/iLCSoft/GEAR/pull/19))
+  - Add LANGUAGES CXX to the top level CMakeLists.txt to disable checks for a C compiler
+
+* 2025-03-31 jmcarcell ([PR#18](https://github.com/iLCSoft/GEAR/pull/18))
+  - Bump the minimum version of CMake to 3.5, to be able to compile with CMake 4.0
+
+* 2025-03-10 scott snyder ([PR#17](https://github.com/iLCSoft/GEAR/pull/17))
+  - Fix a few compiler warning.
+
+* 2025-03-10 sss ([PR#16](https://github.com/iLCSoft/GEAR/pull/16))
+  - Fix apparent off-by-one error in TPCParametersImpl::getNearestPad.
+
 # v01-09-04
 
 * 2025-01-13 Thomas Madlener ([PR#15](https://github.com/iLCSoft/GEAR/pull/15))
